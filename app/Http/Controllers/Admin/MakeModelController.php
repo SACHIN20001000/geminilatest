@@ -1,0 +1,137 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Make;
+use App\Models\MakeModel;
+use DataTables;
+use App\Http\Requests\Admin\Make\StoreModelRequest;
+
+class MakeModelController extends Controller
+{
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+       
+       
+        if ($request->ajax())
+        {
+            $data = MakeModel::with('makes')->orderby('id','DESC')->get();
+
+            return Datatables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('action', function ($row)
+                            {
+                                $action = '<span class="action-buttons">
+                                
+                        <a  href="' . route("model.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
+                        </a>
+
+                        <a href="' . route("model.destroy", $row) . '"
+                                class="btn btn-sm btn-danger remove_us"
+                                title="Delete User"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                data-method="DELETE"
+                                data-confirm-title="Please Confirm"
+                                data-confirm-text="Are you sure that you want to delete this User?"
+                                data-confirm-delete="Yes, delete it!">
+                                <i class="las la-trash"></i>
+                            </a>
+                    ';
+                                return $action;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true);
+        }
+        return view('admin.models.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+
+      $make= Make::all();
+        return view('admin.models.addEdit',compact('make'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreModelRequest $request)
+    {
+
+        $inputs = $request->all();
+        MakeModel::create($inputs);
+        
+        return back()->with('success', 'Model addded successfully!');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+
+        return view('admin.product.index',compact('id'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $makeModel=MakeModel::find($id); 
+        $make= Make::all();
+        return view('admin.models.addEdit', compact('makeModel','make'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(StoreModelRequest $request, $id)
+    {
+        $makeModel=MakeModel::find($id); 
+        $inputs = $request->all();
+        $makeModel->update($inputs);
+        
+        return back()->with('success', 'Model updated successfully!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        MakeModel::find($id)->delete();
+        return back()->with('success', 'Model deleted successfully!');
+    }
+
+}
