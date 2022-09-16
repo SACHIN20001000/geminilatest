@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SubProductController;
 use App\Http\Controllers\Admin\InsuranceController;
 use App\Http\Controllers\Admin\MakeController;
 use App\Http\Controllers\Admin\MakeModelController;
+use App\Http\Controllers\Admin\LeadController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -67,6 +68,10 @@ Route::prefix('admin')->group(function ()
         Route::resource('insurance', InsuranceController::class);
         Route::resource('make', MakeController::class);
         Route::resource('model', MakeModelController::class);
+        Route::resource('leads', LeadController::class);
+        Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
+        Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');
+
         Route::get('view-profile', [App\Http\Controllers\Admin\AdminController::class, 'viewProfile'])->name('viewProfile');
         Route::get('update-profile', [App\Http\Controllers\Admin\AdminController::class, 'updateProfile'])->name('updateProfile');
         Route::post('update-user-profile/{id}', [App\Http\Controllers\Admin\AdminController::class, 'updateUserProfile'])->name('updateUserProfile');

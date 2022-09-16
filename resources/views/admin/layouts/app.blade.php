@@ -8,6 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=9" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
+
         <!-- Title -->
         <title> Gemini Consultancy Services </title>
 
