@@ -13,4 +13,8 @@ class Make extends Model
         'created_at' => 'datetime:M d, Y h:i:s',
         'updated_at' => 'datetime:M d, Y h:i:s',
     ];
+    public function makeModels()
+    {
+        return $this->hasMany(MakeModel::class);
+    }
 }

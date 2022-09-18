@@ -45,9 +45,9 @@
 	<body class="error-page1 main-body bg-light text-dark">
 
 		<!-- Loader -->
-		<div id="global-loader">
+		<!-- <div id="global-loader">
 			<img src="{{URL::asset('assets/img/loader.svg')}}" class="loader-img" alt="Loader">
-		</div>
+		</div> -->
 		<!-- /Loader -->
 
 		<!-- Page -->

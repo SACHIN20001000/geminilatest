@@ -627,7 +627,25 @@
                     <div class="col-lg-3">
                      
                      <p class="mg-b-10">Make</p>
-                     <input type="text" name="make" value="{{isset($policy) ? $policy->make : ''}}" class="form-control feild" id="make">
+                     <select name="make" id="make" class="form-control">
+                        <option value="">Select</option>
+                        @if($make->count())
+                            @foreach($make as $makes)
+                            <option value="{{$makes->id}}">{{$makes->name}}</option>
+                            @endforeach
+                        @endif
+                     </select>
+                     
+                     <!-- <input type="text" name="make" value="{{isset($policy) ? $policy->make : ''}}" class="form-control feild" id="make"> -->
+                     
+                    </div>
+                    <div class="col-lg-3">
+                     
+                     <p class="mg-b-10">Variant</p>
+                     <select name="varriant" class="select2 form-control" id="varriant">
+                    <option value="">Select Below</option>
+                    </select>
+                     <!-- <input type="text" name="varriant" value="{{isset($policy) ? $policy->varriant : ''}}" class="form-control feild" id="varriant"> -->
                      
                     </div>
                     <div class="col-lg-3">
@@ -727,12 +745,7 @@
                      <input type="text" name="passenger_carrying_capacity" value="{{isset($policy) ? $policy->passenger_carrying_capacity : ''}}" class="form-control feild" id="passenger_carrying_capacity">
                      
                     </div>
-                    <div class="col-lg-3">
-                     
-                     <p class="mg-b-10">Variant</p>
-                     <input type="text" name="varriant" value="{{isset($policy) ? $policy->varriant : ''}}" class="form-control feild" id="varriant">
-                     
-                    </div>
+                    
                     <div class="col-lg-3">
                      
                      <p class="mg-b-10">Category</p>
@@ -854,8 +867,24 @@ $.ajaxSetup({
                     insurance_id: insurance_id,
                 },
                 success: function(result) {
-                    console.log(result);
                     $('#product_id').html(result);
+                }
+
+            });
+        }
+    });
+    $('#make').change(function() {
+        if ($(this).val() != '') {
+            
+            var make = $(this).val();
+            $.ajax({
+                url: "{{ route('getVarient') }}",
+                method: "post",
+                data: {
+                    make: make,
+                },
+                success: function(result) {
+                    $('#varriant').html(result);
                 }
 
             });
@@ -1060,6 +1089,7 @@ function changeFeild(subproduct){
                 if(subproduct == 'pvr'){
                  $('.feild').parent('div').hide()
                  $('#make').parent('div').show();   
+                 $('#varriant').parent('div').show(); 
                  $('#model').parent('div').show();      
                  $('#cubic_capacity').parent('div').show(); 
                  $('#bussiness_type').parent('div').show(); 
@@ -1084,7 +1114,8 @@ function changeFeild(subproduct){
                  $('.feild').parent('div').hide()
                  $('#gcv_type').parent('div').show();   
                  $('#gvw').parent('div').show();   
-                 $('#make').parent('div').show();   
+                 $('#make').parent('div').show();  
+                 $('#varriant').parent('div').show();  
                  $('#model').parent('div').show();      
                  $('#bussiness_type').parent('div').show(); 
                  $('#remakrs').parent('div').show();
@@ -1107,7 +1138,8 @@ function changeFeild(subproduct){
                  $('#fuel_type').parent('div').show();   
                  $('#passenger_carrying_capacity').parent('div').show();   
                  $('#category').parent('div').show();   
-                 $('#make').parent('div').show();   
+                 $('#make').parent('div').show();  
+                 $('#varriant').parent('div').show();  
                  $('#model').parent('div').show();      
                  $('#bussiness_type').parent('div').show(); 
                  $('#remakrs').parent('div').show();
@@ -1127,8 +1159,9 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'tw'){
                  $('.feild').parent('div').hide()
-                 $('#varriant').parent('div').show();   
-                 $('#make').parent('div').show();   
+                 
+                 $('#make').parent('div').show();
+                 $('#varriant').parent('div').show();    
                  $('#model').parent('div').show();      
                  $('#bussiness_type').parent('div').show(); 
                  $('#remakrs').parent('div').show();

@@ -38,7 +38,24 @@
                                     <input class="form-control" name="name"  placeholder="Enter your name" type="text" value="{{isset($make) ? $make->name : '' }}">
                                 </div>
                             </div>
-                          
+                            <div class="btn btn-primary" id="add-variant"> Add Variant</div>
+                            <div class="row row-xs align-items-center mg-b-20">
+                                <div class="col-md-4">
+                                    <label class="form-label mg-b-0"> Variant</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 vairants">
+                                    @if(!empty($make->makeModels))
+                                        @foreach($make->makeModels as $varient)
+                                        <div>                                            
+                                            <input class="form-control mb-2" name="model_id[]"  placeholder="Enter your Variants name" type="text" value="{{$varient->name}}" >
+                                          <span class="btn btn-danger mb-2"> <i class="las la-trash deletVarient " ></i></span> 
+                                        </div>
+
+                                        @endforeach
+                                    @endif
+                                    
+                                </div>
+                            </div>
                             <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5" type="submit">{{isset($make) ? 'Update' : 'Save' }}</button>
                         </div>
                 </div>
@@ -58,7 +75,21 @@
 
 {!! JsValidator::formRequest('App\Http\Requests\Admin\Make\StoreMakeRequest','#user-add-edit') !!}
 
-
+<script type="text/javascript">
+      $(document).ready(function() {
+        $('#add-variant').click(function(){
+            
+            $('.vairants').append('<input class="form-control mb-2" name="model_id[]"  placeholder="Enter your Variants name" type="text">')
+        })
+                                         
+        $('.deletVarient').click(function(){
+            
+            $(this).parent('div').remove();
+        })
+       
+      });
+      
+</script>
 @endsection
 
 

@@ -71,6 +71,7 @@ Route::prefix('admin')->group(function ()
         Route::resource('leads', LeadController::class);
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
         Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');
+        Route::any('getVarient', [LeadController::class, 'getVarient'])->name('getVarient');
 
         Route::get('view-profile', [App\Http\Controllers\Admin\AdminController::class, 'viewProfile'])->name('viewProfile');
         Route::get('update-profile', [App\Http\Controllers\Admin\AdminController::class, 'updateProfile'])->name('updateProfile');

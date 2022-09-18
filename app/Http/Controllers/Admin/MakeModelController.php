@@ -115,6 +115,7 @@ class MakeModelController extends Controller
      */
     public function update(StoreModelRequest $request, $id)
     {
+       
         $makeModel=MakeModel::find($id); 
         $inputs = $request->all();
         $makeModel->update($inputs);

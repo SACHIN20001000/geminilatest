@@ -30,14 +30,7 @@
                         @csrf
                         {{ isset($makeModel) ? method_field('PUT'):'' }}
                         <div class="pd-30 pd-sm-40 bg-gray-200">
-                            <div class="row row-xs align-items-center mg-b-20">
-                                <div class="col-md-4">
-                                    <label class="form-label mg-b-0">Name</label>
-                                </div>
-                                <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="name"  placeholder="Enter your name" type="text" value="{{isset($makeModel) ? $makeModel->name : '' }}">
-                                </div>
-                            </div>
+                          
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
                                     <label class="form-label mg-b-0">Type</label>
@@ -51,6 +44,16 @@
                                      @endforeach
                                      @endif
                               </select>
+                                </div>
+                            </div>
+                            <div class="btn btn-primary" id="add-variant"> Add Variant</div>
+                            <div class="row row-xs align-items-center mg-b-20">
+                                <div class="col-md-4">
+                                    <label class="form-label mg-b-0"> Variant</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 vairants">
+                                    
+                                    <input class="form-control" name="model_id[]"  placeholder="Enter your Variants name" type="text" value="{{isset($makeModel) ? $makeModel->name : '' }}">
                                 </div>
                             </div>
                           
@@ -72,7 +75,14 @@
 @section('scripts')
 
 {!! JsValidator::formRequest('App\Http\Requests\Admin\Make\StoreModelRequest','#user-add-edit') !!}
-
+<script>
+      $(document).ready(function() {
+        $('#add-variant').click(function(){
+            
+            $('.vairants').append('<input class="form-control" name="model_id[]"  placeholder="Enter your Variants name" type="text">')
+        })
+      });
+</script>
 @endsection
 
 

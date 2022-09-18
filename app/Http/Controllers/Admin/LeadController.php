@@ -8,6 +8,8 @@ use App\Models\Lead;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\SubProduct;
+use App\Models\MakeModel;
+use App\Models\Make;
 use App\Models\Policy;
 use App\Models\Insurance;
 use App\Models\Company;
@@ -36,7 +38,8 @@ class LeadController extends Controller
     {
         $insurances = Insurance::all();
         $companies = Company::all();
-        return view('admin.lead.addEdit',compact('insurances','companies'));
+        $make = Make::all();
+        return view('admin.lead.addEdit',compact('insurances','companies','make'));
 
     }
 
@@ -146,6 +149,15 @@ class LeadController extends Controller
         $output1="<option>Select </option>";
         foreach ($product as $val1) {
             $output1 .= '<option value="' . $val1->id . '" data-id="'.$val1->name.'">' . $val1->name . '</option>';
+        }
+        echo $output1;
+    }
+    public function getVarient(Request $request){
+        
+        $model= MakeModel::where('make_id',$request->make)->get();
+        $output1="<option>Select </option>";
+        foreach ($model as $val1) {
+            $output1 .= '<option value="' . $val1->id . '">' . $val1->name . '</option>';
         }
         echo $output1;
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Make;
+use App\Models\MakeModel;
 use DataTables;
 use App\Http\Requests\Admin\Make\StoreMakeRequest;
 
@@ -74,8 +75,22 @@ class MakeController extends Controller
     public function store(StoreMakeRequest $request)
     {
 
-        $inputs = $request->all();
-        Make::create($inputs);
+      
+        $inputs = $request->only(
+            'name',
+            );
+           $make= Make::create($inputs);
+            if(!empty($request->model_id)){
+                MakeModel::where('make_id',$make->id)->delete(); 
+                foreach ($request->model_id as $key => $varient) {
+                if(!empty($varient)){
+                    MakeModel::create([
+                        'make_id'=> $make->id,
+                        'name'=> $varient,
+                    ]);
+                }
+                }
+            }
         
         return back()->with('success', 'Make addded successfully!');
     }
@@ -100,6 +115,7 @@ class MakeController extends Controller
      */
     public function edit(Make $make)
     {
+       
         return view('admin.make.addEdit', compact('make'));
     }
 
@@ -112,9 +128,24 @@ class MakeController extends Controller
      */
     public function update(StoreMakeRequest $request, Make $make)
     {
-
-        $inputs = $request->all();
+       
+        $inputs = $request->only(
+            'name',
+            );
         $make->update($inputs);
+            if(!empty($request->model_id)){
+                MakeModel::where('make_id',$make->id)->delete(); 
+                foreach ($request->model_id as $key => $varient) {
+                  
+                if(!empty($varient)){
+                    
+                    MakeModel::create([
+                        'make_id'=> $make->id,
+                        'name'=> $varient,
+                    ]);
+                }
+                }
+            }
         
         return back()->with('success', 'Make updated successfully!');
     }
