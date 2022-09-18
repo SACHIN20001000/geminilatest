@@ -23,18 +23,18 @@ class RedirectIfAuthenticated
         if (Auth::check())
         {
             $user = Auth::user();
-            if ($user->hasRole('Admin'))
-            {
+            // if ($user->hasRole('Admin'))
+            // {
                 return redirect('/admin/dashboard');
-            } else if ($user->hasRole('IotAdmin'))
-            {
+            // } else if ($user->hasRole('IotAdmin'))
+            // {
 
-                return redirect('/iot-admin/dashboard');
-            } else
-            {
+            //     return redirect('/iot-admin/dashboard');
+            // } else
+            // {
 
-                return redirect('/home');
-            }
+            //     return redirect('/home');
+            // }
         }
 
         return $next($request);

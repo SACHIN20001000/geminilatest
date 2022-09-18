@@ -877,7 +877,277 @@ $.ajaxSetup({
             });
         }
     });
+    $('.feild').parent('div').hide()
+    $('.common-feild').parent('div').show()
+    $('#subproduct_id').change(function() {
+       
+   
+            
+            var subproduct = $(this).find(':selected').data("id");
+            if(subproduct != ''){
+                subproduct= $.trim(subproduct).toLowerCase();
+                changeFeild(subproduct);    
+            }
+        
+       
+    });
 });
+function changeFeild(subproduct){
+    if(subproduct == 'others' || subproduct == 'cpm' || subproduct == 'car'){
+                 $('.feild').parent('div').hide()
+                 $('#requirement').parent('div').show();   
+                 $('#client_name').parent('div').show();   
+                 $('#address').parent('div').show();      
+                 $('#remarks').parent('div').show();      
+                }
+                if(subproduct == 'marine'){
+                 $('.feild').parent('div').hide()
+                 $('#type').parent('div').show();   
+                 $('#client_name').parent('div').show();   
+                 $('#address').parent('div').show(); 
+                 $('#commodity_type').parent('div').show(); 
+                 $('#mode_of_transport').parent('div').show(); 
+                 $('#cover_type').parent('div').show(); 
+                 $('#per_sending_limit').parent('div').show(); 
+                 $('#per_location_limit').parent('div').show(); 
+                 $('#estimate_annual_sum').parent('div').show(); 
+                 $('#basic_of_valuation').parent('div').show(); 
+                 $('#policy_period').parent('div').show(); 
+                 $('#start_date').parent('div').show(); 
+                 $('#expiry_date').parent('div').show(); 
+                 $('#commodity_details').parent('div').show(); 
+                 $('#packing_description').parent('div').show(); 
+                 $('#remarks').parent('div').show(); 
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gwp').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'liability'){
+                 $('.feild').parent('div').hide()
+                 $('#libality').parent('div').show();   
+                 $('#policy_type').parent('div').show();   
+                 $('#liability_industrial').parent('div').show(); 
+                 $('#liability_nonindustrial').parent('div').show(); 
+                 $('#liability_act').parent('div').show(); 
+                 $('#professional_indeminity').parent('div').show(); 
+                 $('#comprehensive_general_liability').parent('div').show(); 
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gwp').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'wc'){
+                 $('.feild').parent('div').hide()
+                 $('#wc_policy').parent('div').show();   
+                 $('#client_name').parent('div').show();   
+                 $('#address').parent('div').show();      
+                 $('#pincode').parent('div').show(); 
+                 $('#industry_type').parent('div').show(); 
+                 $('#worker_number').parent('div').show(); 
+                 $('#policy_period').parent('div').show(); 
+                 $('#start_date').parent('div').show(); 
+                 $('#expiry_date').parent('div').show(); 
+                 $('#job_profile').parent('div').show();
+                 $('#remakrs').parent('div').show();
+                 $('#salary_per_month').parent('div').show();
+                 $('#add_on_cover').parent('div').show();
+                 $('#medical_extension').parent('div').show();
+                 $('#occupation_disease').parent('div').show();
+                 $('#compressed_air_disease').parent('div').show();
+                 $('#terrorism_cover').parent('div').show();
+                 $('#sub_contractor_cover').parent('div').show();
+                 $('#multiple_location').parent('div').show();
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gwp').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'fire' || subproduct == 'burglary'){
+                 $('.feild').parent('div').hide()
+                 $('#client_name').parent('div').show();   
+                 $('#address').parent('div').show();      
+                 $('#pincode').parent('div').show(); 
+                 $('#remakrs').parent('div').show(); 
+                 $('#occupancy').parent('div').show(); 
+                 $('#occupancy_tarriff').parent('div').show(); 
+                 $('#particular').parent('div').show(); 
+                 $('#building').parent('div').show(); 
+                 $('#plant_machine').parent('div').show();
+                 $('#furniture_fixure').parent('div').show();
+                 $('#stock_in_process').parent('div').show();
+                 $('#finished_stock').parent('div').show();
+                 $('#other_contents').parent('div').show();
+                 $('#clain_in_last_three_year').parent('div').show();
+                 $('#loss_details').parent('div').show();
+                 $('#loss_in_amount').parent('div').show();
+                 $('#loss_date').parent('div').show();
+                 $('#measures_taken_after_loss').parent('div').show();
+                 $('#basic_premium').parent('div').show(); 
+                 $('#terrorism_premium').parent('div').show(); 
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gwp').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'home'){
+                 $('.feild').parent('div').hide()
+                 $('#client_name').parent('div').show();   
+                 $('#address_risk_location').parent('div').show();      
+                 $('#cover_opted').parent('div').show(); 
+                 $('#policy_inception_date').parent('div').show(); 
+                 $('#tenure').parent('div').show(); 
+                 $('#construction_type').parent('div').show(); 
+                 $('#age_of_building').parent('div').show(); 
+                 $('#basement_for_building').parent('div').show(); 
+                 $('#basement_for_content').parent('div').show();
+                 $('#claims').parent('div').show();
+                 $('#building_carpet_area').parent('div').show();
+                 $('#building_cost_of_construction').parent('div').show();
+                 $('#building_sum_insured').parent('div').show();
+                 $('#content_sum_insured').parent('div').show();
+                 $('#rent_alternative_accommodation').parent('div').show();
+                 $('#loss_in_amount').parent('div').show();
+                 $('#loss_date').parent('div').show();
+                 $('#measures_taken_after_loss').parent('div').show();
+                 $('#basic_premium').parent('div').show(); 
+                 $('#terrorism_premium').parent('div').show(); 
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gwp').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'health'){
+                 $('.feild').parent('div').hide()
+                 $('#fresh').parent('div').show();   
+                 $('#portability').parent('div').show();      
+                 $('#dob').parent('div').show(); 
+                 $('#pre_existing_disease').parent('div').show(); 
+                 $('#hospitalization_history').parent('div').show(); 
+                 $('#upload_discharge_summary').parent('div').show(); 
+                 $('#dob_sr_most_member').parent('div').show(); 
+                 $('#dob_self').parent('div').show(); 
+                 $('#dob_spouse').parent('div').show();
+                 $('#dob_child').parent('div').show();
+                 $('#dob_father').parent('div').show();
+                 $('#dob_mother').parent('div').show();
+                 $('#sum_insured').parent('div').show();
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gwp').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'travel'){
+                 $('.feild').parent('div').hide()
+                 $('#sum_insured').parent('div').show();   
+                 $('#visiting_country').parent('div').show();      
+                 $('#date_of_departure').parent('div').show(); 
+                 $('#date_of_arrival').parent('div').show(); 
+                 $('#no_of_days').parent('div').show(); 
+                 $('#no_person').parent('div').show(); 
+                 $('#passport_datails').parent('div').show(); 
+                 $('#dob_self').parent('div').show(); 
+                 $('#dob_spouse').parent('div').show();
+                 $('#dob_child').parent('div').show();
+                 $('#dob_father').parent('div').show();
+                 $('#dob_mother').parent('div').show();
+                 $('#sum_insured').parent('div').show();
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gwp').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'pvr'){
+                 $('.feild').parent('div').hide()
+                 $('#make').parent('div').show();   
+                 $('#model').parent('div').show();      
+                 $('#cubic_capacity').parent('div').show(); 
+                 $('#bussiness_type').parent('div').show(); 
+                 $('#remakrs').parent('div').show(); 
+                 $('#rto').parent('div').show(); 
+                 $('#reg_no').parent('div').show(); 
+                 $('#mfr_year').parent('div').show(); 
+                 $('#reg_date').parent('div').show();
+                 $('#claims_in_existing_policy').parent('div').show();
+                 $('#ncb_in_existing_policy').parent('div').show();
+                 $('#od_premium').parent('div').show();
+                 $('#add_on_premium').parent('div').show();
+                 $('#tp_premium').parent('div').show();
+                 $('#pa').parent('div').show();
+                 $('#others').parent('div').show();
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gross_premium').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'gcv'){
+                 $('.feild').parent('div').hide()
+                 $('#gcv_type').parent('div').show();   
+                 $('#gvw').parent('div').show();   
+                 $('#make').parent('div').show();   
+                 $('#model').parent('div').show();      
+                 $('#bussiness_type').parent('div').show(); 
+                 $('#remakrs').parent('div').show();
+                 $('#mfr_year').parent('div').show(); 
+                 $('#reg_date').parent('div').show();
+                 $('#claims_in_existing_policy').parent('div').show();
+                 $('#ncb_in_existing_policy').parent('div').show();
+                 $('#od_premium').parent('div').show();
+                 $('#add_on_premium').parent('div').show();
+                 $('#tp_premium').parent('div').show();
+                 $('#pa').parent('div').show();
+                 $('#others').parent('div').show();
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gross_premium').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'pcv'){
+                 $('.feild').parent('div').hide()
+                 $('#fuel_type').parent('div').show();   
+                 $('#passenger_carrying_capacity').parent('div').show();   
+                 $('#category').parent('div').show();   
+                 $('#make').parent('div').show();   
+                 $('#model').parent('div').show();      
+                 $('#bussiness_type').parent('div').show(); 
+                 $('#remakrs').parent('div').show();
+                 $('#mfr_year').parent('div').show(); 
+                 $('#reg_date').parent('div').show();
+                 $('#claims_in_existing_policy').parent('div').show();
+                 $('#ncb_in_existing_policy').parent('div').show();
+                 $('#od_premium').parent('div').show();
+                 $('#add_on_premium').parent('div').show();
+                 $('#tp_premium').parent('div').show();
+                 $('#pa').parent('div').show();
+                 $('#others').parent('div').show();
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gross_premium').parent('div').show(); 
+                  
+                }
+                if(subproduct == 'tw'){
+                 $('.feild').parent('div').hide()
+                 $('#varriant').parent('div').show();   
+                 $('#make').parent('div').show();   
+                 $('#model').parent('div').show();      
+                 $('#bussiness_type').parent('div').show(); 
+                 $('#remakrs').parent('div').show();
+                 $('#mfr_year').parent('div').show(); 
+                 $('#reg_date').parent('div').show();
+                 $('#claims_in_existing_policy').parent('div').show();
+                 $('#ncb_in_existing_policy').parent('div').show();
+                 $('#od_premium').parent('div').show();
+                 $('#add_on_premium').parent('div').show();
+                 $('#tp_premium').parent('div').show();
+                 $('#pa').parent('div').show();
+                 $('#others').parent('div').show();
+                 $('#net_premium').parent('div').show(); 
+                 $('#gst').parent('div').show(); 
+                 $('#gross_premium').parent('div').show(); 
+                  
+                }
+
+}
 </script>
 
 @endsection

@@ -23,7 +23,7 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $leads= Lead::paginate(4);
+        $leads= Lead::with('users','insurances','products','subProduct','policy')->paginate(5);
        return view('admin.lead.index',compact('leads'));
     }
 
@@ -121,9 +121,13 @@ class LeadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Lead $lead)
     {
-        //
+        if(!empty($lead->policy)){
+            $lead->policy->delete();
+        }
+        $lead->delete();
+        return back()->with('success', 'Lead Deleted successfully!');
     }
 
 
@@ -141,7 +145,7 @@ class LeadController extends Controller
         $product= SubProduct::where('product_id',$request->product_id)->get();
         $output1="<option>Select </option>";
         foreach ($product as $val1) {
-            $output1 .= '<option value="' . $val1->id . '">' . $val1->name . '</option>';
+            $output1 .= '<option value="' . $val1->id . '" data-id="'.$val1->name.'">' . $val1->name . '</option>';
         }
         echo $output1;
     }

@@ -9,5 +9,25 @@ class Lead extends Model
 {
     use HasFactory;
     protected $fillable=['user_id','holder_name','phone','email','insurance_id','product_id','subproduct_id','attachment_id','remark','assigned	','status','quote_id'];
-    
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function insurances()
+    {
+        return $this->belongsTo(Insurance::class, 'insurance_id');
+    }
+    public function products()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+    public function subProduct()
+    {
+        return $this->belongsTo(SubProduct::class, 'subproduct_id');
+    }
+    public function policy()
+    {
+        return $this->hasOne(Policy::class, 'lead_id','id');
+    }
+   
 }

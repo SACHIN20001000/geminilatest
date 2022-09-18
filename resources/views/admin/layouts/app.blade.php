@@ -52,7 +52,7 @@
 
         <!---Skinmodes css-->
         <link href="{{URL::asset('assets/css/skin-modes.css')}}" rel="stylesheet" />
-    
+        <link href="{{ mix('css/admin.css') }}" rel="stylesheet" />
 
 
     </head>
@@ -60,9 +60,9 @@
     <body class="main-body app sidebar-mini">
 
         <!-- Loader -->
-        <div id="global-loader">
+        <!-- <div id="global-loader">
             <img src="{{URL::asset('assets/img/loader.svg')}}" class="loader-img" alt="Loader">
-        </div>
+        </div> -->
         <!-- /Loader -->
         <div class="page">
 
@@ -596,7 +596,7 @@
         <script type="text/javascript" src="{{ asset('vendor/DataTables/DataTables-1.11.3/js/dataTables.bootstrap4.min.js')}}"></script>
         <!-- custom js -->
         <script src="{{URL::asset('assets/js/custom.js')}}"></script>
-   
+        <script src="{{ mix('js/admin.js') }}"></script>
         @yield('scripts')
     </body>
 </html>

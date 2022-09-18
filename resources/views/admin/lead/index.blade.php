@@ -33,8 +33,12 @@
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>
-                                <th class="wd-lg-20p"><span>Name</span></th>
-                                
+                                <th class="wd-lg-20p"><span>Holder Name</span></th>
+                                <th class="wd-lg-20p"><span>Phone No</span></th>
+                                <th class="wd-lg-20p"><span>Email</span></th>
+                                <th class="wd-lg-20p"><span>Insurance</span></th>
+                                <th class="wd-lg-20p"><span>Product</span></th>
+                                <th class="wd-lg-20p"><span>Sub Product</span></th>
                                 <th class="wd-lg-20p"><span>Created</span></th>
                                 <th class="wd-lg-20p">Action</th>
                                 </tr>
@@ -44,9 +48,25 @@
                                 @foreach($leads as $lead)
                                 <tr>
                                     <td>{{$lead->holder_name}}</td>
+                                    <td>{{$lead->phone}}</td>
+                                    <td>{{$lead->email}}</td>
+                                    <td>{{$lead->insurances->name ?? ''}}</td>
+                                    <td>{{$lead->products->name ?? ''}}</td>
+                                    <td>{{$lead->subProduct->name ?? ''}}</td>
                                     <td>{{$lead->created_at}}</td>
                                     <td> <a  href="{{route('leads.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
-                        </a></td>
+                        </a>  
+                         <a href="{{route('leads.destroy',$lead->id)}}"
+                                class="btn btn-sm btn-danger remove_us"
+                                title="Delete Lead"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                data-method="DELETE"
+                                data-confirm-title="Please Confirm"
+                                data-confirm-text="Are you sure that you want to delete this Lead?"
+                                data-confirm-delete="Yes, delete it!">
+                                <i class="las la-trash"></i>
+                            </a></td>
                                 </tr>
                                 @endforeach
                                 @endif
@@ -55,7 +75,7 @@
                             <tfoot>
                                 <tr>
                                     <td>
-                                    {{$leads->appends(['storeId' => '1'])->links()}}
+                                    {{$leads->appends(['storeId' => '1'])->links("vendor.pagination.bootstrap-4")}}
                                     </td>
                                 </tr>
                           
