@@ -47,7 +47,7 @@
                                       <option value="">Choose Below..</option>
                                       @if($insurances->count())
                                      @foreach($insurances as $insurance )
-                                <option value="{{$insurance->id}}">{{$insurance->name}}</option>
+                                <option value="{{$insurance->id}}" {{ (isset($product) && $insurance->id == $product->insurance_id) ? 'selected' : '' }}>{{$insurance->name}}</option>
                                      @endforeach
                                      @endif
                               </select>

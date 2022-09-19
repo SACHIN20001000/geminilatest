@@ -75,9 +75,9 @@ class LeadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Lead $lead)
     {
-        //
+        return view('admin.lead.one',compact('lead'));
     }
 
     /**
@@ -89,9 +89,12 @@ class LeadController extends Controller
     public function edit(Lead $lead)
     {
         $insurances = Insurance::all();
+        $products = Product::all();
+        $subProducts = SubProduct::where('product_id',$lead->product_id)->get();
         $companies = Company::all();
         $policy= Policy::where('lead_id',$lead->id)->first();
-        return view('admin.lead.addEdit',compact('insurances','companies','lead','policy'));
+        $make = Make::all();
+        return view('admin.lead.addEdit',compact('insurances','companies','lead','policy','make','products','subProducts'));
     }
 
     /**

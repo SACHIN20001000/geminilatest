@@ -14,3 +14,6 @@
 #datatable {
     width: auto !important;
 }
+.filter-box{
+    display: none;
+}

@@ -45,8 +45,12 @@
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
                                 <select name="type"  class="form-control">
                                       <option value="">Choose Below..</option>
-                                      <option value="life" {{ (isset($company) && 'life' == $company->type) ? 'selected' : '' }}>Life</option>
-                                      <option value="non-life" {{ (isset($company) && 'non-life' == $company->type) ? 'selected' : '' }}>Non Life</option>
+                                      @if($insurances->count())
+                                      @foreach($insurances as $insurance)
+                                      <option value="{{$insurance->id}}" {{ (isset($company) && $insurance->id == $company->type) ? 'selected' : '' }}>{{$insurance->name}}</option>
+                                      @endforeach
+                                      @endif
+                                     
                               </select>
                                 </div>
                             </div>

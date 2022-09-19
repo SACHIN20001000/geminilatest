@@ -8,6 +8,7 @@ use App\Models\Company;
 use DataTables;
 use App\Http\Requests\Admin\Company\StoreCompanyRequest;
 use App\Http\Requests\Admin\Company\UpdateCompanyRequest;
+use App\Models\Insurance;
 
 class CompanyController extends Controller
 {
@@ -62,8 +63,8 @@ class CompanyController extends Controller
     public function create()
     {
 
-
-        return view('admin.company.addEdit');
+        $insurances= Insurance::all();
+        return view('admin.company.addEdit',compact('insurances'));
     }
 
     /**
@@ -101,8 +102,8 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        
-        return view('admin.company.addEdit', compact('company'));
+        $insurances= Insurance::all();
+        return view('admin.company.addEdit', compact('company','insurances'));
     }
 
     /**
