@@ -12,27 +12,23 @@
 						</div>
 					</div>
 					<div class="d-flex my-xl-auto right-content">
-						<div class="pe-1 mb-xl-0 filter-btn">
-							<button type="button" class="btn btn-info btn-icon me-2 btn-b"><i class="mdi mdi-filter-variant"></i></button>
-						</div>
-						<div class="pe-1 mb-xl-0">
-							<button type="button" class="btn btn-danger btn-icon me-2"><i class="mdi mdi-star"></i></button>
-						</div>
-						<div class="pe-1 mb-xl-0">
-							<button type="button" class="btn btn-warning  btn-icon me-2"><i class="mdi mdi-refresh"></i></button>
-						</div>
-						<div class="mb-xl-0">
+                        <div class="pe-1 mb-xl-0">
 							<div class="btn-group dropdown">
-								<button type="button" class="btn btn-primary">14 Aug 2019</button>
-								<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuDate" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<span class="sr-only">Toggle Dropdown</span>
-								</button>
-								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate" x-placement="bottom-end">
-									<a class="dropdown-item" href="#">2015</a>
-									<a class="dropdown-item" href="#">2016</a>
-									<a class="dropdown-item" href="#">2017</a>
-									<a class="dropdown-item" href="#">2018</a>
-								</div>
+								<button  class="modal-effect btn btn-main-primary ml_auto "
+											data-bs-toggle="modal" href="#attachments"
+											data-bs-effect="effect-super-scaled">Attachment</button>
+							</div>
+						</div>
+                        <div class="pe-1 mb-xl-0">
+							<div class="btn-group dropdown">
+								<button  class="modal-effect btn btn-main-primary ml_auto " data-bs-toggle="modal" href="#quotes"
+											data-bs-effect="effect-super-scaled">Quotes</button>
+							</div>
+						</div>
+						<div class="pe-1 mb-xl-0">
+							<div class="btn-group dropdown change-status">
+								<button  class="modal-effect btn btn-main-primary ml_auto "
+											data-bs-effect="effect-super-scaled">Change Status</button>
 							</div>
 						</div>
 					</div>
@@ -43,48 +39,6 @@
 				<div class="row row-sm">
 				
 					<div class="col-lg-12">
-						<div class="row row-sm filter-box hidden">
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-                                    <p class="mg-b-10">Basic Premiun</p>
-                                    <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-                                    <p class="mg-b-10">Basic Premiun</p>
-                                    <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-                                    <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-									</div>
-								</div>
-							</div>
-						</div>
 						<div class="row row-sm">
 							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
 								<div class="card ">
@@ -157,15 +111,15 @@
 									<!-- Tabs -->
 									<ul class="nav nav-tabs profile navtab-custom panel-tabs">
 										<li class="">
-											<a href="#home" data-bs-toggle="tab" class="active" aria-expanded="true"> <span class="visible-xs"><i class="las la-user-circle tx-16 me-1"></i></span> <span class="hidden-xs">ABOUT ME</span> </a>
+											<a href="#home" data-bs-toggle="tab" class="active" aria-expanded="true"> <span class="visible-xs"><i class="las la-user-circle tx-16 me-1"></i></span> <span class="hidden-xs">Details</span> </a>
 										</li>
 										<li class="">
 											<a href="#profile" data-bs-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-												<span class="hidden-xs">GALLERY</span> </a>
+												<span class="hidden-xs">Attachment</span> </a>
 										</li>
 										<li class="">
 											<a href="#settings" data-bs-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-cog tx-16 me-1"></i></span>
-												<span class="hidden-xs">SETTINGS</span> </a>
+												<span class="hidden-xs">Quotes</span> </a>
 										</li>
 									</ul>
 								</div>
@@ -1044,84 +998,77 @@
 									</div>
 									<div class="tab-pane" id="profile">
 										<div class="row">
-											<div class="col-sm-4">
-												<div class="border p-1 card thumb">
-													<a href="#" class="image-popup" title="Screenshot-2"> <img src="../../assets/img/photos/7.jpg" class="thumb-img" alt="work-thumbnail"> </a>
-													<h4 class="text-center tx-14 mt-3 mb-0">Gallary Image</h4>
-													<div class="ga-border"></div>
-													<p class="text-muted text-center"><small>Photography</small></p>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class=" border p-1 card thumb">
-													<a href="#" class="image-popup" title="Screenshot-2"> <img src="../../assets/img/photos/8.jpg" class="thumb-img" alt="work-thumbnail"> </a>
-													<h4 class="text-center tx-14 mt-3 mb-0">Gallary Image</h4>
-													<div class="ga-border"></div>
-													<p class="text-muted text-center"><small>Photography</small></p>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class=" border p-1 card thumb">
-													<a href="#" class="image-popup" title="Screenshot-2"> <img src="../../assets/img/photos/9.jpg" class="thumb-img" alt="work-thumbnail"> </a>
-													<h4 class="text-center tx-14 mt-3 mb-0">Gallary Image</h4>
-													<div class="ga-border"></div>
-													<p class="text-muted text-center"><small>Photography</small></p>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class=" border p-1 card thumb  mb-xl-0">
-													<a href="#" class="image-popup" title="Screenshot-2"> <img src="../../assets/img/photos/10.jpg" class="thumb-img" alt="work-thumbnail"> </a>
-													<h4 class="text-center tx-14 mt-3 mb-0">Gallary Image</h4>
-													<div class="ga-border"></div>
-													<p class="text-muted text-center"><small>Photography</small></p>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class=" border p-1 card thumb  mb-xl-0">
-													<a href="#" class="image-popup" title="Screenshot-2"> <img src="../../assets/img/photos/6.jpg" class="thumb-img" alt="work-thumbnail"> </a>
-													<h4 class="text-center tx-14 mt-3 mb-0">Gallary Image</h4>
-													<div class="ga-border"></div>
-													<p class="text-muted text-center"><small>Photography</small></p>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class=" border p-1 card thumb  mb-xl-0">
-													<a href="#" class="image-popup" title="Screenshot-2"> <img src="../../assets/img/photos/5.jpg" class="thumb-img" alt="work-thumbnail"> </a>
-													<h4 class="text-center tx-14 mt-3 mb-0">Gallary Image</h4>
-													<div class="ga-border"></div>
-													<p class="text-muted text-center"><small>Photography</small></p>
-												</div>
-											</div>
+											<table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Creted By 
+                                                        </th>
+                                                        <th>
+                                                            Creted At 
+                                                        </th>
+                                                        <th>
+                                                            File Name 
+                                                        </th>
+                                                        <th>
+                                                          Type 
+                                                        </th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if(!empty($lead->attachments))
+                                                        @foreach($lead->attachments as $attachment)
+                                                        <tr>
+                                                        <td>{{$attachment->users->name ?? ''}}</td>
+                                                        <td>{{$attachment->created_at}}</td>
+                                                        <td><a href="{{URL::asset('attachments')}}/{{$attachment->file_name}}" target="_blank">{{$attachment->file_name}}</a></td>
+                                                        <td>{{$attachment->type}}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
 										</div>
 									</div>
 									<div class="tab-pane" id="settings">
-										<form role="form">
-											<div class="form-group">
-												<label for="FullName">Full Name</label>
-												<input type="text" value="John Doe" id="FullName" class="form-control">
-											</div>
-											<div class="form-group">
-												<label for="Email">Email</label>
-												<input type="email" value="first.last@example.com" id="Email" class="form-control">
-											</div>
-											<div class="form-group">
-												<label for="Username">Username</label>
-												<input type="text" value="john" id="Username" class="form-control">
-											</div>
-											<div class="form-group">
-												<label for="Password">Password</label>
-												<input type="password" placeholder="6 - 15 Characters" id="Password" class="form-control">
-											</div>
-											<div class="form-group">
-												<label for="RePassword">Re-Password</label>
-												<input type="password" placeholder="6 - 15 Characters" id="RePassword" class="form-control">
-											</div>
-											<div class="form-group">
-												<label for="AboutMe">About Me</label>
-												<textarea id="AboutMe" class="form-control">Loren gypsum dolor sit mate, consecrate disciplining lit, tied diam nonunion nib modernism tincidunt it Loretta dolor manga Amalia erst volute. Ur wise denim ad minim venial, quid nostrum exercise ration perambulator suspicious cortisol nil it applique ex ea commodore consequent.</textarea>
-											</div>
-											<button class="btn btn-primary waves-effect waves-light w-md" type="submit">Save</button>
-										</form>
+                                    <div class="row">
+											<table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Creted By 
+                                                        </th>
+                                                        <th>
+                                                            Creted At 
+                                                        </th>
+                                                        <th>
+                                                          Company
+                                                        </th>
+                                                        <th>
+                                                            File Name 
+                                                        </th>
+                                                        <th>
+                                                          Remarks 
+                                                        </th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if(!empty($lead->quotes))
+                                                        @foreach($lead->quotes as $quotes)
+                                                        <tr>
+                                                        <td>{{$quotes->users->name ?? ''}}</td>
+                                                        <td>{{$quotes->created_at}}</td>
+                                                        <td>{{$quotes->company->name ?? ''}}</td>
+                                                        <td><a href="{{URL::asset('quotes')}}/{{$quotes->file_name}}" target="_blank">{{$quotes->file_name}}</a></td>
+                                                        <td>{{$quotes->remark}}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -1130,11 +1077,111 @@
 				</div>
 				<!-- row closed -->
 			</div>   
+           	<!-- Modal effects -->
+    <div class="modal fade" id="status-modal">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content modal-content-demo">
+					<div class="modal-header">
+						<h6 class="modal-title">Change Status</h6><button aria-label="Close" class="close"
+							data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					</div>
+					<div class="modal-body">
+						<h6>Status</h6>
+						<select name="changeStatus" id="changeStatus" class="form-control changeStatus">
+                            <option value="">Select</option>
+                            <option value="PENDING/FRESH">PENDING/FRESH</option>
+                            <option value="IN PROCESS">IN PROCESS</option>
+                            <option value="MORE INFO REQUIRED">MORE INFO REQUIRED</option>
+                            <option value="QUOTE GENERATED">QUOTE GENERATED</option>
+                            <option value="RE-QUOTE">RE-QUOTE</option>
+                            <option value="REJECTED">REJECTED</option>
+                            <option value="POLICY TO BE ISSUED">POLICY TO BE ISSUED</option>
+                            <option value="LINK GENERATED">LINK GENERATED</option>
+                            <option value="LINK GENERATED BUT NOT PAID">LINK GENERATED BUT NOT PAID</option>
+                          
+                        </select>
+					</div>
+					<div class="modal-footer">
+						<button class="btn ripple btn-primary save-status" type="button">Save changes</button>
+						<button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Modal effects--> 
+           	<!-- attachment effects -->
+    <div class="modal fade" id="attachments">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content modal-content-demo">
+					<div class="modal-header">
+						<h6 class="modal-title">Attachments</h6><button aria-label="Close" class="close"
+							data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					</div>
+                    <form action="{{route('leadAttachment')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+					<div class="modal-body">
+						<h6>Upload</h6>
+                         <input type="file" name="attachment" id="attachment" class="form-control">
+                         <input type="hidden" name="lead_id" value="{{$lead->id}}">
+                         <input type="hidden" name="policy_id" value="{{$lead->policy->id}}">
+					</div>
+					<div class="modal-footer">
+						<button class="btn ripple btn-primary save-status" type="submit">Save changes</button>
+						<button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+					</div>
+                    </form>
+				</div>
+			</div>
+		</div>
+		<!-- End Modal effects--> 
+           	<!-- quotes effects -->
+    <div class="modal fade" id="quotes">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content modal-content-demo">
+					<div class="modal-header">
+						<h6 class="modal-title">Quotes</h6><button aria-label="Close" class="close"
+							data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					</div>
+                    <form action="{{route('leadQuotes')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+					<div class="modal-body">
+						<h6>Insurance Company</h6>
+						<select name="company" id="company" class="form-control">
+                            <option value="">Select</option>
+                        @if($company->count())
+                            @foreach($company as $companies)
+                                <option value="{{$companies->id}}">{{$companies->name}}</option>
+                            @endforeach
+                        @endif
+                          
+                        </select>
+                        <input type="hidden" name="lead_id" value="{{$lead->id}}">
+                        <h6>Attachment</h6>
+                         <input type="file" name="attachment" id="attachment" class="form-control">
+                        <h6>Remarks</h6>
+                       <textarea name="remarks" id="remarks" class="form-control" cols="30" rows="10"></textarea>
+
+					</div>
+					<div class="modal-footer">
+						<button class="btn ripple btn-primary save-status" type="submit">Save changes</button>
+						<button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+					</div>
+                </form>
+				</div>
+			</div>
+		</div>
+		<!-- End Modal effects--> 
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
     $(document).ready(function () {
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('.table').dataTable();
     let subproduct= "{{$lead->subProduct->name ?? ''}}";
     if(subproduct != ''){
                 subproduct= $.trim(subproduct).toLowerCase();
@@ -1143,6 +1190,30 @@
             $('.filter-btn').click(function(){
                 $('.filter-box').toggleClass("hidden");
             })
+            $('.change-status').click(function(){
+                $('#status-modal').modal("show");
+                $('.save-status').click(function() {
+                  
+                var status=  $("#changeStatus option:selected").val();   
+                var lead_id= '{{$lead->id ?? ''}}';
+                if(status != ''){
+                    $.ajax({
+                        url: "{{ route('changeStatus') }}",
+                        method: "post",
+                        data: {
+                            lead_id: lead_id,status: status
+                        },
+                        success: function(result) {
+                            window.location.href =  window.location.href; 
+                        }
+
+                    });
+                }
+              
+            })
+            })
+
+
     });
     function changeFeild(subproduct){
     if(subproduct == 'others' || subproduct == 'cpm' || subproduct == 'car'){

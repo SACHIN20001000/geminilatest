@@ -13,6 +13,8 @@ use App\Models\Make;
 use App\Models\Policy;
 use App\Models\Insurance;
 use App\Models\Company;
+use App\Models\Attachment;
+use App\Models\Quote;
 use DataTables;
 use Auth;
 use App\Http\Requests\Admin\Lead\StoreLeadRequest;
@@ -25,7 +27,7 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $leads= Lead::with('users','insurances','products','subProduct','policy')->paginate(5);
+        $leads= Lead::with('users','insurances','products','subProduct','policy','assigns')->paginate(5);
        return view('admin.lead.index',compact('leads'));
     }
 
@@ -77,7 +79,8 @@ class LeadController extends Controller
      */
     public function show(Lead $lead)
     {
-        return view('admin.lead.one',compact('lead'));
+        $company= Company::all();
+        return view('admin.lead.one',compact('lead','company'));
     }
 
     /**
@@ -163,5 +166,82 @@ class LeadController extends Controller
             $output1 .= '<option value="' . $val1->id . '">' . $val1->name . '</option>';
         }
         echo $output1;
+    }
+    public function getStaff(){
+            
+        $staff=  $query = User::with('roles')->whereHas(
+                'roles', function ($q)
+                {
+                    $q->where('name', '=', 'Staff');
+                })->get();
+
+        $output1="<option>Select </option>";
+        foreach ($staff as $val1) {
+            $output1 .= '<option value="' . $val1->id . '">' . $val1->name . '</option>';
+        }
+        echo $output1;
+    }
+    public function saveAssign(Request $request){
+            
+        $lead = Lead::whereIn('id', $request->ids)->get();
+       
+        if($lead->count()){
+            foreach ($lead as $key => $value) {
+                $value->assigned = $request->staffId;
+                $value->save();
+            }
+        }
+        echo 1;
+    }
+    public function changeStatus(Request $request){
+        $lead = Lead::find($request->lead_id);
+        if($lead){
+            $lead->update(['status'=>$request->status]);  
+        }
+        echo 1;
+    }
+    public function leadAttachment(Request $request){
+       
+       if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) {
+        $attachment_filename = preg_replace('/\s+/', '', $request->file('attachment')->getClientOriginalName());
+        try{
+
+            $request->file('attachment')->move(public_path('/attachments'), $attachment_filename);
+          
+            Attachment::create([
+                'lead_id'=> $request->lead_id ??'',
+                'policy_id'=> $request->policy_id ??'',
+                'user_id'=> Auth::user()->id ??'',
+                'file_name'=> $attachment_filename ??'',
+                'type'=> 'Attachment'
+            ]);
+            return back()->with('success', 'Attachment Created successfully!');
+        }catch(FileException $e) {
+            return back()->with('error', 'Please try again!');
+           
+        }
+    }
+    return back()->with('error', 'File Is Required!');
+    }
+    public function leadQuotes(Request $request){
+   
+            $quote= Quote::create([
+                    'lead_id'=> $request->lead_id ??'',
+                    'company_id'=> $request->company ??'',
+                    'user_id'=> Auth::user()->id ??'',
+                    'remark'=> $request->remarks
+                ]);
+            if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) {
+                $attachment_filename = preg_replace('/\s+/', '', $request->file('attachment')->getClientOriginalName());
+                $request->file('attachment')->move(public_path('/quotes'), $attachment_filename);
+                $quote->update(['file_name'=> $attachment_filename]);
+            }
+            $listQuote=Quote::where('lead_id',$request->lead_id)->count();
+            if($listQuote >= 2){
+                Lead::find($request->lead_id)->update(['status'=>'RE-QUOTE']);
+            }else{
+                Lead::find($request->lead_id)->update(['status'=>'QUOTE GENERATED']);
+            }
+            return back()->with('success', 'Quote Created successfully!');
     }
 }

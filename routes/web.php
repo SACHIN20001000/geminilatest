@@ -72,6 +72,11 @@ Route::prefix('admin')->group(function ()
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
         Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');
         Route::any('getVarient', [LeadController::class, 'getVarient'])->name('getVarient');
+        Route::get('getStaff', [LeadController::class, 'getStaff'])->name('getStaff');
+        Route::post('saveAssign', [LeadController::class, 'saveAssign'])->name('saveAssign');
+        Route::post('changeStatus', [LeadController::class, 'changeStatus'])->name('changeStatus');
+        Route::post('leadAttachment', [LeadController::class, 'leadAttachment'])->name('leadAttachment');
+        Route::post('leadQuotes', [LeadController::class, 'leadQuotes'])->name('leadQuotes');
 
         Route::get('view-profile', [App\Http\Controllers\Admin\AdminController::class, 'viewProfile'])->name('viewProfile');
         Route::get('update-profile', [App\Http\Controllers\Admin\AdminController::class, 'updateProfile'])->name('updateProfile');

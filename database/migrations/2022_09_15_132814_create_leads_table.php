@@ -25,7 +25,7 @@ class CreateLeadsTable extends Migration
             $table->integer('attachment_id')->nullable();
             $table->string('remark')->nullable();
             $table->string('assigned')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default('PENDING/FRESH');
             $table->integer('quote_id')->nullable();
             $table->timestamps();
         });

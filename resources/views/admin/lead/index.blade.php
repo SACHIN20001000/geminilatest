@@ -22,6 +22,13 @@
 						<div class="pe-1 mb-xl-0">
 							<button type="button" class="btn btn-warning  btn-icon me-2"><i class="mdi mdi-refresh"></i></button>
 						</div>
+                        <div class="pe-1 mb-xl-0">
+							<div class="btn-group dropdown assigned-btn">
+                            <a  class="modal-effect btn btn-main-primary ml_auto "
+											data-bs-effect="effect-super-scaled"  
+											>Assign</a>
+							</div>
+						</div>
 						<div class="mb-xl-0">
 							<div class="btn-group dropdown">
                             <a class="btn btn-main-primary ml_auto" href="{{ route('leads.create') }}">Add Leads</a>
@@ -92,6 +99,8 @@
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>
+                                    
+                                <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
                                 <th class="wd-lg-20p"><span>Holder Name</span></th>
                                 <th class="wd-lg-20p"><span>Phone No</span></th>
                                 <th class="wd-lg-20p"><span>Email</span></th>
@@ -99,6 +108,8 @@
                                 <th class="wd-lg-20p"><span>Product</span></th>
                                 <th class="wd-lg-20p"><span>Sub Product</span></th>
                                 <th class="wd-lg-20p"><span>Created</span></th>
+                                <th class="wd-lg-20p"><span>Status</span></th>
+                                <th class="wd-lg-20p"><span>Assigned To</span></th>
                                 <th class="wd-lg-20p">Action</th>
                                 </tr>
                             </thead>
@@ -106,6 +117,7 @@
                                 @if($leads->count())
                                 @foreach($leads as $lead)
                                 <tr>
+                                    <td><input type="checkbox" name="checked"  class="checkSingle" value="{{$lead->id}}"> </td>
                                     <td>{{$lead->holder_name}}</td>
                                     <td>{{$lead->phone}}</td>
                                     <td>{{$lead->email}}</td>
@@ -113,6 +125,8 @@
                                     <td>{{$lead->products->name ?? ''}}</td>
                                     <td>{{$lead->subProduct->name ?? ''}}</td>
                                     <td>{{$lead->created_at}}</td>
+                                    <td>{{$lead->status}}</td>
+                                    <td>{{$lead->assigns->name ?? ''}}</td>
                                     <td><a  href="{{route('leads.show',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
                         </a>   <a  href="{{route('leads.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
                         </a>  
@@ -154,7 +168,28 @@
 
 </div>
 
-<!-- model end -->
+	<!-- Modal effects -->
+    <div class="modal fade" id="assign-model">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content modal-content-demo">
+					<div class="modal-header">
+						<h6 class="modal-title">Assigned To Staff</h6><button aria-label="Close" class="close"
+							data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					</div>
+					<div class="modal-body">
+						<h6>Staff</h6>
+						<select name="staff_id" id="staff_id" class="form-control staff_id">
+                            <option value="">Select</option>
+                        </select>
+					</div>
+					<div class="modal-footer">
+						<button class="btn ripple btn-primary save-assign" type="button">Save changes</button>
+						<button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Modal effects-->
 
 
 
@@ -163,23 +198,68 @@
 @section('scripts')
 <script type="text/javascript">
     $(document).ready(function () {
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
         $('.filter-btn').click(function(){
                 $('.filter-box').toggleClass("hidden");
             })
-    //     var table = $('#datatable').DataTable({
-    //         processing: true,
-    //         serverSide: true,
-    //         ajax: {
-    //                 url: "{{ route('insurance.index') }}",
-                       
-    //                 },
-    //         columns: [
-    //           {data: 'name', name: 'name'},
-    //         {data: 'created_at', name: 'created_at'},
-    //         {data: 'action', name: 'action', orderable: false, searchable: false},
-    //         ]
-    //     });
 
+        $("#checkedAll").change(function() {
+    if (this.checked) {
+        $(".checkSingle").each(function() {
+            this.checked=true;
+        });
+    } else {
+        $(".checkSingle").each(function() {
+            this.checked=false;
+        });
+    }
+    });
+    // for ajax lead data closed
+$('.assigned-btn').click(function() {
+ 
+    const ids= [];
+    $("input:checkbox:checked").each(function(i) {
+        ids.push($(this).val());
+
+    });
+    if (ids != '') {
+      
+        $.ajax({
+            url: "{{ route('getStaff')}}",
+            type:'GET',
+            success: function(result) {
+                console.log(result);
+                $('.staff_id').html(result);
+                
+                
+            }
+        });
+        $('#assign-model').modal('show');
+            $('.save-assign').click(function() {
+            var staffId=  $("#staff_id option:selected").val();
+            if(staffId != ''){
+                $.ajax({
+                    url: "{{ route('saveAssign') }}",
+                    method: "post",
+                    data: {
+                        staffId: staffId,ids: ids
+                    },
+                    success: function(result) {
+                        window.location.href =  window.location.href; 
+                    }
+
+                });
+            }
+              
+            })
+    } else {
+        alert('CheckBox and Lead Owner must not be empty');
+    }
+});
     });
 </script>
 @endsection

@@ -13,6 +13,10 @@ class Lead extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function assigns()
+    {
+        return $this->belongsTo(User::class, 'assigned');
+    }
     public function insurances()
     {
         return $this->belongsTo(Insurance::class, 'insurance_id');
@@ -28,6 +32,14 @@ class Lead extends Model
     public function policy()
     {
         return $this->hasOne(Policy::class, 'lead_id','id');
+    }
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'lead_id','id');
+    }
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class, 'lead_id','id');
     }
    
 }
