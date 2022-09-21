@@ -62,7 +62,7 @@
 											<p class="mg-b-10">Product</p>
                                            <select name="product_id" class="select2 form-control" id="product_id">
                                             <option value="">Select Below</option>
-                                            @if($products->count())
+                                            @if(isset($products) && $products->count())
                                                 @foreach($products as $product)
                                                        <option value="{{$product->id}}" {{ (isset($lead) && $product->id == $lead->product_id) ? 'selected' : '' }}>{{$product->name}}</option>             
                                                 @endforeach
@@ -73,7 +73,7 @@
 											<p class="mg-b-10">Sub Product</p>
                                            <select name="subproduct_id" class="select2 form-control" id="subproduct_id">
                                             <option value="">Select Below</option>
-                                            @if($subProducts->count())
+                                            @if(isset($subProducts) && $subProducts->count())
                                                 @foreach($subProducts as $subProduct)
                                                        <option value="{{$subProduct->id}}" data-id="{{$subProduct->name}}" {{ (isset($lead) && $subProduct->id == $lead->subproduct_id) ? 'selected' : '' }}>{{$subProduct->name}}</option>             
                                                 @endforeach
@@ -635,7 +635,7 @@
                     <div class="col-lg-4">
                      
                      <p class="mg-b-10">Make</p>
-                     <select name="make" id="make" class="form-control">
+                     <select name="make" id="make" class="form-control feild">
                         <option value="">Select</option>
                         @if($make->count())
                             @foreach($make as $makes)
@@ -650,7 +650,7 @@
                     <div class="col-lg-4">
                      
                      <p class="mg-b-10">Variant</p>
-                     <select name="varriant" class="select2 form-control" id="varriant">
+                     <select name="varriant" class="select2 form-control feild"  id="varriant">
                     <option value="">Select Below</option>
                     </select>
                      <!-- <input type="text" name="varriant" value="{{isset($policy) ? $policy->varriant : ''}}" class="form-control feild" id="varriant"> -->

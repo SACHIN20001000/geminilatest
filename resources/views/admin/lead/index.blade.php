@@ -7,7 +7,29 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">All Leads</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ list</span>
+                <h4 class="  content-title mb-0 my-auto pe-4">Leads</h4>
+                <div class="pe-4 mb-xl-0">
+							<div class="btn-group dropdown">
+                            <a href="{{ route('leads.index',['id'=> 1]) }}" class="btn btn-info ml_auto" 
+											>New Leads</a>
+							</div>
+						</div>
+                        <div class="pe-4 mb-xl-0">
+							<div class="btn-group dropdown">
+                            <a  href="{{ route('leads.index',['id'=> 2]) }}" class="btn btn-info ml_auto" 
+											>Quote Lead</a>
+							</div>
+						</div>
+                        <div class="pe-4 mb-xl-0">
+							<div class="btn-group dropdown">
+                            <a  href="{{ route('leads.index',['id'=> 3]) }}" class="btn btn-info ml_auto">Policy Issued</a>
+							</div>
+						</div>
+                        <div class="pe-4 mb-xl-0">
+							<div class="btn-group dropdown ">
+                            <a  href="{{ route('leads.index',['id'=> 4]) }}" class="btn btn-info ml_auto">Opportunities</a>
+							</div>
+						</div>
             </div>
         </div>
        
@@ -46,48 +68,77 @@
 
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
+        <form action="" method="get" >
         <div class="row row-sm filter-box hidden">
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
+       
+							<div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
 								<div class="card ">
 									<div class="card-body">
-                                    <p class="mg-b-10">Basic Premiun</p>
-                                    <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-                                    <p class="mg-b-10">Basic Premiun</p>
-                                    <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
+                                   
+                                    <p class="mg-b-10">Expiry date from</p>
+                                    <input type="date" name="expiry_from" value="{{isset($_GET['expiry_from']) ? $_GET['expiry_from'] : ''}}" class="form-control">
+                                    <input type="hidden" name="id" value="{{isset($_GET['id']) ? $_GET['id'] : ''}}">
+                                    <p class="mg-b-10">Expiry date to</p>
+                                    <input type="date" name="expiry_to" value="{{isset($_GET['expiry_to']) ? $_GET['expiry_to'] : ''}}" class="form-control">
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
+							<div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
 								<div class="card ">
 									<div class="card-body">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
+                                   
+                                    <p class="mg-b-10">Product</p>
+                                  <select name="product" class="form-control">
+                                    <option value="">Select</option>
+                                    @if(isset($products) && $products->count())
+                                                @foreach($products as $product)
+                                                       <option value="{{$product->id}}" {{ (isset($_GET['product']) && $product->id == $_GET['product']) ? 'selected' : '' }}>{{$product->name}}</option>             
+                                        @endforeach
+                                    @endif
+                                  </select>
+                                    <p class="mg-b-10">Broker/Staff</p>
+                                    <select name="users" class="form-control">
+                                    <option value="">Select</option>
+                                    @if(isset($users) && $users->count())
+                                                @foreach($users as $user)
+                                                       <option value="{{$user->id}}" {{ (isset($_GET['users']) && $user->id == $_GET['users']) ? 'selected' : '' }}>{{$user->name}}</option>             
+                                        @endforeach
+                                    @endif
+                                  </select>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
+                            <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
 								<div class="card ">
 									<div class="card-body">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
+                                   
+                                    <p class="mg-b-10">Search Anything</p>
+                                    <input type="text" name="search_anything" value="{{isset($_GET['search_anything']) ? $_GET['search_anything'] : ''}}" class="form-control">
+                                    <p class="mg-b-10">Status</p>
+                                    <select name="status"  class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="PENDING/FRESH" {{ (isset($_GET['search_anything']) && "PENDING/FRESH" == $_GET['search_anything']) ? 'selected' : '' }} >PENDING/FRESH</option>
+                                        <option value="IN PROCESS" {{ (isset($_GET['search_anything']) && "IN PROCESS" == $_GET['search_anything']) ? 'selected' : '' }}>IN PROCESS</option>
+                                        <option value="MORE INFO REQUIRED" {{ (isset($_GET['search_anything']) && "MORE INFO REQUIRED" == $_GET['search_anything']) ? 'selected' : '' }} >MORE INFO REQUIRED</option>
+                                        <option value="QUOTE GENERATED" {{ (isset($_GET['search_anything']) && "QUOTE GENERATED" == $_GET['search_anything']) ? 'selected' : '' }}>QUOTE GENERATED</option>
+                                        <option value="RE-QUOTE" {{ (isset($_GET['search_anything']) && "RE-QUOTE" == $_GET['search_anything']) ? 'selected' : '' }}>RE-QUOTE</option>
+                                        <option value="REJECTED" {{ (isset($_GET['search_anything']) && "REJECTED" == $_GET['search_anything']) ? 'selected' : '' }}>REJECTED</option>
+                                        <option value="POLICY TO BE ISSUED" {{ (isset($_GET['search_anything']) && "POLICY TO BE ISSUED" == $_GET['search_anything']) ? 'selected' : '' }}>POLICY TO BE ISSUED</option>
+                                        <option value="LINK GENERATED" {{ (isset($_GET['search_anything']) && "LINK GENERATED" == $_GET['search_anything']) ? 'selected' : '' }}>LINK GENERATED</option>
+                                        <option value="LINK GENERATED BUT NOT PAID" {{ (isset($_GET['search_anything']) && "LINK GENERATED BUT NOT PAID" == $_GET['search_anything']) ? 'selected' : '' }}>LINK GENERATED BUT NOT PAID</option>
+                                    
+                                    </select>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-                                    <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-                                        <p class="mg-b-10">Basic Premiun</p>
-                                        <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control">
-									</div>
-								</div>
-							</div>
-						</div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                                <button  class="btn btn-info filter">Filter</button>
+
+                            </div>
+                            
+                        </div>
+                    </form>
             <div class="card">
                 <div class="card-header pb-0">
                     <p class="tx-12 tx-gray-500 mb-2">Listing of All Leads...</p>
@@ -149,7 +200,7 @@
                             <tfoot>
                                 <tr>
                                     <td>
-                                    {{$leads->appends(['storeId' => '1'])->links("vendor.pagination.bootstrap-4")}}
+                                    {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? ''])->links("vendor.pagination.bootstrap-4")}}
                                     </td>
                                 </tr>
                           
@@ -205,6 +256,11 @@
     });
         $('.filter-btn').click(function(){
                 $('.filter-box').toggleClass("hidden");
+            })
+        $('.filter').click(function(){
+               var url = "{{url('admin/leads')}}";
+               window.location.replace(url);
+
             })
 
         $("#checkedAll").change(function() {
