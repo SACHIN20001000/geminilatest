@@ -1122,8 +1122,8 @@
 					<div class="modal-body">
 						<h6>Upload</h6>
                          <input type="file" name="attachment" id="attachment" class="form-control">
-                         <input type="hidden" name="lead_id" value="{{$lead->id}}">
-                         <input type="hidden" name="policy_id" value="{{$lead->policy->id}}">
+                         <input type="hidden" name="lead_id" value="{{$lead->id ??''}}">
+                         <input type="hidden" name="policy_id" value="{{$lead->policy->id ??''}}">
 					</div>
 					<div class="modal-footer">
 						<button class="btn ripple btn-primary save-status" type="submit">Save changes</button>

@@ -7,15 +7,40 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">All Users</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ list</span>
+                <h4 class="content-title mb-0 my-auto pe-4">All Users</h4>
+                <div class="pe-4 mb-xl-0">
+                    <div class="btn-group dropdown">
+                    <a class="btn btn-info ml_auto" href="{{ route('users.index') }}">All</a>
+                    </div>
+                </div>
+                <div class="pe-4 mb-xl-0">
+                    <div class="btn-group dropdown">
+                    <a class="btn btn-info ml_auto" href="{{ route('users.index',['id'=> 1]) }}">Admin</a>
+                    </div>
+                </div>
+                <div class="pe-4 mb-xl-0">
+                    <div class="btn-group dropdown">
+                    <a class="btn btn-info ml_auto" href="{{ route('users.index',['id'=> 2]) }}">Broker</a>
+                    </div>
+                </div>
+                <div class="pe-4 mb-xl-0">
+                    <div class="btn-group dropdown">
+                    <a class="btn btn-info ml_auto" href="{{ route('users.index',['id'=> 3]) }}">Staff</a>
+                    </div>
+                </div>
+                <div class="pe-4 mb-xl-0">
+                    <div class="btn-group dropdown">
+                    <a class="btn btn-info ml_auto" href="{{ route('users.index',['id'=> 4]) }}">Client</a>
+                    </div>
+                </div>
             </div>
         </div>
-        <a class="btn btn-main-primary ml_auto" href="{{ route('users.index') }}">All</a>
+       
 
-        <a class="btn btn-main-primary ml_auto" href="{{ route('users.index',['id'=> 1]) }}">Admin</a>
-        <a class="btn btn-main-primary ml_auto" href="{{ route('users.index',['id'=> 2]) }}">Broker</a>
-        <a class="btn btn-main-primary ml_auto" href="{{ route('users.index',['id'=> 3]) }}">Staff</a>
-        <a class="btn btn-main-primary ml_auto" href="{{ route('users.index',['id'=> 4]) }}">Client</a>
+        
+       
+        
+       
         <a class="btn btn-main-primary ml_auto" href="{{ route('users.create') }}">Add User</a>
     </div>
     <!-- breadcrumb -->

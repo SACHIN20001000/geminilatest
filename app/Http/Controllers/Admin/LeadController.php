@@ -30,8 +30,20 @@ class LeadController extends Controller
      
         $products= SubProduct::all();
         $users= User::all();
-        $query= Lead::with('users','insurances','products','subProduct','policy','assigns')
-        ->whereHas('policy', function ($q) use ($request){
+        $query= Lead::with('users','insurances','products','subProduct','policy','assigns');
+        if(isset($request->id) && !empty($request->id)){
+            if($request->id == 1){
+                $query->whereIn('status', ['PENDING/FRESH','IN PROCESS','MORE INFO REQUIRED']);
+            }elseif($request->id == 2){
+                $query->whereIn('status', ['QUOTE GENERATED','RE-QUOTE']);
+            }elseif($request->id == 3){
+                $query->whereIn('status', ['LINK GENERATED BUT NOT PAID','LINK GENERATED','POLICY TO BE ISSUED']);
+            }else{
+                $query->whereIn('status', ['REJECTED']);
+            }
+            
+        }
+        $query->orWhereHas('policy', function ($q) use ($request){
            
             if(isset($request->expiry_from) && !empty($request->expiry_from) && !empty($request->expiry_to) && isset($request->expiry_to) ){
                  $q->whereBetween('expiry_date', [$request->expiry_from,$request->expiry_to]);
@@ -47,20 +59,20 @@ class LeadController extends Controller
                 
         }
             
-        })
-        ->whereHas('insurances', function ($q) use ($request){
+        });
+        $query->orWhereHas('insurances', function ($q) use ($request){
+            if(isset($request->search_anything)   && !empty($request->search_anything)){
+                    $q->where('name',  $request->search_anything );
+         }
+            
+        });
+        $query->orWhereHas('products', function ($q) use ($request){
             if(isset($request->search_anything)   && !empty($request->search_anything)){
                     $q->where('name',  $request->search_anything );
         }
             
-        })
-        ->whereHas('products', function ($q) use ($request){
-            if(isset($request->search_anything)   && !empty($request->search_anything)){
-                    $q->where('name',  $request->search_anything );
-        }
-            
-        })
-        ->whereHas('subProduct', function ($q) use ($request){
+        });
+        $query->orWhereHas('subProduct', function ($q) use ($request){
             if(isset($request->search_anything)   && !empty($request->search_anything)){
                     $q->where('name',  $request->search_anything );
         }
@@ -93,7 +105,7 @@ class LeadController extends Controller
         }
        $leads =  $query->paginate(10);
       
-        
+         
         
        return view('admin.lead.index',compact('leads','products','users'));
     }
