@@ -30,20 +30,8 @@ class LeadController extends Controller
      
         $products= SubProduct::all();
         $users= User::all();
-        $query= Lead::with('users','insurances','products','subProduct','policy','assigns');
-        if(isset($request->id) && !empty($request->id)){
-            if($request->id == 1){
-                $query->whereIn('status', ['PENDING/FRESH','IN PROCESS','MORE INFO REQUIRED']);
-            }elseif($request->id == 2){
-                $query->whereIn('status', ['QUOTE GENERATED','RE-QUOTE']);
-            }elseif($request->id == 3){
-                $query->whereIn('status', ['LINK GENERATED BUT NOT PAID','LINK GENERATED','POLICY TO BE ISSUED']);
-            }else{
-                $query->whereIn('status', ['REJECTED']);
-            }
-            
-        }
-        $query->orWhereHas('policy', function ($q) use ($request){
+        $query= Lead::with('users','insurances','products','subProduct','policy','assigns')
+        ->whereHas('policy', function ($q) use ($request){
            
             if(isset($request->expiry_from) && !empty($request->expiry_from) && !empty($request->expiry_to) && isset($request->expiry_to) ){
                  $q->whereBetween('expiry_date', [$request->expiry_from,$request->expiry_to]);
@@ -59,20 +47,20 @@ class LeadController extends Controller
                 
         }
             
-        });
-        $query->orWhereHas('insurances', function ($q) use ($request){
-            if(isset($request->search_anything)   && !empty($request->search_anything)){
-                    $q->where('name',  $request->search_anything );
-         }
-            
-        });
-        $query->orWhereHas('products', function ($q) use ($request){
+        })
+        ->whereHas('insurances', function ($q) use ($request){
             if(isset($request->search_anything)   && !empty($request->search_anything)){
                     $q->where('name',  $request->search_anything );
         }
             
-        });
-        $query->orWhereHas('subProduct', function ($q) use ($request){
+        })
+        ->whereHas('products', function ($q) use ($request){
+            if(isset($request->search_anything)   && !empty($request->search_anything)){
+                    $q->where('name',  $request->search_anything );
+        }
+            
+        })
+        ->whereHas('subProduct', function ($q) use ($request){
             if(isset($request->search_anything)   && !empty($request->search_anything)){
                     $q->where('name',  $request->search_anything );
         }
@@ -105,7 +93,7 @@ class LeadController extends Controller
         }
        $leads =  $query->paginate(10);
       
-         
+        
         
        return view('admin.lead.index',compact('leads','products','users'));
     }
@@ -288,11 +276,11 @@ class LeadController extends Controller
             $request->file('attachment')->move(public_path('/attachments'), $attachment_filename);
           
             Attachment::create([
-                'lead_id'=> $request->lead_id ??'',
+                'lead_id'=> $request->lead_id ?? 0,
                 'policy_id'=> $request->policy_id ??'',
                 'user_id'=> Auth::user()->id ??'',
                 'file_name'=> $attachment_filename ??'',
-                'type'=> 'Attachment'
+                'type'=> $request->type ??  'Attachment'
             ]);
             return back()->with('success', 'Attachment Created successfully!');
         }catch(FileException $e) {

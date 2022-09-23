@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\InsuranceController;
 use App\Http\Controllers\Admin\MakeController;
 use App\Http\Controllers\Admin\MakeModelController;
 use App\Http\Controllers\Admin\LeadController;
+use App\Http\Controllers\Admin\PolicyController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -69,6 +70,7 @@ Route::prefix('admin')->group(function ()
         Route::resource('make', MakeController::class);
         Route::resource('model', MakeModelController::class);
         Route::resource('leads', LeadController::class);
+        Route::resource('policy', PolicyController::class);
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
         Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');
         Route::any('getVarient', [LeadController::class, 'getVarient'])->name('getVarient');

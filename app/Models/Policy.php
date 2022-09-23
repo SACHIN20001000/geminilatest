@@ -34,4 +34,16 @@ class Policy extends Model
     {
         return $this->belongsTo(Lead::class, 'lead_id');
     }
+    public function makes()
+    {
+        return $this->belongsTo(Make::class, 'make');
+    }
+    public function varriants()
+    {
+        return $this->belongsTo(MakeModel::class, 'varriant');
+    }
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'policy_id','id');
+    }
 }
