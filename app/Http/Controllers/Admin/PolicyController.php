@@ -202,24 +202,28 @@ class PolicyController extends Controller
     if($request->type =='email'){
         $policy= Policy::where('id',$request->policy_id)->with(['users','commonAttachment','subProduct','lead'])->first();
 
-        $sentmail = Mail::send('admin.email.commonemail',['policy' => $policy,'content'=>$request->content],function($messages) use ($request,$policy) {
-                               
-            $messages->to($request->to);
-            if(!empty($request->cc)){
-                $messages->cc($request->cc);
-            }
-            $subject =$policy->subProduct->name .'-'. $policy->expiry_date.'-'.$policy->lead->holder_name ?? 'Gemini consultancy Service';
-            $messages->subject($subject);
-            // if(!empty($policy->commonAttachment)){
-            //     foreach($policy->commonAttachment as $attach){
-            //         $fileurls = url('attachments',$attach->file_name);
-            //         $messages->attach($fileurls);
-            //      }
             
-            //  }
-             
-    });
-   
+            try {
+                $sentmail = Mail::send('admin.email.commonemail',['policy' => $policy,'content'=>$request->content],function($messages) use ($request,$policy) {
+                                    
+                    $messages->to($request->to);
+                    if(!empty($request->cc)){
+                        $messages->cc($request->cc);
+                    }
+                    $subject =$policy->subProduct->name .'-'. $policy->expiry_date.'-'.$policy->lead->holder_name ?? 'Gemini consultancy Service';
+                    $messages->subject($subject);
+                    // if(!empty($policy->commonAttachment)){
+                    //     foreach($policy->commonAttachment as $attach){
+                    //         $fileurls = url('attachments',$attach->file_name);
+                    //         $messages->attach($fileurls);
+                    //      }
+                    
+                    //  }
+                    
+            });    } catch (Exception $e) {
+                //throw $th;
+            }
+        
  
     }
     return back()->with('success', 'Endrosment Sent successfully!');

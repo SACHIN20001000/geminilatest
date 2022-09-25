@@ -326,12 +326,17 @@ class LeadController extends Controller
                 $request->file('attachment')->move(public_path('/quotes'), $attachment_filename);
                 $quote->update(['file_name'=> $attachment_filename]);
             }
-            $sentmail = Mail::send('admin.email.commonemail',['policy' => $lead,'content'=>$request->remarks],function($messages) use ($request,$lead) {
-                               
-                $messages->to($lead->email);
-                $subject ='Gemini consultancy Service';
-                $messages->subject($subject);                 
-        });
+                try {
+                    Mail::send('admin.email.commonemail',['policy' => $lead,'content'=>$request->remarks],function($messages) use ($request,$lead) {
+                                
+                        $messages->to($lead->email);
+                        $subject ='Gemini consultancy Service';
+                        $messages->subject($subject);                 
+                });
+                } catch (\Exception $e) {
+                
+                }
+  
             $listQuote=Quote::where('lead_id',$request->lead_id)->count();
             if($listQuote >= 2){
                 Lead::find($request->lead_id)->update(['status'=>'RE-QUOTE']);
