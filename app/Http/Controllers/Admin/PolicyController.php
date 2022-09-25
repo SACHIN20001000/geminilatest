@@ -16,6 +16,7 @@ use App\Models\Company;
 use App\Models\Attachment;
 use App\Models\Quote;
 use DataTables;
+use Mail;
 use Auth;
 use App\Http\Requests\Admin\Lead\StoreLeadRequest;
 
@@ -62,9 +63,21 @@ class PolicyController extends Controller
         }
             
         });
-        if(isset($request->expiry_from) && !empty($request->expiry_from) && !empty($request->expiry_to) && isset($request->expiry_to) ){
-            $query->whereBetween('expiry_date', [$request->expiry_from,$request->expiry_to]);
-       }
+        if(isset($request->id) && !empty($request->id)){
+            $date = strtotime(date('Y-m-d')); 
+            $today= date('Y-m-d',strtotime('-1 days',$date));
+            $daysabove = date('Y-m-d',strtotime('+15 days',$date));
+            if($request->id == 2){
+                if(isset($request->expiry_from) && !empty($request->expiry_from) && !empty($request->expiry_to) && isset($request->expiry_to) ){
+                    $query->whereBetween('expiry_date', [$request->expiry_from,$request->expiry_to]);
+               }else{
+                $query->whereBetween('expiry_date', [$today, $daysabove]);
+               }
+                
+            }
+            
+        }
+        
        if(isset($request->product)   && !empty($request->product)){
             $query->where('product_id', $request->product);
        }
@@ -78,18 +91,7 @@ class PolicyController extends Controller
        }
            
       }  
-        // if(isset($request->id) && !empty($request->id)){
-        //     if($request->id == 1){
-        //         $query->whereIn('status', ['PENDING/FRESH','IN PROCESS','MORE INFO REQUIRED']);
-        //     }elseif($request->id == 2){
-        //         $query->whereIn('status', ['QUOTE GENERATED','RE-QUOTE']);
-        //     }elseif($request->id == 3){
-        //         $query->whereIn('status', ['LINK GENERATED BUT NOT PAID','LINK GENERATED','POLICY TO BE ISSUED']);
-        //     }else{
-        //         $query->whereIn('status', ['REJECTED']);
-        //     }
-            
-        // }
+      
         if(isset($request->users)   && !empty($request->users)){
             $query->where('user_id', $request->users);
        }
@@ -191,7 +193,35 @@ class PolicyController extends Controller
         $policy->delete();
         return back()->with('success', 'Policy Deleted successfully!');
     }
+    public function renew_status(Request $request){
+        Policy::find($request->policy_id)->update(['renew_status' => $request->status]);
+    }
 
-
+   public function endrosment(Request $request){
    
+    if($request->type =='email'){
+        $policy= Policy::where('id',$request->policy_id)->with(['users','commonAttachment','subProduct','lead'])->first();
+
+        $sentmail = Mail::send('admin.email.commonemail',['policy' => $policy,'content'=>$request->content],function($messages) use ($request,$policy) {
+                               
+            $messages->to($request->to);
+            if(!empty($request->cc)){
+                $messages->cc($request->cc);
+            }
+            $subject =$policy->subProduct->name .'-'. $policy->expiry_date.'-'.$policy->lead->holder_name ?? 'Gemini consultancy Service';
+            $messages->subject($subject);
+            // if(!empty($policy->commonAttachment)){
+            //     foreach($policy->commonAttachment as $attach){
+            //         $fileurls = url('attachments',$attach->file_name);
+            //         $messages->attach($fileurls);
+            //      }
+            
+            //  }
+             
+    });
+   
+ 
+    }
+    return back()->with('success', 'Endrosment Sent successfully!');
+   }
 }

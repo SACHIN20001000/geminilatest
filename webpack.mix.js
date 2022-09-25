@@ -18,3 +18,4 @@ mix.copy('vendor/proengsoft/laravel-jsvalidation/resources/views', 'resources/vi
     .copy('vendor/proengsoft/laravel-jsvalidation/public', 'public/vendor/jsvalidation');
 mix.js('resources/admin/js/admin.js', 'public/js/admin.js')
     .postCss('resources/admin/css/admin.css', 'public/css/admin.css');
+

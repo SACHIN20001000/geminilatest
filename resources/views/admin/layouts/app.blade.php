@@ -598,5 +598,6 @@
         <script src="{{URL::asset('assets/js/custom.js')}}"></script>
         <script src="{{ mix('js/admin.js') }}"></script>
         @yield('scripts')
+        @stack('custom-scripts')
     </body>
 </html>

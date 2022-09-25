@@ -54,5 +54,23 @@ class User extends Authenticatable
     {
         return date('M d, Y h:i:s', strtotime($value));
     }
+    public function contacts()
+    {
+        return $this->hasMany(ChatContact::class, 'contact_id','id');
+    }
 
+    public function messagesSent()
+    {
+        return $this->hasMany(Message::class, 'from_user','id');
+    }
+
+    public function messagesReceived()
+    {
+        return $this->hasMany(Message::class, 'user_id','id');
+    }
+
+    public function messages()
+    {
+        return $this->messagesSent()->union($this->messagesReceived()->toBase());
+    }
 }

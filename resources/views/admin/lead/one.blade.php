@@ -1109,8 +1109,8 @@
 			</div>
 		</div>
 		<!-- End Modal effects--> 
-           	<!-- attachment effects -->
-    <div class="modal fade" id="attachments">
+    	<!-- attachment effects -->
+        <div class="modal fade" id="attachments">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content modal-content-demo">
 					<div class="modal-header">
@@ -1120,10 +1120,31 @@
                     <form action="{{route('leadAttachment')}}" method="POST" enctype="multipart/form-data">
                         @csrf
 					<div class="modal-body">
-						<h6>Upload</h6>
-                         <input type="file" name="attachment" id="attachment" class="form-control">
-                         <input type="hidden" name="lead_id" value="{{$lead->id ??''}}">
-                         <input type="hidden" name="policy_id" value="{{$lead->policy->id ??''}}">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h6>Upload</h6>
+                                <input type="file" name="attachment[]" id="attachment" class="form-control">
+                            </div>
+                            <div class="col-lg-6">
+                                <h6>Type</h6>
+                               
+                                <select name="type[]" class="form-control" required>
+                                    <option value="">Select</option>
+                                    <option value="Attachment">Attachment</option>
+                                    <option value="RC">RC</option>
+                                    <option value="Previous Year Policy">Previous Year Policy</option>
+                                    <option value="Invoice Copy">Invoice Copy</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="attach-content"></div>
+                         <span id="add-attach-multi" class="btn btn-info">
+                            Add More
+                         </span>
+                         
+                         <input type="hidden" name="lead_id" value="{{$policy->lead->id ?? ''}}">
+                         <input type="hidden" name="policy_id" value="{{$policy->id ?? ''}}">
 					</div>
 					<div class="modal-footer">
 						<button class="btn ripple btn-primary save-status" type="submit">Save changes</button>
@@ -1133,7 +1154,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- End Modal effects--> 
+		<!-- End Modal effects-->  
            	<!-- quotes effects -->
     <div class="modal fade" id="quotes">
 			<div class="modal-dialog modal-dialog-centered" role="document">
@@ -1159,7 +1180,7 @@
                         <h6>Attachment</h6>
                          <input type="file" name="attachment" id="attachment" class="form-control">
                         <h6>Remarks</h6>
-                       <textarea name="remarks" id="remarks" class="form-control" cols="30" rows="10"></textarea>
+                       <textarea name="remarks" id="remarks" class="form-control editor" cols="30" rows="10"></textarea>
 
 					</div>
 					<div class="modal-footer">
@@ -1174,6 +1195,8 @@
 @endsection
 
 @section('scripts')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajaxSetup({
@@ -1181,7 +1204,19 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $('.editor').summernote({
+        toolbar: [
+        ['font', ['bold', 'italic', 'underline', 'clear']],
+        ['insert', ['link','image', 'doc', 'video']],
+        ['misc', ['codeview']],
+        ],
+        height: 400,
+     
+    });
     $('.table').dataTable();
+    $('#add-attach-multi').click(function(){
+                $('.attach-content').append('<div class="row"><div class="col-lg-6"><h6>Upload</h6><input type="file" name="attachment[]" id="attachment" class="form-control"></div><div class="col-lg-6"><h6>Type</h6><select name="type[]"required class="form-control"><option value="">Select</option> <option value="Attachment">Attachment</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option><option value="Other">Other</option></select></div></div>');
+            })
     let subproduct= "{{$lead->subProduct->name ?? ''}}";
     if(subproduct != ''){
                 subproduct= $.trim(subproduct).toLowerCase();

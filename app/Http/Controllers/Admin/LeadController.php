@@ -18,6 +18,9 @@ use App\Models\Quote;
 use DataTables;
 use Auth;
 use App\Http\Requests\Admin\Lead\StoreLeadRequest;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Mail;
 class LeadController extends Controller
 {
     /**
@@ -39,14 +42,13 @@ class LeadController extends Controller
             if(isset($request->product)   && !empty($request->product)){
                  $q->where('product_id', $request->product);
             }
+            $q->where('is_policy',0);
             if(isset($request->search_anything)   && !empty($request->search_anything)){
                 $searchParam=['user_id','insurance_id','product_id','net_premium','case_type','policy_no','channel_name','lead_id','company_id','attachment_id','subproduct_id','gross_premium','others','pa','tp_premium','add_on_premium','od_premium','gwp','gst','basic_premium','terrorism_premium','requirement','client_name','address','remarks','type','commodity_type','mode_of_transport','cover_type','per_sending_limit','per_location_limit','estimate_annual_sum','basic_of_valuation','policy_period','start_date','expiry_date','commodity_details','packing_description','libality','policy_type','liability_industrial','liability_nonindustrial','liability_act','professional_indeminity','comprehensive_general_liability','wc_policy','pincode','industry_type','worker_number','job_profile','salary_per_month','add_on_cover','medical_extension','occupation_disease','compressed_air_disease','terrorism_cover','terrorism_cover','multiple_location','occupancy','occupancy_tarriff','particular','building','plant_machine','furniture_fixure','stock_in_process','finished_stock','other_contents','clain_in_last_three_year','loss_details','loss_in_amount','loss_date','measures_taken_after_loss','address_risk_location','cover_opted','policy_inception_date','tenure','construction_type','age_of_building','basement_for_building','basement_for_content','claims','building_carpet_area','building_cost_of_construction','building_sum_insured','content_sum_insured','rent_alternative_accommodation','health_type','fresh','portability','dob','pre_existing_disease','hospitalization_history','upload_discharge_summary','dob_sr_most_member','dob_self','dob_spouse','dob_child','dob_father','dob_mother','sum_insured','visiting_country','date_of_departure','date_of_arrival','no_of_days','no_person','passport_datails','make','model','cubic_capacity','bussiness_type','rto','reg_no','mfr_year','reg_date','claims_in_existing_policy','ncb_in_existing_policy','gcv_type','gvw','fuel_type','passenger_carrying_capacity','category','varriant'];
                 foreach ($searchParam as $key => $value) {
                     $q->orwhere($value, 'like','%' . $request->search_anything . '%');
-                }
-                
-        }
-            
+                }     
+        } 
         })
         ->whereHas('insurances', function ($q) use ($request){
             if(isset($request->search_anything)   && !empty($request->search_anything)){
@@ -133,6 +135,7 @@ class LeadController extends Controller
         $lead = Lead::create($leadData);
         $policyInputs= $request->except('holder_name', '_token','phone','email',);
         $policyInputs['lead_id']= $lead->id;
+        $policyInputs['user_id']= Auth::User()->id;
         Policy::create($policyInputs);
         return back()->with('success', 'Lead added successfully!');
        
@@ -269,25 +272,44 @@ class LeadController extends Controller
     }
     public function leadAttachment(Request $request){
        
-       if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) {
-        $attachment_filename = preg_replace('/\s+/', '', $request->file('attachment')->getClientOriginalName());
-        try{
+        
+        foreach ($request->attachment as $key => $value) {
+            if(!empty($value)){
+                $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
+                $value->move(public_path('/attachments'), $attachment_filename);
+                Attachment::create([
+                    'lead_id'=> $request->lead_id ?? 0,
+                    'policy_id'=> $request->policy_id ??'',
+                    'user_id'=> Auth::user()->id ??'',
+                    'file_name'=> $attachment_filename ??'',
+                    'type'=> $request->type[$key] ??  ''
+                ]);
+                if($request->type[$key] == 'Attachment'){
+                    if(isset($request->lead_id)  && !empty($request->lead_id)){
+                     $lead=   Lead::find($request->lead_id);
+                     $user= User::where('email',$lead->email)->first();
+                     if(empty($user)){
+                        $client = Role::updateOrCreate(['name' => 'Client']);
+                        $userClient =   User::create(
+                            [
+                                'name'=>  $lead->holder_name,
+                                'email'=>  $lead->email,
+                                'phone'=>  $lead->phone,
+                                'password'=> bcrypt('12345678')
+                            ]
+                            );
+                            $userClient->assignRole($client);
+                     }
+                       
+                    } 
+                    if(isset($request->policy_id)  && !empty($request->policy_id)){
+                      Policy::find($request->policy_id)->update(['is_policy' =>1]);
+                    } 
+                   
+                }
+            }
+          }
 
-            $request->file('attachment')->move(public_path('/attachments'), $attachment_filename);
-          
-            Attachment::create([
-                'lead_id'=> $request->lead_id ?? 0,
-                'policy_id'=> $request->policy_id ??'',
-                'user_id'=> Auth::user()->id ??'',
-                'file_name'=> $attachment_filename ??'',
-                'type'=> $request->type ??  'Attachment'
-            ]);
-            return back()->with('success', 'Attachment Created successfully!');
-        }catch(FileException $e) {
-            return back()->with('error', 'Please try again!');
-           
-        }
-    }
     return back()->with('error', 'File Is Required!');
     }
     public function leadQuotes(Request $request){
@@ -298,11 +320,18 @@ class LeadController extends Controller
                     'user_id'=> Auth::user()->id ??'',
                     'remark'=> $request->remarks
                 ]);
+            $lead = Lead::find($request->lead_id);
             if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) {
                 $attachment_filename = preg_replace('/\s+/', '', $request->file('attachment')->getClientOriginalName());
                 $request->file('attachment')->move(public_path('/quotes'), $attachment_filename);
                 $quote->update(['file_name'=> $attachment_filename]);
             }
+            $sentmail = Mail::send('admin.email.commonemail',['policy' => $lead,'content'=>$request->remarks],function($messages) use ($request,$lead) {
+                               
+                $messages->to($lead->email);
+                $subject ='Gemini consultancy Service';
+                $messages->subject($subject);                 
+        });
             $listQuote=Quote::where('lead_id',$request->lead_id)->count();
             if($listQuote >= 2){
                 Lead::find($request->lead_id)->update(['status'=>'RE-QUOTE']);

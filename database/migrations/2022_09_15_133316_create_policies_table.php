@@ -23,6 +23,7 @@ class CreatePoliciesTable extends Migration
             $table->integer('company_id')->nullable();
             $table->integer('lead_id')->default(0);
             $table->integer('is_paid')->default(0);
+            $table->integer('is_policy')->default(0);
             $table->integer('is_mail')->default(0);
             $table->string('renew_status')->default('POLICY ISSUED');
             $table->string('channel_name')->nullable();

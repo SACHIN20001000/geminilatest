@@ -1,31 +1,45 @@
 $(function() {
-	'use strict'
-	$('#chatActiveContacts').lightSlider({
-		autoWidth: true,
-		controls: false,
-		pager: false,
-		slideMargin: 12
-	});
-	if (window.matchMedia('(min-width: 992px)').matches) {
-		new PerfectScrollbar('#ChatList', {
-			suppressScrollX: true
-		});
-		const ChatBody = new PerfectScrollbar('#ChatBody', {
-			suppressScrollX: true
-		});
-		$('#ChatBody').scrollTop($('#ChatBody').prop('scrollHeight'));
+	'use strict';
+  
+  $(".chat_input").on("change keyup", function (e) {
+	if($(this).val() != "") {
+		$(".btn-chat").prop("disabled", false);
+	} else {
+		$(".btn-chat").prop("disabled", true);
 	}
-	$('.main-chat-list .media').on('click touch', function() {
-		$(this).addClass('selected').removeClass('new');
-		$(this).siblings().removeClass('selected');
-		if (window.matchMedia('(max-width: 991px)').matches) {
-			$('body').addClass('main-content-body-show');
-			$('html body').scrollTop($('html body').prop('scrollHeight'));
-		}
-	});
-	$('[data-toggle="tooltip"]').tooltip();
-	$('#ChatBodyHide').on('click touch', function(e) {
-		e.preventDefault();
-		$('body').removeClass('main-content-body-show');
-	})
-});
+  });
+	$(".btn-chat").on("click", function (e) {
+	  send(1,$('#btn-chat').val());
+	  $('#btn-chat').val();
+  
+  });
+  function send(to_user, message)
+  {
+	  let formData = new FormData();
+	  formData.append("to_user", to_user);
+	  formData.append("message", message);
+  
+	  $.ajax({
+		  url: 'send',
+		  data: formData,
+		  method: "POST",
+		  dataType: "json",
+		  processData: false,
+		  contentType: false,
+		  headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		},
+		  beforeSend: function () {
+			  
+			 
+		  },
+		  success: function (response) {
+			  
+		  },
+		  complete: function () {
+			 
+			  
+		  }
+	  });
+  }
+  });
