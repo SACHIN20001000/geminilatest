@@ -8,7 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 class RegisterController extends Controller
 {
     /*
@@ -64,10 +65,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        $role = Role::updateOrCreate(['name' => 'Client']);
+        $user->assignRole($role);
+        return $user;
     }
 }

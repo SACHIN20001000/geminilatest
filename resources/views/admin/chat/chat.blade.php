@@ -16,6 +16,176 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
 .input-group .position-relative{
   display:none;
 }
+
+.chat-wrapper {
+  height: calc(100vh - 60px - 102px);
+}
+@media (max-width: 991px) {
+  .chat-wrapper {
+    min-height: 100%;
+  }
+}
+@media (max-width: 991px) {
+  .chat-wrapper {
+    height: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .chat-wrapper .chat-aside {
+    padding-right: 23px;
+  }
+}
+.chat-wrapper .chat-aside .aside-body .tab-content .tab-pane {
+  position: relative;
+  max-height: calc(100vh - 385px);
+}
+.chat-wrapper .chat-aside .aside-body .tab-content .tab-pane .chat-list .chat-item a > div {
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+@media (max-width: 991px) {
+  .chat-wrapper .chat-content {
+    position: absolute;
+    background: #fff;
+    left: 0;
+    bottom: -1px;
+    top: 0;
+    right: 0;
+    display: none;
+  }
+  .chat-wrapper .chat-content.show {
+    display: block;
+  }
+}
+.chat-wrapper .chat-content .chat-header {
+  padding: 0 10px;
+}
+.chat-wrapper .chat-content .chat-body {
+  position: relative;
+  max-height: calc(100vh - 340px);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .chat-wrapper .chat-content .chat-body {
+    max-height: calc(100vh - 315px);
+  }
+}
+@media (max-width: 991px) {
+  .chat-wrapper .chat-content .chat-body {
+    max-height: calc(100vh - 342px);
+  }
+}
+.chat-wrapper .chat-content .chat-body .messages {
+  padding: 0 10px;
+  list-style-type: none;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 80%;
+  margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .chat-wrapper .chat-content .chat-body .messages .message-item {
+    max-width: 95%;
+  }
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item .content .bubble {
+  position: relative;
+  padding: 7px 15px;
+  margin-bottom: 4px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item .content span {
+  font-size: 12px;
+  color: #7987a1;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.friend img {
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+  margin-right: 15px;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.friend .content {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.friend .content .bubble {
+  background: rgba(82, 113, 255, 0.1);
+  border-radius: 0 5px 5px;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.friend .content .bubble::before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: -10px;
+  top: 0;
+  border-top: 5px solid rgba(82, 113, 255, 0.1);
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid transparent;
+  border-right: 5px solid rgba(82, 113, 255, 0.1);
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me {
+  margin-left: auto;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me img {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+  margin-left: 15px;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me .content {
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+  margin-left: auto;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me .content .bubble {
+  background: rgba(102, 209, 209, 0.1);
+  border-radius: 5px 0 5px 5px;
+  margin-left: auto;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me .content .bubble::before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: -10px;
+  top: 0;
+  border-top: 5px solid rgba(102, 209, 209, 0.1);
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid rgba(102, 209, 209, 0.1);
+  border-right: 5px solid transparent;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me .content span {
+  text-align: right;
+  display: block;
+}
+.chat-wrapper figure {
+  position: relative;
+}
+.chat-wrapper figure .status {
+  width: 11px;
+  height: 11px;
+  background: #7987a1;
+  position: absolute;
+  bottom: 0px;
+  right: -2px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+.chat-wrapper figure .status.online {
+  background: #05a34a;
+}
+.chat-wrapper figure .status.offline {
+  background: #7987a1;
+}
   </style>
 <div class="row chat-wrapper">
   <div class="col-md-12">

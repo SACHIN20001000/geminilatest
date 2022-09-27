@@ -39,7 +39,7 @@
 				<div class="row row-sm">
 				
 					<div class="col-lg-12">
-						<div class="row row-sm">
+						<!-- <div class="row row-sm">
 							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
 								<div class="card ">
 									<div class="card-body">
@@ -104,7 +104,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div class="card">
 							<div class="card-body">
 								<div class="tabs-menu ">

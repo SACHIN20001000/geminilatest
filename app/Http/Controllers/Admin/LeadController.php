@@ -83,6 +83,10 @@ class LeadController extends Controller
         if(isset($request->users)   && !empty($request->users)){
             $query->where('user_id', $request->users)->orwhere('assigned', $request->users);
        }
+        if(isset($request->lead_id)   && !empty($request->lead_id)){
+            $query->where('user_id', $request->lead_id)->orwhere('assigned', $request->lead_id);
+       }
+
             if(isset($request->status)   && !empty($request->status)){
                 $query->where('status', $request->status);
         }

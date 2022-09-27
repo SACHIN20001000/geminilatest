@@ -62,8 +62,9 @@ class UserController extends Controller
                             ->addIndexColumn()
                             ->addColumn('action', function ($row)
                             {
+                             
                                 $action = '<span class="action-buttons">
-                                <a  href="#" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye" aria-hidden="true"></i>
+                                <a  href="' . route("leads.index", ['lead_id'=> $row]) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>
                         <a  href="' . route("users.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
                         </a>

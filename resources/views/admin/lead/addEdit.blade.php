@@ -32,22 +32,22 @@
                         <div class="pd-30 pd-sm-40 bg-gray-200">
                             <div class="row row-xs align-items-center mg-b-20">
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
 											<p class="mg-b-10">Polciy Holder Name</p>
                                             <input class="form-control" name="holder_name"  placeholder="Enter your name" type="text" value="{{isset($lead) ? $lead->holder_name : '' }}">
 							</div>
                       
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
 											<p class="mg-b-10">Phone Number </p>
                                             <input class="form-control" name="phone"  placeholder="Enter your Number" type="text" value="{{isset($lead) ? $lead->phone : '' }}">
 							</div>
                       
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
 											<p class="mg-b-10">Email</p>
                                             <input class="form-control" name="email"  placeholder="Enter your email" type="email" value="{{isset($lead) ? $lead->email : '' }}">
 							</div>
                       
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
 											<p class="mg-b-10">Insurance</p>
                                            <select name="insurance_id" class="select2 form-control" id="insurance_id">
                                             <option value="">Select Below</option>
@@ -58,7 +58,7 @@
                                             @endif
                                            </select>
 							</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
 											<p class="mg-b-10">Product</p>
                                            <select name="product_id" class="select2 form-control" id="product_id">
                                             <option value="">Select Below</option>
@@ -69,7 +69,7 @@
                                             @endif
                                            </select>
 							</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
 											<p class="mg-b-10">Sub Product</p>
                                            <select name="subproduct_id" class="select2 form-control" id="subproduct_id">
                                             <option value="">Select Below</option>
@@ -81,11 +81,11 @@
                                            </select>
 							</div>
                       <!------------------------------------------------- polciy start  ------------------------------------------------>
-                      <div class="col-lg-4">
+                      <div class="col-lg-6">
 											<p class="mg-b-10">Channel Name</p>
                                           <input type="text" name="channel_name" value="{{isset($policy) ? $policy->channel_name : ''}}" class="form-control common-feild feild" id="channel_name">
                      </div>
-                      <div class="col-lg-4">
+                      <div class="col-lg-6">
 											<p class="mg-b-10">Insurance Company</p>
                                             <select name="company_id" class="select2 form-control common-feild feild" id="company_id">
                                             <option value="">Select Below</option>
@@ -96,11 +96,11 @@
                                             @endif
                                            </select>
                      </div>
-                      <div class="col-lg-4">
+                      <div class="col-lg-6">
 											<p class="mg-b-10">Policy Number</p>
                                            <input type="text" name="policy_no" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control common-feild feild" id="policy_no">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Case Type</p>
                                             <select name="case_type" class="select2 form-control common-feild feild" id="case_type">
                                             <option value="">Select Below</option>
@@ -109,23 +109,23 @@
                                             <option value="RENEWAL" {{ (isset($policy) && "RENEWAL" == $policy->case_type) ? 'selected' : '' }}>RENEWAL</option>             
                                            </select>
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Requirement</p>
                                            <input type="text" name="requirement" value="{{isset($policy) ? $policy->requirement : ''}}" class="form-control feild" id="requirement">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Client Name</p>
                                            <input type="text" name="client_name" value="{{isset($policy) ? $policy->client_name : ''}}" class="form-control feild" id="client_name">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Address</p>
                                            <input type="text" name="address" value="{{isset($policy) ? $policy->address : ''}}" class="form-control feild" id="address">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Remarks</p>
                                            <input type="text" name="remarks" value="{{isset($policy) ? $policy->remarks : ''}}" class="form-control feild" id="remarks">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Type</p>
                                             <select name="type" class="select2 form-control feild" id="type">
                                             <option value="">Select Below</option>
@@ -133,11 +133,11 @@
                                             <option value="OPEN POLICY" {{ (isset($policy) && "OPEN POLICY" == $policy->case_type) ? 'selected' : '' }}>OPEN POLICY</option>          
                                            </select>
                      </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
 											<p class="mg-b-10">Commodity Type</p>
                                            <input type="text" name="commodity_type" value="{{isset($policy) ? $policy->commodity_type : ''}}" class="form-control feild" id="commodity_type">
                      </div> 
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Mode Of Transport</p>
                                             <select name="mode_of_transport" class="select2 form-control feild" id="mode_of_transport">
                                             <option value="">Select Below</option>
@@ -149,7 +149,7 @@
                                             <option value="ALL" {{ (isset($policy) && "ALL" == $policy->mode_of_transport) ? 'selected' : '' }}>ALL</option>          
                                            </select>
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Cover Type</p>
                                             <select name="cover_type" class="select2 form-control feild" id="cover_type">
                                             <option value="">Select Below</option>
@@ -157,39 +157,39 @@
                                             <option value="ITC B" {{ (isset($policy) && "ITC B" == $policy->cover_type) ? 'selected' : '' }}>ITC B</option>           
                                            </select>
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Sum Insured</p>
                                            <input type="text" name="sum_insured" value="{{isset($policy) ? $policy->sum_insured : ''}}" class="form-control feild" id="sum_insured">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Per Sending Limt</p>
                                            <input type="text" name="per_sending_limit" value="{{isset($policy) ? $policy->per_sending_limit : ''}}" class="form-control feild" id="per_sending_limit">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Per Location Limit</p>
                                            <input type="text" name="per_location_limit" value="{{isset($policy) ? $policy->per_location_limit : ''}}" class="form-control feild" id="per_location_limit">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Estimated Annual Sum Insured</p>
                                            <input type="text" name="estimate_annual_sum" value="{{isset($policy) ? $policy->estimate_annual_sum : ''}}" class="form-control feild" id="estimate_annual_sum">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Basis Of Valuation</p>
                                            <input type="text" name="basic_of_valuation" value="{{isset($policy) ? $policy->basic_of_valuation : ''}}" class="form-control feild" id="basic_of_valuation">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Policy Period</p>
                                            <input type="text" name="policy_period" value="{{isset($policy) ? $policy->policy_period : ''}}" class="form-control feild" id="policy_period">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Start Date</p>
                                            <input type="date" name="start_date" value="{{isset($policy) ? $policy->start_date : ''}}" class="form-control feild" id="start_date">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">End  Date</p>
                                            <input type="date" name="expiry_date" value="{{isset($policy) ? $policy->expiry_date : ''}}" class="form-control feild" id="expiry_date">
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Details Of Commodity Type</p>
                                             <select name="commodity_details" class="select2 form-control feild" id="commodity_details">
@@ -200,79 +200,79 @@
                                             <option value="NO OF PACKAGES" {{ (isset($policy) && "NO OF PACKAGES" == $policy->commodity_details) ? 'selected' : '' }}>NO OF PACKAGES</option>           
                                            </select>
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Packing Description</p>
                                            <input type="text" name="packing_description" value="{{isset($policy) ? $policy->packing_description : ''}}" class="form-control feild" id="packing_description">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Libaility</p>
                                            <input type="text" name="libality" value="{{isset($policy) ? $policy->libality : ''}}" class="form-control feild" id="libality">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Type Of Policy</p>
                                            <input type="text" name="policy_type" value="{{isset($policy) ? $policy->policy_type : ''}}" class="form-control feild" id="policy_type">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Public Liability Industrial</p>
                                            <input type="text" name="liability_industrial" value="{{isset($policy) ? $policy->liability_industrial : ''}}" class="form-control feild" id="liability_industrial">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Public Liability Non Industrial</p>
                                            <input type="text" name="liability_nonindustrial" value="{{isset($policy) ? $policy->liability_nonindustrial : ''}}" class="form-control feild" id="liability_nonindustrial">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Liability Act</p>
                                            <input type="text" name="liability_act" value="{{isset($policy) ? $policy->liability_act : ''}}" class="form-control feild" id="liability_act">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Professional Indeminity</p>
                                            <input type="text" name="professional_indeminity" value="{{isset($policy) ? $policy->professional_indeminity : ''}}" class="form-control feild" id="professional_indeminity">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Comprehensive General Liability</p>
                                            <input type="text" name="comprehensive_general_liability" value="{{isset($policy) ? $policy->comprehensive_general_liability : ''}}" class="form-control feild" id="comprehensive_general_liability">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">WC Policy</p>
                                            <input type="text" name="wc_policy" value="{{isset($policy) ? $policy->wc_policy : ''}}" class="form-control feild" id="wc_policy">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Pincode</p>
                                            <input type="text" name="pincode" value="{{isset($policy) ? $policy->pincode : ''}}" class="form-control feild" id="pincode">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Industry Type</p>
                                            <input type="text" name="industry_type" value="{{isset($policy) ? $policy->industry_type : ''}}" class="form-control feild" id="industry_type">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
 											<p class="mg-b-10">Total No Of Workers</p>
                                            <input type="text" name="worker_number" value="{{isset($policy) ? $policy->worker_number : ''}}" class="form-control feild" id="worker_number">
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
 											<p class="mg-b-10">Job Profile</p>
                                             <select name="job_profile" class="select2 form-control feild" id="job_profile">
                                             <option value="">Select Below</option>
@@ -283,172 +283,172 @@
                                            </select>
                                             
                      </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Salery Per Month</p>
                     <input type="text" name="salary_per_month" value="{{isset($policy) ? $policy->salary_per_month : ''}}" class="form-control feild" id="salary_per_month">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Salery Per Month</p>
                     <input type="text" name="salary_per_month" value="{{isset($policy) ? $policy->salary_per_month : ''}}" class="form-control feild" id="salary_per_month">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Add On Cover</p>
                     <input type="text" name="add_on_cover" value="{{isset($policy) ? $policy->add_on_cover : ''}}" class="form-control feild" id="add_on_cover">
                      
                     </div>
 
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Medical Extension</p>
                     <input type="text" name="medical_extension" value="{{isset($policy) ? $policy->medical_extension : ''}}" class="form-control feild" id="medical_extension">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Occupation Disease</p>
                     <input type="text" name="occupation_disease" value="{{isset($policy) ? $policy->occupation_disease : ''}}" class="form-control feild" id="occupation_disease">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Compressed Air Disease Extension</p>
                     <input type="text" name="compressed_air_disease" value="{{isset($policy) ? $policy->compressed_air_disease : ''}}" class="form-control feild" id="compressed_air_disease">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Terrorism Cover</p>
                     <input type="text" name="terrorism_cover" value="{{isset($policy) ? $policy->terrorism_cover : ''}}" class="form-control feild" id="terrorism_cover">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Sub Contractor Cover</p>
                     <input type="text" name="sub_contractor_cover" value="{{isset($policy) ? $policy->sub_contractor_cover : ''}}" class="form-control feild" id="sub_contractor_cover">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Multiple Location</p>
                     <input type="text" name="multiple_location" value="{{isset($policy) ? $policy->multiple_location : ''}}" class="form-control feild" id="multiple_location">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Occupancy</p>
                     <input type="text" name="occupancy" value="{{isset($policy) ? $policy->occupancy : ''}}" class="form-control feild" id="occupancy">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Occupancy Tarriff</p>
                     <input type="text" name="occupancy_tarriff" value="{{isset($policy) ? $policy->occupancy_tarriff : ''}}" class="form-control feild" id="occupancy_tarriff">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Particular</p>
                     <input type="text" name="particular" value="{{isset($policy) ? $policy->particular : ''}}" class="form-control feild" id="particular">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Building</p>
                     <input type="text" name="building" value="{{isset($policy) ? $policy->building : ''}}" class="form-control feild" id="building">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Plant And Machinery</p>
                     <input type="text" name="plant_machine" value="{{isset($policy) ? $policy->plant_machine : ''}}" class="form-control feild" id="plant_machine">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Furniture Fixture And Fittings</p>
                     <input type="text" name="furniture_fixure" value="{{isset($policy) ? $policy->furniture_fixure : ''}}" class="form-control feild" id="furniture_fixure">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Stock In Process</p>
                     <input type="text" name="stock_in_process" value="{{isset($policy) ? $policy->stock_in_process : ''}}" class="form-control feild" id="stock_in_process">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Finished Stock</p>
                     <input type="text" name="finished_stock" value="{{isset($policy) ? $policy->finished_stock : ''}}" class="form-control feild" id="finished_stock">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Other Contents</p>
                     <input type="text" name="other_contents" value="{{isset($policy) ? $policy->other_contents : ''}}" class="form-control feild" id="other_contents">
                      
                     </div>
-                     <div class="col-lg-4">
+                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Claim In last 3 Years </p>
                     <input type="radio" name="clain_in_last_three_year" value="Yes" class="feild mg-b-0" id="clain_in_last_three_year">Yes
                     <input type="radio" name="clain_in_last_three_year" value="No" class=" feild mg-b-0" id="clain_in_last_three_year">No
                      
                     </div>
-                     <div class="col-lg-4 clain_in_last_three_year_yes">
+                     <div class="col-lg-6 clain_in_last_three_year_yes">
                      
                      <p class="mg-b-10">Loss Details</p>
                     <input type="text" name="loss_details" value="{{isset($policy) ? $policy->loss_details : ''}}" class="form-control feild" id="loss_details">
                      
                     </div>
-                     <div class="col-lg-4 clain_in_last_three_year_yes">
+                     <div class="col-lg-6 clain_in_last_three_year_yes">
                      
                      <p class="mg-b-10">Loss In Amount</p>
                     <input type="text" name="loss_in_amount" value="{{isset($policy) ? $policy->loss_in_amount : ''}}" class="form-control feild" id="loss_in_amount">
                      
                     </div>
-                     <div class="col-lg-4 clain_in_last_three_year_yes">
+                     <div class="col-lg-6 clain_in_last_three_year_yes">
                      
                      <p class="mg-b-10">Loss Date</p>
                     <input type="text" name="loss_date" value="{{isset($policy) ? $policy->loss_date : ''}}" class="form-control feild" id="loss_date">
                      
                     </div>
-                     <div class="col-lg-4 clain_in_last_three_year_yes">
+                     <div class="col-lg-6 clain_in_last_three_year_yes">
                      
                      <p class="mg-b-10">Measures Taken After Loss</p>
                     <input type="text" name="measures_taken_after_loss" value="{{isset($policy) ? $policy->measures_taken_after_loss : ''}}" class="form-control feild" id="measures_taken_after_loss">
                      
                     </div>
                  
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Address Risk Location</p>
                     <input type="text" name="address_risk_location" value="{{isset($policy) ? $policy->address_risk_location : ''}}" class="form-control feild" id="address_risk_location">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Cover Opted</p>
                     <input type="text" name="cover_opted" value="{{isset($policy) ? $policy->cover_opted : ''}}" class="form-control feild" id="cover_opted">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Policy Inception Date</p>
                     <input type="text" name="policy_inception_date" value="{{isset($policy) ? $policy->policy_inception_date : ''}}" class="form-control feild" id="policy_inception_date">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Tenure</p>
                     <input type="text" name="tenure" value="{{isset($policy) ? $policy->tenure : ''}}" class="form-control feild" id="tenure">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Construction Type</p>
                         <select name="construction_type" class="form-control feild" id="construction_type">
@@ -458,61 +458,61 @@
                         </select>
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Age Of the Building</p>
                      <input type="text" name="age_of_building" value="{{isset($policy) ? $policy->age_of_building : ''}}" class="form-control feild" id="age_of_building">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Basement for Building</p>
                      <input type="text" name="basement_for_building" value="{{isset($policy) ? $policy->basement_for_building : ''}}" class="form-control feild" id="basement_for_building">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Basement for Content</p>
                      <input type="text" name="basement_for_content" value="{{isset($policy) ? $policy->basement_for_content : ''}}" class="form-control feild" id="basement_for_content">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Claim</p>
                      <input type="text" name="claims" value="{{isset($policy) ? $policy->claims : ''}}" class="form-control feild" id="claims">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Building Carpet Area</p>
                      <input type="text" name="building_carpet_area" value="{{isset($policy) ? $policy->building_carpet_area : ''}}" class="form-control feild" id="building_carpet_area">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Building Cost Of Construction</p>
                      <input type="text" name="building_cost_of_construction" value="{{isset($policy) ? $policy->building_cost_of_construction : ''}}" class="form-control feild" id="building_cost_of_construction">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Building Sum Insured</p>
                      <input type="text" name="building_sum_insured" value="{{isset($policy) ? $policy->building_sum_insured : ''}}" class="form-control feild" id="building_sum_insured">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Content Sum Insured</p>
                      <input type="text" name="content_sum_insured" value="{{isset($policy) ? $policy->content_sum_insured : ''}}" class="form-control feild" id="content_sum_insured">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Rent of Alternative Accommodation</p>
                      <input type="text" name="rent_alternative_accommodation" value="{{isset($policy) ? $policy->rent_alternative_accommodation : ''}}" class="form-control feild" id="rent_alternative_accommodation">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Health Type</p>
                      <select name="health_type" class="form-control feild" id="health_type">
@@ -523,116 +523,116 @@
                      
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Fresh</p>
                      <input type="radio" name="fresh" value="Yes"  {{ (isset($policy) && "Yes" == $policy->fresh) ? 'checked' : '' }} class="feild" id="fresh">Yes
                      <input type="radio" name="fresh" value="No" {{ (isset($policy) && "No" == $policy->fresh) ? 'checked' : '' }}  class="feild" id="fresh">No
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Portability</p>
                      <input type="radio" name="portability" {{ (isset($policy) && "Yes" == $policy->portability) ? 'checked' : '' }}  value="Yes" class="feild" id="portability">Yes
                      <input type="radio" name="portability" {{ (isset($policy) && "No" == $policy->portability) ? 'checked' : '' }}  value="No" class="feild" id="portability">No
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">DOB</p>
                      <input type="date" name="dob" value="{{isset($policy) ? $policy->dob : ''}}" class="form-control feild" id="dob">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Pre Existing Disease</p>
                      <input type="text" name="pre_existing_disease" value="{{isset($policy) ? $policy->pre_existing_disease : ''}}" class="form-control feild" id="pre_existing_disease">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Hospitalization History</p>
                      <input type="text" name="hospitalization_history" value="{{isset($policy) ? $policy->hospitalization_history : ''}}" class="form-control feild" id="hospitalization_history">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Upload Discharge Summary</p>
                      <input type="text" name="upload_discharge_summary" value="{{isset($policy) ? $policy->upload_discharge_summary : ''}}" class="form-control feild" id="upload_discharge_summary">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Dob Sr Most Member</p>
                      <input type="date" name="dob_sr_most_member" value="{{isset($policy) ? $policy->dob_sr_most_member : ''}}" class="form-control feild" id="dob_sr_most_member">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Dob Self</p>
                      <input type="date" name="dob_self" value="{{isset($policy) ? $policy->dob_self : ''}}" class="form-control feild" id="dob_self">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Dob Spouse</p>
                      <input type="date" name="dob_spouse" value="{{isset($policy) ? $policy->dob_spouse : ''}}" class="form-control feild" id="dob_spouse">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Dob Child</p>
                      <input type="date" name="dob_child" value="{{isset($policy) ? $policy->dob_child : ''}}" class="form-control feild" id="dob_child">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Dob Father</p>
                      <input type="date" name="dob_father" value="{{isset($policy) ? $policy->dob_father : ''}}" class="form-control feild" id="dob_father">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Dob Mother</p>
                      <input type="date" name="dob_mother" value="{{isset($policy) ? $policy->dob_mother : ''}}" class="form-control feild" id="dob_mother">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Visiting Country</p>
                      <input type="text" name="visiting_country" value="{{isset($policy) ? $policy->visiting_country : ''}}" class="form-control feild" id="visiting_country">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Date Of Departure</p>
                      <input type="text" name="date_of_departure" value="{{isset($policy) ? $policy->date_of_departure : ''}}" class="form-control feild" id="date_of_departure">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Date of Arrival</p>
                      <input type="text" name="date_of_arrival" value="{{isset($policy) ? $policy->date_of_arrival : ''}}" class="form-control feild" id="date_of_arrival">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">No Of Days</p>
                      <input type="text" name="no_of_days" value="{{isset($policy) ? $policy->no_of_days : ''}}" class="form-control feild" id="no_of_days">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">No Of Person</p>
                      <input type="text" name="no_person" value="{{isset($policy) ? $policy->no_person : ''}}" class="form-control feild" id="no_person">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Passport details</p>
                      <input type="text" name="passport_datails" value="{{isset($policy) ? $policy->passport_datails : ''}}" class="form-control feild" id="passport_datails">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Make</p>
                      <select name="make" id="make" class="form-control feild">
@@ -647,7 +647,7 @@
                      <!-- <input type="text" name="make" value="{{isset($policy) ? $policy->make : ''}}" class="form-control feild" id="make"> -->
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Variant</p>
                      <select name="varriant" class="select2 form-control feild"  id="varriant">
@@ -656,19 +656,19 @@
                      <!-- <input type="text" name="varriant" value="{{isset($policy) ? $policy->varriant : ''}}" class="form-control feild" id="varriant"> -->
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Model</p>
                      <input type="text" name="model" value="{{isset($policy) ? $policy->model : ''}}" class="form-control feild" id="model">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Cubic Capacity</p>
                      <input type="text" name="cubic_capacity" value="{{isset($policy) ? $policy->cubic_capacity : ''}}" class="form-control feild" id="cubic_capacity">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Type Of Business</p>
                      <select name="bussiness_type" class="form-control feild" id="bussiness_type">
@@ -679,43 +679,43 @@
                     </select>
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Rto</p>
                      <input type="text" name="rto" value="{{isset($policy) ? $policy->rto : ''}}" class="form-control feild" id="rto">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Reg No</p>
                      <input type="text" name="reg_no" value="{{isset($policy) ? $policy->reg_no : ''}}" class="form-control feild" id="reg_no">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">MFR Year</p>
                      <input type="text" name="mfr_year" value="{{isset($policy) ? $policy->mfr_year : ''}}" class="form-control feild" id="mfr_year">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Date Of Registration</p>
                      <input type="date" name="reg_date" value="{{isset($policy) ? $policy->reg_date : ''}}" class="form-control feild" id="reg_date">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Claim In Existing Policy</p>
                      <input type="radio" name="claims_in_existing_policy" {{ (isset($policy) && "Yes" == $policy->claims_in_existing_policy) ? 'checked' : '' }} value="Yes" class=" feild" id="claims_in_existing_policy">Yes
                      <input type="radio" name="claims_in_existing_policy" {{ (isset($policy) && "No" == $policy->claims_in_existing_policy) ? 'checked' : '' }} value="No" class=" feild" id="claims_in_existing_policy">No
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">NCB In Existing Policy</p>
                      <input type="radio" name="ncb_in_existing_policy" {{ (isset($policy) && "Yes" == $policy->ncb_in_existing_policy) ? 'checked' : '' }} value="Yes" class=" feild" id="ncb_in_existing_policy">Yes
                      <input type="radio" name="ncb_in_existing_policy"{{ (isset($policy) && "No" == $policy->ncb_in_existing_policy) ? 'checked' : '' }} value="No" class=" feild" id="ncb_in_existing_policy">No
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Gcv Type</p>
                      <select name="gcv_type" class="form-control feild" id="gcv_type">
@@ -725,7 +725,7 @@
                     </select>
                     
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">GVW</p>
                      <select name="gvw" class="form-control feild" id="gvw">
@@ -741,93 +741,93 @@
                     </select>
                     
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Fuel Type</p>
                      <input type="text" name="fuel_type" value="{{isset($policy) ? $policy->fuel_type : ''}}" class="form-control feild" id="fuel_type">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Passenger Carrying Capacity</p>
                      <input type="text" name="passenger_carrying_capacity" value="{{isset($policy) ? $policy->passenger_carrying_capacity : ''}}" class="form-control feild" id="passenger_carrying_capacity">
                      
                     </div>
                     
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Category</p>
                      <input type="text" name="category" value="{{isset($policy) ? $policy->category : ''}}" class="form-control feild" id="category">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Net Premium</p>
                      <input type="text" name="net_premium" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control feild" id="net_premium">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">GST</p>
                      <input type="text" name="gst" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control feild" id="gst">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">GWP</p>
                      <input type="text" name="gwp" value="{{isset($policy) ? $policy->gwp : ''}}" class="form-control feild" id="gwp">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">GST</p>
                      <input type="text" name="gst" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control feild" id="gst">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">OD Premium</p>
                      <input type="text" name="od_premium" value="{{isset($policy) ? $policy->od_premium : ''}}" class="form-control feild" id="od_premium">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Add On Premium</p>
                      <input type="text" name="add_on_premium" value="{{isset($policy) ? $policy->add_on_premium : ''}}" class="form-control feild" id="add_on_premium">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">TP Premium</p>
                      <input type="text" name="tp_premium" value="{{isset($policy) ? $policy->tp_premium : ''}}" class="form-control feild" id="tp_premium">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">PA</p>
                      <input type="text" name="pa" value="{{isset($policy) ? $policy->pa : ''}}" class="form-control feild" id="pa">
                      
                     </div>
                     
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Other</p>
                      <input type="text" name="others" value="{{isset($policy) ? $policy->others : ''}}" class="form-control feild" id="others">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Gross Premiun</p>
                      <input type="text" name="gross_premium" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control feild" id="gross_premium">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Basic Premiun</p>
                      <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control feild" id="basic_premium">
                      
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                      
                      <p class="mg-b-10">Terrorism Premiun</p>
                      <input type="text" name="terrorism_premium" value="{{isset($policy) ? $policy->terrorism_premium : ''}}" class="form-control feild" id="terrorism_premium">

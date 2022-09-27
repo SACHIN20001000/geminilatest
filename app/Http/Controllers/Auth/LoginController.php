@@ -30,21 +30,9 @@ use AuthenticatesUsers;
      */
     public function redirectTo()
     {
-        $user = Auth::user();
-        if ($user->hasRole('Admin'))
-        {
+      
             return '/admin/dashboard';
-        } else if ($user->hasRole('IotAdmin'))
-        {
-
-            return '/iot-admin/dashboard';
-        } else
-        {
-            Auth::logout();
-            Session::flash('message', 'User does not have the right permissions'); 
-            Session::flash('alert-class', 'alert-danger'); 
-            return '/admin';
-        }
+        
     }
 
     /**

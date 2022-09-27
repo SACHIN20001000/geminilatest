@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\MakeModelController;
 use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\ChatsController;
+use App\Http\Controllers\Admin\ReportController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -53,14 +54,17 @@ Route::prefix('admin')->group(function ()
     {
         return view('admin.login');
     })->middleware(['guest']);
-    ;
+    Route::get('register', function ()
+        {
+            return view('admin.register');
+        })->middleware(['guest']);
     Route::get('/forgotPassword', function ()
     {
         return view('admin.forgotPassword');
     })->middleware(['guest']);
 
-    Route::group(['middleware' => ['role:Admin']], function ()
-    {
+
+   
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
        
         Route::resource('users', UserController::class);
@@ -72,6 +76,7 @@ Route::prefix('admin')->group(function ()
         Route::resource('model', MakeModelController::class);
         Route::resource('leads', LeadController::class);
         Route::resource('policy', PolicyController::class);
+        Route::resource('report', ReportController::class);
         Route::any('renew_status', [PolicyController::class, 'renew_status'])->name('renew_status');
         Route::any('endrosment', [PolicyController::class, 'endrosment'])->name('endrosment');
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
@@ -91,11 +96,11 @@ Route::prefix('admin')->group(function ()
         Route::get('view-profile', [App\Http\Controllers\Admin\AdminController::class, 'viewProfile'])->name('viewProfile');
         Route::get('update-profile', [App\Http\Controllers\Admin\AdminController::class, 'updateProfile'])->name('updateProfile');
         Route::post('update-user-profile/{id}', [App\Http\Controllers\Admin\AdminController::class, 'updateUserProfile'])->name('updateUserProfile');
-    });
+   
 });
 
 Auth::routes([
-    'register' => false
+    'register' => true
 ]);
 
 Route::prefix('')->group(function ()

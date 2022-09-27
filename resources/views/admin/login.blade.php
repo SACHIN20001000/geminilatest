@@ -62,8 +62,18 @@
 														</div> -->
 													</form>
 													<div class="main-signin-footer mt-5">
-														<p><a href="{{ url('admin/forgotPassword') }}">Forgot password?</a></p>
+														<div class="row">
+															<div class="col-lg-6">
+															<p ><a class="btn btn-info btn-block btn-b" href="{{ url('admin/register') }}">Register?</a></p>
+															</div>
+															<div class="col-lg-6">
+															<p ><a  class="btn btn-danger btn-block" href="{{ url('admin/forgotPassword') }}">Forgot password?</a></p>
+															</div>
+														</div>
+														
+														
 													</div>
+												
 												</div>
 											</div>
 										</div>

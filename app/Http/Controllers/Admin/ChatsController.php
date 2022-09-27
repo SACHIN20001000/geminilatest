@@ -107,11 +107,11 @@ class ChatsController extends Controller
 
         $message->to_user_id = $request->to_user;
 
-        PusherFactory::make()->trigger(
-            "chat_room_" . $request->to_user,
-            "send",
-            ["data" => $message]
-        );
+        // PusherFactory::make()->trigger(
+        //     "chat_room_" . $request->to_user,
+        //     "send",
+        //     ["data" => $message]
+        // );
         return response()->json(["state" => 1, "data" => $message]);
     }
 

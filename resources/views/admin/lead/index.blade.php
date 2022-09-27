@@ -10,24 +10,24 @@
                 <h4 class="  content-title mb-0 my-auto pe-4">Leads</h4>
                 <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
-                            <a href="{{ route('leads.index',['id'=> 1]) }}" class="btn btn-info ml_auto" 
+                            <a href="{{ route('leads.index',['id'=> 1]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto" 
 											>New Leads</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
-                            <a  href="{{ route('leads.index',['id'=> 2]) }}" class="btn btn-info ml_auto" 
+                            <a  href="{{ route('leads.index',['id'=> 2]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif ml_auto" 
 											>Quote Lead</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
-                            <a  href="{{ route('leads.index',['id'=> 3]) }}" class="btn btn-info ml_auto">Policy Issued</a>
+                            <a  href="{{ route('leads.index',['id'=> 3]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 3) btn btn-warning @else btn btn-info @endif ml_auto">Policy Issued</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown ">
-                            <a  href="{{ route('leads.index',['id'=> 4]) }}" class="btn btn-info ml_auto">Opportunities</a>
+                            <a  href="{{ route('leads.index',['id'=> 4]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 4) btn btn-warning @else btn btn-info @endif ml_auto">Opportunities</a>
 							</div>
 						</div>
             </div>
@@ -207,7 +207,7 @@
                             <tfoot>
                                 <tr>
                                     <td>
-                                    {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? ''])->links("vendor.pagination.bootstrap-4")}}
+                                    {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','lead_id'=>$_GET['lead_id']?? ''])->links("vendor.pagination.bootstrap-4")}}
                                     </td>
                                 </tr>
                           

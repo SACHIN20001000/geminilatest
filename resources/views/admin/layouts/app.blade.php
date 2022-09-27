@@ -40,6 +40,7 @@
 
         <!-- Sidemenu css -->
         <link rel="stylesheet" href="{{URL::asset('assets/css/sidemenu.css')}}">
+        <link rel="stylesheet" href="{{URL::asset('assets/css/daterange.css')}}">
 
         <!-- Maps css -->
         <link href="{{URL::asset('assets/plugins/jqvmap/jqvmap.min.css')}}" rel="stylesheet">
@@ -87,15 +88,15 @@
                                 <a class="open-toggle" href="#"><i class="header-icon fe fe-align-left"></i></a>
                                 <a class="close-toggle" href="#"><i class="header-icons fe fe-x"></i></a>
                             </div>
-                            <div class="main-header-center ms-3 d-sm-none d-md-none d-lg-block">
+                            <!-- <div class="main-header-center ms-3 d-sm-none d-md-none d-lg-block">
                                 <input class="form-control" placeholder="Search for anything..." type="search"> <button
                                     class="btn"><i class="fas fa-search d-none d-md-block"></i></button>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="main-header-right">
                             <ul class="nav nav-item  navbar-nav-right ms-auto">
 
-
+<!-- 
                                 <li class="dropdown nav-item main-header-notification">
                                     <a class="new nav-link" href="#">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="header-icon-svgs" viewBox="0 0 24 24"
@@ -193,7 +194,7 @@
                                             <a href="">VIEW ALL</a>
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
 
                                 <!-- <li class="nav-item full-screen fullscreen-button">
                                         <a class="new nav-link full-screen-link" href="#"><svg
@@ -557,6 +558,8 @@
         <!-- Sticky js -->
         <script src="{{URL::asset('assets/js/sticky.js')}}"></script>
         <script src="{{URL::asset('assets/js/modal-popup.js')}}"></script>
+        <script src="{{URL::asset('assets/js/daterange.js')}}"></script>
+
 
         <!-- Left-menu js-->
         <script src="{{URL::asset('assets/plugins/side-menu/sidemenu.js')}}"></script>
