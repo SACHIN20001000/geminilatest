@@ -7,7 +7,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<!-- Title -->
-		<title> Pet Parents® | Healthy Pets. Happy Family ® </title>
+		<title> Gemini Consultancy Services  </title>
 
 		<!-- Favicon -->
 		<link rel="icon" href="{{URL::asset('assets/img/brand/favicon.png')}}" type="image/x-icon"/>
