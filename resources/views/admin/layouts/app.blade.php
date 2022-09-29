@@ -55,7 +55,11 @@
         <link href="{{URL::asset('assets/css/skin-modes.css')}}" rel="stylesheet" />
         <link href="{{ mix('css/admin.css') }}" rel="stylesheet" />
 
-
+<style>
+    .hidden{
+        display:none
+    }
+</style>
     </head>
 
     <body class="main-body app sidebar-mini">
