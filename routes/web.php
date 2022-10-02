@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\ChatsController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\ChannelController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -50,6 +51,7 @@ Route::get('home', function ()
 
 Route::prefix('admin')->group(function ()
 {
+
     Route::get('/', function ()
     {
         return view('admin.login');
@@ -63,7 +65,7 @@ Route::prefix('admin')->group(function ()
         return view('admin.forgotPassword');
     })->middleware(['guest']);
 
-
+Route::group(['middleware' => ['auth']], function () { 
    
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
        
@@ -77,6 +79,7 @@ Route::prefix('admin')->group(function ()
         Route::resource('leads', LeadController::class);
         Route::resource('policy', PolicyController::class);
         Route::resource('report', ReportController::class);
+        Route::resource('channel', ChannelController::class);
         Route::any('renew_status', [PolicyController::class, 'renew_status'])->name('renew_status');
         Route::any('endrosment', [PolicyController::class, 'endrosment'])->name('endrosment');
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
@@ -97,6 +100,7 @@ Route::prefix('admin')->group(function ()
         Route::get('update-profile', [App\Http\Controllers\Admin\AdminController::class, 'updateProfile'])->name('updateProfile');
         Route::post('update-user-profile/{id}', [App\Http\Controllers\Admin\AdminController::class, 'updateUserProfile'])->name('updateUserProfile');
    
+});
 });
 
 Auth::routes([

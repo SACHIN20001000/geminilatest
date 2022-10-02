@@ -8,6 +8,7 @@ use App\Models\Lead;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\SubProduct;
+use App\Models\Channel;
 use App\Models\MakeModel;
 use App\Models\Make;
 use App\Models\Policy;
@@ -113,8 +114,9 @@ class LeadController extends Controller
     {
         $insurances = Insurance::all();
         $companies = Company::all();
+        $channels = Channel::all();
         $make = Make::all();
-        return view('admin.lead.addEdit',compact('insurances','companies','make'));
+        return view('admin.lead.addEdit',compact('insurances','companies','make','channels'));
 
     }
 
@@ -171,7 +173,9 @@ class LeadController extends Controller
         $companies = Company::all();
         $policy= Policy::where('lead_id',$lead->id)->first();
         $make = Make::all();
-        return view('admin.lead.addEdit',compact('insurances','companies','lead','policy','make','products','subProducts'));
+        $varients=MakeModel::where('make_id',$policy->make)->get();
+        $channels = Channel::all();
+        return view('admin.lead.addEdit',compact('insurances','companies','lead','policy','make','products','subProducts','channels','varients'));
     }
 
     /**
@@ -235,11 +239,49 @@ class LeadController extends Controller
     public function getVarient(Request $request){
         
         $model= MakeModel::where('make_id',$request->make)->get();
-        $output1="<option>Select </option>";
-        foreach ($model as $val1) {
-            $output1 .= '<option value="' . $val1->id . '">' . $val1->name . '</option>';
+        // $output1="<option>Select </option>";
+        $response=[];
+        $response['varriant']=[
+            0=>"<option value=''>Select </option>"
+        ];
+        $response['model']=[
+            0=>"<option value=''>Select </option>"
+
+        ];
+        $response['fuel']=[
+            0=>"<option value=''>Select </option>"
+
+        ];
+        $response['cc']=[
+            0=>"<option value=''>Select </option>"
+
+        ];
+        $response['seating']=[
+            0=>"<option value=''>Select </option>"
+
+        ];
+        $response['showroom']=[
+            0=>"<option value=''>Select </option>"
+
+        ];
+        $response['od']=[
+            0=>"<option value=''>Select </option>"
+
+        ];
+        $response['tp']=[
+            0=>"<option value=''>Select </option>"
+
+        ];
+       
+        foreach ($model as $val) {
+          if(!empty($val->type)){
+            array_push($response[$val->type],'<option value="' . $val->name . '">' . $val->name . '</option>');
+
+          }
+            
         }
-        echo $output1;
+     
+        return $response;
     }
     public function getStaff(){
             

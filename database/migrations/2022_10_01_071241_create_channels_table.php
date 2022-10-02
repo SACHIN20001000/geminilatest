@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMakeModelsTable extends Migration
+class CreateChannelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateMakeModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('make_models', function (Blueprint $table) {
+        Schema::create('channels', function (Blueprint $table) {
             $table->id();
-            $table->integer('make_id')->nullable();
             $table->string('name')->nullable();
-            $table->string('type')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateMakeModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('make_models');
+        Schema::dropIfExists('channels');
     }
 }

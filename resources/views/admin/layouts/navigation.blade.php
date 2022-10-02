@@ -44,6 +44,7 @@
                     <li><a class="slide-item" href="{{ route('product.index') }}">Product</a></li>
                     <li><a class="slide-item" href="{{ route('subproduct.index') }}">SubProduct</a></li>
                     <li><a class="slide-item" href="{{ route('make.index') }}">Make</a></li>
+                    <li><a class="slide-item" href="{{ route('channel.index') }}">Channel</a></li>
                    
                 </ul>
             </li>
@@ -108,6 +109,8 @@
                     <li><a class="slide-item" href="{{ route('product.index') }}">Product</a></li>
                     <li><a class="slide-item" href="{{ route('subproduct.index') }}">SubProduct</a></li>
                     <li><a class="slide-item" href="{{ route('make.index') }}">Make/Variant</a></li>
+                    <li><a class="slide-item" href="{{ route('channel.index') }}">Channel</a></li>
+
                     <!-- <li><a class="slide-item" href="{{ route('model.index') }}">Variant</a></li> -->
                    
                 </ul>

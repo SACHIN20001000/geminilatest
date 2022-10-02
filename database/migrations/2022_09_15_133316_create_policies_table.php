@@ -31,6 +31,11 @@ class CreatePoliciesTable extends Migration
             $table->string('case_type')->nullable();
             $table->string('net_premium')->nullable();
             $table->string('gst')->nullable();
+            $table->string('od_factor')->nullable();
+            $table->string('ex_showroom')->nullable();
+            $table->string('seating_capacity')->nullable();
+            $table->string('fuel')->nullable();
+            $table->string('cc')->nullable();
             $table->text('gwp')->nullable();
             $table->text('od_premium')->nullable();
             $table->text('add_on_premium')->nullable();

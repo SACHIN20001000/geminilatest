@@ -8,6 +8,7 @@ use App\Models\Lead;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\SubProduct;
+use App\Models\Channel;
 use App\Models\MakeModel;
 use App\Models\Make;
 use App\Models\Policy;
@@ -116,7 +117,9 @@ class PolicyController extends Controller
         $insurances = Insurance::all();
         $companies = Company::all();
         $make = Make::all();
-        return view('admin.policy.addEdit',compact('insurances','companies','make'));
+        $channels = Channel::all();
+        $users= User::all();
+        return view('admin.policy.addEdit',compact('insurances','companies','make','channels','users'));
 
     }
 
@@ -129,8 +132,8 @@ class PolicyController extends Controller
     public function store(Request $request)
     {
        
-    
-        $policyInputs= $request->except('holder_name', '_token','phone','email',);
+        
+        $policyInputs = $request->except('holder_name', '_token','phone','email',);
         Policy::create($policyInputs);
         return back()->with('success', 'Policy added successfully!');
        
@@ -163,7 +166,9 @@ class PolicyController extends Controller
         $companies = Company::all();
         $make = Make::all();
         $varriant = MakeModel::where('make_id',$policy->make)->get();
-        return view('admin.policy.addEdit',compact('insurances','companies','policy','make','products','subProducts','varriant'));
+        $channels = Channel::all();
+        $users= User::all();
+        return view('admin.policy.addEdit',compact('users','channels','insurances','companies','policy','make','products','subProducts','varriant'));
     }
 
     /**

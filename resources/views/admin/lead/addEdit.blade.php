@@ -83,8 +83,16 @@
                       <!------------------------------------------------- polciy start  ------------------------------------------------>
                       <div class="col-lg-6">
 											<p class="mg-b-10">Channel Name</p>
-                                          <input type="text" name="channel_name" value="{{isset($policy) ? $policy->channel_name : ''}}" class="form-control common-feild feild" id="channel_name">
-                     </div>
+                                          <!-- <input type="text" name="channel_name" value="{{isset($policy) ? $policy->channel_name : ''}}" class="form-control common-feild feild" id="channel_name"> -->
+                                          <select name="channel_name" class="select2 form-control common-feild feild" id="channel_name">
+                                            <option value="">Select Below</option>
+                                            @if($channels->count())
+                                                @foreach($channels as $channel)
+                                                       <option value="{{$channel->name}}" {{ (isset($policy) && $channel->name == $policy->channel_name) ? 'selected' : '' }}>{{$channel->name}}</option>             
+                                                @endforeach
+                                            @endif
+                                           </select>
+                                        </div>
                       <div class="col-lg-6">
 											<p class="mg-b-10">Insurance Company</p>
                                             <select name="company_id" class="select2 form-control common-feild feild" id="company_id">
@@ -652,6 +660,13 @@
                      <p class="mg-b-10">Variant</p>
                      <select name="varriant" class="select2 form-control feild"  id="varriant">
                     <option value="">Select Below</option>
+                    @if(isset($varients) &&  $varients->count())
+                            @foreach($varients as $varient)
+                            @if($varient->type == 'varriant')
+                            <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->varriant) ? 'selected' : '' }}>{{$varient->name}}</option>
+                            @endif
+                            @endforeach
+                        @endif
                     </select>
                      <!-- <input type="text" name="varriant" value="{{isset($policy) ? $policy->varriant : ''}}" class="form-control feild" id="varriant"> -->
                      
@@ -659,8 +674,92 @@
                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">Model</p>
-                     <input type="text" name="model" value="{{isset($policy) ? $policy->model : ''}}" class="form-control feild" id="model">
+                    
+                        <select name="model" class="select2 form-control feild"  id="model">
+                        <option value="">Select Below</option>
+                        @if(isset($varients) &&  $varients->count())
+                                @foreach($varients as $varient)
+                                @if($varient->type == 'model')
+                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->model) ? 'selected' : '' }}>{{$varient->name}}</option>
+                                @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
                      
+                     <p class="mg-b-10">CC/KW</p>
+                    
+                        <select name="cc" class="select2 form-control feild"  id="cc">
+                        <option value="">Select Below</option>
+                        @if(isset($varients) &&  $varients->count())
+                                @foreach($varients as $varient)
+                                @if($varient->type == 'cc')
+                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->cc) ? 'selected' : '' }}>{{$varient->name}}</option>
+                                @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-b-10">Fuel</p>
+                    
+                        <select name="fuel" class="select2 form-control feild"  id="fuel">
+                        <option value="">Select Below</option>
+                        @if(isset($varients) &&  $varients->count())
+                                @foreach($varients as $varient)
+                                @if($varient->type == 'fuel')
+                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->fuel) ? 'selected' : '' }}>{{$varient->name}}</option>
+                                @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-b-10">Seating Capacity</p>
+                    
+                        <select name="seating_capacity" class="select2 form-control feild"  id="seating">
+                        <option value="">Select Below</option>
+                        @if(isset($varients) &&  $varients->count())
+                                @foreach($varients as $varient)
+                                @if($varient->type == 'seating')
+                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->seating_capacity) ? 'selected' : '' }}>{{$varient->name}}</option>
+                                @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-b-10">EX Showroom Price</p>
+                    
+                        <select name="ex_showroom" class="select2 form-control feild"  id="showroom">
+                        <option value="">Select Below</option>
+                        @if(isset($varients) &&  $varients->count())
+                                @foreach($varients as $varient)
+                                @if($varient->type == 'showroom')
+                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->ex_showroom) ? 'selected' : '' }}>{{$varient->name}}</option>
+                                @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-b-10">OD Factor</p>
+                    
+                        <select name="od_factor" class="select2 form-control feild"  id="od">
+                        <option value="">Select Below</option>
+                        @if(isset($varients) &&  $varients->count())
+                                @foreach($varients as $varient)
+                                @if($varient->type == 'od')
+                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->od_factor) ? 'selected' : '' }}>{{$varient->name}}</option>
+                                @endif
+                                @endforeach
+                            @endif
+                        </select>
                     </div>
                     <div class="col-lg-6">
                      
@@ -799,8 +898,17 @@
                     <div class="col-lg-6">
                      
                      <p class="mg-b-10">TP Premium</p>
-                     <input type="text" name="tp_premium" value="{{isset($policy) ? $policy->tp_premium : ''}}" class="form-control feild" id="tp_premium">
-                     
+                     <select name="tp_premium" class="select2 form-control feild"  id="tp_premium">
+                        <option value="">Select Below</option>
+                        @if(isset($varients) &&  $varients->count())
+                                @foreach($varients as $varient)
+                                @if($varient->type == 'tp')
+                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->tp_premium) ? 'selected' : '' }}>{{$varient->name}}</option>
+                                @endif
+                                @endforeach
+                            @endif
+                        </select>
+                  
                     </div>
                     <div class="col-lg-6">
                      
@@ -893,7 +1001,15 @@ $.ajaxSetup({
                     make: make,
                 },
                 success: function(result) {
-                    $('#varriant').html(result);
+                    console.log(result);
+                    $('#varriant').html(result['varriant']);
+                    $('#cc').html(result['cc']);
+                    $('#fuel').html(result['fuel']);
+                    $('#model').html(result['model']);
+                    $('#od').html(result['od']);
+                    $('#seating').html(result['seating']);
+                    $('#showroom').html(result['showroom']);
+                    $('#tp').html(result['tp']);
                 }
 
             });
@@ -915,8 +1031,8 @@ $.ajaxSetup({
             });
         }
     });
-    $('.feild').parent('div').hide()
-    $('.common-feild').parent('div').show()
+    $('.feild').parent('div').hide();
+    $('.common-feild').parent('div').show();
     $('#subproduct_id').change(function() {
        
    
@@ -939,6 +1055,7 @@ $.ajaxSetup({
 function changeFeild(subproduct){
     if(subproduct == 'others' || subproduct == 'cpm' || subproduct == 'car'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#requirement').parent('div').show();   
                  $('#client_name').parent('div').show();   
                  $('#address').parent('div').show();      
@@ -946,6 +1063,7 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'marine'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#type').parent('div').show();   
                  $('#client_name').parent('div').show();   
                  $('#address').parent('div').show(); 
@@ -969,6 +1087,7 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'liability'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#libality').parent('div').show();   
                  $('#policy_type').parent('div').show();   
                  $('#liability_industrial').parent('div').show(); 
@@ -983,6 +1102,7 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'wc'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#wc_policy').parent('div').show();   
                  $('#client_name').parent('div').show();   
                  $('#address').parent('div').show();      
@@ -1009,6 +1129,7 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'fire' || subproduct == 'burglary'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#client_name').parent('div').show();   
                  $('#address').parent('div').show();      
                  $('#pincode').parent('div').show(); 
@@ -1036,6 +1157,7 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'home'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#client_name').parent('div').show();   
                  $('#address_risk_location').parent('div').show();      
                  $('#cover_opted').parent('div').show(); 
@@ -1063,6 +1185,7 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'health'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#fresh').parent('div').show();   
                  $('#portability').parent('div').show();      
                  $('#dob').parent('div').show(); 
@@ -1083,6 +1206,7 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'travel'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#sum_insured').parent('div').show();   
                  $('#visiting_country').parent('div').show();      
                  $('#date_of_departure').parent('div').show(); 
@@ -1103,6 +1227,7 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'pvr'){
                  $('.feild').parent('div').hide()
+                  $('.common-feild').parent('div').show();
                  $('#make').parent('div').show();   
                  $('#varriant').parent('div').show(); 
                  $('#model').parent('div').show();      
@@ -1123,10 +1248,16 @@ function changeFeild(subproduct){
                  $('#net_premium').parent('div').show(); 
                  $('#gst').parent('div').show(); 
                  $('#gross_premium').parent('div').show(); 
+                 $('#od').parent('div').show(); 
+                 $('#showroom').parent('div').show(); 
+                 $('#cc').parent('div').show(); 
+                 $('#seating').parent('div').show(); 
+                 $('#seating').parent('div').show(); 
                   
                 }
                 if(subproduct == 'gcv'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#gcv_type').parent('div').show();   
                  $('#gvw').parent('div').show();   
                  $('#make').parent('div').show();  
@@ -1146,10 +1277,15 @@ function changeFeild(subproduct){
                  $('#net_premium').parent('div').show(); 
                  $('#gst').parent('div').show(); 
                  $('#gross_premium').parent('div').show(); 
-                  
+                 $('#od').parent('div').show(); 
+                 $('#showroom').parent('div').show(); 
+                 $('#cc').parent('div').show(); 
+                 $('#seating').parent('div').show(); 
+                 $('#seating').parent('div').show(); 
                 }
                 if(subproduct == 'pcv'){
                  $('.feild').parent('div').hide()
+                 $('.common-feild').parent('div').show();
                  $('#fuel_type').parent('div').show();   
                  $('#passenger_carrying_capacity').parent('div').show();   
                  $('#category').parent('div').show();   
@@ -1170,11 +1306,15 @@ function changeFeild(subproduct){
                  $('#net_premium').parent('div').show(); 
                  $('#gst').parent('div').show(); 
                  $('#gross_premium').parent('div').show(); 
-                  
+                 $('#od').parent('div').show(); 
+                 $('#showroom').parent('div').show(); 
+                 $('#cc').parent('div').show(); 
+                 $('#seating').parent('div').show(); 
+                 $('#seating').parent('div').show(); 
                 }
                 if(subproduct == 'tw'){
                  $('.feild').parent('div').hide()
-                 
+                 $('.common-feild').parent('div').show();
                  $('#make').parent('div').show();
                  $('#varriant').parent('div').show();    
                  $('#model').parent('div').show();      
@@ -1192,7 +1332,11 @@ function changeFeild(subproduct){
                  $('#net_premium').parent('div').show(); 
                  $('#gst').parent('div').show(); 
                  $('#gross_premium').parent('div').show(); 
-                  
+                 $('#od').parent('div').show(); 
+                 $('#showroom').parent('div').show(); 
+                 $('#cc').parent('div').show(); 
+                 $('#seating').parent('div').show(); 
+                 $('#seating').parent('div').show();  
                 }
      
 

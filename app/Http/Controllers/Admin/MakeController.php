@@ -75,22 +75,108 @@ class MakeController extends Controller
     public function store(StoreMakeRequest $request)
     {
 
-      
+     
         $inputs = $request->only(
             'name',
             );
            $make= Make::create($inputs);
             if(!empty($request->model_id)){
-                MakeModel::where('make_id',$make->id)->delete(); 
-                foreach ($request->model_id as $key => $varient) {
-                if(!empty($varient)){
-                    MakeModel::create([
-                        'make_id'=> $make->id,
-                        'name'=> $varient,
-                    ]);
-                }
+                MakeModel::where('make_id',$make->id)->where('type','model')->delete(); 
+                foreach ($request->model_id as $key => $model) {
+                    if(!empty($model)){
+                        MakeModel::create([
+                            'make_id'=> $make->id,
+                            'name'=> $model,
+                            'type' => 'model'
+                        ]);
+                    }
                 }
             }
+            if(!empty($request->varriant_id)){
+                MakeModel::where('make_id',$make->id)->where('type','varriant')->delete(); 
+                foreach ($request->varriant_id as $key => $varriant) {
+                    if(!empty($varriant)){
+                        MakeModel::create([
+                            'make_id'=> $make->id,
+                            'name'=> $varriant,
+                            'type' => 'varriant'
+                        ]);
+                    }
+                }
+            }
+            if(!empty($request->fuel_id)){
+                MakeModel::where('make_id',$make->id)->where('type','fuel')->delete(); 
+                foreach ($request->fuel_id as $key => $fuel) {
+                    if(!empty($fuel)){
+                        MakeModel::create([
+                            'make_id'=> $make->id,
+                            'name'=> $fuel,
+                            'type' => 'fuel'
+                        ]);
+                    }
+                }
+            }
+            if(!empty($request->cc_id)){
+                MakeModel::where('make_id',$make->id)->where('type','cc')->delete(); 
+                foreach ($request->cc_id as $key => $cc) {
+                    if(!empty($cc)){
+                        MakeModel::create([
+                            'make_id'=> $make->id,
+                            'name'=> $cc,
+                            'type' => 'cc'
+                        ]);
+                    }
+                }
+            }
+            if(!empty($request->seating_id)){
+                MakeModel::where('make_id',$make->id)->where('type','seating')->delete(); 
+                foreach ($request->seating_id as $key => $seating) {
+                    if(!empty($seating)){
+                        MakeModel::create([
+                            'make_id'=> $make->id,
+                            'name'=> $seating,
+                            'type' => 'seating'
+                        ]);
+                    }
+                }
+            }
+            if(!empty($request->seating_id)){
+                MakeModel::where('make_id',$make->id)->where('type','showroom')->delete(); 
+                foreach ($request->seating_id as $key => $showroom) {
+                    if(!empty($showroom)){
+                        MakeModel::create([
+                            'make_id'=> $make->id,
+                            'name'=> $showroom,
+                            'type' => 'showroom'
+                        ]);
+                    }
+                }
+            }
+            if(!empty($request->od_id)){
+                MakeModel::where('make_id',$make->id)->where('type','od')->delete(); 
+                foreach ($request->od_id as $key => $od) {
+                    if(!empty($od)){
+                        MakeModel::create([
+                            'make_id'=> $make->id,
+                            'name'=> $od,
+                            'type' => 'od'
+                        ]);
+                    }
+                }
+            }
+            if(!empty($request->tp_id)){
+                MakeModel::where('make_id',$make->id)->where('type','tp')->delete(); 
+                foreach ($request->tp_id as $key => $tp) {
+                    if(!empty($tp)){
+                        MakeModel::create([
+                            'make_id'=> $make->id,
+                            'name'=> $tp,
+                            'type' => 'tp'
+                        ]);
+                    }
+                }
+            }
+          
         
         return back()->with('success', 'Make addded successfully!');
     }
@@ -133,20 +219,103 @@ class MakeController extends Controller
             'name',
             );
         $make->update($inputs);
-            if(!empty($request->model_id)){
-                MakeModel::where('make_id',$make->id)->delete(); 
-                foreach ($request->model_id as $key => $varient) {
-                  
-                if(!empty($varient)){
-                    
+        if(!empty($request->model_id)){
+            MakeModel::where('make_id',$make->id)->where('type','model')->delete(); 
+            foreach ($request->model_id as $key => $model) {
+                if(!empty($model)){
                     MakeModel::create([
                         'make_id'=> $make->id,
-                        'name'=> $varient,
+                        'name'=> $model,
+                        'type' => 'model'
                     ]);
                 }
+            }
+        }
+        if(!empty($request->varriant_id)){
+            MakeModel::where('make_id',$make->id)->where('type','varriant')->delete(); 
+            foreach ($request->varriant_id as $key => $varriant) {
+                if(!empty($varriant)){
+                    MakeModel::create([
+                        'make_id'=> $make->id,
+                        'name'=> $varriant,
+                        'type' => 'varriant'
+                    ]);
                 }
             }
-        
+        }
+        if(!empty($request->fuel_id)){
+            MakeModel::where('make_id',$make->id)->where('type','fuel')->delete(); 
+            foreach ($request->fuel_id as $key => $fuel) {
+                if(!empty($fuel)){
+                    MakeModel::create([
+                        'make_id'=> $make->id,
+                        'name'=> $fuel,
+                        'type' => 'fuel'
+                    ]);
+                }
+            }
+        }
+        if(!empty($request->cc_id)){
+            MakeModel::where('make_id',$make->id)->where('type','cc')->delete(); 
+            foreach ($request->cc_id as $key => $cc) {
+                if(!empty($cc)){
+                    MakeModel::create([
+                        'make_id'=> $make->id,
+                        'name'=> $cc,
+                        'type' => 'cc'
+                    ]);
+                }
+            }
+        }
+        if(!empty($request->seating_id)){
+            MakeModel::where('make_id',$make->id)->where('type','seating')->delete(); 
+            foreach ($request->seating_id as $key => $seating) {
+                if(!empty($seating)){
+                    MakeModel::create([
+                        'make_id'=> $make->id,
+                        'name'=> $seating,
+                        'type' => 'seating'
+                    ]);
+                }
+            }
+        }
+        if(!empty($request->seating_id)){
+            MakeModel::where('make_id',$make->id)->where('type','showroom')->delete(); 
+            foreach ($request->seating_id as $key => $showroom) {
+                if(!empty($showroom)){
+                    MakeModel::create([
+                        'make_id'=> $make->id,
+                        'name'=> $showroom,
+                        'type' => 'showroom'
+                    ]);
+                }
+            }
+        }
+        if(!empty($request->od_id)){
+            MakeModel::where('make_id',$make->id)->where('type','od')->delete(); 
+            foreach ($request->od_id as $key => $od) {
+                if(!empty($od)){
+                    MakeModel::create([
+                        'make_id'=> $make->id,
+                        'name'=> $od,
+                        'type' => 'od'
+                    ]);
+                }
+            }
+        }
+        if(!empty($request->tp_id)){
+            MakeModel::where('make_id',$make->id)->where('type','tp')->delete(); 
+            foreach ($request->tp_id as $key => $tp) {
+                if(!empty($tp)){
+                    MakeModel::create([
+                        'make_id'=> $make->id,
+                        'name'=> $tp,
+                        'type' => 'tp'
+                    ]);
+                }
+            }
+        }
+      
         return back()->with('success', 'Make updated successfully!');
     }
 
