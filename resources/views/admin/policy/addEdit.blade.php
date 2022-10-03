@@ -953,11 +953,11 @@
                                 <tbody>
                                     <tr>
                                     <td>
-                                        <input type="file" name="attachment[]" required id="attachment"  class="form-control tableData">
+                                        <input type="file" name="attachment[]"  id="attachment"  class="form-control tableData">
                                        
                                     </td>
                                     <td>
-                                    <select name="type[]" class="form-control" required>
+                                    <select name="type[]" class="form-control" >
                                         <option value="">Select</option>
                                         <option value="Attachment">Attachment</option>
                                         <option value="RC">RC</option>
@@ -974,21 +974,114 @@
                     <div class="card">
                         <div class="card-body">
                             <h4>Mis</h4>
-                            <div class="row row-xs align-items-center mg-b-20">
-                                            <div class="col-md-4">
-                                                <label class="form-label mg-b-0"> Reference</label>
-                                            </div>
-                                            <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
-                                                <select name="refrence" class="form-control">
-                                                    <option value="">Select</option>
-                                                    @if(isset($users) && $users->count())
-                                                @foreach($users as $user)
-                                                       <option value="{{$user->id}}" {{ (isset($_GET['users']) && $user->id == $_GET['users']) ? 'selected' : '' }}>{{$user->name}}</option>             
-                                        @endforeach
-                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
+                        
+                            <div class="row row-xs align-items-center mg-b-20 ">
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Reference</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                    <select name="user_id" class="form-control">
+                                        <option value="">Select</option>
+                                        @if(isset($users) && $users->count())
+                                            @foreach($users as $user)
+                                                        <option value="{{$user->id}}" {{ (isset($policy->user_id) && $user->id == $policy->user_id) ? 'selected' : '' }}>{{$user->name}}</option>             
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                </div>
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Premium</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                   <input type="number" name="mis_premium" value="{{isset($policy) ? $policy->mis_premium : ''}}" id="mis_premium" placeholder="enter premium" class="form-control">
+                                </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row row-xs align-items-center mg-b-20 ">
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Amount paid</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                   <input type="number" name="mis_amount_paid"value="{{isset($policy) ? $policy->mis_amount_paid : ''}}"  class="form-control" placeholder="enter amount paid" id="">
+                                </div>
+                                </div>
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Payment date</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                               <input type="date" name="mis_payment_date" value="{{isset($policy) ? $policy->mis_payment_date : ''}}" class="form-control" placeholder="enter payment date" id="">
+                                </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row row-xs align-items-center mg-b-20 ">
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Payment method</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                    <select name="mis_payment_method" class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="Cheque" {{ (isset($policy->mis_payment_method) && 'Cheque' == $policy->mis_payment_method) ? 'selected' : '' }}>Cheque</option>
+                                        <option value="DD/Draft" {{ (isset($policy->mis_payment_method) && 'DD/Draft' == $policy->mis_payment_method) ? 'selected' : '' }}>DD/Draft</option>
+                                        <option value="Bank Transfer" {{ (isset($policy->mis_payment_method) && 'Bank Transfer' == $policy->mis_payment_method) ? 'selected' : '' }}>Bank Transfer</option>
+                                        <option value="Online" {{ (isset($policy->mis_payment_method) && 'Online' == $policy->mis_payment_method) ? 'selected' : '' }}>Online</option>
+                                    </select>
+                                </div>
+                                </div>
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Commissionable Amount</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                <input type="number" name="mis_commissionable_amount" value="{{isset($policy) ? $policy->mis_commissionable_amount : ''}}" class="form-control" placeholder="enter commission amount" id="">
+                                </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row row-xs align-items-center mg-b-20 ">
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Percentage</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                   <input type="number" name="mis_percentage" value="{{isset($policy) ? $policy->mis_percentage : ''}}" class="form-control" placeholder="enter percentage" id="">
+                                </div>
+                                </div>
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Commision</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                  <input type="number" name="mis_commission" value="{{isset($policy) ? $policy->mis_commission : ''}}" class="form-control" placeholder="enter commision" id="">
+                                </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row row-xs align-items-center mg-b-20 ">
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Transaction Type</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                    <select name="mis_transaction_type" class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="Package" {{ (isset($policy->mis_transaction_type) && 'Package' == $policy->mis_transaction_type) ? 'selected' : '' }} >Package</option>
+                                        <option value="SOAD" {{ (isset($policy->mis_transaction_type) && 'SOAD' == $policy->mis_transaction_type) ? 'selected' : '' }}>SOAD</option>
+                                        <option value="TP" {{ (isset($policy->mis_transaction_type) && 'TP' == $policy->mis_transaction_type) ? 'selected' : '' }}>TP</option>
+                                        <option value="Endorsement" {{ (isset($policy->mis_transaction_type) && 'Endorsement' == $policy->mis_transaction_type) ? 'selected' : '' }}>Endorsement</option>
+                                    </select>
+                                </div>
+                                </div>
+                         
+                               
+                            </div>
                         </div>
                     </div>
                           

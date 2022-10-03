@@ -134,6 +134,7 @@ class PolicyController extends Controller
        
         
         $policyInputs = $request->except('holder_name', '_token','phone','email',);
+        $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         Policy::create($policyInputs);
         return back()->with('success', 'Policy added successfully!');
        
@@ -180,9 +181,23 @@ class PolicyController extends Controller
      */
     public function update(Request $request, Policy $policy)
     {
-   
         $policyInputs= $request->except('holder_name', '_token','_method','phone','email');
         $policy->update($policyInputs);
+        if(isset($request->attachment) && (!empty($request->attachment))){
+        foreach ($request->attachment as $key => $value) {
+                if(!empty($value)){
+                    $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
+                    $value->move(public_path('/attachments'), $attachment_filename);
+                    Attachment::create([
+                        'lead_id'=> $policy->lead_id ?? 0,
+                        'policy_id'=> $policy->id ??'',
+                        'user_id'=> Auth::user()->id ??'',
+                        'file_name'=> $attachment_filename ??'',
+                        'type'=> $request->type[$key] ??  ''
+                    ]);
+                }
+            }
+        }
         return back()->with('success', 'Policy Update successfully!');
     }
 

@@ -146,6 +146,15 @@ class CreatePoliciesTable extends Migration
             $table->string('passenger_carrying_capacity')->nullable();
             $table->string('category')->nullable();
             $table->string('varriant')->nullable();
+            $table->text('mis_premium')->nullable();
+            $table->text('mis_amount_paid')->nullable();
+            $table->text('mis_payment_date')->nullable();
+            $table->text('mis_payment_method')->nullable();
+            $table->text('mis_commissionable_amount')->nullable();
+            $table->text('mis_percentage')->nullable();
+            $table->text('mis_commission')->nullable();
+            $table->text('mis_transaction_type')->nullable();
+            $table->text('mis_premium')->nullable();
             $table->timestamps();
         });
     }
