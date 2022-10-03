@@ -154,7 +154,6 @@ class CreatePoliciesTable extends Migration
             $table->text('mis_percentage')->nullable();
             $table->text('mis_commission')->nullable();
             $table->text('mis_transaction_type')->nullable();
-            $table->text('mis_premium')->nullable();
             $table->timestamps();
         });
     }
