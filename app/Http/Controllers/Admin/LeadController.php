@@ -142,7 +142,22 @@ class LeadController extends Controller
         $policyInputs= $request->except('holder_name', '_token','phone','email',);
         $policyInputs['lead_id']= $lead->id;
         $policyInputs['user_id']= Auth::User()->id;
-        Policy::create($policyInputs);
+        $policy=  Policy::create($policyInputs);
+        if(isset($request->attachment) && (!empty($request->attachment))){
+            foreach ($request->attachment as $key => $value) {
+                    if(!empty($value)){
+                        $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
+                        $value->move(public_path('/attachments'), $attachment_filename);
+                        Attachment::create([
+                            'lead_id'=> $lead->id ?? 0,
+                            'policy_id'=> $policy->id ??'',
+                            'user_id'=> Auth::user()->id ??'',
+                            'file_name'=> $attachment_filename ??'',
+                            'type'=> $request->type[$key] ??  ''
+                        ]);
+                    }
+                }
+            }
         return back()->with('success', 'Lead added successfully!');
        
     }
@@ -198,7 +213,22 @@ class LeadController extends Controller
         );
         $lead->update($leadData);
         $policyInputs= $request->except('holder_name', '_token','_method','phone','email');
-        Policy::where('lead_id',$lead->id)->update($policyInputs);
+        $policy= Policy::where('lead_id',$lead->id)->update($policyInputs);
+        if(isset($request->attachment) && (!empty($request->attachment))){
+            foreach ($request->attachment as $key => $value) {
+                    if(!empty($value)){
+                        $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
+                        $value->move(public_path('/attachments'), $attachment_filename);
+                        Attachment::create([
+                            'lead_id'=> $lead->id ?? 0,
+                            'policy_id'=> $policy->id ??'',
+                            'user_id'=> Auth::user()->id ??'',
+                            'file_name'=> $attachment_filename ??'',
+                            'type'=> $request->type[$key] ??  ''
+                        ]);
+                    }
+                }
+            }
         return back()->with('success', 'Lead Update successfully!');
     }
 
