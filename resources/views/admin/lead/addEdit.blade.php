@@ -942,6 +942,11 @@
                      
                     </div>
 
+                    <!-- ------------------------------------------------- polciy end --------------------------------------------   -->
+                      
+                         
+                            </div>
+                          
                     <div class="card">
                         <div class="card-body">
                             <h4>Attachment</h4>
@@ -967,11 +972,6 @@
                             </tbody></table>
                         </div>
                     </div>
-                    <!-- ------------------------------------------------- polciy end --------------------------------------------   -->
-                      
-                         
-                            </div>
-                          
                             <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5" type="submit">{{isset($lead) ? 'Update' : 'Save' }}</button>
                         </div>
                 </div>
