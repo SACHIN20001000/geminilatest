@@ -91,7 +91,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('saveAssign', [LeadController::class, 'saveAssign'])->name('saveAssign');
         Route::post('changeStatus', [LeadController::class, 'changeStatus'])->name('changeStatus');
         Route::post('leadAttachment', [LeadController::class, 'leadAttachment'])->name('leadAttachment');
-        Route::post('leadQuotes', [LeadController::class, 'leadQuotes'])->name('leadQuotes');
+       
+        Route::post('acceptLead', [LeadController::class, 'acceptLead'])->name('acceptLead');
         Route::get('dummyMail', [LeadController::class, 'dummyMail'])->name('dummyMail');
         Route::get('chat', [ChatsController::class, 'index'])->name('chat');
         Route::post('send', [ChatsController::class, 'postSendMessage']);
@@ -104,6 +105,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('update-user-profile/{id}', [App\Http\Controllers\Admin\AdminController::class, 'updateUserProfile'])->name('updateUserProfile');
    
 });
+Route::post('leadQuotes', [LeadController::class, 'leadQuotes'])->name('leadQuotes');
+Route::post('rejectLead', [LeadController::class, 'rejectLead'])->name('rejectLead');
 });
 
 Auth::routes([

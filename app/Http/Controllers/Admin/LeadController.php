@@ -22,6 +22,8 @@ use App\Http\Requests\Admin\Lead\StoreLeadRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Mail;
+ini_set('max_execution_time', 0);
+
 class LeadController extends Controller
 {
     /**
@@ -403,16 +405,16 @@ class LeadController extends Controller
                 $request->file('attachment')->move(public_path('/quotes'), $attachment_filename);
                 $quote->update(['file_name'=> $attachment_filename]);
             }
-                try {
-                    Mail::send('admin.email.commonemail',['policy' => $lead,'content'=>$request->remarks],function($messages) use ($request,$lead) {
-                                
-                        $messages->to($lead->email);
-                        $subject ='Gemini consultancy Service';
-                        $messages->subject($subject);                 
-                });
-                } catch (\Exception $e) {
-                
+            Mail::send('admin.email.commonemail',['policy' => $lead,'content'=>$request->remarks],function($messages) use ($request,$lead,$quote) {
+                $messages->to($lead->email);
+                $subject ='Gemini consultancy Service';
+                if(isset($quote->file_name) && !empty($quote->file_name)){
+                    $fileurls = url('quotes',$quote->file_name);
+                    $messages->attach($fileurls);
                 }
+             
+                $messages->subject($subject);                 
+        });
   
             $listQuote=Quote::where('lead_id',$request->lead_id)->count();
             if($listQuote >= 2){
@@ -434,4 +436,15 @@ class LeadController extends Controller
         });
         echo "Successfully sent the email";  
     }
+    public function rejectLead(Request $request,Lead $lead){
+        $lead->update(['status'=> 'REJECTED']);
+        return   redirect('/admin/dashboard');
+
+    }
+    public function acceptLead(Request $request,Lead $lead){
+        $lead->update(['status'=> 'POLICY TO BE ISSUED']);
+        return   redirect('/admin/dashboard');
+
+    }
+    
 }
