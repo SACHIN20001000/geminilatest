@@ -242,21 +242,19 @@ class PolicyController extends Controller
 
             
             try {
-                $sentmail = Mail::send('admin.email.commonemail',['policy' => $policy,'content'=>$request->content],function($messages) use ($request,$policy) {
-                                    
+                $sentmail = Mail::send('admin.email.commonemail',['policy' => $policy,'content'=>$request->content],function($messages) use ($request,$policy) {            
                     $messages->to($request->to);
                     if(!empty($request->cc)){
                         $messages->cc($request->cc);
                     }
                     $subject =$policy->subProduct->name .'-'. $policy->expiry_date.'-'.$policy->lead->holder_name ?? 'Gemini consultancy Service';
                     $messages->subject($subject);
-                    // if(!empty($policy->commonAttachment)){
-                    //     foreach($policy->commonAttachment as $attach){
-                    //         $fileurls = url('attachments',$attach->file_name);
-                    //         $messages->attach($fileurls);
-                    //      }
-                    
-                    //  }
+                    if(!empty($policy->commonAttachment)){
+                        foreach($policy->commonAttachment as $attach){
+                            $fileurls = url('attachments',$attach->file_name);
+                            $messages->attach($fileurls);
+                         }
+                     }
                     
             });    } catch (Exception $e) {
                 //throw $th;
