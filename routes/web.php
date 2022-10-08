@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\ChatsController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ChannelController;
+use App\Http\Controllers\Admin\PayoutController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -80,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('policy', PolicyController::class);
         Route::resource('report', ReportController::class);
         Route::resource('channel', ChannelController::class);
+        Route::resource('payout', PayoutController::class);
         Route::any('renew_status', [PolicyController::class, 'renew_status'])->name('renew_status');
         Route::any('endrosment', [PolicyController::class, 'endrosment'])->name('endrosment');
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
@@ -90,6 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('changeStatus', [LeadController::class, 'changeStatus'])->name('changeStatus');
         Route::post('leadAttachment', [LeadController::class, 'leadAttachment'])->name('leadAttachment');
         Route::post('leadQuotes', [LeadController::class, 'leadQuotes'])->name('leadQuotes');
+        Route::get('dummyMail', [LeadController::class, 'dummyMail'])->name('dummyMail');
         Route::get('chat', [ChatsController::class, 'index'])->name('chat');
         Route::post('send', [ChatsController::class, 'postSendMessage']);
         Route::post('getmessage',[ChatsController::class, 'getOldMessages']);

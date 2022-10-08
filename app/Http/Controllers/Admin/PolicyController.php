@@ -197,6 +197,9 @@ class PolicyController extends Controller
     public function update(Request $request, Policy $policy)
     {
         $policyInputs= $request->except('holder_name', '_token','_method','phone','email','attachment','type');
+        if($request->mis_commission && !empty($request->mis_commission)){
+            $policyInputs['is_mis'] = 1;
+        }
         $policy->update($policyInputs);
         if(isset($request->attachment) && (!empty($request->attachment))){
         foreach ($request->attachment as $key => $value) {

@@ -101,7 +101,6 @@ class LeadController extends Controller
        $leads =  $query->paginate(10);
       
         
-        
        return view('admin.lead.index',compact('leads','products','users'));
     }
 
@@ -128,7 +127,6 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-       
       $leadData=  $request->only(
         'holder_name',
         'phone',
@@ -139,10 +137,13 @@ class LeadController extends Controller
         );
         $leadData['user_id'] = Auth::User()->id;
         $lead = Lead::create($leadData);
-        $policyInputs= $request->except('holder_name', '_token','phone','email',);
+
+        $policyInputs= $request->except('holder_name', '_token','phone','email','type');
         $policyInputs['lead_id']= $lead->id;
         $policyInputs['user_id']= Auth::User()->id;
+
         $policy=  Policy::create($policyInputs);
+        
         if(isset($request->attachment) && (!empty($request->attachment))){
             foreach ($request->attachment as $key => $value) {
                     if(!empty($value)){
@@ -212,7 +213,7 @@ class LeadController extends Controller
         'subproduct_id'
         );
         $lead->update($leadData);
-        $policyInputs= $request->except('holder_name', '_token','_method','phone','email');
+        $policyInputs= $request->except('holder_name', '_token','_method','phone','email','type');
         $policy= Policy::where('lead_id',$lead->id)->update($policyInputs);
         if(isset($request->attachment) && (!empty($request->attachment))){
             foreach ($request->attachment as $key => $value) {
@@ -379,7 +380,7 @@ class LeadController extends Controller
                        
                     } 
                     if(isset($request->policy_id)  && !empty($request->policy_id)){
-                      Policy::find($request->policy_id)->update(['is_policy' =>1]);
+                      Policy::find($request->policy_id)->update(['is_policy' =>1,'attachment_id'=>$userClient->id ]);
                     } 
                    
                 }
@@ -420,5 +421,17 @@ class LeadController extends Controller
                 Lead::find($request->lead_id)->update(['status'=>'QUOTE GENERATED']);
             }
             return back()->with('success', 'Quote Created successfully!');
+    }
+    public function dummyMail(){
+        $info = array(
+            'name' => "Alex"
+        );
+        Mail::send(['text' => 'mail'], $info, function ($message)
+        {
+            $message->to('sachindts98@gmail.com', 'W3SCHOOLS')
+                ->subject('Basic test eMail from W3schools.');
+            // $message->from('sender@example.com', 'Alex');
+        });
+        echo "Successfully sent the email";  
     }
 }
