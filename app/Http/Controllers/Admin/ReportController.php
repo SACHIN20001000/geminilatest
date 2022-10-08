@@ -8,6 +8,8 @@ use App\Http\Requests\Admin\Report\ReportRequest;
 use App\Exports\LeadExport;
 use App\Exports\PolicyExport;
 use App\Models\Lead;
+use App\Models\User;
+
 use Maatwebsite\Excel\Facades\Excel;
 class ReportController extends Controller
 {
@@ -18,7 +20,8 @@ class ReportController extends Controller
      */
     public function index()
     {
-       return view('admin.report.addEdit');
+        $user= User::all();
+       return view('admin.report.addEdit',compact('user'));
     }
 
     /**
@@ -42,12 +45,13 @@ class ReportController extends Controller
       
 
        $type  = $request->type ?? '';
+       $user  = $request->user ?? '';
        $date_range  = $request->daterange ?? '';
         if(in_array($type,['lead','policy_issue','quote','opportunities'])){
 
-            return Excel::download(new LeadExport($type,$date_range), 'LeadsExport.csv');
+            return Excel::download(new LeadExport($type,$date_range,$user), 'LeadsExport.csv');
         }else{
-            return Excel::download(new PolicyExport($type,$date_range), 'PolicyExport.csv');
+            return Excel::download(new PolicyExport($type,$date_range,$user), 'PolicyExport.csv');
 
         }
 

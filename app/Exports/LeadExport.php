@@ -10,22 +10,20 @@ class LeadExport implements FromCollection
     /**
     * @return \Illuminate\Support\Collection
     */
-    private $date_range, $type;
+    private $date_range, $type,$user;
 
-    public function __construct(String  $type, String $date_range) {
+    public function __construct(String  $type, String $date_range,String $user) {
 
         $this->date_range = $date_range;
         $this->type =  $type;
+        $this->$user =  $user;
     }
-    // public function headings(): array {
-    //     return [
-    //         "Id","Client","Broker","Phone","Email","Insurance","Product","Sub Product","Assigned To","Status","Created At"
-    //     ];
-    // }
+
     public function collection()
     {
         $date_range=  $this->date_range;
         $type=         $this->type;
+        $user=         $this->user;
         $finalData=[];
         $header['Id']="Id" ?? null;
         $header['Client']='Client' ?? null;
@@ -170,6 +168,9 @@ class LeadExport implements FromCollection
                 $query->whereIn('status', ['REJECTED']);
             }
             
+        }
+        if(isset($user) && !empty($user)){
+            $query->where('user_id', $request->user)->orwhere('assigned', $request->user);
         }
         if ($date_range) {
               

@@ -47,6 +47,22 @@
                             </div>
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
+                                    <label class="form-label mg-b-0">User</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                    <select name="user" id="user" class="form-control">
+                                        <option value="">Select Below</option>
+                                      @if($user->count())
+
+                                      @foreach($user as $userr)
+                                   <option value="{{$userr->id}}">{{$userr->name}}</option>
+                                      @endforeach
+                                      @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row row-xs align-items-center mg-b-20">
+                                <div class="col-md-4">
                                     <label class="form-label mg-b-0">Date Range</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">

@@ -7,12 +7,13 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class PolicyExport implements FromCollection
 {
-    private $date_range, $type;
+    private $date_range, $type,$user;
 
-    public function __construct(String  $type, String $date_range) {
+    public function __construct(String  $type, String $date_range,String $user) {
 
         $this->date_range = $date_range;
         $this->type =  $type;
+        $this->user =  $user;
     }
      /**
     * @return \Illuminate\Support\Collection
@@ -21,6 +22,7 @@ class PolicyExport implements FromCollection
     {
         $date_range=  $this->date_range;
         $type=         $this->type;
+        $user=         $this->user;
         $finalData=[];
         $header['Id']="Id" ?? null;
         $header['Client']='Client' ?? null;
@@ -172,7 +174,9 @@ class PolicyExport implements FromCollection
             }
             
         }
-     
+        if(isset($user) && !empty($user)){
+            $query->where('user_id', $request->user);
+        }
       
        $policies =  $query->get();
        

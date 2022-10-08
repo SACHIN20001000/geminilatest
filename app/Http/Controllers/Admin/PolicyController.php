@@ -242,7 +242,7 @@ class PolicyController extends Controller
 
             
             try {
-                $sentmail = Mail::send('admin.email.commonemail',['policy' => $policy,'content'=>$request->content],function($messages) use ($request,$policy) {            
+             Mail::send('admin.email.commonemail',['policy' => $policy,'content'=>$request->content],function($messages) use ($request,$policy) {            
                     $messages->to($request->to);
                     if(!empty($request->cc)){
                         $messages->cc($request->cc);
@@ -256,8 +256,9 @@ class PolicyController extends Controller
                          }
                      }
                     
-            });    } catch (Exception $e) {
-                //throw $th;
+            }); 
+           } catch (Exception $e) {
+              
             }
         
  
