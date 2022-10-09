@@ -22,7 +22,6 @@ use App\Http\Requests\Admin\Lead\StoreLeadRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Mail;
-ini_set('max_execution_time', 0);
 
 class LeadController extends Controller
 {
@@ -45,32 +44,15 @@ class LeadController extends Controller
             if(isset($request->product)   && !empty($request->product)){
                  $q->where('product_id', $request->product);
             }
-            $q->where('is_policy',0);
+             $q->where('is_policy',0);
             if(isset($request->search_anything)   && !empty($request->search_anything)){
                 $searchParam=['user_id','insurance_id','product_id','net_premium','case_type','policy_no','channel_name','lead_id','company_id','attachment_id','subproduct_id','gross_premium','others','pa','tp_premium','add_on_premium','od_premium','gwp','gst','basic_premium','terrorism_premium','requirement','client_name','address','remarks','type','commodity_type','mode_of_transport','cover_type','per_sending_limit','per_location_limit','estimate_annual_sum','basic_of_valuation','policy_period','start_date','expiry_date','commodity_details','packing_description','libality','policy_type','liability_industrial','liability_nonindustrial','liability_act','professional_indeminity','comprehensive_general_liability','wc_policy','pincode','industry_type','worker_number','job_profile','salary_per_month','add_on_cover','medical_extension','occupation_disease','compressed_air_disease','terrorism_cover','terrorism_cover','multiple_location','occupancy','occupancy_tarriff','particular','building','plant_machine','furniture_fixure','stock_in_process','finished_stock','other_contents','clain_in_last_three_year','loss_details','loss_in_amount','loss_date','measures_taken_after_loss','address_risk_location','cover_opted','policy_inception_date','tenure','construction_type','age_of_building','basement_for_building','basement_for_content','claims','building_carpet_area','building_cost_of_construction','building_sum_insured','content_sum_insured','rent_alternative_accommodation','health_type','fresh','portability','dob','pre_existing_disease','hospitalization_history','upload_discharge_summary','dob_sr_most_member','dob_self','dob_spouse','dob_child','dob_father','dob_mother','sum_insured','visiting_country','date_of_departure','date_of_arrival','no_of_days','no_person','passport_datails','make','model','cubic_capacity','bussiness_type','rto','reg_no','mfr_year','reg_date','claims_in_existing_policy','ncb_in_existing_policy','gcv_type','gvw','fuel_type','passenger_carrying_capacity','category','varriant'];
                 foreach ($searchParam as $key => $value) {
                     $q->orwhere($value, 'like','%' . $request->search_anything . '%');
                 }     
         } 
-        })
-        ->whereHas('insurances', function ($q) use ($request){
-            if(isset($request->search_anything)   && !empty($request->search_anything)){
-                    $q->where('name',  $request->search_anything );
-        }
-            
-        })
-        ->whereHas('products', function ($q) use ($request){
-            if(isset($request->search_anything)   && !empty($request->search_anything)){
-                    $q->where('name',  $request->search_anything );
-        }
-            
-        })
-        ->whereHas('subProduct', function ($q) use ($request){
-            if(isset($request->search_anything)   && !empty($request->search_anything)){
-                    $q->where('name',  $request->search_anything );
-        }
-            
-        });  
+        });
+ 
         if(isset($request->id) && !empty($request->id)){
             if($request->id == 1){
                 $query->whereIn('status', ['PENDING/FRESH','IN PROCESS','MORE INFO REQUIRED']);
@@ -91,8 +73,8 @@ class LeadController extends Controller
        }
 
             if(isset($request->status)   && !empty($request->status)){
-                $query->where('status', $request->status);
-        }
+                    $query->where('status', $request->status);
+            }
             if(isset($request->search_anything)   && !empty($request->search_anything)){
                 $searchParam=['holder_name','phone','email'];
                 foreach ($searchParam as $key => $value) {
@@ -100,9 +82,25 @@ class LeadController extends Controller
                 }
                 
         }
+        if(isset($request->search_anything)   && !empty($request->search_anything)){
+        $query ->orwhereHas('insurances', function ($q) use ($request){
+                    $q->where('name',  $request->search_anything );
+            
+        })
+        ->orwhereHas('products', function ($q) use ($request){
+           
+                    $q->where('name',  $request->search_anything );
+
+            
+        })
+        ->orwhereHas('subProduct', function ($q) use ($request){
+           
+                    $q->where('name',  $request->search_anything );
+            
+        });  
+    }
        $leads =  $query->paginate(10);
       
-        
        return view('admin.lead.index',compact('leads','products','users'));
     }
 
@@ -117,7 +115,8 @@ class LeadController extends Controller
         $companies = Company::all();
         $channels = Channel::all();
         $make = Make::all();
-        return view('admin.lead.addEdit',compact('insurances','companies','make','channels'));
+        $users= User::all();
+        return view('admin.lead.addEdit',compact('insurances','companies','make','channels','users'));
 
     }
 
@@ -137,12 +136,12 @@ class LeadController extends Controller
         'product_id',
         'subproduct_id'
         );
-        $leadData['user_id'] = Auth::User()->id;
+        $leadData['user_id'] = $request->user_id ?? auth()->user()->id;
         $lead = Lead::create($leadData);
 
         $policyInputs= $request->except('holder_name', '_token','phone','email','type');
         $policyInputs['lead_id']= $lead->id;
-        $policyInputs['user_id']= Auth::User()->id;
+        $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
 
         $policy=  Policy::create($policyInputs);
         
@@ -193,7 +192,8 @@ class LeadController extends Controller
         $make = Make::all();
         $varients=MakeModel::where('make_id',$policy->make)->get();
         $channels = Channel::all();
-        return view('admin.lead.addEdit',compact('insurances','companies','lead','policy','make','products','subProducts','channels','varients'));
+        $users= User::all();
+        return view('admin.lead.addEdit',compact('insurances','companies','lead','users','policy','make','products','subProducts','channels','varients'));
     }
 
     /**
@@ -216,6 +216,7 @@ class LeadController extends Controller
         );
         $lead->update($leadData);
         $policyInputs= $request->except('holder_name', '_token','_method','phone','email','type');
+        $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         $policy= Policy::where('lead_id',$lead->id)->update($policyInputs);
         if(isset($request->attachment) && (!empty($request->attachment))){
             foreach ($request->attachment as $key => $value) {
@@ -405,16 +406,21 @@ class LeadController extends Controller
                 $request->file('attachment')->move(public_path('/quotes'), $attachment_filename);
                 $quote->update(['file_name'=> $attachment_filename]);
             }
-            Mail::send('admin.email.commonemail',['policy' => $lead,'content'=>$request->remarks],function($messages) use ($request,$lead,$quote) {
-                $messages->to($lead->email);
-                $subject ='Gemini consultancy Service';
-                if(isset($quote->file_name) && !empty($quote->file_name)){
-                    $fileurls = url('quotes',$quote->file_name);
-                    $messages->attach($fileurls);
-                }
-             
-                $messages->subject($subject);                 
-        });
+                try {
+                    Mail::send('admin.email.commonemail',['policy' => $lead,'content'=>$request->remarks],function($messages) use ($request,$lead,$quote) {
+                        $messages->to($lead->email);
+                        $subject ='Gemini consultancy Service';
+                        if(isset($quote->file_name) && !empty($quote->file_name)){
+                            $fileurls = url('quotes',$quote->file_name);
+                            $messages->attach($fileurls);
+                        }
+                    
+                        $messages->subject($subject);                 
+                });
+                } catch (\Exception $e) {
+                    //throw $th;
+                }    
+   
   
             $listQuote=Quote::where('lead_id',$request->lead_id)->count();
             if($listQuote >= 2){

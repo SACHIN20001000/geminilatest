@@ -33,37 +33,36 @@ class PolicyController extends Controller
      
         $products= SubProduct::all();
         $users= User::all();
-        $query= Policy::with('users','lead','insurances','products','subProduct','lead.assigns')
-        ->whereHas('lead', function ($q) use ($request){
-           
-        
+        $query= Policy::with('users','lead','insurances','products','subProduct','lead.assigns')->where(['is_policy'=>1]);
         if(isset($request->search_anything)   && !empty($request->search_anything)){
-            $searchParam=['holder_name','phone','email'];
-            foreach ($searchParam as $key => $value) {
-                $q->orwhere($value, 'like','%' . $request->search_anything . '%');
-            }
-            
-    }
+            $query  ->orwhereHas('lead', function ($q) use ($request){
+             
+                    $searchParam=['holder_name','phone','email'];
+                    foreach ($searchParam as $key => $value) {
+                        $q->orwhere($value, 'like','%' . $request->search_anything . '%');
+                    }
+                    
+              
+        })
+        ->orwhereHas('insurances', function ($q) use ($request){
+           
+                    $q->where('name',  $request->search_anything );
+        
             
         })
-        ->whereHas('insurances', function ($q) use ($request){
-            if(isset($request->search_anything)   && !empty($request->search_anything)){
+        ->orwhereHas('products', function ($q) use ($request){
+         
                     $q->where('name',  $request->search_anything );
-        }
+        
             
         })
-        ->whereHas('products', function ($q) use ($request){
-            if(isset($request->search_anything)   && !empty($request->search_anything)){
+        ->orwhereHas('subProduct', function ($q) use ($request){
+          
                     $q->where('name',  $request->search_anything );
-        }
-            
-        })
-        ->whereHas('subProduct', function ($q) use ($request){
-            if(isset($request->search_anything)   && !empty($request->search_anything)){
-                    $q->where('name',  $request->search_anything );
-        }
+        
             
         });
+    }
         if(isset($request->id) && !empty($request->id)){
             $date = strtotime(date('Y-m-d')); 
             $today= date('Y-m-d',strtotime('-1 days',$date));
@@ -135,6 +134,7 @@ class PolicyController extends Controller
         
         $policyInputs = $request->except('holder_name', '_token','phone','email','attachment','type');
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
+        $policyInputs['is_policy'] = 1;
         Policy::create($policyInputs);
         if(isset($request->attachment) && (!empty($request->attachment))){
             foreach ($request->attachment as $key => $value) {
@@ -263,6 +263,6 @@ class PolicyController extends Controller
         
  
     }
-    return back()->with('success', 'Endrosment Sent successfully!');
+    return back()->with('success', 'Mail Sent successfully!');
    }
 }

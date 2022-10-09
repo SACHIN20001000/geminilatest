@@ -7,7 +7,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="  content-title mb-0 my-auto pe-4">Policy</h4>
+                <h4 class="  content-title mb-0 my-auto pe-4">Policy </h4>
                 <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
                             <a href="{{ route('policy.index',['id'=> 1]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto" 
@@ -284,11 +284,7 @@
         }
     });
     $('.editor').summernote({
-        toolbar: [
-        ['font', ['bold', 'italic', 'underline', 'clear']],
-        ['insert', ['link','image', 'doc', 'video']],
-        ['misc', ['codeview']],
-        ],
+   
         height: 400,
      
     });
