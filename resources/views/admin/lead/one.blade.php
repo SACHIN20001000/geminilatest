@@ -1260,7 +1260,7 @@
     });
     $('.table').dataTable();
     $('#add-attach-multi').click(function(){
-                $('.attach-content').append('<div class="row"><div class="col-lg-6"><h6>Upload</h6><input type="file" name="attachment[]" id="attachment" class="form-control"></div><div class="col-lg-6"><h6>Type</h6><select name="type[]"required class="form-control"><option value="">Select</option> <option value="Attachment">Attachment</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option><option value="Other">Other</option></select></div></div>');
+                $('.attach-content').append('<div class="row"><div class="col-lg-6"><h6>Upload</h6><input type="file" name="attachment[]" id="attachment" class="form-control"></div><div class="col-lg-6"><h6>Type</h6><select name="type[]"required class="form-control"><option value="">Select</option> <option value="Attachment">Attachment</option><option value="Policy">Policy</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option><option value="Other">Other</option></select></div></div>');
             })
     let subproduct= "{{$lead->subProduct->name ?? ''}}";
     if(subproduct != ''){
