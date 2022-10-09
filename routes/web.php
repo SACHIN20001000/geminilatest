@@ -105,10 +105,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('update-user-profile/{id}', [App\Http\Controllers\Admin\AdminController::class, 'updateUserProfile'])->name('updateUserProfile');
    
 });
+
+});
 Route::post('leadQuotes', [LeadController::class, 'leadQuotes'])->name('leadQuotes');
 Route::post('rejectLead', [LeadController::class, 'rejectLead'])->name('rejectLead');
-});
-
 Auth::routes([
     'register' => true
 ]);
