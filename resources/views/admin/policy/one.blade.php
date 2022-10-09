@@ -1087,7 +1087,6 @@
     });
     $('.table').dataTable();
     let subproduct= "{{$policy->subProduct->name ?? ''}}";
-    console.log(subproduct);
     if(subproduct != ''){
                 subproduct= $.trim(subproduct).toLowerCase();
                 changeFeild(subproduct);    

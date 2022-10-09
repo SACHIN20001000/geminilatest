@@ -1190,9 +1190,11 @@ $.ajaxSetup({
                             }
 });
 function addAttachment(){
-    $("#attachment_dynamic").prepend('  <tr> <td><input type="file" name="attachment[]" required id="attachment"  class="form-control tableData"></td> <td><select name="type[]" class="form-control" required><option value="">Select</option><option value="Attachment">Attachment</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option> <option value="Other">Other</option> </select> </td><td><button type="button" name="add" onclick="addAttachment()"  class="btn btn-success">Save</button></td></tr>')
+    $("#attachment_dynamic").append('  <tr> <td><input type="file" name="attachment[]"  id="attachment"  class="form-control tableData"></td> <td><select name="type[]" class="form-control" ><option value="">Select</option><option value="Attachment">Attachment</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option> <option value="Other">Other</option> </select> </td><td><button type="button"  class="btn btn-danger deleteatt">Delete</button></td></tr>')
 }
-
+$(document).on('click','.deleteatt', function() {
+    $(this).closest('tr').remove();
+});
 function changeFeild(subproduct){
     if(subproduct == 'others' || subproduct == 'cpm' || subproduct == 'car'){
                  $('.feild').parent('div').hide()
