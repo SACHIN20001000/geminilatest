@@ -107,6 +107,10 @@
 											<a href="#profile" data-bs-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
 												<span class="hidden-xs">Attachment</span> </a>
 										</li>
+										<li class="">
+											<a href="#policy" data-bs-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
+												<span class="hidden-xs">Policy</span> </a>
+										</li>
 										
 									</ul>
 								</div>
@@ -1004,14 +1008,53 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if(!empty($policy->attachments))
-                                                        @foreach($policy->attachments as $attachment)
+                                                @if(!empty($lead->attachments))
+                                                        @foreach($lead->attachments as $attachment)
+                                                       @if($attachment->type != 'Policy')
                                                         <tr>
                                                         <td>{{$attachment->users->name ?? ''}}</td>
                                                         <td>{{$attachment->created_at}}</td>
                                                         <td><a href="{{URL::asset('attachments')}}/{{$attachment->file_name}}" target="_blank">{{$attachment->file_name}}</a></td>
                                                         <td>{{$attachment->type}}</td>
                                                         </tr>
+                                                        @endif
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
+										</div>
+									</div>
+									<div class="tab-pane" id="policy">
+										<div class="row">
+											<table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Creted By 
+                                                        </th>
+                                                        <th>
+                                                            Creted At 
+                                                        </th>
+                                                        <th>
+                                                            File Name 
+                                                        </th>
+                                                        <th>
+                                                          Type 
+                                                        </th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @if(!empty($lead->attachments))
+                                                        @foreach($lead->attachments as $attachment)
+                                                       @if($attachment->type == 'Policy')
+                                                        <tr>
+                                                        <td>{{$attachment->users->name ?? ''}}</td>
+                                                        <td>{{$attachment->created_at}}</td>
+                                                        <td><a href="{{URL::asset('attachments')}}/{{$attachment->file_name}}" target="_blank">{{$attachment->file_name}}</a></td>
+                                                        <td>{{$attachment->type}}</td>
+                                                        </tr>
+                                                        @endif
                                                         @endforeach
                                                     @endif
                                                 </tbody>
@@ -1050,6 +1093,7 @@
                                     <option value="">Select</option>
                                     <option value="Attachment">Attachment</option>
                                     <option value="RC">RC</option>
+                                    <option value="Policy">Policy</option>
                                     <option value="Previous Year Policy">Previous Year Policy</option>
                                     <option value="Invoice Copy">Invoice Copy</option>
                                     <option value="Renewals">Renewals</option>

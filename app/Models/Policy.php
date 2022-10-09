@@ -56,6 +56,6 @@ class Policy extends Model
 
     public function commonAttachment()
     {
-        return $this->hasMany(Attachment::class, 'policy_id','id')->whereIn('type' ,['Attachment','Renewals']);
+        return $this->hasMany(Attachment::class, 'policy_id','id')->whereIn('type' ,['Policy','Renewals']);
     }
 }

@@ -151,7 +151,8 @@ class PolicyController extends Controller
                     }
                 }
             }
-        return back()->with('success', 'Policy added successfully!');
+        return redirect ()->route ('policy.index', ['id' => 1])->with ('success', 'Policy Added successfully!');
+
        
     }
 
@@ -216,7 +217,8 @@ class PolicyController extends Controller
                 }
             }
         }
-        return back()->with('success', 'Policy Update successfully!');
+        return redirect ()->route ('policy.index', ['id' => 1])->with ('success', 'Policy Update successfully!');
+
     }
 
     /**

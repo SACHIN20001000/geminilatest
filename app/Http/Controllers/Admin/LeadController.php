@@ -160,7 +160,8 @@ class LeadController extends Controller
                     }
                 }
             }
-        return back()->with('success', 'Lead added successfully!');
+            return redirect ()->route ('leads.index', ['id' => 1])->with ('success', 'Lead added successfully!');
+     
        
     }
 
@@ -233,7 +234,8 @@ class LeadController extends Controller
                     }
                 }
             }
-        return back()->with('success', 'Lead Update successfully!');
+        return redirect ()->route ('leads.index', ['id' => 1])->with ('success', 'Lead Update successfully!');
+
     }
 
     /**
@@ -352,19 +354,18 @@ class LeadController extends Controller
     }
     public function leadAttachment(Request $request){
        
-        
         foreach ($request->attachment as $key => $value) {
             if(!empty($value)){
                 $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
                 $value->move(public_path('/attachments'), $attachment_filename);
                 Attachment::create([
                     'lead_id'=> $request->lead_id ?? 0,
-                    'policy_id'=> $request->policy_id ??'',
+                    'policy_id'=> $request->policy_id ??0,
                     'user_id'=> Auth::user()->id ??'',
                     'file_name'=> $attachment_filename ??'',
                     'type'=> $request->type[$key] ??  ''
                 ]);
-                if($request->type[$key] == 'Attachment'){
+                if($request->type[$key] == 'Policy'){
                     if(isset($request->lead_id)  && !empty($request->lead_id)){
                      $lead=   Lead::find($request->lead_id);
                      $user= User::where('email',$lead->email)->first();
@@ -383,7 +384,7 @@ class LeadController extends Controller
                        
                     } 
                     if(isset($request->policy_id)  && !empty($request->policy_id)){
-                      Policy::find($request->policy_id)->update(['is_policy' =>1,'attachment_id'=>$userClient->id ]);
+                      Policy::find($request->policy_id)->update(['is_policy' =>1,'attachment_id'=>$userClient->id?? 0 ]);
                     } 
                    
                 }
