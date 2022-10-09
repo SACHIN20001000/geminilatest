@@ -176,9 +176,9 @@
                                 @foreach($leads as $lead)
                                 <tr>
                                     <td><input type="checkbox" name="checked"  class="checkSingle" value="{{$lead->id}}"> </td>
-                                    <td>{{$lead->holder_name}}</td>
-                                    <td>{{$lead->phone}}</td>
-                                    <td>{{$lead->email}}</td>
+                                    <td>{{$lead->holder_name??''}}</td>
+                                    <td>{{$lead->phone ??''}}</td>
+                                    <td>{{$lead->email??''}}</td>
                                     <td>{{$lead->insurances->name ?? ''}}</td>
                                     <td>{{$lead->products->name ?? ''}}</td>
                                     <td>{{$lead->subProduct->name ?? ''}}</td>

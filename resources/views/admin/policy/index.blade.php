@@ -151,8 +151,8 @@
 
                                     <td>{{$lead->users->name ?? ''}}</td>
                                     <td>{{$lead->lead->holder_name ?? ''}}</td>
-                                    <td>{{$lead->lead->phone}}</td>
-                                    <td>{{$lead->lead->email}}</td>
+                                    <td>{{$lead->lead->phone ?? ''}}</td>
+                                    <td>{{$lead->lead->email ?? ''}}</td>
                                     <td>{{$lead->insurances->name ?? ''}}</td>
                                     <td>{{$lead->products->name ?? ''}}</td>
                                     <td>{{$lead->subProduct->name ?? ''}}</td>
