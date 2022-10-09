@@ -114,12 +114,12 @@ Auth::routes([
     'register' => true
 ]);
 
-// Route::prefix('')->group(function ()
-// {
-//     Route::get('{any}', function ()
-//     {
-//         return redirect('/admin');
-//     })->where('any', '.*');
-// });
+Route::prefix('')->group(function ()
+{
+    Route::get('{any}', function ()
+    {
+        return redirect('/admin');
+    })->where('any', '.*');
+});
 
 
