@@ -492,6 +492,7 @@ aside.app-sidebar.sidebar-scroll {overflow: scroll;}
         <!-- custom js -->
         <script src="{{URL::asset('assets/js/custom.js')}}"></script>
         <script src="{{ mix('js/admin.js') }}"></script>
+        <script src="{{ URL::asset('js/admin.js') }}"></script>
         @yield('scripts')
         @stack('custom-scripts')
     </body>
