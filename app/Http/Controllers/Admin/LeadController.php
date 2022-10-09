@@ -448,6 +448,7 @@ class LeadController extends Controller
 
     }
     public function acceptLead(Request $request){
+     
         Lead::find($request->id)->update(['status'=> 'POLICY TO BE ISSUED']);
         return   redirect('/admin/dashboard');
 
