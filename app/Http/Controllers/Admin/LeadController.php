@@ -391,7 +391,8 @@ class LeadController extends Controller
             }
           }
 
-    return back()->with('error', 'File Is Required!');
+          return back()->with('success', 'Attachment Created successfully!');
+
     }
     public function leadQuotes(Request $request){
    
