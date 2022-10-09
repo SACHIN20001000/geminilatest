@@ -442,13 +442,13 @@ class LeadController extends Controller
         });
         echo "Successfully sent the email";  
     }
-    public function rejectLead(Request $request,Lead $lead){
-        $lead->update(['status'=> 'REJECTED']);
+    public function rejectLead(Request $request){
+        Lead::find($request->id)->update(['status'=> 'REJECTED']);
         return   redirect('/admin/dashboard');
 
     }
-    public function acceptLead(Request $request,Lead $lead){
-        $lead->update(['status'=> 'POLICY TO BE ISSUED']);
+    public function acceptLead(Request $request){
+        Lead::find($request->id)->update(['status'=> 'POLICY TO BE ISSUED']);
         return   redirect('/admin/dashboard');
 
     }
