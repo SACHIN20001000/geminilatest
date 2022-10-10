@@ -99,7 +99,7 @@ class PolicyController extends Controller
                 $query->where('status', $request->status);
         }
           
-       $leads =  $query->paginate(10);
+       $leads =  $query->orderby('id','DESC')->paginate(10);
       
         
         

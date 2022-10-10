@@ -99,7 +99,7 @@ class LeadController extends Controller
             
         });  
     }
-       $leads =  $query->paginate(10);
+       $leads =  $query->orderby('id','DESC')->paginate(10);
       
        return view('admin.lead.index',compact('leads','products','users'));
     }
