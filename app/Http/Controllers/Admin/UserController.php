@@ -64,6 +64,8 @@ class UserController extends Controller
                             {
                              
                                 $action = '<span class="action-buttons">
+                                <a  href="' . route("users.show", $row) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-user"></i>
+                                </a>
                                 <a  href="' . route("leads.index", ['lead_id'=> $row]) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>
                         <a  href="' . route("users.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
@@ -126,10 +128,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
 
-        return view('admin.pet.index',compact('id'));
+        
+        return view('admin.profile.viewProfile',compact('user'));
     }
 
     /**
