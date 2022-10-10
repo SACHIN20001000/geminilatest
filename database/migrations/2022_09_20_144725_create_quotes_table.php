@@ -19,6 +19,7 @@ class CreateQuotesTable extends Migration
             $table->integer('user_id')->nullable();
             $table->integer('company_id')->nullable();
             $table->string('file_name')->nullable();
+            $table->string('type')->nullable();
             $table->text('remark')->nullable();
             $table->timestamps();
         });

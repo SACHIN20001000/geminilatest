@@ -1094,6 +1094,9 @@
                                                         <th>
                                                           Remarks 
                                                         </th>
+                                                        <th>
+                                                          Action 
+                                                        </th>
                                                         
                                                     </tr>
                                                 </thead>
@@ -1105,7 +1108,35 @@
                                                         <td>{{$quotes->created_at}}</td>
                                                         <td>{{$quotes->company->name ?? ''}}</td>
                                                         <td><a href="{{URL::asset('quotes')}}/{{$quotes->file_name}}" target="_blank">{{$quotes->file_name}}</a></td>
-                                                        <td>{{$quotes->remark}}</td>
+                                                        <td>{!! $quotes->remark !!}</td>
+                                                        <td> 
+                                                        @if(empty($quotes->type))
+                                                        <a href="{{ route('acceptLead',['id'=>$lead->id,'quote'=> $quotes->id]) }}"
+                                                                    class="btn btn-sm btn-primary remove_us"
+                                                                    title="Accept"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    data-method="DELETE"
+                                                                    data-confirm-title="Please Confirm"
+                                                                    data-confirm-text="Are you sure that you want to accept this quotes?"
+                                                                    data-confirm-delete="Yes, Accept it!">
+                                                                   Accept
+                                                                </a> 
+                                                            <a href="{{route('rejectLead',['id'=>$lead->id,'quote'=> $quotes->id])}}"
+                                                                    class="btn btn-sm btn-danger remove_us"
+                                                                    title="Reject"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    data-method="DELETE"
+                                                                    data-confirm-title="Please Confirm"
+                                                                    data-confirm-text="Are you sure that you want to reject this quotes?"
+                                                                    data-confirm-delete="Yes, Reject it!">
+                                                                   Reject
+                                                                </a>
+                                                                @else
+                                                                <button class="btn btn-primary">{{$quotes->type}}</button>
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                         @endforeach
                                                     @endif

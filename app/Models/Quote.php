@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Quote extends Model
 {
     use HasFactory;
-    protected $fillable = ['lead_id','user_id','company_id','file_name','remark'];
+    protected $fillable = ['lead_id','type','user_id','company_id','file_name','remark'];
     protected $casts = [
         'created_at' => 'datetime:M d, Y h:i:s',
         'updated_at' => 'datetime:M d, Y h:i:s',

@@ -445,14 +445,17 @@ class LeadController extends Controller
         echo "Successfully sent the email";  
     }
     public function rejectLead(Request $request){
+        
+        Quote::find($request->quote)->update(['type'=>'Reject']);
         Lead::find($request->id)->update(['status'=> 'REJECTED']);
-        return   redirect('/admin/dashboard');
+        return back()->with('success', 'Quote Rejected!');
 
     }
     public function acceptLead(Request $request){
-     
+        Quote::find($request->quote)->update(['type'=>'Accept']);
         Lead::find($request->id)->update(['status'=> 'POLICY TO BE ISSUED']);
-        return   redirect('/admin/dashboard');
+        return back()->with('success', 'Quote Accepted!');
+
 
     }
     

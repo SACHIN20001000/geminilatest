@@ -39,7 +39,7 @@
                                           showCancelButton: true,
                                           confirmButtonColor: '#3085d6',
                                           cancelButtonColor: '#d33',
-                                          confirmButtonText: 'Yes, delete it!'
+                                          confirmButtonText: link.data('confirm-delete') ?? 'Yes, delete it!'
                                         }).then((result) => {
                                           if (result.isConfirmed) {
                                            callback(result)
