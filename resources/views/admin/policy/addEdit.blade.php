@@ -6,11 +6,20 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">Policy</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ {{isset($policy) ? $policy->name : 'Add New' }}</span>
+                <h4 class="content-title mb-0 my-auto">Policy</h4>
+                @include('admin.policy.common')
             </div>
         </div>
-        <a class="btn btn-main-primary ml_auto" style="margin-left: 740px;" href="{{ route('policy.index') }}">View Policy</a>
+      
 
+        <div class="d-flex my-xl-auto right-content">
+                        <div class="pe-1 mb-xl-0">
+							<div class="btn-group dropdown">
+                            <a class="btn btn-main-primary"  href="{{ route('policy.index') }}">View Policy</a>
+							</div>
+						</div>
+                      
+					</div>
 
     </div>
     <!-- breadcrumb -->

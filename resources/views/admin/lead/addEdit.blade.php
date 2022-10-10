@@ -6,11 +6,15 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-              
-          
+            @include('admin.lead.common')
             </div>
         </div>
-        <a class="btn btn-main-primary ml_auto" style="margin-left: 740px;" href="{{ route('leads.index',['id'=> 1]) }}">View Leads</a>
+        <div class="d-flex my-xl-auto right-content">
+                        <div class="pe-1 mb-xl-0">
+                            <a class="btn btn-main-primary" href="{{ route('leads.index',['id'=> 1]) }}">View Leads</a>
+						</div>
+</div>
+        
 
 
     </div>
