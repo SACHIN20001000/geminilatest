@@ -143,7 +143,7 @@ class PolicyController extends Controller
                         $value->move(public_path('/attachments'), $attachment_filename);
                         Attachment::create([
                             'lead_id'=> $policy->lead_id ?? 0,
-                            'policy_id'=> $policy->id ??'',
+                            'policy_id'=> $policy->id ??0,
                             'user_id'=> Auth::user()->id ??'',
                             'file_name'=> $attachment_filename ??'',
                             'type'=> $request->type[$key] ??  ''
@@ -209,7 +209,7 @@ class PolicyController extends Controller
                     $value->move(public_path('/attachments'), $attachment_filename);
                     Attachment::create([
                         'lead_id'=> $policy->lead_id ?? 0,
-                        'policy_id'=> $policy->id ??'',
+                        'policy_id'=> $policy->id ??0,
                         'user_id'=> Auth::user()->id ??'',
                         'file_name'=> $attachment_filename ??'',
                         'type'=> $request->type[$key] ??  ''
