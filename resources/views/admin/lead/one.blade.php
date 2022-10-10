@@ -8,7 +8,7 @@
 				<div class="breadcrumb-header justify-content-between">
 					<div class="my-auto">
 						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">Leads</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ Profile</span>
+						
 						</div>
 					</div>
 					<div class="d-flex my-xl-auto right-content">
@@ -1134,7 +1134,7 @@
                                                                    Reject
                                                                 </a>
                                                                 @else
-                                                                <button class="btn btn-primary">{{$quotes->type}}</button>
+                                                                <button class="btn @if($quotes->type =='Accept')btn-primary @else btn-danger @endif">{{$quotes->type}}</button>
                                                                 @endif
                                                             </td>
                                                         </tr>

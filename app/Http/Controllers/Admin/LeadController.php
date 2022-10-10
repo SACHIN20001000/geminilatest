@@ -55,9 +55,9 @@ class LeadController extends Controller
  
         if(isset($request->id) && !empty($request->id)){
             if($request->id == 1){
-                $query->whereIn('status', ['PENDING/FRESH','IN PROCESS','MORE INFO REQUIRED']);
+                $query->whereIn('status', ['PENDING/FRESH','IN PROCESS','MORE INFO REQUIRED','RE-QUOTE']);
             }elseif($request->id == 2){
-                $query->whereIn('status', ['QUOTE GENERATED','RE-QUOTE']);
+                $query->whereIn('status', ['QUOTE GENERATED']);
             }elseif($request->id == 3){
                 $query->whereIn('status', ['LINK GENERATED BUT NOT PAID','LINK GENERATED','POLICY TO BE ISSUED']);
             }else{
@@ -422,14 +422,9 @@ class LeadController extends Controller
                 } catch (\Exception $e) {
                     //throw $th;
                 }    
-   
-  
-            $listQuote=Quote::where('lead_id',$request->lead_id)->count();
-            if($listQuote >= 2){
-                Lead::find($request->lead_id)->update(['status'=>'RE-QUOTE']);
-            }else{
-                Lead::find($request->lead_id)->update(['status'=>'QUOTE GENERATED']);
-            }
+         
+            Lead::find($request->lead_id)->update(['status'=>'QUOTE GENERATED']);
+          
             return back()->with('success', 'Quote Created successfully!');
     }
     public function dummyMail(){
@@ -445,13 +440,15 @@ class LeadController extends Controller
         echo "Successfully sent the email";  
     }
     public function rejectLead(Request $request){
-        
+        Quote::where('lead_id',$request->id)->whereNotIn('id', [$request->quote])->update(['type'=>'Accept']);
         Quote::find($request->quote)->update(['type'=>'Reject']);
         Lead::find($request->id)->update(['status'=> 'REJECTED']);
         return back()->with('success', 'Quote Rejected!');
 
     }
     public function acceptLead(Request $request){
+        Quote::where('lead_id',$request->id)->whereNotIn('id', [$request->quote])->update(['type'=>'Reject']);
+
         Quote::find($request->quote)->update(['type'=>'Accept']);
         Lead::find($request->id)->update(['status'=> 'POLICY TO BE ISSUED']);
         return back()->with('success', 'Quote Accepted!');

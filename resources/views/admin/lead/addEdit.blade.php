@@ -6,7 +6,8 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">Lead</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ {{isset($lead) ? $lead->name : 'Add New' }}</span>
+              
+          
             </div>
         </div>
         <a class="btn btn-main-primary ml_auto" style="margin-left: 740px;" href="{{ route('leads.index',['id'=> 1]) }}">View Leads</a>
@@ -965,25 +966,10 @@
                     <div class="card">
                         <div class="card-body">
                             <h4>Attachment</h4>
+                            <button type="button" name="add" onclick="addAttachment()"  class="btn btn-success">Add More</button>
                             <table class="table table-bordered" id="attachment_dynamic">
                                 <tbody>
-                                    <tr>
-                                    <td>
-                                        <input type="file" name="attachment[]"  id="attachment"  class="form-control tableData">
-                                       
-                                    </td>
-                                    <td>
-                                    <select name="type[]" class="form-control" >
-                                        <option value="">Select</option>
-                                        <option value="Attachment">Attachment</option>
-                                        <option value="RC">RC</option>
-                                        <option value="Previous Year Policy">Previous Year Policy</option>
-                                        <option value="Invoice Copy">Invoice Copy</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                    </td>
-                                    <td><button type="button" name="add" onclick="addAttachment()"  class="btn btn-success">Add More</button></td>
-                                </tr>
+                           
                             </tbody></table>
                         </div>
                     </div>

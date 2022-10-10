@@ -140,9 +140,9 @@ class MakeController extends Controller
                     }
                 }
             }
-            if(!empty($request->seating_id)){
+            if(!empty($request->showroom_id)){
                 MakeModel::where('make_id',$make->id)->where('type','showroom')->delete(); 
-                foreach ($request->seating_id as $key => $showroom) {
+                foreach ($request->showroom_id as $key => $showroom) {
                     if(!empty($showroom)){
                         MakeModel::create([
                             'make_id'=> $make->id,
@@ -279,9 +279,9 @@ class MakeController extends Controller
                 }
             }
         }
-        if(!empty($request->seating_id)){
+        if(!empty($request->showroom_id)){
             MakeModel::where('make_id',$make->id)->where('type','showroom')->delete(); 
-            foreach ($request->seating_id as $key => $showroom) {
+            foreach ($request->showroom_id as $key => $showroom) {
                 if(!empty($showroom)){
                     MakeModel::create([
                         'make_id'=> $make->id,
