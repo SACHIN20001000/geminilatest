@@ -1145,7 +1145,14 @@ $.ajaxSetup({
                     make: make,
                 },
                 success: function(result) {
-                    $('#varriant').html(result);
+                    $('#varriant').html(result['varriant']);
+                    $('#cc').html(result['cc']);
+                    $('#fuel').html(result['fuel']);
+                    $('#model').html(result['model']);
+                    $('#od').html(result['od']);
+                    $('#seating').html(result['seating']);
+                    $('#showroom').html(result['showroom']);
+                    $('#tp').html(result['tp']);
                 }
 
             });
