@@ -25,7 +25,6 @@ class StoreModelRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'make_id'=>'required',
            
         ];
     }

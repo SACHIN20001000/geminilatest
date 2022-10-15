@@ -10,11 +10,13 @@ use App\Models\Product;
 use App\Models\SubProduct;
 use App\Models\Channel;
 use App\Models\MakeModel;
+use App\Models\ModelMake;
 use App\Models\Make;
 use App\Models\Policy;
 use App\Models\Insurance;
 use App\Models\Company;
 use App\Models\Attachment;
+use App\Models\Endrosment;
 use App\Models\Quote;
 use DataTables;
 use Mail;
@@ -182,10 +184,11 @@ class PolicyController extends Controller
         $subProducts = SubProduct::where('product_id',$policy->product_id)->get();
         $companies = Company::all();
         $make = Make::all();
-        $varriant = MakeModel::where('make_id',$policy->make)->get();
+        $model=ModelMake::all();
+        $varients=MakeModel::where('make_id',$policy->model)->get();
         $channels = Channel::all();
         $users= User::all();
-        return view('admin.policy.addEdit',compact('users','channels','insurances','companies','policy','make','products','subProducts','varriant'));
+        return view('admin.policy.addEdit',compact('model','users','channels','insurances','companies','policy','make','products','subProducts','varients'));
     }
 
     /**
@@ -267,4 +270,17 @@ class PolicyController extends Controller
     }
     return back()->with('success', 'Mail Sent successfully!');
    }
+   public function commonEndrosment(Request $request){
+ $lead=   Lead::find($request->lead_id);
+ echo "<PRE>"; print_r([$request->all(),$lead]);die;
+
+        $endresoment=Endrosment::create([
+        'created_to'=> $lead->user_id,
+        'created_by'=> auth()->user()->id,
+        'parent'=> 1,
+        'lead_id'=> $request->lead_id,
+        'message'=> $request->message,
+        ]);
+
+}
 }

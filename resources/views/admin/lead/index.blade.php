@@ -167,6 +167,7 @@
                                 <th class="wd-lg-20p"><span>Sub Product</span></th>
                                 <th class="wd-lg-20p"><span>Created</span></th>
                                 <th class="wd-lg-20p"><span>Status</span></th>
+                                <th class="wd-lg-20p"><span>Endrosment</span></th>
                                 <th class="wd-lg-20p"><span>Assigned To</span></th>
                                 <th class="wd-lg-20p">Action</th>
                                 </tr>
@@ -184,6 +185,9 @@
                                     <td>{{$lead->subProduct->name ?? ''}}</td>
                                     <td>{{$lead->created_at}}</td>
                                     <td>{{$lead->status}}</td>
+                                    <td> <button class="modal-effect btn btn-main-primary ml_auto  endrosment-btn" 
+                                    data-id="{{$lead->id ?? ''}}"
+                                    data-bs-toggle="modal" data-bs-effect="effect-super-scaled">Endrosment</button></td>
                                     <td>{{$lead->assigns->name ?? ''}}</td>
                                     <td><a  href="{{route('leads.show',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
                         </a>   <a  href="{{route('leads.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
@@ -250,6 +254,40 @@
 		<!-- End Modal effects-->
 
 
+        <div class="modal fade show" id="endrosment-btn" aria-modal="true" role="dialog" >
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content modal-content-demo">
+					<div class="modal-header">
+						<h6 class="modal-title">Endrosment</h6><button aria-label="Close" class="close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+					</div>
+                    <form  method="POST" action="{{route('commonEndrosment')}}"  enctype="multipart/form-data">
+                        		@csrf
+                        		<div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">                           
+                                  <label>File </label>
+                                  <input type="file" name="image" id="image" class="form-control">
+                                  <input type="hidden" name="lead_id" id="lead_id">
+                             
+                              
+                                  <label>Message </label>
+                                 <textarea name="message" class="form-control" id="message" cols="30" rows="10">
+
+                                 </textarea>
+                               
+                            </div>
+                            
+                        </div>
+                      
+                         
+					<div class="modal-footer">
+						<button class="btn ripple btn-primary save-status" type="submit">Save</button>
+						<button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+					</div>
+                    </form>
+				</div>
+			</div>
+		</div>
 
 @endsection
 
@@ -281,6 +319,11 @@
         });
     }
     });
+    $('.endrosment-btn').click(function(){
+        
+                $('#lead_id').val($(this).attr('data-id'))
+                $('#endrosment-btn').modal('show');
+             })
     // for ajax lead data closed
 $('.assigned-btn').click(function() {
  

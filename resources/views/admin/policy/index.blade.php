@@ -130,12 +130,10 @@
                                 <tr>
                                     
                                 <th class="wd-lg-20p"><span>Reference Name</span></th>
-                                <th class="wd-lg-20p"><span>Client</span></th>
-                                <th class="wd-lg-20p"><span>Phone No</span></th>
-                                <th class="wd-lg-20p"><span>Email</span></th>
-                                <th class="wd-lg-20p"><span>Insurance</span></th>
-                                <th class="wd-lg-20p"><span>Product</span></th>
+                                <th class="wd-lg-20p"><span>Policy Holder Name</span></th>
+                                <th class="wd-lg-20p"><span>Trasaction Type</span></th>
                                 <th class="wd-lg-20p"><span>Sub Product</span></th>
+                                <th class="wd-lg-20p"><span>Gwp</span></th>
                                 <th class="wd-lg-20p"><span>Due date</span></th>
                                 <th class="wd-lg-20p"><span>Payment</span></th>
                                 
@@ -150,14 +148,13 @@
                                 <tr>
 
                                     <td>{{$lead->users->name ?? ''}}</td>
-                                    <td>{{$lead->lead->holder_name ?? ''}}</td>
-                                    <td>{{$lead->lead->phone ?? ''}}</td>
-                                    <td>{{$lead->lead->email ?? ''}}</td>
-                                    <td>{{$lead->insurances->name ?? ''}}</td>
-                                    <td>{{$lead->products->name ?? ''}}</td>
+                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >
+                                    {{$lead->lead->holder_name ?? ''}} </a></td>
+                                    <td>{{$lead->mis_transaction_type ?? ''}}</td>
                                     <td>{{$lead->subProduct->name ?? ''}}</td>
+                                    <td>{{$lead->gwp ?? ''}}</td>
                                     <td>{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</td>
-                                    <td>{{$lead->is_paid == 0 ? 'Pending' : 'Paid'}}</td>
+                                    <td>{{$lead->is_paid == 0 ? 'Short' : 'Paid'}}</td>
                                   
                                     <td>
                                     @if(isset($_GET['id']) && $_GET['id'] == 2)
@@ -178,8 +175,7 @@
                                 
                                    
                                     <td>
-                                            <a  href="{{route('policy.show',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
-                                            </a>
+                                           
                                             <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
                                             </a>  
                                             <a href="{{route('policy.destroy',$lead->id)}}"

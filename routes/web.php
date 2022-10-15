@@ -75,8 +75,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('product', ProductController::class);
         Route::resource('subproduct', SubProductController::class);
         Route::resource('insurance', InsuranceController::class);
-        Route::resource('make', MakeController::class);
-        Route::resource('model', MakeModelController::class);
+        Route::resource('make', MakeModelController::class);
+        Route::resource('model', MakeController::class);
         Route::resource('leads', LeadController::class);
         Route::resource('policy', PolicyController::class);
         Route::resource('report', ReportController::class);
@@ -84,9 +84,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('payout', PayoutController::class);
         Route::any('renew_status', [PolicyController::class, 'renew_status'])->name('renew_status');
         Route::any('endrosment', [PolicyController::class, 'endrosment'])->name('endrosment');
+        Route::any('commonEndrosment', [PolicyController::class, 'commonEndrosment'])->name('commonEndrosment');
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
         Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');
         Route::any('getVarient', [LeadController::class, 'getVarient'])->name('getVarient');
+        Route::any('getModel', [LeadController::class, 'getModel'])->name('getModel');
         Route::get('getStaff', [LeadController::class, 'getStaff'])->name('getStaff');
         Route::post('saveAssign', [LeadController::class, 'saveAssign'])->name('saveAssign');
         Route::post('changeStatus', [LeadController::class, 'changeStatus'])->name('changeStatus');

@@ -7,10 +7,10 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">All Models</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ list</span>
+                <h4 class="content-title mb-0 my-auto">All Make</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ list</span>
             </div>
         </div>
-        <a class="btn btn-main-primary ml_auto" href="{{ route('model.create') }}">Add Model</a>
+        <a class="btn btn-main-primary ml_auto" href="{{ route('make.create') }}">Add Make</a>
     </div>
     <!-- breadcrumb -->
    
@@ -18,7 +18,7 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
                 <div class="card-header pb-0">
-                    <p class="tx-12 tx-gray-500 mb-2">Listing of All Models...</p>
+                    <p class="tx-12 tx-gray-500 mb-2">Listing of All Make...</p>
                 </div>
                 <div class="card-body">
 
@@ -28,7 +28,6 @@
                             <thead>
                                 <tr>
                                 <th class="wd-lg-20p"><span>Name</span></th>
-                                <th class="wd-lg-20p"><span>Make</span></th>
 												<th class="wd-lg-20p"><span>Created</span></th>
 												<th class="wd-lg-20p">Action</th>
                                 </tr>
@@ -60,12 +59,11 @@
             processing: true,
             serverSide: true,
             ajax: {
-                    url: "{{ route('model.index') }}",
+                    url: "{{ route('make.index') }}",
                        
                     },
             columns: [
               {data: 'name', name: 'name'},
-              {data: 'makes.name', name: 'makes.name'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
             ]

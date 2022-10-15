@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Make;
+use App\Models\ModelMake;
 use App\Models\MakeModel;
 use DataTables;
 use App\Http\Requests\Admin\Make\StoreMakeRequest;
@@ -23,7 +24,7 @@ class MakeController extends Controller
        
         if ($request->ajax())
         {
-            $data = Make::orderby('id','DESC')->get();
+            $data = ModelMake::with('makes')->orderby('id','DESC')->get();
 
             return Datatables::of($data)
                             ->addIndexColumn()
@@ -31,10 +32,10 @@ class MakeController extends Controller
                             {
                                 $action = '<span class="action-buttons">
                                 
-                        <a  href="' . route("make.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
+                        <a  href="' . route("model.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
                         </a>
 
-                        <a href="' . route("make.destroy", $row) . '"
+                        <a href="' . route("model.destroy", $row) . '"
                                 class="btn btn-sm btn-danger remove_us"
                                 title="Delete User"
                                 data-toggle="tooltip"
@@ -62,8 +63,8 @@ class MakeController extends Controller
     public function create()
     {
 
-      
-        return view('admin.make.addEdit');
+      $makes=Make::all();
+        return view('admin.make.addEdit',compact('makes'));
     }
 
     /**
@@ -78,20 +79,10 @@ class MakeController extends Controller
      
         $inputs = $request->only(
             'name',
+            'make_id'
             );
-           $make= Make::create($inputs);
-            if(!empty($request->model_id)){
-                MakeModel::where('make_id',$make->id)->where('type','model')->delete(); 
-                foreach ($request->model_id as $key => $model) {
-                    if(!empty($model)){
-                        MakeModel::create([
-                            'make_id'=> $make->id,
-                            'name'=> $model,
-                            'type' => 'model'
-                        ]);
-                    }
-                }
-            }
+           $make= ModelMake::create($inputs);
+    
             if(!empty($request->varriant_id)){
                 MakeModel::where('make_id',$make->id)->where('type','varriant')->delete(); 
                 foreach ($request->varriant_id as $key => $varriant) {
@@ -178,7 +169,7 @@ class MakeController extends Controller
             }
           
         
-        return back()->with('success', 'Make addded successfully!');
+        return back()->with('success', 'Model added successfully!');
     }
 
     /**
@@ -199,10 +190,11 @@ class MakeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Make $make)
+    public function edit($id)
     {
-       
-        return view('admin.make.addEdit', compact('make'));
+        $makes=Make::all();
+        $make=ModelMake::with('makeModels')->where('id',$id)->first();
+        return view('admin.make.addEdit', compact('make','makes'));
     }
 
     /**
@@ -212,25 +204,17 @@ class MakeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreMakeRequest $request, Make $make)
+    public function update(StoreMakeRequest $request, $id)
     {
-       
         $inputs = $request->only(
             'name',
+            'make_id'
             );
-        $make->update($inputs);
-        if(!empty($request->model_id)){
-            MakeModel::where('make_id',$make->id)->where('type','model')->delete(); 
-            foreach ($request->model_id as $key => $model) {
-                if(!empty($model)){
-                    MakeModel::create([
-                        'make_id'=> $make->id,
-                        'name'=> $model,
-                        'type' => 'model'
-                    ]);
-                }
-            }
+        $make= ModelMake::find($id);
+        if($make){
+            $make->update($inputs);
         }
+           
         if(!empty($request->varriant_id)){
             MakeModel::where('make_id',$make->id)->where('type','varriant')->delete(); 
             foreach ($request->varriant_id as $key => $varriant) {
@@ -316,7 +300,7 @@ class MakeController extends Controller
             }
         }
       
-        return back()->with('success', 'Make updated successfully!');
+        return back()->with('success', 'Model updated successfully!');
     }
 
     /**
@@ -325,9 +309,10 @@ class MakeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Make $make)
+    public function destroy($id)
     {
-        $make->delete();
+     MakeModel::where('make_id',$id)->delete();
+     ModelMake::find($id)->delete();
         return back()->with('success', 'Make deleted successfully!');
     }
 

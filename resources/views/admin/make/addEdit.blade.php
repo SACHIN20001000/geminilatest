@@ -6,10 +6,10 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">Make</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ {{isset($make) ? $make->name : 'Add New' }}</span>
+                <h4 class="content-title mb-0 my-auto">Model</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ {{isset($make) ? $make->name : 'Add New' }}</span>
             </div>
         </div>
-        <a class="btn btn-main-primary ml_auto" style="margin-left: 740px;" href="{{ route('make.index') }}">View Make</a>
+        <a class="btn btn-main-primary ml_auto" style="margin-left: 740px;" href="{{ route('model.index') }}">View Model</a>
 
 
     </div>
@@ -26,7 +26,7 @@
 
 
                     <!--  start  -->
-                    <form  id="user-add-edit" action="{{isset($make) ? route('make.update',$make->id) : route('make.store')}}" method="POST" enctype="multipart/form-data">
+                    <form  id="user-add-edit" action="{{isset($make) ? route('model.update',$make->id) : route('model.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         {{ isset($make) ? method_field('PUT'):'' }}
                         <div class="pd-30 pd-sm-40 bg-gray-200">
@@ -38,6 +38,23 @@
                                         <h4>Details</h4>
                                         <div class="row row-xs align-items-center mg-b-20">
                                             <div class="col-md-4">
+                                                <label class="form-label mg-b-0">Make</label>
+                                            </div>
+                                            <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                            <select name="make_id" id="make_id"class="form-control">
+                                                <option value="">Select Below</option>
+                                                @if($makes->count())
+                                                @foreach($makes as $makies)
+                                                <option value="{{$makies->id}}" {{isset($make) && $make->make_id == $makies->id ? 'selected':'' }}>{{$makies->name}}</option>
+
+                                                @endforeach
+                                                @endif
+                                            </select>   
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="row row-xs align-items-center mg-b-20">
+                                            <div class="col-md-4">
                                                 <label class="form-label mg-b-0">Name</label>
                                             </div>
                                             <div class="col-md-8 mg-t-5 mg-md-t-0">
@@ -47,32 +64,7 @@
                                     </div>
                                 </div>
                              </div>
-                             <div class="col-lg-12 col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4>Model</h4>
-                                        <div class="btn btn-primary" id="add-model"> Add Model</div>
-                                        <div class="row row-xs align-items-center mg-b-20">
-                                            <div class="col-md-4">
-                                                <!-- <label class="form-label mg-b-0"> Variant</label> -->
-                                            </div>
-                                            <div class="col-md-8 mg-t-5 mg-md-t-0 models">
-                                                @if(!empty($make->makeModels))
-                                                    @foreach($make->makeModels as $varient)
-                                                    @if($varient->type == 'model')
-                                                    <div>                                            
-                                                        <input class="form-control mb-2" name="model_id[]"  placeholder="Enter your Model name" type="text" value="{{$varient->name}}" >
-                                                    <span class="btn btn-danger mb-2 deletModel"> <i class="las la-trash" ></i></span> 
-                                                    </div>
-                                                    @endif
-                                                    @endforeach
-                                                @endif
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                             </div>
+                    
                             <div class="col-lg-12 col-md-12">
                                 <div class="card">
                                     <div class="card-body">

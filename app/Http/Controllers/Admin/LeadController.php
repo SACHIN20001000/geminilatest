@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\SubProduct;
 use App\Models\Channel;
 use App\Models\MakeModel;
+use App\Models\ModelMake;
 use App\Models\Make;
 use App\Models\Policy;
 use App\Models\Insurance;
@@ -185,16 +186,18 @@ class LeadController extends Controller
      */
     public function edit(Lead $lead)
     {
+       
         $insurances = Insurance::all();
         $products = Product::all();
         $subProducts = SubProduct::where('product_id',$lead->product_id)->get();
         $companies = Company::all();
         $policy= Policy::where('lead_id',$lead->id)->first();
         $make = Make::all();
-        $varients=MakeModel::where('make_id',$policy->make)->get();
+        $model=ModelMake::all();
+        $varients=MakeModel::where('make_id',$policy->model)->get();
         $channels = Channel::all();
         $users= User::all();
-        return view('admin.lead.addEdit',compact('insurances','companies','lead','users','policy','make','products','subProducts','channels','varients'));
+        return view('admin.lead.addEdit',compact('model','insurances','companies','lead','users','policy','make','products','subProducts','channels','varients'));
     }
 
     /**
@@ -271,6 +274,19 @@ class LeadController extends Controller
             $output1 .= '<option value="' . $val1->id . '" data-id="'.$val1->name.'">' . $val1->name . '</option>';
         }
         echo $output1;
+    }
+    public function getModel(Request $request){
+    $model= ModelMake::where('make_id',$request->make)->get();
+    $response=[];
+    $response['model']=[
+        0=>"<option value=''>Select </option>"
+
+    ];
+    foreach ($model as $val) {
+          array_push($response['model'],'<option value="' . $val->id . '">' . $val->name . '</option>'); 
+      }
+   
+      return $response;
     }
     public function getVarient(Request $request){
         

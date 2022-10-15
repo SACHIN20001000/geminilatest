@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Make;
-use App\Models\MakeModel;
 use DataTables;
 use App\Http\Requests\Admin\Make\StoreModelRequest;
 
@@ -23,7 +22,7 @@ class MakeModelController extends Controller
        
         if ($request->ajax())
         {
-            $data = MakeModel::with('makes')->orderby('id','DESC')->get();
+            $data = Make::orderby('id','DESC')->get();
 
             return Datatables::of($data)
                             ->addIndexColumn()
@@ -31,10 +30,10 @@ class MakeModelController extends Controller
                             {
                                 $action = '<span class="action-buttons">
                                 
-                        <a  href="' . route("model.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
+                        <a  href="' . route("make.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
                         </a>
 
-                        <a href="' . route("model.destroy", $row) . '"
+                        <a href="' . route("make.destroy", $row) . '"
                                 class="btn btn-sm btn-danger remove_us"
                                 title="Delete User"
                                 data-toggle="tooltip"
@@ -61,9 +60,7 @@ class MakeModelController extends Controller
      */
     public function create()
     {
-
-      $make= Make::all();
-        return view('admin.models.addEdit',compact('make'));
+        return view('admin.models.addEdit');
     }
 
     /**
@@ -76,9 +73,9 @@ class MakeModelController extends Controller
     {
 
         $inputs = $request->all();
-        MakeModel::create($inputs);
+        Make::create($inputs);
         
-        return back()->with('success', 'Model addded successfully!');
+        return back()->with('success', 'Make addded successfully!');
     }
 
     /**
@@ -101,9 +98,8 @@ class MakeModelController extends Controller
      */
     public function edit($id)
     {
-        $makeModel=MakeModel::find($id); 
-        $make= Make::all();
-        return view('admin.models.addEdit', compact('makeModel','make'));
+        $makeModel=Make::find($id); 
+        return view('admin.models.addEdit', compact('makeModel'));
     }
 
     /**
@@ -116,11 +112,11 @@ class MakeModelController extends Controller
     public function update(StoreModelRequest $request, $id)
     {
        
-        $makeModel=MakeModel::find($id); 
+        $makeModel=Make::find($id); 
         $inputs = $request->all();
         $makeModel->update($inputs);
         
-        return back()->with('success', 'Model updated successfully!');
+        return back()->with('success', 'Make updated successfully!');
     }
 
     /**
@@ -131,8 +127,8 @@ class MakeModelController extends Controller
      */
     public function destroy($id)
     {
-        MakeModel::find($id)->delete();
-        return back()->with('success', 'Model deleted successfully!');
+        Make::find($id)->delete();
+        return back()->with('success', 'Make deleted successfully!');
     }
 
 }

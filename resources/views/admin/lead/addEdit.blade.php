@@ -695,11 +695,10 @@
                     
                         <select name="model" class="select2 form-control feild"  id="model">
                         <option value="">Select Below</option>
-                        @if(isset($varients) &&  $varients->count())
-                                @foreach($varients as $varient)
-                                @if($varient->type == 'model')
-                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->model) ? 'selected' : '' }}>{{$varient->name}}</option>
-                                @endif
+                        @if(isset($model) &&  $model->count() && isset($policy) )
+                                @foreach($model as $models)
+                                <option value="{{$models->id}}" {{ (isset($policy) && $models->id == $policy->model) ? 'selected' : '' }}>{{$models->name}}</option>
+                             
                                 @endforeach
                             @endif
                         </select>
@@ -1024,17 +1023,32 @@ $.ajaxSetup({
             
             var make = $(this).val();
             $.ajax({
+                url: "{{ route('getModel') }}",
+                method: "post",
+                data: {
+                    make: make,
+                },
+                success: function(result) {
+                    $('#model').html(result['model']);
+                }
+
+            });
+        }
+    });
+    $('#model').change(function() {
+        if ($(this).val() != '') {
+            
+            var make = $(this).val();
+            $.ajax({
                 url: "{{ route('getVarient') }}",
                 method: "post",
                 data: {
                     make: make,
                 },
                 success: function(result) {
-                    console.log(result);
                     $('#varriant').html(result['varriant']);
                     $('#cc').html(result['cc']);
                     $('#fuel').html(result['fuel']);
-                    $('#model').html(result['model']);
                     $('#od').html(result['od']);
                     $('#seating').html(result['seating']);
                     $('#showroom').html(result['showroom']);
