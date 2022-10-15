@@ -24,7 +24,7 @@ class CompanyController extends Controller
        
         if ($request->ajax())
         {
-            $data = Company::orderby('id','DESC')->get();
+            $data = Company::with('insurances')->orderby('id','DESC')->get();
 
             return Datatables::of($data)
                             ->addIndexColumn()

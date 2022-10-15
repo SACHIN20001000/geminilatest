@@ -65,7 +65,7 @@
                     },
             columns: [
               {data: 'name', name: 'name'},
-              {data: 'type', name: 'type'},
+              {data: 'insurances.name', name: 'insurances.name'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
