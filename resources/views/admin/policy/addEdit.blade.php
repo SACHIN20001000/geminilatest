@@ -1146,7 +1146,7 @@ $.ajaxSetup({
                     $('#od').html(result['od']);
                     $('#seating').html(result['seating']);
                     $('#showroom').html(result['showroom']);
-                    $('#tp').html(result['tp']);
+                    $('#tp_premium').html(result['tp']);
                 }
 
             });
