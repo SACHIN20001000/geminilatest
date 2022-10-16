@@ -150,11 +150,11 @@
                                     <td>{{$lead->users->name ?? ''}}</td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >
                                     {{$lead->lead->holder_name ?? ''}} </a></td>
-                                    <td>{{$lead->mis_transaction_type ?? ''}}</td>
-                                    <td>{{$lead->subProduct->name ?? ''}}</td>
-                                    <td>{{$lead->gwp ?? ''}}</td>
-                                    <td>{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</td>
-                                    <td>{{$lead->is_paid == 0 ? 'Short' : 'Paid'}}</td>
+                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->mis_transaction_type ?? ''}}</a></td>
+                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->subProduct->name ?? ''}}</a></td>
+                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->gwp ?? ''}}</a></td>
+                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
+                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->is_paid == 0 ? 'Short' : 'Paid'}}</a></td>
                                   
                                     <td>
                                     @if(isset($_GET['id']) && $_GET['id'] == 2)
