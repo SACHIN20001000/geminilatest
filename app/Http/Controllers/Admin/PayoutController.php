@@ -69,7 +69,8 @@ class PayoutController extends Controller
                             })
                             ->addColumn('payable', function ($row)
                             {
-                                $action = '<span class="btn btn-danger">1000</span><span class="btn btn-info">1000</span>    ';
+                                $pay=!empty($row->advance_payout)?$row->advance_payout:0;
+                                $action = '<span class="">'.$pay.'</span>/<span class="">0</span>    ';
                                 return $action;
                             })
                             ->rawColumns(['action','payable'])
