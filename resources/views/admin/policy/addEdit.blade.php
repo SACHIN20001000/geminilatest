@@ -57,7 +57,29 @@
 											<p class="mg-t-10 mg-b-1">Email</p>
                                             <input class="form-control" name="email"  placeholder="Enter your email" type="email" value="{{isset($policy) ? $policy->email : '' }}">
 							</div> -->
-                      
+                            <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">Channel Name</p>
+                                         
+                                            <select name="channel_name" class="select2 form-control common-feild feild" id="channel_name">
+                                            <option value="">Select Below</option>
+                                            @if($channels->count())
+                                                @foreach($channels as $channel)
+                                                       <option value="{{$channel->name}}" {{ (isset($policy) && $channel->name == $policy->channel_name) ? 'selected' : '' }}>{{$channel->name}}</option>             
+                                                @endforeach
+                                            @endif
+                                           </select>
+                                        </div>
+                      <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">Insurance Company</p>
+                                            <select name="company_id" class="select2 form-control common-feild feild" id="company_id">
+                                            <option value="">Select Below</option>
+                                            @if($companies->count())
+                                                @foreach($companies as $company)
+                                                       <option value="{{$company->id}}" {{ (isset($policy) && $company->id == $policy->company_id) ? 'selected' : '' }}>{{$company->name}}</option>             
+                                                @endforeach
+                                            @endif
+                                           </select>
+                     </div>
                             <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Insurance</p>
                                            <select name="insurance_id" class="select2 form-control" id="insurance_id">
@@ -92,33 +114,88 @@
                                            </select>
 							</div>
                       <!------------------------------------------------- polciy start  ------------------------------------------------>
-                      <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">Channel Name</p>
-                                         
-                                            <select name="channel_name" class="select2 form-control common-feild feild" id="channel_name">
-                                            <option value="">Select Below</option>
-                                            @if($channels->count())
-                                                @foreach($channels as $channel)
-                                                       <option value="{{$channel->name}}" {{ (isset($policy) && $channel->name == $policy->channel_name) ? 'selected' : '' }}>{{$channel->name}}</option>             
-                                                @endforeach
-                                            @endif
-                                           </select>
-                                        </div>
-                      <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">Insurance Company</p>
-                                            <select name="company_id" class="select2 form-control common-feild feild" id="company_id">
-                                            <option value="">Select Below</option>
-                                            @if($companies->count())
-                                                @foreach($companies as $company)
-                                                       <option value="{{$company->id}}" {{ (isset($policy) && $company->id == $policy->company_id) ? 'selected' : '' }}>{{$company->name}}</option>             
-                                                @endforeach
-                                            @endif
-                                           </select>
-                     </div>
+                    
                       <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Policy Number</p>
                                            <input type="text" name="policy_no" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control common-feild feild" id="policy_no">
                      </div>
+                     <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">Start Date</p>
+                                           <input type="date" name="start_date" value="{{isset($policy) ? $policy->start_date : ''}}" class="form-control feild" id="start_date">
+                     </div>
+                     <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">End  Date</p>
+                                           <input type="date" name="expiry_date" value="{{isset($policy) ? $policy->expiry_date : ''}}" class="form-control feild" id="expiry_date">
+                     </div>
+                     <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">GWP</p>
+                     <input type="text" name="gwp" value="{{isset($policy) ? $policy->gwp : ''}}" class="form-control feild" id="gwp">
+                     
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Net Premium</p>
+                     <input type="text" name="net_premium" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control feild" id="net_premium">
+                     
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">OD Premium</p>
+                     <input type="text" name="od_premium" value="{{isset($policy) ? $policy->od_premium : ''}}" class="form-control feild" id="od_premium">
+                     
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Add On Premium</p>
+                     <input type="text" name="add_on_premium" value="{{isset($policy) ? $policy->add_on_premium : ''}}" class="form-control feild" id="add_on_premium">
+                     
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">TP Premium</p>
+                     <select name="tp_premium" class="select2 form-control feild"  id="tp_premium">
+                        <option value="">Select Below</option>
+                        @if(isset($varients) &&  $varients->count())
+                                @foreach($varients as $varient)
+                                @if($varient->type == 'tp')
+                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->tp_premium) ? 'selected' : '' }}>{{$varient->name}}</option>
+                                @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">PA</p>
+                     <input type="text" name="pa" value="{{isset($policy) ? $policy->pa : ''}}" class="form-control feild" id="pa">
+                     
+                    </div>
+                    
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Other</p>
+                     <input type="text" name="others" value="{{isset($policy) ? $policy->others : ''}}" class="form-control feild" id="others">
+                     
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Gross Premiun</p>
+                     <input type="text" name="gross_premium" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control feild" id="gross_premium">
+                     
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Basic Premiun</p>
+                     <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control feild" id="basic_premium">
+                     
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Terrorism Premiun</p>
+                     <input type="text" name="terrorism_premium" value="{{isset($policy) ? $policy->terrorism_premium : ''}}" class="form-control feild" id="terrorism_premium">
+                     
+                    </div>
                      <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Case Type</p>
                                             <select name="case_type" class="select2 form-control common-feild feild" id="case_type">
@@ -196,18 +273,11 @@
 											<p class="mg-t-10 mg-b-1">Basis Of Valuation</p>
                                            <input type="text" name="basic_of_valuation" value="{{isset($policy) ? $policy->basic_of_valuation : ''}}" class="form-control feild" id="basic_of_valuation">
                      </div>
-                     <div class="col-lg-6">
+                     <!-- <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Policy Period</p>
                                            <input type="text" name="policy_period" value="{{isset($policy) ? $policy->policy_period : ''}}" class="form-control feild" id="policy_period">
-                     </div>
-                     <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">Start Date</p>
-                                           <input type="date" name="start_date" value="{{isset($policy) ? $policy->start_date : ''}}" class="form-control feild" id="start_date">
-                     </div>
-                     <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">End  Date</p>
-                                           <input type="date" name="expiry_date" value="{{isset($policy) ? $policy->expiry_date : ''}}" class="form-control feild" id="expiry_date">
-                     </div>
+                     </div> -->
+                    
                      <div class="col-lg-6">
                      
 											<p class="mg-t-10 mg-b-1">Details Of Commodity Type</p>
@@ -662,9 +732,21 @@
                             @endforeach
                         @endif
                      </select>
+                 
                      
-                     <!-- <input type="text" name="make" value="{{isset($policy) ? $policy->make : ''}}" class="form-control feild" id="make"> -->
+                    </div>
+                    <div class="col-lg-6">
                      
+                     <p class="mg-t-10 mg-b-1">Model</p>
+                    
+                        <select name="model" class="select2 form-control feild"  id="model">
+                        <option value="">Select Below</option>
+                        @if(isset($model) &&  $model->count() && isset($policy) )
+                                @foreach($model as $models)
+                                <option value="{{$models->id}}" {{ (isset($policy) && $models->id == $policy->model) ? 'selected' : '' }}>{{$models->name}}</option>
+                                @endforeach
+                            @endif
+                        </select>
                     </div>
                     <div class="col-lg-6">
                      
@@ -683,19 +765,7 @@
                      
                     </div>
        
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Model</p>
-                    
-                        <select name="model" class="select2 form-control feild"  id="model">
-                        <option value="">Select Below</option>
-                        @if(isset($model) &&  $model->count() && isset($policy) )
-                                @foreach($model as $models)
-                                <option value="{{$models->id}}" {{ (isset($policy) && $models->id == $policy->model) ? 'selected' : '' }}>{{$models->name}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
+              
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">CC/KW</p>
@@ -850,12 +920,12 @@
                     </select>
                     
                     </div>
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">Fuel Type</p>
                      <input type="text" name="fuel_type" value="{{isset($policy) ? $policy->fuel_type : ''}}" class="form-control feild" id="fuel_type">
                      
-                    </div>
+                    </div> -->
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">Passenger Carrying Capacity</p>
@@ -869,87 +939,21 @@
                      <input type="text" name="category" value="{{isset($policy) ? $policy->category : ''}}" class="form-control feild" id="category">
                      
                     </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Net Premium</p>
-                     <input type="text" name="net_premium" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control feild" id="net_premium">
-                     
-                    </div>
+                  
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">GST</p>
                      <input type="text" name="gst" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control feild" id="gst">
                      
                     </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">GWP</p>
-                     <input type="text" name="gwp" value="{{isset($policy) ? $policy->gwp : ''}}" class="form-control feild" id="gwp">
-                     
-                    </div>
+                 
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">GST</p>
                      <input type="text" name="gst" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control feild" id="gst">
                      
                     </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">OD Premium</p>
-                     <input type="text" name="od_premium" value="{{isset($policy) ? $policy->od_premium : ''}}" class="form-control feild" id="od_premium">
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Add On Premium</p>
-                     <input type="text" name="add_on_premium" value="{{isset($policy) ? $policy->add_on_premium : ''}}" class="form-control feild" id="add_on_premium">
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">TP Premium</p>
-                     <select name="tp_premium" class="select2 form-control feild"  id="tp_premium">
-                        <option value="">Select Below</option>
-                        @if(isset($varients) &&  $varients->count())
-                                @foreach($varients as $varient)
-                                @if($varient->type == 'tp')
-                                <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->tp_premium) ? 'selected' : '' }}>{{$varient->name}}</option>
-                                @endif
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">PA</p>
-                     <input type="text" name="pa" value="{{isset($policy) ? $policy->pa : ''}}" class="form-control feild" id="pa">
-                     
-                    </div>
-                    
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Other</p>
-                     <input type="text" name="others" value="{{isset($policy) ? $policy->others : ''}}" class="form-control feild" id="others">
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Gross Premiun</p>
-                     <input type="text" name="gross_premium" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control feild" id="gross_premium">
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Basic Premiun</p>
-                     <input type="text" name="basic_premium" value="{{isset($policy) ? $policy->basic_premium : ''}}" class="form-control feild" id="basic_premium">
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Terrorism Premiun</p>
-                     <input type="text" name="terrorism_premium" value="{{isset($policy) ? $policy->terrorism_premium : ''}}" class="form-control feild" id="terrorism_premium">
-                     
-                    </div>
+                   
                     </div>
                     </div>
 
@@ -1107,10 +1111,6 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-
-
-
-
     $('#insurance_id').change(function() {
         if ($(this).val() != '') {
             
@@ -1187,13 +1187,9 @@ $.ajaxSetup({
     $('.feild').parent('div').hide()
     $('.common-feild').parent('div').show()
     $('#subproduct_id').change(function() {
-       
-   
-            
             var subproduct = $(this).find(':selected').data("id");
             if(subproduct != ''){
                 subproduct= $.trim(subproduct).toLowerCase();
-               
                 changeFeild(subproduct);    
             }
         
@@ -1203,7 +1199,6 @@ $.ajaxSetup({
                 if(editSubproductId != ''){
                     editSubproductId= $.trim(editSubproductId).toLowerCase();
                                 changeFeild(editSubproductId);  
-                                console.log(editSubproductId);  
                             }
 });
 function addAttachment(){

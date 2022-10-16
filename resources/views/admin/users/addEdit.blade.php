@@ -9,10 +9,8 @@
                 <h4 class="content-title mb-0 my-auto">User</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ {{isset($user) ? $user->email : 'Add New' }}</span>
             </div>
         </div>
-        <a class="btn btn-main-primary ml_auto" style="margin-left: 740px;" href="{{ route('users.index') }}">View User</a>
-        @isset($user)
-        <a class="btn btn-main-primary ml_auto" href="{{ route('users.show', $user->id ) }}">View Pets</a>
-        @endisset
+        <a class="btn btn-main-primary ml_auto" style="margin-left: 740px;" href="{{ route('users.index',['id'=> 0]) }}">View User</a>
+      
 
     </div>
     <!-- breadcrumb -->
@@ -70,7 +68,14 @@
                                 </div>
                             </div>
 
-
+                            <div class="row row-xs align-items-center mg-b-20 advance_payout">
+                                <div class="col-md-4">
+                                    <label class="form-label mg-b-0">Advance Payout</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                    <input class="form-control" name="advance_payout"  placeholder="Enter your Amount" type="number" value="{{isset($user) && !empty($user->advance_payout) ? $user->advance_payout : ''}}">
+                                </div>
+                            </div>
 
                             <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5" type="submit">{{isset($user) ? 'Update' : 'Save' }}</button>
                         </div>

@@ -115,6 +115,7 @@ class CreatePoliciesTable extends Migration
             $table->text('fresh')->nullable();
             $table->text('portability')->nullable();
             $table->text('dob')->nullable();
+            $table->text('invoice_id')->nullable();
             $table->text('pre_existing_disease')->nullable();
             $table->string('hospitalization_history')->nullable();
             $table->string('upload_discharge_summary')->nullable();

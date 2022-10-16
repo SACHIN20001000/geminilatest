@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Policy;
+use App\Models\Invoice;
+use App\Models\User;
 use DataTables;
 class PayoutController extends Controller
 {
@@ -17,9 +19,21 @@ class PayoutController extends Controller
     {
         if ($request->ajax())
         {
-            $data = Policy::with('users','clients','insurances','company','products','subProduct')->where('is_mis',1)->orderby('id','DESC')->get();
+           
+            $query = Policy::with('users','clients','insurances','company','products','subProduct')->where('is_mis',1);
+            if(isset($request->id) && !empty($request->id)) {
+                $query->where('user_id',$request->id);
+               
+            }
+          $data=  $query->orderby('id','DESC')->get();
             return Datatables::of($data)
                             ->addIndexColumn()
+                            ->addColumn('checkbox', function ($row)
+                            {
+                                $action = '<input type="checkbox" name="checked"  class="checkSingle" value="'.$row->id.'"> 
+                    ';
+                                return $action;
+                            })
                             ->addColumn('clients', function ($row)
                             {
                                 return isset($row->clients->name)?  $row->clients->name : '';
@@ -32,11 +46,77 @@ class PayoutController extends Controller
                             {
                                 return isset($row->subProduct->name)?  $row->subProduct->name : '';
                             })
+                            ->rawColumns(['checkbox'])
                             ->make(true);
         }
         return view('admin.payout.index');
     }
 
+    public function brokerPayout(Request $request){
+        if ($request->ajax())
+        {
+            $data = User::with('policy')->orderby('id','DESC')->get();
+            return Datatables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('action', function ($row)
+                            {
+                                $action = '<span class="action-buttons">
+                                
+                        <a  href="' . route("payout.index", ['id'=>$row]) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
+                        </a>
+                    ';
+                                return $action;
+                            })
+                            ->addColumn('payable', function ($row)
+                            {
+                                $action = '<span class="btn btn-danger">1000</span><span class="btn btn-info">1000</span>    ';
+                                return $action;
+                            })
+                            ->rawColumns(['action','payable'])
+                            ->make(true);
+        }
+        return view('admin.payout.userpayout');
+        
+    }
+    public function getInvoiceDetail(Request $request){
+          
+            $policy=Policy::select('mis_premium','mis_amount_paid','user_id')->whereIn('id',$request->ids)->get();
+          $short_premium=0;
+          $total_Payout=0;
+            if($policy->count()){
+                foreach ($policy as $key => $value) {
+                  $short_premium +=$value->mis_amount_paid;
+                  $total_Payout +=$value->mis_premium;
+                }
+            }
+           $user= User::find($request->user_id);
+           $response=[];
+           $response['advance_payout']= $user->advance_payout;
+           $response['short_premium']= $short_premium;
+           $response['total_Payout']= $total_Payout;
+           return $response;
+    }
+    public function invoiceStore(Request $request){
+       
+     $invoice=   Invoice::create([
+            'user_id'=>$request->user_id,
+            'invoice_id'=>random_int(1000, 9999),
+            'invoice_date'=>$request->invoice_date,
+            'transfer_date'=>$request->transfer_date,
+            'bank_detail'=>$request->bank_detail,
+            'name'=>$request->name,
+            'invoice_amount'=>$request->invoice_amount,
+            'tds'=>$request->tds,
+            'amount_transfer'=>$request->amount_transfer,
+            'adjusted'=>$request->adjusted,
+            'advance_payout'=>$request->advance_payout,
+            'recovery_cases'=>$request->recovery_cases,
+            'short_premium'=>$request->short_premium,
+            'total_Payout'=>$request->total_Payout,
+     ]);
+    Policy::whereIn('id',$request->policy_id)->update(['invoice_id'=>$invoice->invoice_id]);
+    return back()->with('success', 'Invoice Generated successfully!');
+    }
     /**
      * Show the form for creating a new resource.
      *

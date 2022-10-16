@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('pan_card')->nullable();
             $table->string('aadhar_card')->nullable();
             $table->string('gst')->nullable();
+            $table->string('advance_payout')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -38,21 +38,6 @@
                         <div class="card">
                         <div class="card-body">
                             <div class="row row-xs align-items-center mg-b-20">
-
-                            <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">Polciy Holder Name</p>
-                                            <input class="form-control" name="holder_name"  placeholder="Enter your name" type="text" value="{{isset($lead) ? $lead->holder_name : '' }}">
-							</div>
-                      
-                            <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">Phone Number </p>
-                                            <input class="form-control" name="phone"  placeholder="Enter your Number" type="text" value="{{isset($lead) ? $lead->phone : '' }}">
-							</div>
-                      
-                            <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">Email</p>
-                                            <input class="form-control" name="email"  placeholder="Enter your email" type="email" value="{{isset($lead) ? $lead->email : '' }}">
-							</div>
                             <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Reference</p>
                                             <select name="user_id" class="form-control">
@@ -64,7 +49,32 @@
                                         @endif
                                     </select>
                                         </div>
+                                        <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">Phone Number </p>
+                                            <input class="form-control" name="phone"  placeholder="Enter your Number" type="text" value="{{isset($lead) ? $lead->phone : '' }}">
+							</div>
                       
+                            <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">Email</p>
+                                            <input class="form-control" name="email"  placeholder="Enter your email" type="email" value="{{isset($lead) ? $lead->email : '' }}">
+							</div>
+                            <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">Polciy Holder Name</p>
+                                            <input class="form-control" name="holder_name"  placeholder="Enter your name" type="text" value="{{isset($lead) ? $lead->holder_name : '' }}">
+							</div>
+                      
+                         
+                            <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Type Of Business</p>
+                     <select name="bussiness_type" class="form-control feild" id="bussiness_type">
+                            <option value="">Select</option>
+                            <option value="New" {{ (isset($policy) && "New" == $policy->bussiness_type) ? 'selected' : '' }}>New</option>
+                            <option value="Rollover" {{ (isset($policy) && "Rollover" == $policy->bussiness_type) ? 'selected' : '' }}>Rollover</option>
+                            <option value="Renewal" {{ (isset($policy) && "Renewal" == $policy->bussiness_type) ? 'selected' : '' }}>Renewal</option>
+                    </select>
+                     
+                    </div>
                             <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Insurance</p>
                                            <select name="insurance_id" class="select2 form-control" id="insurance_id">
@@ -99,9 +109,9 @@
                                            </select>
 							</div>
                       <!------------------------------------------------- polciy start  ------------------------------------------------>
-                      <div class="col-lg-6">
+                      <!-- <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Channel Name</p>
-                                          <!-- <input type="text" name="channel_name" value="{{isset($policy) ? $policy->channel_name : ''}}" class="form-control common-feild feild" id="channel_name"> -->
+                                      
                                           <select name="channel_name" class="select2 form-control common-feild feild" id="channel_name">
                                             <option value="">Select Below</option>
                                             @if($channels->count())
@@ -110,8 +120,8 @@
                                                 @endforeach
                                             @endif
                                            </select>
-                                        </div>
-                      <div class="col-lg-6">
+                                        </div> -->
+                      <!-- <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Insurance Company</p>
                                             <select name="company_id" class="select2 form-control common-feild feild" id="company_id">
                                             <option value="">Select Below</option>
@@ -121,12 +131,12 @@
                                                 @endforeach
                                             @endif
                                            </select>
-                     </div>
-                      <div class="col-lg-6">
+                     </div> -->
+                      <!-- <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Policy Number</p>
                                            <input type="text" name="policy_no" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control common-feild feild" id="policy_no">
-                     </div>
-                     <div class="col-lg-6">
+                     </div> -->
+                     <!-- <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Case Type</p>
                                             <select name="case_type" class="select2 form-control common-feild feild" id="case_type">
                                             <option value="">Select Below</option>
@@ -134,7 +144,7 @@
                                             <option value="ROLLOVER" {{ (isset($policy) && "ROLLOVER" == $policy->case_type) ? 'selected' : '' }}>ROLLOVER</option>             
                                             <option value="RENEWAL" {{ (isset($policy) && "RENEWAL" == $policy->case_type) ? 'selected' : '' }}>RENEWAL</option>             
                                            </select>
-                     </div>
+                     </div> -->
                      <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Requirement</p>
                                            <input type="text" name="requirement" value="{{isset($policy) ? $policy->requirement : ''}}" class="form-control feild" id="requirement">
@@ -147,10 +157,7 @@
 											<p class="mg-t-10 mg-b-1">Address</p>
                                            <input type="text" name="address" value="{{isset($policy) ? $policy->address : ''}}" class="form-control feild" id="address">
                      </div>
-                     <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">Remarks</p>
-                                           <input type="text" name="remarks" value="{{isset($policy) ? $policy->remarks : ''}}" class="form-control feild" id="remarks">
-                     </div>
+                
                      <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Type</p>
                                             <select name="type" class="select2 form-control feild" id="type">
@@ -207,14 +214,11 @@
 											<p class="mg-t-10 mg-b-1">Policy Period</p>
                                            <input type="text" name="policy_period" value="{{isset($policy) ? $policy->policy_period : ''}}" class="form-control feild" id="policy_period">
                      </div>
-                     <div class="col-lg-6">
+                     <!-- <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Start Date</p>
                                            <input type="date" name="start_date" value="{{isset($policy) ? $policy->start_date : ''}}" class="form-control feild" id="start_date">
                      </div>
-                     <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">End  Date</p>
-                                           <input type="date" name="expiry_date" value="{{isset($policy) ? $policy->expiry_date : ''}}" class="form-control feild" id="expiry_date">
-                     </div>
+                     -->
                      <div class="col-lg-6">
                      
 											<p class="mg-t-10 mg-b-1">Details Of Commodity Type</p>
@@ -670,23 +674,6 @@
                         @endif
                      </select>
                      
-                     <!-- <input type="text" name="make" value="{{isset($policy) ? $policy->make : ''}}" class="form-control feild" id="make"> -->
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Variant</p>
-                     <select name="varriant" class="select2 form-control feild"  id="varriant">
-                    <option value="">Select Below</option>
-                    @if(isset($varients) &&  $varients->count())
-                            @foreach($varients as $varient)
-                            @if($varient->type == 'varriant')
-                            <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->varriant) ? 'selected' : '' }}>{{$varient->name}}</option>
-                            @endif
-                            @endforeach
-                        @endif
-                    </select>
-                     <!-- <input type="text" name="varriant" value="{{isset($policy) ? $policy->varriant : ''}}" class="form-control feild" id="varriant"> -->
                      
                     </div>
                     <div class="col-lg-6">
@@ -703,6 +690,29 @@
                             @endif
                         </select>
                     </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Passenger Carrying Capacity</p>
+                     <input type="text" name="passenger_carrying_capacity" value="{{isset($policy) ? $policy->passenger_carrying_capacity : ''}}" class="form-control feild" id="passenger_carrying_capacity">
+                     
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Variant</p>
+                     <select name="varriant" class="select2 form-control feild"  id="varriant">
+                    <option value="">Select Below</option>
+                    @if(isset($varients) &&  $varients->count())
+                            @foreach($varients as $varient)
+                            @if($varient->type == 'varriant')
+                            <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->varriant) ? 'selected' : '' }}>{{$varient->name}}</option>
+                            @endif
+                            @endforeach
+                        @endif
+                    </select>
+                  
+                     
+                    </div>
+                  
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">CC/KW</p>
@@ -780,35 +790,6 @@
                     </div>
                     <div class="col-lg-6">
                      
-                     <p class="mg-t-10 mg-b-1">Cubic Capacity</p>
-                     <input type="text" name="cubic_capacity" value="{{isset($policy) ? $policy->cubic_capacity : ''}}" class="form-control feild" id="cubic_capacity">
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Type Of Business</p>
-                     <select name="bussiness_type" class="form-control feild" id="bussiness_type">
-                            <option value="">Select</option>
-                            <option value="New" {{ (isset($policy) && "New" == $policy->bussiness_type) ? 'selected' : '' }}>New</option>
-                            <option value="Rollover" {{ (isset($policy) && "Rollover" == $policy->bussiness_type) ? 'selected' : '' }}>Rollover</option>
-                            <option value="Renewal" {{ (isset($policy) && "Renewal" == $policy->bussiness_type) ? 'selected' : '' }}>Renewal</option>
-                    </select>
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Rto</p>
-                     <input type="text" name="rto" value="{{isset($policy) ? $policy->rto : ''}}" class="form-control feild" id="rto">
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Reg No</p>
-                     <input type="text" name="reg_no" value="{{isset($policy) ? $policy->reg_no : ''}}" class="form-control feild" id="reg_no">
-                     
-                    </div>
-                    <div class="col-lg-6">
-                     
                      <p class="mg-t-10 mg-b-1">MFR Year</p>
                      <input type="text" name="mfr_year" value="{{isset($policy) ? $policy->mfr_year : ''}}" class="form-control feild" id="mfr_year">
                      
@@ -831,9 +812,41 @@
                      <input type="radio" name="ncb_in_existing_policy" {{ (isset($policy) && "Yes" == $policy->ncb_in_existing_policy) ? 'checked' : '' }} value="Yes" class=" feild" id="ncb_in_existing_policy">Yes
                      <input type="radio" name="ncb_in_existing_policy"{{ (isset($policy) && "No" == $policy->ncb_in_existing_policy) ? 'checked' : '' }} value="No" class=" feild" id="ncb_in_existing_policy">No
                     </div>
+                    
+                    <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">End  Date</p>
+                                           <input type="date" name="expiry_date" value="{{isset($policy) ? $policy->expiry_date : ''}}" class="form-control feild" id="expiry_date">
+                     </div>
+                     <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">Remarks</p>
+                                           <input type="text" name="remarks" value="{{isset($policy) ? $policy->remarks : ''}}" class="form-control feild" id="remarks">
+                     </div>
                     <div class="col-lg-6">
                      
-                     <p class="mg-t-10 mg-b-1">Gcv Type</p>
+                     <p class="mg-t-10 mg-b-1">Cubic Capacity</p>
+                     <input type="text" name="cubic_capacity" value="{{isset($policy) ? $policy->cubic_capacity : ''}}" class="form-control feild" id="cubic_capacity">
+                     
+                    </div>
+                
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Rto</p>
+                     <input type="text" name="rto" value="{{isset($policy) ? $policy->rto : ''}}" class="form-control feild" id="rto">
+                     
+                    </div>
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Reg No</p>
+                     <input type="text" name="reg_no" value="{{isset($policy) ? $policy->reg_no : ''}}" class="form-control feild" id="reg_no">
+                     
+                    </div>
+               
+                   
+                 
+                 
+                    <div class="col-lg-6">
+                     
+                     <p class="mg-t-10 mg-b-1">Carrier</p>
                      <select name="gcv_type" class="form-control feild" id="gcv_type">
                             <option value="">Select</option>
                             <option value="Public Carrier"{{ (isset($policy) && "Public Carrier" == $policy->gcv_type) ? 'selected' : '' }}>Public Carrier</option>
@@ -857,18 +870,13 @@
                     </select>
                     
                     </div>
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">Fuel Type</p>
                      <input type="text" name="fuel_type" value="{{isset($policy) ? $policy->fuel_type : ''}}" class="form-control feild" id="fuel_type">
                      
-                    </div>
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Passenger Carrying Capacity</p>
-                     <input type="text" name="passenger_carrying_capacity" value="{{isset($policy) ? $policy->passenger_carrying_capacity : ''}}" class="form-control feild" id="passenger_carrying_capacity">
-                     
-                    </div>
+                    </div> -->
+             
                     
                     <div class="col-lg-6">
                      
@@ -1109,7 +1117,7 @@ function changeFeild(subproduct){
                  $('#client_name').parent('div').show();   
                  $('#address').parent('div').show();      
                  $('#remarks').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show();      
                 }
                 if(subproduct == 'marine'){
@@ -1125,15 +1133,15 @@ function changeFeild(subproduct){
                  $('#per_location_limit').parent('div').show(); 
                  $('#estimate_annual_sum').parent('div').show(); 
                  $('#basic_of_valuation').parent('div').show(); 
-                 $('#policy_period').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#policy_period').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                  $('#commodity_details').parent('div').show(); 
                  $('#packing_description').parent('div').show(); 
                  $('#remarks').parent('div').show(); 
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gwp').parent('div').show(); 
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gwp').parent('div').show(); 
                   
                 }
                 if(subproduct == 'liability'){
@@ -1146,28 +1154,42 @@ function changeFeild(subproduct){
                  $('#liability_act').parent('div').show(); 
                  $('#professional_indeminity').parent('div').show(); 
                  $('#comprehensive_general_liability').parent('div').show(); 
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gwp').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gwp').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                   
                 }
-                if(subproduct == 'liability'){
-                 $('.feild').parent('div').hide()
+                if(subproduct == 'miscd'){
+                    $('.feild').parent('div').hide()
                  $('.common-feild').parent('div').show();
-                 $('#libality').parent('div').show();   
-                 $('#policy_type').parent('div').show();   
-                 $('#liability_industrial').parent('div').show(); 
-                 $('#liability_nonindustrial').parent('div').show(); 
-                 $('#liability_act').parent('div').show(); 
-                 $('#professional_indeminity').parent('div').show(); 
-                 $('#comprehensive_general_liability').parent('div').show(); 
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gwp').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
-                 $('#expiry_date').parent('div').show(); 
+                 $('#gcv_type').parent('div').show();   
+                //  $('#gvw').parent('div').show();   
+                 $('#make').parent('div').show();  
+                 $('#varriant').parent('div').show();  
+                 $('#model').parent('div').show();      
+                 $('#bussiness_type').parent('div').show(); 
+                 $('#remakrs').parent('div').show();
+                 $('#mfr_year').parent('div').show(); 
+                 $('#reg_date').parent('div').show();
+                 $('#claims_in_existing_policy').parent('div').show();
+                 $('#ncb_in_existing_policy').parent('div').show();
+                //  $('#od_premium').parent('div').show();
+                //  $('#add_on_premium').parent('div').show();
+                //  $('#tp_premium').parent('div').show();
+                //  $('#pa').parent('div').show();
+                //  $('#others').parent('div').show();
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gross_premium').parent('div').show(); 
+                 $('#od').parent('div').show(); 
+                 $('#showroom').parent('div').show(); 
+                 $('#cc').parent('div').show(); 
+                 $('#fuel').parent('div').show(); 
+                 $('#seating').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
+                 $('#expiry_date').parent('div').show();  
                   
                 }
                 if(subproduct == 'wc'){
@@ -1179,8 +1201,8 @@ function changeFeild(subproduct){
                  $('#pincode').parent('div').show(); 
                  $('#industry_type').parent('div').show(); 
                  $('#worker_number').parent('div').show(); 
-                 $('#policy_period').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#policy_period').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                  $('#job_profile').parent('div').show();
                  $('#remakrs').parent('div').show();
@@ -1192,9 +1214,9 @@ function changeFeild(subproduct){
                  $('#terrorism_cover').parent('div').show();
                  $('#sub_contractor_cover').parent('div').show();
                  $('#multiple_location').parent('div').show();
-                 $('#net_premium').parent('div').show(); 
+                //  $('#net_premium').parent('div').show(); 
                  $('#gst').parent('div').show(); 
-                 $('#gwp').parent('div').show(); 
+                //  $('#gwp').parent('div').show(); 
                   
                 }
                 if(subproduct == 'fire' || subproduct == 'burglary'){
@@ -1218,12 +1240,12 @@ function changeFeild(subproduct){
                  $('#loss_in_amount').parent('div').show();
                  $('#loss_date').parent('div').show();
                  $('#measures_taken_after_loss').parent('div').show();
-                 $('#basic_premium').parent('div').show(); 
-                 $('#terrorism_premium').parent('div').show(); 
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gwp').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#basic_premium').parent('div').show(); 
+                //  $('#terrorism_premium').parent('div').show(); 
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gwp').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                 }
                 if(subproduct == 'home'){
@@ -1247,12 +1269,12 @@ function changeFeild(subproduct){
                  $('#loss_in_amount').parent('div').show();
                  $('#loss_date').parent('div').show();
                  $('#measures_taken_after_loss').parent('div').show();
-                 $('#basic_premium').parent('div').show(); 
-                 $('#terrorism_premium').parent('div').show(); 
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gwp').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#basic_premium').parent('div').show(); 
+                //  $('#terrorism_premium').parent('div').show(); 
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gwp').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                   
                 }
@@ -1272,10 +1294,10 @@ function changeFeild(subproduct){
                  $('#dob_father').parent('div').show();
                  $('#dob_mother').parent('div').show();
                  $('#sum_insured').parent('div').show();
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gwp').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gwp').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                   
                 }
@@ -1294,11 +1316,11 @@ function changeFeild(subproduct){
                  $('#dob_child').parent('div').show();
                  $('#dob_father').parent('div').show();
                  $('#dob_mother').parent('div').show();
-                 $('#sum_insured').parent('div').show();
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gwp').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#sum_insured').parent('div').show();
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gwp').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                   
                 }
@@ -1337,8 +1359,8 @@ function changeFeild(subproduct){
                 if(subproduct == 'pvt car'){
                     $('.feild').parent('div').hide()
                  $('.common-feild').parent('div').show();
-                 $('#gcv_type').parent('div').show();   
-                 $('#gvw').parent('div').show();   
+                //  $('#gcv_type').parent('div').show();   
+                //  $('#gvw').parent('div').show();   
                  $('#make').parent('div').show();  
                  $('#varriant').parent('div').show();  
                  $('#model').parent('div').show();      
@@ -1348,20 +1370,20 @@ function changeFeild(subproduct){
                  $('#reg_date').parent('div').show();
                  $('#claims_in_existing_policy').parent('div').show();
                  $('#ncb_in_existing_policy').parent('div').show();
-                 $('#od_premium').parent('div').show();
-                 $('#add_on_premium').parent('div').show();
-                 $('#tp_premium').parent('div').show();
-                 $('#pa').parent('div').show();
-                 $('#others').parent('div').show();
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gross_premium').parent('div').show(); 
+                //  $('#od_premium').parent('div').show();
+                //  $('#add_on_premium').parent('div').show();
+                //  $('#tp_premium').parent('div').show();
+                //  $('#pa').parent('div').show();
+                //  $('#others').parent('div').show();
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gross_premium').parent('div').show(); 
                  $('#od').parent('div').show(); 
                  $('#showroom').parent('div').show(); 
                  $('#cc').parent('div').show(); 
+                 $('#fuel').parent('div').show(); 
                  $('#seating').parent('div').show(); 
-                 $('#seating').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show();  
                 }
                 if(subproduct == 'gcv'){
@@ -1378,20 +1400,20 @@ function changeFeild(subproduct){
                  $('#reg_date').parent('div').show();
                  $('#claims_in_existing_policy').parent('div').show();
                  $('#ncb_in_existing_policy').parent('div').show();
-                 $('#od_premium').parent('div').show();
-                 $('#add_on_premium').parent('div').show();
-                 $('#tp_premium').parent('div').show();
-                 $('#pa').parent('div').show();
-                 $('#others').parent('div').show();
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gross_premium').parent('div').show(); 
+                //  $('#od_premium').parent('div').show();
+                //  $('#add_on_premium').parent('div').show();
+                //  $('#tp_premium').parent('div').show();
+                //  $('#pa').parent('div').show();
+                //  $('#others').parent('div').show();
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                 $('#fuel').parent('div').show(); 
                  $('#od').parent('div').show(); 
-                 $('#showroom').parent('div').show(); 
+                //  $('#showroom').parent('div').show(); 
                  $('#cc').parent('div').show(); 
                  $('#seating').parent('div').show(); 
-                 $('#seating').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#seating').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                 }
                 if(subproduct == 'pcv'){
@@ -1399,30 +1421,30 @@ function changeFeild(subproduct){
                  $('.common-feild').parent('div').show();
                  $('#fuel_type').parent('div').show();   
                  $('#passenger_carrying_capacity').parent('div').show();   
-                 $('#category').parent('div').show();   
+                //  $('#category').parent('div').show();   
                  $('#make').parent('div').show();  
                  $('#varriant').parent('div').show();  
                  $('#model').parent('div').show();      
                  $('#bussiness_type').parent('div').show(); 
-                 $('#remakrs').parent('div').show();
+                 $('#remarks').parent('div').show();
                  $('#mfr_year').parent('div').show(); 
                  $('#reg_date').parent('div').show();
                  $('#claims_in_existing_policy').parent('div').show();
                  $('#ncb_in_existing_policy').parent('div').show();
-                 $('#od_premium').parent('div').show();
-                 $('#add_on_premium').parent('div').show();
-                 $('#tp_premium').parent('div').show();
-                 $('#pa').parent('div').show();
-                 $('#others').parent('div').show();
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gross_premium').parent('div').show(); 
+                //  $('#od_premium').parent('div').show();
+                //  $('#add_on_premium').parent('div').show();
+                //  $('#tp_premium').parent('div').show();
+                //  $('#pa').parent('div').show();
+                //  $('#others').parent('div').show();
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gross_premium').parent('div').show(); 
                  $('#od').parent('div').show(); 
                  $('#showroom').parent('div').show(); 
                  $('#cc').parent('div').show(); 
                  $('#seating').parent('div').show(); 
-                 $('#seating').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                 $('#fuel').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                 }
                 if(subproduct == 'tw'){
@@ -1432,25 +1454,25 @@ function changeFeild(subproduct){
                  $('#varriant').parent('div').show();    
                  $('#model').parent('div').show();      
                  $('#bussiness_type').parent('div').show(); 
-                 $('#remakrs').parent('div').show();
+                 $('#remarks').parent('div').show();
                  $('#mfr_year').parent('div').show(); 
-                 $('#reg_date').parent('div').show();
+                 $('#reg_no').parent('div').show();
                  $('#claims_in_existing_policy').parent('div').show();
                  $('#ncb_in_existing_policy').parent('div').show();
-                 $('#od_premium').parent('div').show();
-                 $('#add_on_premium').parent('div').show();
-                 $('#tp_premium').parent('div').show();
-                 $('#pa').parent('div').show();
-                 $('#others').parent('div').show();
-                 $('#net_premium').parent('div').show(); 
-                 $('#gst').parent('div').show(); 
-                 $('#gross_premium').parent('div').show(); 
+                //  $('#od_premium').parent('div').show();
+                //  $('#add_on_premium').parent('div').show();
+                //  $('#tp_premium').parent('div').show();
+                //  $('#pa').parent('div').show();
+                //  $('#others').parent('div').show();
+                //  $('#net_premium').parent('div').show(); 
+                //  $('#gst').parent('div').show(); 
+                //  $('#gross_premium').parent('div').show(); 
                  $('#od').parent('div').show(); 
-                 $('#showroom').parent('div').show(); 
+                //  $('#showroom').parent('div').show(); 
                  $('#cc').parent('div').show(); 
-                 $('#seating').parent('div').show(); 
-                 $('#seating').parent('div').show(); 
-                 $('#start_date').parent('div').show(); 
+                //  $('#seating').parent('div').show(); 
+                //  $('#seating').parent('div').show(); 
+                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show();  
                 }
      

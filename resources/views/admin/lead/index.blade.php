@@ -167,7 +167,7 @@
                                 <th class="wd-lg-20p"><span>Sub Product</span></th>
                                 <th class="wd-lg-20p"><span>Created</span></th>
                                 <th class="wd-lg-20p"><span>Status</span></th>
-                                <th class="wd-lg-20p"><span>Endrosment</span></th>
+                                <!-- <th class="wd-lg-20p"><span>Endrosment</span></th> -->
                                 <th class="wd-lg-20p"><span>Assigned To</span></th>
                                 <th class="wd-lg-20p">Action</th>
                                 </tr>
@@ -185,9 +185,9 @@
                                     <td>{{$lead->subProduct->name ?? ''}}</td>
                                     <td>{{$lead->created_at}}</td>
                                     <td>{{$lead->status}}</td>
-                                    <td> <button class="modal-effect btn btn-main-primary ml_auto  endrosment-btn" 
+                                    <!-- <td> <button class="modal-effect btn btn-main-primary ml_auto  endrosment-btn" 
                                     data-id="{{$lead->id ?? ''}}"
-                                    data-bs-toggle="modal" data-bs-effect="effect-super-scaled">Endrosment</button></td>
+                                    data-bs-toggle="modal" data-bs-effect="effect-super-scaled">Endrosment</button></td> -->
                                     <td>{{$lead->assigns->name ?? ''}}</td>
                                     <td><a  href="{{route('leads.show',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
                         </a>   <a  href="{{route('leads.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>

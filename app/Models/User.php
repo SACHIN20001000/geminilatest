@@ -22,7 +22,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = ['name','email','profile','password','birthday','anniversary','account_no','bank_name','account_name','ifsc','upi','photo','pan_card','aadhar_card','gst'];
+    protected $fillable = ['name','email','profile','password','birthday','anniversary','account_no','bank_name','account_name','ifsc','upi','photo','pan_card','aadhar_card','gst','advance_payout'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -67,6 +67,10 @@ class User extends Authenticatable
     public function messagesReceived()
     {
         return $this->hasMany(Message::class, 'user_id','id');
+    }
+    public function policy()
+    {
+        return $this->hasOne(Policy::class, 'user_id','id');
     }
 
     public function messages()

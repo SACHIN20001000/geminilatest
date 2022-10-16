@@ -82,6 +82,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('report', ReportController::class);
         Route::resource('channel', ChannelController::class);
         Route::resource('payout', PayoutController::class);
+        Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
+        Route::any('getInvoiceDetail', [PayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');
+        Route::any('invoiceStore', [PayoutController::class, 'invoiceStore'])->name('invoiceStore');
         Route::any('renew_status', [PolicyController::class, 'renew_status'])->name('renew_status');
         Route::any('endrosment', [PolicyController::class, 'endrosment'])->name('endrosment');
         Route::any('commonEndrosment', [PolicyController::class, 'commonEndrosment'])->name('commonEndrosment');
