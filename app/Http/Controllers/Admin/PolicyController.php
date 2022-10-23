@@ -17,6 +17,7 @@ use App\Models\Insurance;
 use App\Models\Company;
 use App\Models\Attachment;
 use App\Models\Endrosment;
+use App\Models\SubEndrosment;
 use App\Models\Quote;
 use DataTables;
 use Mail;
@@ -271,8 +272,9 @@ class PolicyController extends Controller
     return back()->with('success', 'Mail Sent successfully!');
    }
    public function commonEndrosment(Request $request){
+    
+   
  $lead=   Lead::find($request->lead_id);
- echo "<PRE>"; print_r([$request->all(),$lead]);die;
 
         $endresoment=Endrosment::create([
         'created_to'=> $lead->user_id,
@@ -281,6 +283,27 @@ class PolicyController extends Controller
         'lead_id'=> $request->lead_id,
         'message'=> $request->message,
         ]);
-
+        if(!empty($request->image)){
+            $attachment_filename = preg_replace('/\s+/', '', $request->image->getClientOriginalName());
+            $request->image->move(public_path('/endrosment'), $attachment_filename);
+            $endresoment->update(['image'=>$attachment_filename]);
+        }
+        return back()->with('success', 'Endrosment Sent successfully!');
+}
+public function subEndrosment(Request $request){
+   
+    $endrosment=Endrosment::find($request->lead_id);
+    $endresoment=SubEndrosment::create([
+        'created_to'=> $endrosment->created_by,
+        'created_by'=> auth()->user()->id,
+        'endrosment_id'=> $request->lead_id,
+        'message'=> $request->message,
+        ]);
+        if(!empty($request->image)){
+            $attachment_filename = preg_replace('/\s+/', '', $request->image->getClientOriginalName());
+            $request->image->move(public_path('/endrosment'), $attachment_filename);
+            $endresoment->update(['image'=>$attachment_filename]);
+        }
+        return back()->with('success', 'Reply Sent successfully!');
 }
 }

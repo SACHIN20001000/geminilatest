@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\ChatsController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ChannelController;
 use App\Http\Controllers\Admin\PayoutController;
+use App\Http\Controllers\Admin\EndrosmentController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -82,11 +83,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('report', ReportController::class);
         Route::resource('channel', ChannelController::class);
         Route::resource('payout', PayoutController::class);
+        Route::resource('endrosment', EndrosmentController::class);
         Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
         Route::any('getInvoiceDetail', [PayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');
         Route::any('invoiceStore', [PayoutController::class, 'invoiceStore'])->name('invoiceStore');
         Route::any('renew_status', [PolicyController::class, 'renew_status'])->name('renew_status');
-        Route::any('endrosment', [PolicyController::class, 'endrosment'])->name('endrosment');
+        Route::any('endrosments', [PolicyController::class, 'endrosment'])->name('endrosment');
+        Route::any('sub-endrosment', [PolicyController::class, 'subEndrosment'])->name('subEndrosment');
         Route::any('commonEndrosment', [PolicyController::class, 'commonEndrosment'])->name('commonEndrosment');
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
         Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');
