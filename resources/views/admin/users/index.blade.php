@@ -8,6 +8,7 @@
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="content-title mb-0 my-auto pe-4">All Users</h4>
+              @if(!($_GET['advance'] ?? ''))
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
                     <a class="@if(isset($_GET['id']) && $_GET['id'] == 0) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 0]) }}">All</a>
@@ -33,15 +34,17 @@
                     <a class="@if(isset($_GET['id']) && $_GET['id'] == 4) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 4]) }}">Client</a>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
        
 
         
        
-        
+        @if(!($_GET['advance'] ?? ''))
        
         <a class="btn btn-main-primary ml_auto" href="{{ route('users.create') }}">Add User</a>
+        @endif
     </div>
     <!-- breadcrumb -->
    
@@ -92,7 +95,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         let id= '{{ $_GET['id'] ?? ''}}';
-        console.log(id);
+        let advance= '{{ $_GET['advance'] ?? ''}}';
+    
         var table = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
@@ -100,6 +104,7 @@
                     url: "{{ route('users.index') }}",
                         data: function(d) {
                             d.id = id;
+                            d.advance = advance;
 
                         }
                     },

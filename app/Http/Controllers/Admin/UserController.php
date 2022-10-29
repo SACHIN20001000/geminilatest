@@ -26,35 +26,42 @@ class UserController extends Controller
         if ($request->ajax())
         {
             $id=$request->id;
+            $advance=$request->advance;
             $query = User::with('roles');
-            if(isset($id) && $id ==1){
-                $query->whereHas(
-                    'roles', function ($q)
-                    {
-                        $q->where('name', '=', 'Admin');
-                    });
+            if(isset($advance) && !empty($advance)){
+                $query->whereNotNull('advance_payout');
+            }else{
+                if(isset($id) && $id ==1){
+                    $query->whereHas(
+                        'roles', function ($q)
+                        {
+                            $q->where('name', '=', 'Admin');
+                        });
+                }
+                if(isset($id) && $id ==2){
+                    $query->whereHas(
+                        'roles', function ($q)
+                        {
+                            $q->where('name', '=', 'Broker');
+                        });
+                }
+                if(isset($id) && $id ==3){
+                    $query->whereHas(
+                        'roles', function ($q)
+                        {
+                            $q->where('name', '=', 'Staff');
+                        });
+                }
+                if(isset($id) && $id ==4){
+                    $query->whereHas(
+                        'roles', function ($q)
+                        {
+                            $q->where('name', '=', 'Client');
+                        });
+                }
             }
-            if(isset($id) && $id ==2){
-                $query->whereHas(
-                    'roles', function ($q)
-                    {
-                        $q->where('name', '=', 'Broker');
-                    });
-            }
-            if(isset($id) && $id ==3){
-                $query->whereHas(
-                    'roles', function ($q)
-                    {
-                        $q->where('name', '=', 'Staff');
-                    });
-            }
-            if(isset($id) && $id ==4){
-                $query->whereHas(
-                    'roles', function ($q)
-                    {
-                        $q->where('name', '=', 'Client');
-                    });
-            }
+         
+           
                
             $data=$query->orderby('id','DESC');
 
