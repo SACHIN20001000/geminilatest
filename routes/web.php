@@ -85,6 +85,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('payout', PayoutController::class);
         Route::resource('endrosment', EndrosmentController::class);
         Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
+        Route::any('getStatusChange', [PayoutController::class, 'getStatusChange'])->name('getStatusChange');
         Route::any('getInvoiceDetail', [PayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');
         Route::any('invoiceStore', [PayoutController::class, 'invoiceStore'])->name('invoiceStore');
         Route::any('renew_status', [PolicyController::class, 'renew_status'])->name('renew_status');

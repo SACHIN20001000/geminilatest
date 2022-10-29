@@ -11,7 +11,7 @@
                 <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
                             <a href="{{ route('leads.index',['id'=> 1]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto" 
-											>New Leads</a>
+											>Leads</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
@@ -22,7 +22,7 @@
 						</div>
                         <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
-                            <a  href="{{ route('leads.index',['id'=> 3]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 3) btn btn-warning @else btn btn-info @endif ml_auto">Policy Issued</a>
+                            <a  href="{{ route('leads.index',['id'=> 3]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 3) btn btn-warning @else btn btn-info @endif ml_auto">Policy to be issued</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
@@ -53,7 +53,7 @@
 						</div>
 						<div class="mb-xl-0">
 							<div class="btn-group dropdown">
-                            <a class="btn btn-main-primary ml_auto" href="{{ route('leads.create') }}">Add Leads</a>
+                            <a class="btn btn-main-primary ml_auto" href="{{ route('leads.create') }}">Create Lead</a>
 							</div>
 						</div>
 					</div>
@@ -68,8 +68,8 @@
 
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
-        <form action="" method="get" >
-        <div class="row row-sm filter-box hidden">
+                    <form action="" method="get" >
+                    <div class="row row-sm filter-box hidden">
        
 							<div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
 								<div class="card ">

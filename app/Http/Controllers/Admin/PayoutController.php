@@ -8,6 +8,7 @@ use App\Models\Policy;
 use App\Models\Invoice;
 use App\Models\User;
 use DataTables;
+use DB;
 class PayoutController extends Controller
 {
     /**
@@ -17,6 +18,7 @@ class PayoutController extends Controller
      */
     public function index(Request $request)
     {
+     
         if ($request->ajax())
         {
            
@@ -25,13 +27,33 @@ class PayoutController extends Controller
                 $query->where('user_id',$request->id);
                
             }
-          $data=  $query->orderby('id','DESC')->get();
+            if(!empty($request->from) && !empty($request->to)){
+                $query->whereBetween('expiry_date', [$request->from,$request->to]);
+               }
+            $data=  $query->orderby('id','DESC')->get();
             return Datatables::of($data)
                             ->addIndexColumn()
                             ->addColumn('checkbox', function ($row)
                             {
                                 $action = '<input type="checkbox" name="checked"  class="checkSingle" value="'.$row->id.'"> 
                     ';
+                                return $action;
+                            })
+                            ->addColumn('recovery', function ($row)
+                            {
+                                if($row->is_recovery == 0){
+
+                                    $action = '<select name="is_recovery" data-id="'.$row->id.'" class="is_recovery form-control">
+                                    <option value="0" selected >No</option>
+                                    <option value="1" >Yes</option>
+                                    </select>';                              
+                                }else{
+                                    $action = '<select name="is_recovery" data-id="'.$row->id.'" class="is_recovery form-control">
+                                    <option value="0"  >No</option>
+                                    <option value="1" selected >Yes</option>
+                                    </select>';      
+                                }
+                                
                                 return $action;
                             })
                             ->addColumn('clients', function ($row)
@@ -46,31 +68,48 @@ class PayoutController extends Controller
                             {
                                 return isset($row->subProduct->name)?  $row->subProduct->name : '';
                             })
-                            ->rawColumns(['checkbox'])
+                            ->rawColumns(['checkbox','recovery'])
                             ->make(true);
         }
         return view('admin.payout.index');
     }
 
     public function brokerPayout(Request $request){
+    
+     
         if ($request->ajax())
         {
-            $data = User::with('policy')->orderby('id','DESC')->get();
+            $query = User::has('policy');
+            $data= $query->orderby('id','DESC')->get();
+          
             return Datatables::of($data)
                             ->addIndexColumn()
-                            ->addColumn('action', function ($row)
+                            ->addColumn('action', function ($row ,Request $request)
                             {
+                              $array=[
+                                'id'=>$row,
+                                'status'=> $request->status??'',
+                                'from'=> $request->from ??'',
+                                'to'=> $request->to??'',
+                              ];
+                                
                                 $action = '<span class="action-buttons">
                                 
-                        <a  href="' . route("payout.index", ['id'=>$row]) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
+                        <a  href="' . route("payout.index", $array) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
                         </a>
                     ';
                                 return $action;
                             })
-                            ->addColumn('payable', function ($row)
+                            ->addColumn('payable', function ($row,Request $request)
                             {
+                                $query= Policy::where(['user_id'=>$row->id]);
+                                 if(!empty($request->from) && !empty($request->to)){
+                                  $query->whereBetween('expiry_date', [$request->from,$request->to]);
+                                 }
+                               $receivable =$query->sum('mis_amount_paid');
+                               
                                 $pay=!empty($row->advance_payout)?$row->advance_payout:0;
-                                $action = '<span class="">'.$pay.'</span>/<span class="">0</span>    ';
+                                $action = '<span class="">'.$pay.'</span>/<span class="">'.$receivable.'</span>    ';
                                 return $action;
                             })
                             ->rawColumns(['action','payable'])
@@ -82,6 +121,7 @@ class PayoutController extends Controller
     public function getInvoiceDetail(Request $request){
           
             $policy=Policy::select('mis_premium','mis_amount_paid','user_id')->whereIn('id',$request->ids)->get();
+            $recovery_cases=Policy::whereIn('id',$request->ids)->where(['is_recovery'=>1])->count();
           $short_premium=0;
           $total_Payout=0;
             if($policy->count()){
@@ -95,6 +135,7 @@ class PayoutController extends Controller
            $response['advance_payout']= $user->advance_payout;
            $response['short_premium']= $short_premium;
            $response['total_Payout']= $total_Payout;
+           $response['recovery_cases']= $recovery_cases;
            return $response;
     }
     public function invoiceStore(Request $request){
@@ -118,15 +159,10 @@ class PayoutController extends Controller
     Policy::whereIn('id',$request->policy_id)->update(['invoice_id'=>$invoice->invoice_id]);
     return back()->with('success', 'Invoice Generated successfully!');
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  public function getStatusChange(Request $request){
+    Policy::find($request->id)->update(['is_recovery'=>$request->value]);
+
+  }
 
     /**
      * Store a newly created resource in storage.

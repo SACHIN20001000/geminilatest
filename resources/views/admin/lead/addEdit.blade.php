@@ -1104,7 +1104,7 @@ $.ajaxSetup({
                             }
 });
 function addAttachment(){
-    $("#attachment_dynamic").append('  <tr> <td><input type="file" name="attachment[]"  id="attachment"  class="form-control tableData"></td> <td><select name="type[]" class="form-control" ><option value="">Select</option><option value="Attachment">Attachment</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option> <option value="Other">Other</option> </select> </td><td><button type="button"  class="btn btn-danger deleteatt">Delete</button></td></tr>')
+    $("#attachment_dynamic").append('  <tr> <td><input type="file" name="attachment[]"  id="attachment"  class="form-control tableData"></td> <td><select name="type[]" class="form-control" ><option value="">Select</option><option value="Attachment">Policy Copy</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option> <option value="Other">Other</option> </select> </td><td><button type="button"  class="btn btn-danger deleteatt">Delete</button></td></tr>')
 }
 $(document).on('click','.deleteatt', function() {
     $(this).closest('tr').remove();
@@ -1117,7 +1117,6 @@ function changeFeild(subproduct){
                  $('#client_name').parent('div').show();   
                  $('#address').parent('div').show();      
                  $('#remarks').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show();      
                 }
                 if(subproduct == 'marine'){
@@ -1133,15 +1132,10 @@ function changeFeild(subproduct){
                  $('#per_location_limit').parent('div').show(); 
                  $('#estimate_annual_sum').parent('div').show(); 
                  $('#basic_of_valuation').parent('div').show(); 
-                //  $('#policy_period').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                  $('#commodity_details').parent('div').show(); 
                  $('#packing_description').parent('div').show(); 
                  $('#remarks').parent('div').show(); 
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gwp').parent('div').show(); 
                   
                 }
                 if(subproduct == 'liability'){
@@ -1153,19 +1147,14 @@ function changeFeild(subproduct){
                  $('#liability_nonindustrial').parent('div').show(); 
                  $('#liability_act').parent('div').show(); 
                  $('#professional_indeminity').parent('div').show(); 
-                 $('#comprehensive_general_liability').parent('div').show(); 
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gwp').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
+                 $('#comprehensive_general_liability').parent('div').show();  
                  $('#expiry_date').parent('div').show(); 
                   
                 }
                 if(subproduct == 'miscd'){
                     $('.feild').parent('div').hide()
                  $('.common-feild').parent('div').show();
-                 $('#gcv_type').parent('div').show();   
-                //  $('#gvw').parent('div').show();   
+                 $('#gcv_type').parent('div').show();    
                  $('#make').parent('div').show();  
                  $('#varriant').parent('div').show();  
                  $('#model').parent('div').show();      
@@ -1175,20 +1164,11 @@ function changeFeild(subproduct){
                  $('#reg_date').parent('div').show();
                  $('#claims_in_existing_policy').parent('div').show();
                  $('#ncb_in_existing_policy').parent('div').show();
-                //  $('#od_premium').parent('div').show();
-                //  $('#add_on_premium').parent('div').show();
-                //  $('#tp_premium').parent('div').show();
-                //  $('#pa').parent('div').show();
-                //  $('#others').parent('div').show();
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gross_premium').parent('div').show(); 
                  $('#od').parent('div').show(); 
                  $('#showroom').parent('div').show(); 
                  $('#cc').parent('div').show(); 
                  $('#fuel').parent('div').show(); 
                  $('#seating').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show();  
                   
                 }
@@ -1201,8 +1181,6 @@ function changeFeild(subproduct){
                  $('#pincode').parent('div').show(); 
                  $('#industry_type').parent('div').show(); 
                  $('#worker_number').parent('div').show(); 
-                //  $('#policy_period').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                  $('#job_profile').parent('div').show();
                  $('#remakrs').parent('div').show();
@@ -1213,10 +1191,8 @@ function changeFeild(subproduct){
                  $('#compressed_air_disease').parent('div').show();
                  $('#terrorism_cover').parent('div').show();
                  $('#sub_contractor_cover').parent('div').show();
-                 $('#multiple_location').parent('div').show();
-                //  $('#net_premium').parent('div').show(); 
+                 $('#multiple_location').parent('div').show(); 
                  $('#gst').parent('div').show(); 
-                //  $('#gwp').parent('div').show(); 
                   
                 }
                 if(subproduct == 'fire' || subproduct == 'burglary'){
@@ -1240,12 +1216,6 @@ function changeFeild(subproduct){
                  $('#loss_in_amount').parent('div').show();
                  $('#loss_date').parent('div').show();
                  $('#measures_taken_after_loss').parent('div').show();
-                //  $('#basic_premium').parent('div').show(); 
-                //  $('#terrorism_premium').parent('div').show(); 
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gwp').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                 }
                 if(subproduct == 'home'){
@@ -1269,12 +1239,6 @@ function changeFeild(subproduct){
                  $('#loss_in_amount').parent('div').show();
                  $('#loss_date').parent('div').show();
                  $('#measures_taken_after_loss').parent('div').show();
-                //  $('#basic_premium').parent('div').show(); 
-                //  $('#terrorism_premium').parent('div').show(); 
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gwp').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                   
                 }
@@ -1294,10 +1258,6 @@ function changeFeild(subproduct){
                  $('#dob_father').parent('div').show();
                  $('#dob_mother').parent('div').show();
                  $('#sum_insured').parent('div').show();
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gwp').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                   
                 }
@@ -1316,11 +1276,6 @@ function changeFeild(subproduct){
                  $('#dob_child').parent('div').show();
                  $('#dob_father').parent('div').show();
                  $('#dob_mother').parent('div').show();
-                //  $('#sum_insured').parent('div').show();
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gwp').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                   
                 }
@@ -1359,8 +1314,7 @@ function changeFeild(subproduct){
                 if(subproduct == 'pvt car'){
                     $('.feild').parent('div').hide()
                  $('.common-feild').parent('div').show();
-                //  $('#gcv_type').parent('div').show();   
-                //  $('#gvw').parent('div').show();   
+                
                  $('#make').parent('div').show();  
                  $('#varriant').parent('div').show();  
                  $('#model').parent('div').show();      
@@ -1370,20 +1324,12 @@ function changeFeild(subproduct){
                  $('#reg_date').parent('div').show();
                  $('#claims_in_existing_policy').parent('div').show();
                  $('#ncb_in_existing_policy').parent('div').show();
-                //  $('#od_premium').parent('div').show();
-                //  $('#add_on_premium').parent('div').show();
-                //  $('#tp_premium').parent('div').show();
-                //  $('#pa').parent('div').show();
-                //  $('#others').parent('div').show();
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gross_premium').parent('div').show(); 
+        
                  $('#od').parent('div').show(); 
                  $('#showroom').parent('div').show(); 
                  $('#cc').parent('div').show(); 
                  $('#fuel').parent('div').show(); 
                  $('#seating').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show();  
                 }
                 if(subproduct == 'gcv'){
@@ -1400,20 +1346,10 @@ function changeFeild(subproduct){
                  $('#reg_date').parent('div').show();
                  $('#claims_in_existing_policy').parent('div').show();
                  $('#ncb_in_existing_policy').parent('div').show();
-                //  $('#od_premium').parent('div').show();
-                //  $('#add_on_premium').parent('div').show();
-                //  $('#tp_premium').parent('div').show();
-                //  $('#pa').parent('div').show();
-                //  $('#others').parent('div').show();
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
                  $('#fuel').parent('div').show(); 
                  $('#od').parent('div').show(); 
-                //  $('#showroom').parent('div').show(); 
                  $('#cc').parent('div').show(); 
-                 $('#seating').parent('div').show(); 
-                //  $('#seating').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
+                 $('#seating').parent('div').show();  
                  $('#expiry_date').parent('div').show(); 
                 }
                 if(subproduct == 'pcv'){
@@ -1421,7 +1357,6 @@ function changeFeild(subproduct){
                  $('.common-feild').parent('div').show();
                  $('#fuel_type').parent('div').show();   
                  $('#passenger_carrying_capacity').parent('div').show();   
-                //  $('#category').parent('div').show();   
                  $('#make').parent('div').show();  
                  $('#varriant').parent('div').show();  
                  $('#model').parent('div').show();      
@@ -1431,20 +1366,11 @@ function changeFeild(subproduct){
                  $('#reg_date').parent('div').show();
                  $('#claims_in_existing_policy').parent('div').show();
                  $('#ncb_in_existing_policy').parent('div').show();
-                //  $('#od_premium').parent('div').show();
-                //  $('#add_on_premium').parent('div').show();
-                //  $('#tp_premium').parent('div').show();
-                //  $('#pa').parent('div').show();
-                //  $('#others').parent('div').show();
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gross_premium').parent('div').show(); 
                  $('#od').parent('div').show(); 
                  $('#showroom').parent('div').show(); 
                  $('#cc').parent('div').show(); 
                  $('#seating').parent('div').show(); 
                  $('#fuel').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
                  $('#expiry_date').parent('div').show(); 
                 }
                 if(subproduct == 'tw'){
@@ -1458,21 +1384,9 @@ function changeFeild(subproduct){
                  $('#mfr_year').parent('div').show(); 
                  $('#reg_no').parent('div').show();
                  $('#claims_in_existing_policy').parent('div').show();
-                 $('#ncb_in_existing_policy').parent('div').show();
-                //  $('#od_premium').parent('div').show();
-                //  $('#add_on_premium').parent('div').show();
-                //  $('#tp_premium').parent('div').show();
-                //  $('#pa').parent('div').show();
-                //  $('#others').parent('div').show();
-                //  $('#net_premium').parent('div').show(); 
-                //  $('#gst').parent('div').show(); 
-                //  $('#gross_premium').parent('div').show(); 
+                 $('#ncb_in_existing_policy').parent('div').show(); 
                  $('#od').parent('div').show(); 
-                //  $('#showroom').parent('div').show(); 
-                 $('#cc').parent('div').show(); 
-                //  $('#seating').parent('div').show(); 
-                //  $('#seating').parent('div').show(); 
-                //  $('#start_date').parent('div').show(); 
+                 $('#cc').parent('div').show();  
                  $('#expiry_date').parent('div').show();  
                 }
      

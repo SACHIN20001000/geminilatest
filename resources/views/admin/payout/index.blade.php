@@ -44,6 +44,7 @@
                                 <th class="wd-lg-20p"><span>Commissionable Amount</span></th>
                                 <th class="wd-lg-20p"><span>PAYOUT %GE</span></th>
                                 <th class="wd-lg-20p"><span>PAYOUT</span></th>
+                                <th class="wd-lg-20p"><span>Recovery</span></th>
                                 <th class="wd-lg-20p"><span>Invoice Id</span></th>
                                 </tr>
                             </thead>
@@ -163,7 +164,12 @@
             serverSide: true,
             ajax: {
                     url: "{{ route('payout.index',['id'=>$_GET['id']??'']) }}",
-                       
+                    data(d) {
+                d.from = '{{$_GET["from"] ?? ''}}';
+                d.to = '{{$_GET["to"] ?? ''}}';
+                d.status = '{{$_GET["status"] ?? ''}}';
+              	
+            },  
                     },
             columns: [
             {data: 'checkbox', name: 'checkbox'},
@@ -179,6 +185,7 @@
             {data: 'mis_commissionable_amount', name: 'mis_commissionable_amount'},
             {data: 'mis_percentage', name: 'mis_percentage'},
             {data: 'mis_commission', name: 'mis_commission'},
+            {data: 'recovery', name: 'recovery'},
             {data: 'invoice_id', name: 'invoice_id'},
             ]
         });
@@ -193,6 +200,7 @@
         });
     }
     });
+
     $('.generate-btn').click(function() {
  
  const ids= [];
@@ -214,6 +222,7 @@
              $('#advance_payout').val(result['advance_payout'])
              $('#short_premium').val(result['short_premium'])
              $('#total_Payout').val(result['total_Payout']) 
+             $('#recovery_cases').val(result['recovery_cases']) 
              $('#user_id').val(user_id) 
              $('#policy_id').val(ids) 
          }
@@ -224,7 +233,23 @@
      alert('CheckBox must not be empty');
  }
 });
+
     });
+    $(document).on('change', '.is_recovery', function() {
+        var id=$(this).data('id');
+        var value = $(this).val();
+        $.ajax({
+         url: "{{ route('getStatusChange')}}",
+         method: "post",
+                    data: {
+                       id: id, 
+                       value:value
+                    },
+         success: function(result) {
+            
+         }
+     });
+});
     
 </script>
 @endsection

@@ -43,7 +43,7 @@
                         <div class="card-body">
                             <div class="row row-xs align-items-center mg-b-20">
 
-                            <!-- <div class="col-lg-6">
+                            <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Polciy Holder Name</p>
                                             <input class="form-control" name="holder_name"  placeholder="Enter your name" type="text" value="{{isset($policy) ? $policy->holder_name : '' }}">
 							</div>
@@ -56,7 +56,7 @@
                             <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Email</p>
                                             <input class="form-control" name="email"  placeholder="Enter your email" type="email" value="{{isset($policy) ? $policy->email : '' }}">
-							</div> -->
+							</div>
                             <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Channel Name</p>
                                          
@@ -142,19 +142,19 @@
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">OD Premium</p>
-                     <input type="text" name="od_premium" value="{{isset($policy) ? $policy->od_premium : ''}}" class="form-control feild" id="od_premium">
+                     <input type="text" name="od_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->od_premium : ''}}" class="form-control feild" id="od_premium">
                      
                     </div>
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">Add On Premium</p>
-                     <input type="text" name="add_on_premium" value="{{isset($policy) ? $policy->add_on_premium : ''}}" class="form-control feild" id="add_on_premium">
+                     <input type="text" name="add_on_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->add_on_premium : ''}}" class="form-control feild" id="add_on_premium">
                      
                     </div>
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">TP Premium</p>
-                     <select name="tp_premium" class="select2 form-control feild"  id="tp_premium">
+                     <select name="tp_premium" class="select2 form-control feild tp_premium" onkeyup="grossPremium()" id="tp_premium">
                         <option value="">Select Below</option>
                         @if(isset($varients) &&  $varients->count())
                                 @foreach($varients as $varient)
@@ -175,7 +175,7 @@
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">Other</p>
-                     <input type="text" name="others" value="{{isset($policy) ? $policy->others : ''}}" class="form-control feild" id="others">
+                     <input type="text" name="others" value="{{isset($policy) ? $policy->others : ''}}" onkeyup="grossPremium()" class="form-control feild" id="others">
                      
                     </div>
                     <div class="col-lg-6">
@@ -196,7 +196,7 @@
                      <input type="text" name="terrorism_premium" value="{{isset($policy) ? $policy->terrorism_premium : ''}}" class="form-control feild" id="terrorism_premium">
                      
                     </div>
-                     <div class="col-lg-6">
+                     <!-- <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Case Type</p>
                                             <select name="case_type" class="select2 form-control common-feild feild" id="case_type">
                                             <option value="">Select Below</option>
@@ -204,7 +204,7 @@
                                             <option value="ROLLOVER" {{ (isset($policy) && "ROLLOVER" == $policy->case_type) ? 'selected' : '' }}>ROLLOVER</option>             
                                             <option value="RENEWAL" {{ (isset($policy) && "RENEWAL" == $policy->case_type) ? 'selected' : '' }}>RENEWAL</option>             
                                            </select>
-                     </div>
+                     </div> -->
                      <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Requirement</p>
                                            <input type="text" name="requirement" value="{{isset($policy) ? $policy->requirement : ''}}" class="form-control feild" id="requirement">
@@ -920,12 +920,7 @@
                     </select>
                     
                     </div>
-                    <!-- <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">Fuel Type</p>
-                     <input type="text" name="fuel_type" value="{{isset($policy) ? $policy->fuel_type : ''}}" class="form-control feild" id="fuel_type">
-                     
-                    </div> -->
+              
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">Passenger Carrying Capacity</p>
@@ -943,16 +938,11 @@
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">GST</p>
-                     <input type="text" name="gst" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control feild" id="gst">
+                     <input type="text" name="gst" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control feild" id="gst">
                      
                     </div>
                  
-                    <div class="col-lg-6">
-                     
-                     <p class="mg-t-10 mg-b-1">GST</p>
-                     <input type="text" name="gst" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control feild" id="gst">
-                     
-                    </div>
+             
                    
                     </div>
                     </div>
@@ -1162,7 +1152,7 @@ $.ajaxSetup({
                     $('#od').html(result['od']);
                     $('#seating').html(result['seating']);
                     $('#showroom').html(result['showroom']);
-                    $('#tp_premium').html(result['tp']);
+                    $('.tp_premium').html(result['tp']);
                 }
 
             });
@@ -1202,7 +1192,7 @@ $.ajaxSetup({
                             }
 });
 function addAttachment(){
-    $("#attachment_dynamic").append('  <tr> <td><input type="file" name="attachment[]"  id="attachment"  class="form-control tableData"></td> <td><select name="type[]" class="form-control" ><option value="">Select</option><option value="Attachment">Attachment</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option> <option value="Other">Other</option> </select> </td><td><button type="button"  class="btn btn-danger deleteatt">Delete</button></td></tr>')
+    $("#attachment_dynamic").append('  <tr> <td><input type="file" name="attachment[]"  id="attachment"  class="form-control tableData"></td> <td><select name="type[]" class="form-control" ><option value="">Select</option><option value="Attachment">Policy Copy</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option> <option value="Other">Other</option> </select> </td><td><button type="button"  class="btn btn-danger deleteatt">Delete</button></td></tr>')
 }
 $(document).on('click','.deleteatt', function() {
     $(this).closest('tr').remove();
@@ -1442,9 +1432,7 @@ function changeFeild(subproduct){
                 }
                 if(subproduct == 'pvt car'){
                     $('.feild').parent('div').hide()
-                 $('.common-feild').parent('div').show();
-                 $('#gcv_type').parent('div').show();   
-                 $('#gvw').parent('div').show();   
+                 $('.common-feild').parent('div').show();  
                  $('#make').parent('div').show();  
                  $('#varriant').parent('div').show();  
                  $('#model').parent('div').show();      
@@ -1567,8 +1555,19 @@ var commission_amount = $("#mis_commissionable_amount").val();
 var commission_perc = $("#mis_percentage").val();
 var commission_calc = commission_amount * commission_perc / 100;
 $("#mis_commission").val(commission_calc);
-
 }
+function grossPremium(){
+    var od_premium=$("#od_premium").val();
+    var tp_premium=$("#tp_premium").val();
+    var add_on_premium=$("#add_on_premium").val();
+    var others=$("#others").val();
+    var gst=$("#gst").val();
+    var gross= od_premium + tp_premium + add_on_premium + others + gst;
+  
+    $("#gross_premium").val(gross );
+    console.log();
+}
+
 </script>
 
 @endsection

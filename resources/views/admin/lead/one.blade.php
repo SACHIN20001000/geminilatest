@@ -887,14 +887,14 @@
                                             @if(!empty($lead->policy->make))
                                             <div class="col-lg-4 feild">
                                                             <p class="mg-b-10 fw-bolder" id="make">Make</p>
-                                                                            <p class="mg-b-10"> {{$lead->policy->make ?? ''}}</p>
+                                                                            <p class="mg-b-10"> {{$lead->policy->makes->name ?? ''}}</p>
 
                                             </div>
                                             @endif
                                             @if(!empty($lead->policy->model))
                                             <div class="col-lg-4 feild">
                                                             <p class="mg-b-10 fw-bolder" id="model">Model</p>
-                                                                            <p class="mg-b-10"> {{$lead->policy->model ?? ''}}</p>
+                                                                            <p class="mg-b-10"> {{$lead->policy->makes->makeModels->name ?? ''}}</p>
 
                                             </div>
                                             @endif
