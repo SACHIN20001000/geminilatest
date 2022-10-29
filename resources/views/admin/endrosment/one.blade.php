@@ -28,7 +28,7 @@
 											<div class="emai-img">
 												<div class="d-sm-flex">
 													<div class=" m-2">
-														<a href="{{URL::asset('endrosment')}}/{{$endrosment->image}}">View File</a>
+														<a href="{{URL::asset('endrosment')}}/{{$endrosment->image}}" target="_blank">View File</a>
 														
 													</div>
 													
@@ -68,7 +68,7 @@
 											<div class="emai-img">
 												<div class="d-sm-flex">
 													<div class=" m-2">
-														<a href="{{URL::asset('endrosment')}}/{{$endrosments->image}}">View File</a>
+														<a href="{{URL::asset('endrosment')}}/{{$endrosments->image}}" target="_blank">View File</a>
 														
 													</div>
 													
