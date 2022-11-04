@@ -138,7 +138,6 @@
                                 <th class="wd-lg-20p"><span>Payment</span></th>
                                 
                                 <th class="wd-lg-20p"><span>Status</span></th>
-                                <th class="wd-lg-20p"> Email/SMS/Whatsapp</th>
                                 <th class="wd-lg-20p">Action</th>
                                 </tr>
                             </thead>
@@ -169,13 +168,10 @@
                                     {{$lead->renew_status}}
                                     @endif
                                     </td>
-                                    <td>
-                                    <button class="modal-effect btn btn-main-primary ml_auto  common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->lead->holder_name ?? ''}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->email ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled">Click</button>
-                                    </td>             
-                                
+                          
                                    
                                     <td>
-                                           
+                                    <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->lead->holder_name ?? ''}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->email ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled">📩</button>
                                             <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
                                             </a>  
                                             <a href="{{route('policy.destroy',$lead->id)}}"
