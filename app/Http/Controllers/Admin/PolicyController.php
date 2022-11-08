@@ -201,7 +201,7 @@ class PolicyController extends Controller
      */
     public function update(Request $request, Policy $policy)
     {
-        $policyInputs= $request->except('holder_name', '_token','_method','phone','email','attachment','type');
+        $policyInputs= $request->except( '_token','_method','attachment','type');
         if($request->mis_commission && !empty($request->mis_commission)){
             $policyInputs['is_mis'] = 1;
         }
