@@ -148,7 +148,7 @@
 
                                     <td>{{$lead->users->name ?? ''}}</td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >
-                                    {{$lead->lead->holder_name ?? ''}} </a></td>
+                                    {{$lead->lead->holder_name ?? $lead->holder_name}} </a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->mis_transaction_type ?? ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->subProduct->name ?? ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->gwp ?? ''}}</a></td>
