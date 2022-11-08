@@ -135,7 +135,7 @@ class PolicyController extends Controller
     {
        
         
-        $policyInputs = $request->except('holder_name', '_token','phone','email','attachment','type');
+        $policyInputs = $request->except('_token','attachment','type');
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         $policyInputs['is_policy'] = 1;
         Policy::create($policyInputs);
