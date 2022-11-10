@@ -19,6 +19,9 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ChannelController;
 use App\Http\Controllers\Admin\PayoutController;
 use App\Http\Controllers\Admin\EndrosmentController;
+use App\Http\Controllers\Admin\NotepadController;
+use App\Http\Controllers\Admin\ExpensesController;
+use App\Http\Controllers\Admin\CommunicationController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -84,6 +87,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('channel', ChannelController::class);
         Route::resource('payout', PayoutController::class);
         Route::resource('endrosment', EndrosmentController::class);
+        Route::resource('notepad', NotepadController::class);
+        Route::resource('expences', ExpensesController::class);
+        Route::resource('communications', CommunicationController::class);
         Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
         Route::any('getStatusChange', [PayoutController::class, 'getStatusChange'])->name('getStatusChange');
         Route::any('getInvoiceDetail', [PayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');

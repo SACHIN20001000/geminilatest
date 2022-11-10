@@ -253,7 +253,7 @@ class PolicyController extends Controller
                     if(!empty($request->cc)){
                         $messages->cc($request->cc);
                     }
-                    $subject =$policy->subProduct->name .'-'. $policy->expiry_date.'-'.$policy->lead->holder_name ?? 'Gemini consultancy Service';
+                    $subject ='Gemini consultancy Service';
                     $messages->subject($subject);
                     if(!empty($policy->commonAttachment)){
                         foreach($policy->commonAttachment as $attach){
