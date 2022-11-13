@@ -73,7 +73,7 @@
             {data: 'lead', name: 'lead'},
             {data: 'mis_transaction_type', name: 'mis_transaction_type'},
             {data: 'subProduct', name: 'subProduct'},
-            {data: 'gwp', name: 'gwp'},
+            {data: 'gross_premium', name: 'gross_premium'},
             {data: 'renew_status', name: 'renew_status'},
             {data: 'created_at', name: 'created_at'},
             ]
