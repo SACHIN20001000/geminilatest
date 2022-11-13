@@ -59,25 +59,36 @@
 @endsection
 
 @section('scripts')
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         var table = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
+
             ajax: {
                     url: "{{ route('income.index') }}",   
                     },
-            columns: [
-            {data: 'channel_name', name: 'channel_name'},
-            {data: 'company', name: 'company'},
-            {data: 'lead', name: 'lead'},
-            {data: 'mis_transaction_type', name: 'mis_transaction_type'},
-            {data: 'subProduct', name: 'subProduct'},
-            {data: 'gross_premium', name: 'gross_premium'},
-            {data: 'renew_status', name: 'renew_status'},
-            {data: 'created_at', name: 'created_at'},
-            ]
-        });
+                    dom: 'Bfrtip',
+                     buttons: [
+                    'excelHtml5',
+                    'csvHtml5',
+                    ],
+                    "iDisplayLength": 100,
+                                columns: [
+                                {data: 'channel_name', name: 'channel_name'},
+                                {data: 'company', name: 'company'},
+                                {data: 'lead', name: 'lead'},
+                                {data: 'mis_transaction_type', name: 'mis_transaction_type'},
+                                {data: 'subProduct', name: 'subProduct'},
+                                {data: 'gross_premium', name: 'gross_premium'},
+                                {data: 'renew_status', name: 'renew_status'},
+                                {data: 'created_at', name: 'created_at'},
+                                ]
+                            });
 
     });
 </script>

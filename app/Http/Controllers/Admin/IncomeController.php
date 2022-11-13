@@ -33,7 +33,7 @@ class IncomeController extends Controller
                             {
                                 return isset($row->lead->holder_name)?  $row->lead->holder_name : $row->holder_name;
                             })
-                            ->make(true);
+                            ->make(true) ;
         }
         return view('admin.income.index');
     }

@@ -92,6 +92,10 @@
 @endsection
 
 @section('scripts')
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         let id= '{{ $_GET['id'] ?? ''}}';
@@ -108,6 +112,11 @@
 
                         }
                     },
+                    dom: 'Bfrtip',
+                     buttons: [
+                    'excelHtml5',
+                    'csvHtml5',
+                    ],
             columns: [
               {data: 'name', name: 'name'},
             {data: 'roles[0].name', name: 'roles[0].name', orderable: false,searchable: false},
