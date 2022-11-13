@@ -71,7 +71,7 @@
             {data: 'channel_name', name: 'channel_name'},
             {data: 'company', name: 'company'},
             {data: 'lead', name: 'lead'},
-            {data: 'gross_premium', name: 'gross_premium'},
+            {data: 'mis_transaction_type', name: 'mis_transaction_type'},
             {data: 'subProduct', name: 'subProduct'},
             {data: 'gwp', name: 'gwp'},
             {data: 'renew_status', name: 'renew_status'},
