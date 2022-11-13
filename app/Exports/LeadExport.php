@@ -170,7 +170,7 @@ class LeadExport implements FromCollection
             
         }
         if(isset($user) && !empty($user)){
-            $query->where('user_id', $request->user)->orwhere('assigned', $request->user);
+            $query->where('user_id', $user)->orwhere('assigned', $user);
         }
         if ($date_range) {
               

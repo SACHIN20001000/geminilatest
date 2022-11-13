@@ -167,7 +167,7 @@ class PolicyController extends Controller
      */
     public function show(Policy $policy)
     {
-        
+        $policy->update(['mark_read'=>1]);
         $company= Company::all();
         return view('admin.policy.one',compact('policy','company'));
     }

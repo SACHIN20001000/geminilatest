@@ -174,6 +174,7 @@ class LeadController extends Controller
      */
     public function show(Lead $lead)
     {
+        $lead->update(['mark_read'=>1]);
         $company= Company::all();
         return view('admin.lead.one',compact('lead','company'));
     }
@@ -260,7 +261,7 @@ class LeadController extends Controller
     public function getProduct(Request $request){
         
         $product= Product::where('insurance_id',$request->insurance_id)->get();
-        $output1="<option>Select </option>";
+        $output1="<option value=''>Select </option>";
         foreach ($product as $val1) {
             $output1 .= '<option value="' . $val1->id . '">' . $val1->name . '</option>';
         }
@@ -269,7 +270,7 @@ class LeadController extends Controller
     public function getSubProduct(Request $request){
         
         $product= SubProduct::where('product_id',$request->product_id)->get();
-        $output1="<option>Select </option>";
+        $output1="<option value=''>Select </option>";
         foreach ($product as $val1) {
             $output1 .= '<option value="' . $val1->id . '" data-id="'.$val1->name.'">' . $val1->name . '</option>';
         }
@@ -343,8 +344,18 @@ class LeadController extends Controller
                     $q->where('name', '=', 'Staff');
                 })->get();
 
-        $output1="<option>Select </option>";
+        $output1="<option value=''>Select </option>";
         foreach ($staff as $val1) {
+            $output1 .= '<option value="' . $val1->id . '">' . $val1->name . '</option>';
+        }
+        echo $output1;
+    }
+    public function getCompany(){
+            
+        $companies = Company::all();
+
+        $output1="<option value=''>Select </option>";
+        foreach ($companies as $val1) {
             $output1 .= '<option value="' . $val1->id . '">' . $val1->name . '</option>';
         }
         echo $output1;
@@ -366,6 +377,7 @@ class LeadController extends Controller
         if($lead){
             $lead->update(['status'=>$request->status]);  
         }
+        
         echo 1;
     }
     public function leadAttachment(Request $request){
@@ -412,18 +424,26 @@ class LeadController extends Controller
     }
     public function leadQuotes(Request $request){
    
-            $quote= Quote::create([
-                    'lead_id'=> $request->lead_id ??'',
-                    'company_id'=> $request->company ??'',
-                    'user_id'=> Auth::user()->id ??'',
-                    'remark'=> $request->remarks
-                ]);
-            $lead = Lead::find($request->lead_id);
-            if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) {
-                $attachment_filename = preg_replace('/\s+/', '', $request->file('attachment')->getClientOriginalName());
-                $request->file('attachment')->move(public_path('/quotes'), $attachment_filename);
-                $quote->update(['file_name'=> $attachment_filename]);
+      
+        if(isset($request->company) && !empty($request->company)){
+            foreach ($request->company as $key => $company) {
+            
+                    $quote= Quote::create([
+                        'lead_id'=> $request->lead_id ??'',
+                        'company_id'=> $company ??'',
+                        'user_id'=> Auth::user()->id ??'',
+                        'remark'=> $request->remarks[$key]?? ''
+                    ]);
+
+                if (isset($request->attachment[$key])) {
+                    $attachment_filename = preg_replace('/\s+/', '', $request->attachment[$key]->getClientOriginalName());
+                    $request->attachment[$key]->move(public_path('/quotes'), $attachment_filename);
+                    $quote->update(['file_name'=> $attachment_filename]);
+                }
             }
+        }
+       
+            $lead = Lead::find($request->lead_id);
                 try {
                     Mail::send('admin.email.commonemail',['policy' => $lead,'content'=>$request->remarks],function($messages) use ($request,$lead,$quote) {
                         $messages->to($lead->email);
@@ -439,7 +459,7 @@ class LeadController extends Controller
                     //throw $th;
                 }    
          
-            Lead::find($request->lead_id)->update(['status'=>'QUOTE GENERATED']);
+            Lead::find($request->lead_id)->update(['status'=>'QUOTE GENERATED','mark_read'=>0]);
           
             return back()->with('success', 'Quote Created successfully!');
     }
@@ -458,7 +478,7 @@ class LeadController extends Controller
     public function rejectLead(Request $request){
         Quote::where('lead_id',$request->id)->whereNotIn('id', [$request->quote])->update(['type'=>'Accept']);
         Quote::find($request->quote)->update(['type'=>'Reject']);
-        Lead::find($request->id)->update(['status'=> 'REJECTED']);
+        Lead::find($request->id)->update(['status'=> 'REJECTED','mark_read'=>0]);
         return back()->with('success', 'Quote Rejected!');
 
     }
@@ -466,7 +486,7 @@ class LeadController extends Controller
         Quote::where('lead_id',$request->id)->whereNotIn('id', [$request->quote])->update(['type'=>'Reject']);
 
         Quote::find($request->quote)->update(['type'=>'Accept']);
-        Lead::find($request->id)->update(['status'=> 'POLICY TO BE ISSUED']);
+        Lead::find($request->id)->update(['status'=> 'POLICY TO BE ISSUED','mark_read'=>0]);
         return back()->with('success', 'Quote Accepted!');
 
 

@@ -11,13 +11,13 @@
                 <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
                             <a href="{{ route('policy.index',['id'=> 1]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto" 
-											>MIS</a>
+											>MIS (<?php echo new_policy() ?>)</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
                             <a  href="{{ route('policy.index',['id'=> 2]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif  ml_auto" 
-											>Renewals</a>
+											>Renewals (<?php echo renew_policy() ?>)</a>
 							</div>
 						</div>
                        
@@ -144,7 +144,7 @@
                             <tbody>
                                 @if($leads->count())
                                 @foreach($leads as $lead)
-                                <tr>
+                                <tr style="@if($lead->mark_read == 0)  background: #bef1ff @endif">
 
                                     <td>{{$lead->users->name ?? ''}}</td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >

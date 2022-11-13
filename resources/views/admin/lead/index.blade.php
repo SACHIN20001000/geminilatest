@@ -11,23 +11,23 @@
                 <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
                             <a href="{{ route('leads.index',['id'=> 1]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto" 
-											>Leads</a>
+											>Leads (<?php echo new_lead() ?>)</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
                             <a  href="{{ route('leads.index',['id'=> 2]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif ml_auto" 
-											>Quote Lead</a>
+											>Quote Lead (<?php echo quote_lead() ?>)</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
-                            <a  href="{{ route('leads.index',['id'=> 3]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 3) btn btn-warning @else btn btn-info @endif ml_auto">Policy to be issued</a>
+                            <a  href="{{ route('leads.index',['id'=> 3]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 3) btn btn-warning @else btn btn-info @endif ml_auto">Policy to be issued (<?php echo issue_lead() ?>)</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown ">
-                            <a  href="{{ route('leads.index',['id'=> 4]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 4) btn btn-warning @else btn btn-info @endif ml_auto">Opportunities</a>
+                            <a  href="{{ route('leads.index',['id'=> 4]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 4) btn btn-warning @else btn btn-info @endif ml_auto">Opportunities (<?php echo reject_lead() ?>)</a>
 							</div>
 						</div>
             </div>
@@ -174,7 +174,7 @@
                             <tbody>
                                 @if($leads->count())
                                 @foreach($leads as $lead)
-                                <tr>
+                                <tr style="@if($lead->mark_read == 0)  background: #bef1ff @endif">
                                     <td><input type="checkbox" name="checked"  class="checkSingle" value="{{$lead->id}}"> </td>
                                     <td>{{$lead->holder_name??''}}</td>
                                     <td>{{$lead->phone ??''}}</td>

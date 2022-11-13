@@ -27,6 +27,7 @@ class CreatePoliciesTable extends Migration
             $table->integer('is_mail')->default(0);
             $table->integer('is_mis')->default(0);
             $table->integer('is_recovery')->default(0);
+            $table->integer('mark_read')->default(0);
             $table->string('holder_name')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();

@@ -1235,7 +1235,7 @@
            	<!-- quotes effects -->
     <div class="modal fade" id="quotes">
 			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content modal-content-demo">
+				<div class="modal-content modal-content-demo" style="min-width: 800px">
 					<div class="modal-header">
 						<h6 class="modal-title">Quotes</h6><button aria-label="Close" class="close"
 							data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
@@ -1243,24 +1243,35 @@
                     <form action="{{route('leadQuotes')}}" method="POST" enctype="multipart/form-data">
                         @csrf
 					<div class="modal-body">
-						<h6>Insurance Company</h6>
-						<select name="company" id="company" class="form-control">
-                            <option value="">Select</option>
-                        @if($company->count())
-                            @foreach($company as $companies)
-                                <option value="{{$companies->id}}">{{$companies->name}}</option>
-                            @endforeach
-                        @endif
-                          
-                        </select>
-                        <input type="hidden" name="lead_id" value="{{$lead->id}}">
-                        <h6>Attachment</h6>
-                         <input type="file" name="attachment" id="attachment" class="form-control">
-                        <h6>Remarks</h6>
-                       <textarea name="remarks" id="remarks" class="form-control editor" cols="30" rows="10"></textarea>
+                    <div class="row">
+                            <div class="col-lg-6">
+                                <h6>Insurance Company</h6>
+                                <select name="company[]" id="company" class="form-control">
+                                    <option value="">Select</option>
+                                @if($company->count())
+                                    @foreach($company as $companies)
+                                        <option value="{{$companies->id}}">{{$companies->name}}</option>
+                                    @endforeach
+                                @endif
+                                
+                                </select>
+                                <h6>Attachment</h6>
+                                <input type="file" name="attachment[]" id="attachment" class="form-control">
+                            </div>
+                    
+                            <div class="col-lg-6">
+                                <h6>Remarks</h6>
+                            <textarea name="remarks[]" id="remarks" class="form-control editor"></textarea>
 
+                            </div>
 					</div>
+                    <input type="hidden" name="lead_id" value="{{$lead->id}}">
+                    <div class="dynamic-quote"></div>
+					</div>
+
 					<div class="modal-footer">
+						<button class="btn ripple btn-primary add-more" type="button">Add More</button>
+
 						<button class="btn ripple btn-primary save-status" type="submit">Save changes</button>
 						<button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
 					</div>
@@ -1287,13 +1298,50 @@
         ['insert', ['link','image', 'doc', 'video']],
         ['misc', ['codeview']],
         ],
-        height: 400,
+        height: 100,
      
     });
     $('.table').dataTable();
     $('#add-attach-multi').click(function(){
                 $('.attach-content').append('<div class="row"><div class="col-lg-6"><h6>Upload</h6><input type="file" name="attachment[]" id="attachment" class="form-control"></div><div class="col-lg-6"><h6>Type</h6><select name="type[]"required class="form-control"><option value="">Select</option> <option value="Attachment">Attachment</option><option value="Policy">Policy</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option><option value="Other">Other</option></select></div></div>');
             })
+    $('.add-more').click(function(){
+
+        $.ajax({
+                        url: "{{ route('getCompany') }}",
+                        method: "get",
+                        success: function(result) {
+                        
+                $('.dynamic-quote').append(`<div class="row">
+                            <div class="col-lg-6">
+                                <h6>Insurance Company</h6>
+                                <select name="company[]" id="company" class="form-control">  
+                               ${result}
+                                </select>
+                                <h6>Attachment</h6>
+                                <input type="file" name="attachment[]" id="attachment" class="form-control">
+                            </div>
+                    
+                            <div class="col-lg-6">
+                                <h6>Remarks</h6>
+                            <textarea name="remarks[]" id="remarks" class="form-control editor"></textarea>
+
+                            </div>
+					</div>`);
+                    $('.editor').summernote({
+        toolbar: [
+        ['font', ['bold', 'italic', 'underline', 'clear']],
+        ['insert', ['link','image', 'doc', 'video']],
+        ['misc', ['codeview']],
+        ],
+        height: 100,
+     
+    });
+
+                        }
+
+                    });
+    })
     let subproduct= "{{$lead->subProduct->name ?? ''}}";
     if(subproduct != ''){
                 subproduct= $.trim(subproduct).toLowerCase();
