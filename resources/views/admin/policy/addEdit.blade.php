@@ -124,7 +124,7 @@
                                            <input type="date" name="start_date" value="{{isset($policy) ? $policy->start_date : ''}}" class="form-control feild" id="start_date">
                      </div>
                      <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">End  Date</p>
+											<p class="mg-t-10 mg-b-1">Policy Expiry Date</p>
                                            <input type="date" name="expiry_date" value="{{isset($policy) ? $policy->expiry_date : ''}}" class="form-control feild" id="expiry_date">
                      </div>
                      <div class="col-lg-6">
@@ -855,6 +855,7 @@
                             <option value="New" {{ (isset($policy) && "New" == $policy->bussiness_type) ? 'selected' : '' }}>New</option>
                             <option value="Rollover" {{ (isset($policy) && "Rollover" == $policy->bussiness_type) ? 'selected' : '' }}>Rollover</option>
                             <option value="Renewal" {{ (isset($policy) && "Renewal" == $policy->bussiness_type) ? 'selected' : '' }}>Renewal</option>
+                            <option value="Used" {{ (isset($policy) && "Used" == $policy->bussiness_type) ? 'selected' : '' }}>Used</option>
                     </select>
                      
                     </div>
@@ -866,14 +867,45 @@
                     </div>
                     <div class="col-lg-6">
                      
-                     <p class="mg-t-10 mg-b-1">Reg No</p>
+                     <p class="mg-t-10 mg-b-1">Vehicle Reg No</p>
                      <input type="text" name="reg_no" value="{{isset($policy) ? $policy->reg_no : ''}}" class="form-control feild" id="reg_no">
                      
                     </div>
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">MFR Year</p>
-                     <input type="text" name="mfr_year" value="{{isset($policy) ? $policy->mfr_year : ''}}" class="form-control feild" id="mfr_year">
+                     <Select name="mfr_year" id="mfr_year" class="form-control feild">
+                        <option value="">Select</option>
+                        <option value="2023" {{ (isset($policy) && "2023" == $policy->mfr_year) ? 'selected' : '' }}>2023</option>
+                        <option value="2022" {{ (isset($policy) && "2022" == $policy->mfr_year) ? 'selected' : '' }}>2022</option>
+                        <option value="2021" {{ (isset($policy) && "2021" == $policy->mfr_year) ? 'selected' : '' }}>2021</option>
+                        <option value="2020" {{ (isset($policy) && "2020" == $policy->mfr_year) ? 'selected' : '' }}>2020</option>
+                        <option value="2019" {{ (isset($policy) && "2019" == $policy->mfr_year) ? 'selected' : '' }}>2019</option>
+                        <option value="2018" {{ (isset($policy) && "2018" == $policy->mfr_year) ? 'selected' : '' }}>2018</option>
+                        <option value="2017" {{ (isset($policy) && "2017" == $policy->mfr_year) ? 'selected' : '' }}>2017</option>
+                        <option value="2016" {{ (isset($policy) && "2016" == $policy->mfr_year) ? 'selected' : '' }}>2016</option>
+                        <option value="2015" {{ (isset($policy) && "2015" == $policy->mfr_year) ? 'selected' : '' }}>2015</option>
+                        <option value="2014" {{ (isset($policy) && "2014" == $policy->mfr_year) ? 'selected' : '' }}>2014</option>
+                        <option value="2013" {{ (isset($policy) && "2013" == $policy->mfr_year) ? 'selected' : '' }}>2013</option>
+                        <option value="2012" {{ (isset($policy) && "2012" == $policy->mfr_year) ? 'selected' : '' }}>2012</option>
+                        <option value="2011" {{ (isset($policy) && "2011" == $policy->mfr_year) ? 'selected' : '' }}>2011</option>
+                        <option value="2010" {{ (isset($policy) && "2010" == $policy->mfr_year) ? 'selected' : '' }}>2010</option>
+                        <option value="2009" {{ (isset($policy) && "2009" == $policy->mfr_year) ? 'selected' : '' }}>2009</option>
+                        <option value="2008" {{ (isset($policy) && "2008" == $policy->mfr_year) ? 'selected' : '' }}>2008</option>
+                        <option value="2007" {{ (isset($policy) && "2007" == $policy->mfr_year) ? 'selected' : '' }}>2007</option>
+                        <option value="2006" {{ (isset($policy) && "2006" == $policy->mfr_year) ? 'selected' : '' }}>2006</option>
+                        <option value="2005" {{ (isset($policy) && "2005" == $policy->mfr_year) ? 'selected' : '' }}>2005</option>
+                        <option value="2004" {{ (isset($policy) && "2004" == $policy->mfr_year) ? 'selected' : '' }}>2004</option>
+                        <option value="2003" {{ (isset($policy) && "2003" == $policy->mfr_year) ? 'selected' : '' }}>2003</option>
+                        <option value="2002" {{ (isset($policy) && "2002" == $policy->mfr_year) ? 'selected' : '' }}>2002</option>
+                        <option value="2001" {{ (isset($policy) && "2001" == $policy->mfr_year) ? 'selected' : '' }}>2001</option>
+                        <option value="2000" {{ (isset($policy) && "2000" == $policy->mfr_year) ? 'selected' : '' }}>2000</option>
+                        <option value="1999" {{ (isset($policy) && "1999" == $policy->mfr_year) ? 'selected' : '' }}>1999</option>
+                        <option value="1998" {{ (isset($policy) && "1998" == $policy->mfr_year) ? 'selected' : '' }}>1998</option>
+                        <option value="1997" {{ (isset($policy) && "1997" == $policy->mfr_year) ? 'selected' : '' }}>1997</option>
+                        <option value="1996" {{ (isset($policy) && "1996" == $policy->mfr_year) ? 'selected' : '' }}>1996</option>
+                        <option value="1995" {{ (isset($policy) && "1995" == $policy->mfr_year) ? 'selected' : '' }}>1995</option>
+                     </Select>
                      
                     </div>
                     <div class="col-lg-6">
@@ -891,8 +923,15 @@
                     <div class="col-lg-6">
                      
                      <p class="mg-t-10 mg-b-1">NCB In Existing Policy</p>
-                     <input type="radio" name="ncb_in_existing_policy" {{ (isset($policy) && "Yes" == $policy->ncb_in_existing_policy) ? 'checked' : '' }} value="Yes" class=" feild" id="ncb_in_existing_policy">Yes
-                     <input type="radio" name="ncb_in_existing_policy"{{ (isset($policy) && "No" == $policy->ncb_in_existing_policy) ? 'checked' : '' }} value="No" class=" feild" id="ncb_in_existing_policy">No
+                     <select name="ncb_in_existing_policy" id="ncb_in_existing_policy" class="form-control feild">
+                        <option value="">Select</option>
+                        <option value="0" {{ (isset($policy) && "0" == $policy->ncb_in_existing_policy) ? 'selected' : '' }}>0</option>
+                        <option value="20" {{ (isset($policy) && "20" == $policy->ncb_in_existing_policy) ? 'selected' : '' }}>20</option>
+                        <option value="25" {{ (isset($policy) && "25" == $policy->ncb_in_existing_policy) ? 'selected' : '' }}>25</option>
+                        <option value="35" {{ (isset($policy) && "35" == $policy->ncb_in_existing_policy) ? 'selected' : '' }}>35</option>
+                        <option value="45" {{ (isset($policy) && "45" == $policy->ncb_in_existing_policy) ? 'selected' : '' }}>45</option>
+                        <option value="50" {{ (isset($policy) && "50" == $policy->ncb_in_existing_policy) ? 'selected' : '' }}>50</option>
+                    </select>
                     </div>
                     <div class="col-lg-6">
                      
@@ -1462,6 +1501,7 @@ function changeFeild(subproduct){
                   
                 }
                 if(subproduct == 'pvt car'){
+                  
                     $('.feild').parent('div').hide()
                  $('.common-feild').parent('div').show();  
                  $('#make').parent('div').show();  
@@ -1487,7 +1527,8 @@ function changeFeild(subproduct){
                  $('#seating').parent('div').show(); 
                  $('#seating').parent('div').show(); 
                  $('#start_date').parent('div').show(); 
-                 $('#expiry_date').parent('div').show();  
+                 $('#expiry_date').parent('div').show(); 
+                 $('#reg_no').parent('div').show(); 
                 }
                 if(subproduct == 'gcv'){
                  $('.feild').parent('div').hide()
@@ -1517,7 +1558,8 @@ function changeFeild(subproduct){
                  $('#seating').parent('div').show(); 
                  $('#seating').parent('div').show(); 
                  $('#start_date').parent('div').show(); 
-                 $('#expiry_date').parent('div').show(); 
+                 $('#expiry_date').parent('div').show();
+                 $('#reg_no').parent('div').show(); 
                 }
                 if(subproduct == 'pcv'){
                  $('.feild').parent('div').hide()
@@ -1548,7 +1590,8 @@ function changeFeild(subproduct){
                  $('#seating').parent('div').show(); 
                  $('#seating').parent('div').show(); 
                  $('#start_date').parent('div').show(); 
-                 $('#expiry_date').parent('div').show(); 
+                 $('#expiry_date').parent('div').show();
+                 $('#reg_no').parent('div').show(); 
                 }
                 if(subproduct == 'tw'){
                  $('.feild').parent('div').hide()
@@ -1576,7 +1619,8 @@ function changeFeild(subproduct){
                  $('#seating').parent('div').show(); 
                  $('#seating').parent('div').show(); 
                  $('#start_date').parent('div').show(); 
-                 $('#expiry_date').parent('div').show();  
+                 $('#expiry_date').parent('div').show(); 
+                 $('#reg_no').parent('div').show(); 
                 }
      
 
