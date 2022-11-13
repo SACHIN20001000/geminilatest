@@ -198,7 +198,7 @@
                     </div>
                     <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">TYPE OF VEHICLE</p>
-                                            <select name="case_type" class="select2 form-control common-feild feild" id="vehicle_type">
+                                            <select name="case_type" class="select2 form-control feild" id="vehicle_type">
                                             <option value="">Select Below</option>
                                             <option value="3 WHEELER" {{ (isset($policy) && "3 WHEELER" == $policy->case_type) ? 'selected' : '' }}>3 WHEELER</option>             
                                             <option value=" =>4 WHEELER" {{ (isset($policy) && " =>4 WHEELER" == $policy->case_type) ? 'selected' : '' }}> =>4 WHEELER</option>             
