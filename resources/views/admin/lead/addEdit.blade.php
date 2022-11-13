@@ -55,7 +55,7 @@
                                                 <option value="">Select</option>
                                                 @if(isset($users) && $users->count())
                                                     @foreach($users as $user)
-                                                                <option value="{{$user->id}}" {{ (isset($lead->user_id) && $user->id == $lead->user_id) ? 'selected' : '' }}>{{$user->name }}</option>             
+                                                                <option value="{{$user->id}}" {{ (isset($policy->user_id) && $user->id == $policy->user_id) ? 'selected' : '' }}>{{$user->name }}</option>             
                                                     @endforeach
                                                 @endif
                                             </select>
