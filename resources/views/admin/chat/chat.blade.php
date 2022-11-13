@@ -452,7 +452,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
               </div>
             </div>
           </div>
-          <div class="col-lg-8 chat-content" id="chat_view">
+          <div class="col-lg-8 chat-content" id="chat_view" style="background: azure;">
             
           </div>
         </div>

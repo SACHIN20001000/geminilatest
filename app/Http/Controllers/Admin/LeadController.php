@@ -15,8 +15,9 @@ use App\Models\Make;
 use App\Models\Policy;
 use App\Models\Insurance;
 use App\Models\Company;
-use App\Models\Attachment;
+use App\Models\Attachment; 
 use App\Models\Quote;
+
 use DataTables;
 use Auth;
 use App\Http\Requests\Admin\Lead\StoreLeadRequest;
@@ -117,7 +118,9 @@ class LeadController extends Controller
         $channels = Channel::all();
         $make = Make::all();
         $users= User::all();
-        return view('admin.lead.addEdit',compact('insurances','companies','make','channels','users'));
+        $roles= Role::all();
+ 
+        return view('admin.lead.addEdit',compact('insurances','companies','make','channels','users','roles'));
 
     }
 
@@ -135,12 +138,13 @@ class LeadController extends Controller
         'email',
         'insurance_id',
         'product_id',
-        'subproduct_id'
+        'subproduct_id',
+        'user_type'
         );
         $leadData['user_id'] = $request->user_id ?? auth()->user()->id;
         $lead = Lead::create($leadData);
 
-        $policyInputs= $request->except('holder_name', '_token','phone','email','type');
+        $policyInputs= $request->except('holder_name', '_token','phone','email','type','user_type');
         $policyInputs['lead_id']= $lead->id;
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
 
@@ -197,8 +201,13 @@ class LeadController extends Controller
         $model=ModelMake::all();
         $varients=MakeModel::where('make_id',$policy->model)->get();
         $channels = Channel::all();
-        $users= User::all();
-        return view('admin.lead.addEdit',compact('model','insurances','companies','lead','users','policy','make','products','subProducts','channels','varients'));
+        $roles= Role::all();
+        $users=  User::with('roles')->whereHas(
+            'roles', function ($q)use ($lead)
+            {
+                $q->where('id', '=', $lead->user_type);
+            })->get();
+        return view('admin.lead.addEdit',compact('roles','model','insurances','companies','lead','users','policy','make','products','subProducts','channels','varients'));
     }
 
     /**
@@ -217,10 +226,11 @@ class LeadController extends Controller
         'email',
         'insurance_id',
         'product_id',
-        'subproduct_id'
+        'subproduct_id',
+        'user_type'
         );
         $lead->update($leadData);
-        $policyInputs= $request->except('holder_name', '_token','_method','phone','email','type');
+        $policyInputs= $request->except('holder_name', '_token','_method','phone','email','type','user_type');
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         $policy= Policy::where('lead_id',$lead->id)->update($policyInputs);
         if(isset($request->attachment) && (!empty($request->attachment))){
@@ -342,6 +352,20 @@ class LeadController extends Controller
                 'roles', function ($q)
                 {
                     $q->where('name', '=', 'Staff');
+                })->get();
+
+        $output1="<option value=''>Select </option>";
+        foreach ($staff as $val1) {
+            $output1 .= '<option value="' . $val1->id . '">' . $val1->name . '</option>';
+        }
+        echo $output1;
+    }
+    public function getUsers(Request $request){
+            
+        $staff=  $query = User::with('roles')->whereHas(
+                'roles', function ($q)use ($request)
+                {
+                    $q->where('id', '=', $request->role);
                 })->get();
 
         $output1="<option value=''>Select </option>";

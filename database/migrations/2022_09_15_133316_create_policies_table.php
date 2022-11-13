@@ -16,6 +16,7 @@ class CreatePoliciesTable extends Migration
         Schema::create('policies', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->nullable();
+            $table->integer('user_type')->nullable();
             $table->integer('insurance_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->integer('subproduct_id')->nullable();

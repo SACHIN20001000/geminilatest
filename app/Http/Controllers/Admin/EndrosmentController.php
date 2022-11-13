@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Endrosment;
 use DataTables;
-
+use URL;
 class EndrosmentController extends Controller
 {
     /**
@@ -27,13 +27,13 @@ class EndrosmentController extends Controller
                                 $action = '<span class="action-buttons"><a  href="' . route("endrosment.show", $row) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i></a>';
                                 return $action;
                             })
-                            ->addColumn('lead_link', function ($row)
+                            ->addColumn('attachments', function ($row)
                             {
-                              
-                                $action = '<span class="action-buttons"><a  href="' . route("leads.show", $row->lead->id) . '" class="btn btn-sm btn-info btn-b">View Lead</a>';
+                               
+                                $action = '<span class="action-buttons"><a  href="' . URL::asset('endrosment').'/'.$row->image . '" class="btn btn-sm btn-info btn-b" target="_blank">📁</a>';
                                 return $action;
                             })
-                            ->rawColumns(['action','lead_link'])
+                            ->rawColumns(['action','attachments'])
                             ->make(true);
         }
         return view('admin.endrosment.index');

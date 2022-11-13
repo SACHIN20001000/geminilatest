@@ -68,7 +68,11 @@ class PayoutController extends Controller
                             {
                                 return isset($row->subProduct->name)?  $row->subProduct->name : '';
                             })
-                            ->rawColumns(['checkbox','recovery'])
+                            ->addColumn('invoiced', function ($row)
+                            {
+                                return '<div  data-id="'.$row->invoice_id.'" class="get-invoice">'.$row->invoice_id.' </div>';
+                            })
+                            ->rawColumns(['checkbox','recovery','invoiced'])
                             ->make(true);
         }
         return view('admin.payout.index');
@@ -156,12 +160,21 @@ class PayoutController extends Controller
             'short_premium'=>$request->short_premium,
             'total_Payout'=>$request->total_Payout,
      ]);
+    $user= User::find($request->user_id);
+    if(!empty($user->advance_payout)){
+        $amount = $user->advance_payout - $request->invoice_amount;
+        $user->update(['advance_payout'=> $amount]);
+    }
     Policy::whereIn('id',$request->policy_id)->update(['invoice_id'=>$invoice->invoice_id]);
     return back()->with('success', 'Invoice Generated successfully!');
     }
   public function getStatusChange(Request $request){
     Policy::find($request->id)->update(['is_recovery'=>$request->value]);
 
+  }
+  public function getInvoice(Request $request){
+    $invoice=Invoice::where('invoice_id',$request->id)->first();
+    return $invoice;
   }
 
     /**

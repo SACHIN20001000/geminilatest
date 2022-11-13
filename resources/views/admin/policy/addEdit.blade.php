@@ -970,10 +970,25 @@
                             <div class="row row-xs align-items-center mg-b-20 ">
                                 <div class="col-lg-6">
                                 <div class="col-md-4 mb-2">
-                                    <label class="form-label mg-b-0"> Reference</label>
+                                    <label class="form-label mg-b-0"> Reference Type</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
-                                    <select name="user_id" class="form-control">
+                                <select name="user_type" class="form-control reference_type">
+                                        <option value="">Select</option>
+                                        @if(isset($roles) && $roles->count())
+                                            @foreach($roles as $role)
+                                                        <option value="{{$role->id}}" {{ (isset($policy->user_type) && $role->id == $policy->user_type) ? 'Selected' : '' }}>{{$role->name }}</option>             
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                </div>
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Reference Name</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                    <select name="user_id" class="form-control  dynamic-user-id">
                                         <option value="">Select</option>
                                         @if(isset($users) && $users->count())
                                             @foreach($users as $user)
@@ -983,14 +998,7 @@
                                     </select>
                                 </div>
                                 </div>
-                                <div class="col-lg-6">
-                                <div class="col-md-4 mb-2">
-                                    <label class="form-label mg-b-0"> Premium</label>
-                                </div>
-                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
-                                   <input type="number" name="mis_premium" value="{{isset($policy) ? $policy->mis_premium : ''}}" id="mis_premium" placeholder="enter premium" class="form-control">
-                                </div>
-                                </div>
+                               
                                
                             </div>
                             <div class="row row-xs align-items-center mg-b-20 ">
@@ -1071,7 +1079,14 @@
                                     </select>
                                 </div>
                                 </div>
-                         
+                                <div class="col-lg-6">
+                                <div class="col-md-4 mb-2">
+                                    <label class="form-label mg-b-0"> Premium</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
+                                   <input type="number" name="mis_premium" value="{{isset($policy) ? $policy->mis_premium : ''}}" id="mis_premium" placeholder="enter premium" class="form-control">
+                                </div>
+                                </div>
                                
                             </div>
                         </div>
@@ -1115,6 +1130,22 @@ $.ajaxSetup({
                     $('#product_id').html(result);
                 }
 
+            });
+        }
+    });
+    $('.reference_type').change(function() {
+        if ($(this).val() != '') {
+            
+            var role = $(this).val();
+            $.ajax({
+                url: "{{ route('getUsers') }}",
+                method: "post",
+                data: {
+                    role: role,
+                },
+                success: function(result) {
+                    $('.dynamic-user-id').html(result);
+                }
             });
         }
     });

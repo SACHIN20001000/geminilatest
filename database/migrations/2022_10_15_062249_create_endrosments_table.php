@@ -20,6 +20,7 @@ class CreateEndrosmentsTable extends Migration
             $table->integer('parent')->default(0);
             $table->integer('lead_id')->nullable();
             $table->string('image')->nullable();
+            $table->string('type')->nullable();
             $table->text('message')->nullable();
             $table->timestamps();
         });

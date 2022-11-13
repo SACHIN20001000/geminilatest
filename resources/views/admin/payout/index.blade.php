@@ -13,7 +13,7 @@
         <div class="btn-group dropdown generate-btn">
                             <a  class="modal-effect btn btn-main-primary ml_auto "
 											data-bs-effect="effect-super-scaled"  
-											>Generate Invoice</a>
+											style="color:white">Generate Invoice</a>
 							</div>
     </div>
     <!-- breadcrumb -->
@@ -76,21 +76,21 @@
 					<div class="modal-body">
                         <div class="row">
                         <div class="col-lg-6">
-                        <h6 class="mg-t-10 mg-b-0">TOTAL PAYOUT</h6>
+                        <span >TOTAL PAYOUT</span>
 						<input type="text" class="form-control" name="total_Payout" id="total_Payout" >
                         </div>
 						<div class="col-lg-6">
-                        <h6 class="mg-t-10 mg-b-0">SHORT PREMIUM</h6>
+                        <span >SHORT PREMIUM</span>
 						<input type="text" class="form-control" name="short_premium" id="short_premium" >
                         </div>
 						</div>
                         <div class="row">
                         <div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">RECOVERY CASES</h6>
+						<span >RECOVERY CASES</span>
 						<input type="text" class="form-control" name="recovery_cases" id="recovery_cases" >
                         </div>
 						<div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">Advance Payout</h6>
+						<span >Advance Payout</span>
 						<input type="text" class="form-control" name="advance_payout" id="advance_payout" >
 						<input type="hidden"  name="policy_id[]" id="policy_id">
 						<input type="hidden"  name="user_id" id="user_id">
@@ -98,41 +98,41 @@
 						</div>
                         <div class="row">
                         <div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">TO BE ADJUSTED</h6>
+						<span >TO BE ADJUSTED</span>
 						<input type="text" class="form-control" name="adjusted" id="adjusted" >
                         </div>
 						<div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">AMOUNT TO BE TRANSFERRED</h6>
+						<span >AMOUNT TO BE TRANSFERRED</span>
 						<input type="text" class="form-control" name="amount_transfer" id="amount_transfer" >
                         </div>
 						</div>
                         <div class="row">
                         <div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">TDS %AGE</h6>
+						<span >TDS %AGE</span>
 						<input type="text" class="form-control" name="tds" id="tds" >
                         </div>
 						<div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">INVOICE AMOUNT</h6>
+						<span >INVOICE AMOUNT</span>
 						<input type="text" class="form-control" name="invoice_amount" id="invoice_amount" >
                         </div>
 						</div>
                         <div class="row">
                         <div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">Name</h6>
+						<span >Name</span>
 						<input type="text" class="form-control" name="name" id="name" >
                         </div>
 						<div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">Bank Detail</h6>
+						<span >Bank Detail</span>
 						<input type="text" class="form-control" name="bank_detail" id="bank_detail" >
                         </div>
 						</div>
                         <div class="row">
                         <div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">INVOICE DATE</h6>
+						<span >INVOICE DATE</span>
 						<input type="date" class="form-control" name="invoice_date" id="invoice_date" >
                         </div>
 						<div class="col-lg-6">
-						<h6 class="mg-t-10 mg-b-0">TRANSFER DATE</h6>
+						<span >TRANSFER DATE</span>
 						<input type="date" class="form-control" name="transfer_date" id="transfer_date" >
                         </div>
 						</div>
@@ -146,6 +146,24 @@
 			</div>
 		</div>
 		<!-- End Modal effects-->
+<!-- Modal effects -->
+<div class="modal fade" id="invoice-view">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content modal-content-demo">
+					<div class="modal-header">
+						<h6 class="modal-title">Invoice</h6><button aria-label="Close" class="close"
+							data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+					</div>
+              
+					<div class="modal-body">
+                  
+					</div>
+				
+             
+				</div>
+			</div>
+		</div>
+		<!-- End Modal effects-->
 
 
 @endsection
@@ -155,10 +173,10 @@
      let user_id='{{$_GET["id"]??''}}';
     $(document).ready(function () {
         $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         var table = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
@@ -186,55 +204,135 @@
             {data: 'mis_percentage', name: 'mis_percentage'},
             {data: 'mis_commission', name: 'mis_commission'},
             {data: 'recovery', name: 'recovery'},
-            {data: 'invoice_id', name: 'invoice_id'},
+            {data: 'invoiced', name: 'invoiced'},
             ]
         });
         $("#checkedAll").change(function() {
-    if (this.checked) {
-        $(".checkSingle").each(function() {
-            this.checked=true;
+        if (this.checked) {
+            $(".checkSingle").each(function() {
+                this.checked=true;
+            });
+        } else {
+            $(".checkSingle").each(function() {
+                this.checked=false;
+            });
+        }
         });
-    } else {
-        $(".checkSingle").each(function() {
-            this.checked=false;
-        });
-    }
-    });
 
-    $('.generate-btn').click(function() {
+     
+        $('.generate-btn').click(function() {
  
- const ids= [];
+            const ids= [];
 
- $("input:checkbox:checked").each(function(i) {
-     ids.push($(this).val());
+            $("input:checkbox:checked").each(function(i) {
+                ids.push($(this).val());
 
- });
- if (ids != '') {
-   
-     $.ajax({
-         url: "{{ route('getInvoiceDetail')}}",
+            });
+            if (ids != '') {
+            
+                $.ajax({
+                    url: "{{ route('getInvoiceDetail')}}",
+                    method: "post",
+                                data: {
+                                ids: ids, 
+                                user_id:user_id
+                                },
+                    success: function(result) {
+                        $('#advance_payout').val(result['advance_payout'])
+                        $('#short_premium').val(result['short_premium'])
+                        $('#total_Payout').val(result['total_Payout']) 
+                        $('#recovery_cases').val(result['recovery_cases']) 
+                        $('#user_id').val(user_id) 
+                        $('#policy_id').val(ids) 
+                    }
+                });
+                $('#invoice-modal').modal('show');
+                
+            } else {
+                alert('CheckBox must not be empty');
+            }
+            });
+
+    });
+    $(document).on('click', '.get-invoice', function() {
+       
+            var id = $(this).data('id');
+          if(id){
+            $.ajax({
+         url: "{{ route('getInvoice')}}",
          method: "post",
                     data: {
-                       ids: ids, 
-                       user_id:user_id
+                       id: id, 
                     },
          success: function(result) {
-             $('#advance_payout').val(result['advance_payout'])
-             $('#short_premium').val(result['short_premium'])
-             $('#total_Payout').val(result['total_Payout']) 
-             $('#recovery_cases').val(result['recovery_cases']) 
-             $('#user_id').val(user_id) 
-             $('#policy_id').val(ids) 
+            console.log(result);
+            var html=`      <div class="row">
+                        <div class="col-lg-6">
+                        <span >TOTAL PAYOUT</span>
+						<input type="text" class="form-control" value="${result.total_Payout}" readOnly name="total_Payout" id="total_Payout" >
+                        </div>
+						<div class="col-lg-6">
+                        <span >SHORT PREMIUM</span>
+						<input type="text" class="form-control" readOnly value="${result.short_premium}" name="short_premium" id="short_premium" >
+                        </div>
+						</div>
+                        <div class="row">
+                        <div class="col-lg-6">
+						<span >RECOVERY CASES</span>
+						<input type="text" class="form-control" readOnly value="${result.recovery_cases}" name="recovery_cases" id="recovery_cases" >
+                        </div>
+						<div class="col-lg-6">
+						<span >Advance Payout</span>
+						<input type="text" class="form-control" readOnly value="${result.advance_payout}" name="advance_payout" id="advance_payout" >
+					
+                        </div>
+						</div>
+                        <div class="row">
+                        <div class="col-lg-6">
+						<span >TO BE ADJUSTED</span>
+						<input type="text" class="form-control" readOnly value="${result.adjusted}" name="adjusted" id="adjusted" >
+                        </div>
+						<div class="col-lg-6">
+						<span >AMOUNT TO BE TRANSFERRED</span>
+						<input type="text" class="form-control" readOnly value="${result.amount_transfer}" name="amount_transfer" id="amount_transfer" >
+                        </div>
+						</div>
+                        <div class="row">
+                        <div class="col-lg-6">
+						<span >TDS %AGE</span>
+						<input type="text" class="form-control" readOnly value="${result.tds}" name="tds" id="tds" >
+                        </div>
+						<div class="col-lg-6">
+						<span >INVOICE AMOUNT</span>
+						<input type="text" class="form-control" readOnly value="${result.invoice_amount}" name="invoice_amount" id="invoice_amount" >
+                        </div>
+						</div>
+                        <div class="row">
+                        <div class="col-lg-6">
+						<span >Name</span>
+						<input type="text" class="form-control" readOnly value="${result.name}" name="name" id="name" >
+                        </div>
+						<div class="col-lg-6">
+						<span >Bank Detail</span>
+						<input type="text" class="form-control" readOnly value="${result.bank_detail}" name="bank_detail" id="bank_detail" >
+                        </div>
+						</div>
+                        <div class="row">
+                        <div class="col-lg-6">
+						<span >INVOICE DATE</span>
+						<input type="date" class="form-control" readOnly value="${result.invoice_date}" name="invoice_date" id="invoice_date" >
+                        </div>
+						<div class="col-lg-6">
+						<span >TRANSFER DATE</span>
+						<input type="date" class="form-control" readOnly value="${result.transfer_date}" name="transfer_date" id="transfer_date" >
+                        </div>
+						</div>`;
+            $('#invoice-view').modal('show');
+            $('.modal-body').html(html)
          }
      });
-     $('#invoice-modal').modal('show');
-     
- } else {
-     alert('CheckBox must not be empty');
- }
-});
-
-    });
+          }
+        });
     $(document).on('change', '.is_recovery', function() {
         var id=$(this).data('id');
         var value = $(this).val();

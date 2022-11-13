@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Lead extends Model
 {
     use HasFactory;
-    protected $fillable=['user_id','holder_name','phone','email','insurance_id','product_id','subproduct_id','attachment_id','remark','assigned	','status','quote_id','mark_read'];
+    protected $fillable=['user_id','user_type','holder_name','phone','email','insurance_id','product_id','subproduct_id','attachment_id','remark','assigned	','status','quote_id','mark_read'];
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -144,7 +144,7 @@
                             <tbody>
                                 @if($leads->count())
                                 @foreach($leads as $lead)
-                                <tr style="@if($lead->mark_read == 0)  background: #bef1ff @endif">
+                                <tr style="@if($lead->mark_read == 0)  background: #bef1ff; font-weight: bold; @endif">
 
                                     <td>{{$lead->users->name ?? ''}}</td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >
@@ -171,8 +171,8 @@
                           
                                    
                                     <td>
-                                    <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->lead->holder_name ?? ''}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->email ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled">📩</button>
-                                            <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
+                                    <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->lead->holder_name ?? ''}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->email ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled"  data-toggle="tooltip" title="Send Mail!">📩</button>
+                                            <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"  data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>
                                             </a>  
                                             <a href="{{route('policy.destroy',$lead->id)}}"
                                                 class="btn btn-sm btn-danger remove_us"
@@ -217,7 +217,7 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content modal-content-demo">
 					<div class="modal-header">
-						<h6 class="modal-title">Endrosment</h6><button aria-label="Close" class="close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+						<h6 class="modal-title">Common Email</h6><button aria-label="Close" class="close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
 					</div>
                     <form  method="POST" action="{{route('endrosment')}}" >
                         		@csrf

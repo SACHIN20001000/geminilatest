@@ -22,6 +22,7 @@ use App\Models\Quote;
 use DataTables;
 use Mail;
 use Auth;
+use Spatie\Permission\Models\Role;
 use App\Http\Requests\Admin\Lead\StoreLeadRequest;
 
 class PolicyController extends Controller
@@ -120,8 +121,9 @@ class PolicyController extends Controller
         $companies = Company::all();
         $make = Make::all();
         $channels = Channel::all();
+        $roles= Role::all();
         $users= User::all();
-        return view('admin.policy.addEdit',compact('insurances','companies','make','channels','users'));
+        return view('admin.policy.addEdit',compact('insurances','companies','make','channels','users','roles'));
 
     }
 
@@ -188,8 +190,13 @@ class PolicyController extends Controller
         $model=ModelMake::all();
         $varients=MakeModel::where('make_id',$policy->model)->get();
         $channels = Channel::all();
-        $users= User::all();
-        return view('admin.policy.addEdit',compact('model','users','channels','insurances','companies','policy','make','products','subProducts','varients'));
+        $roles= Role::all();
+        $users=  User::with('roles')->whereHas(
+            'roles', function ($q)use ($policy)
+            {
+                $q->where('id', '=', $policy->user_type);
+            })->get();
+        return view('admin.policy.addEdit',compact('roles','model','users','channels','insurances','companies','policy','make','products','subProducts','varients'));
     }
 
     /**
@@ -282,6 +289,7 @@ class PolicyController extends Controller
         'parent'=> 1,
         'lead_id'=> $request->lead_id,
         'message'=> $request->message,
+        'type'=> $request->type,
         ]);
         if(!empty($request->image)){
             $attachment_filename = preg_replace('/\s+/', '', $request->image->getClientOriginalName());

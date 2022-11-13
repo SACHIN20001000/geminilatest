@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="main-content-label mg-b-5">
-                        {{isset($user) ? 'Update # '.$user->id : 'Add New' }}
+                        {{isset($user) ? 'Update': 'Add New' }}
                     </div>
 
 

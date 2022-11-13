@@ -61,7 +61,7 @@
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>
-                                <th class="wd-lg-20p"><span>Email</span></th>
+                                <th class="wd-lg-20p"><span>Name</span></th>
 												<th class="wd-lg-20p"><span>Role</span></th>
                                                 @if(isset($_GET['id']) && $_GET['id'] == 2)
 												<th class="wd-lg-20p"><span>Advance Payout</span></th>
@@ -109,7 +109,7 @@
                         }
                     },
             columns: [
-              {data: 'email', name: 'email'},
+              {data: 'name', name: 'name'},
             {data: 'roles[0].name', name: 'roles[0].name', orderable: false,searchable: false},
             <?php if(isset($_GET['id']) && $_GET['id'] == 2) {?>
                 {data: 'advance_payout', name: 'advance_payout'},

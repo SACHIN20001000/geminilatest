@@ -94,6 +94,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::any('getStatusChange', [PayoutController::class, 'getStatusChange'])->name('getStatusChange');
         Route::any('getInvoiceDetail', [PayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');
         Route::any('invoiceStore', [PayoutController::class, 'invoiceStore'])->name('invoiceStore');
+        Route::any('getInvoice', [PayoutController::class, 'getInvoice'])->name('getInvoice');
         Route::any('renew_status', [PolicyController::class, 'renew_status'])->name('renew_status');
         Route::any('endrosments', [PolicyController::class, 'endrosment'])->name('endrosment');
         Route::any('sub-endrosment', [PolicyController::class, 'subEndrosment'])->name('subEndrosment');
@@ -104,6 +105,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::any('getVarient', [LeadController::class, 'getVarient'])->name('getVarient');
         Route::any('getModel', [LeadController::class, 'getModel'])->name('getModel');
         Route::get('getStaff', [LeadController::class, 'getStaff'])->name('getStaff');
+        Route::any('getUsers', [LeadController::class, 'getUsers'])->name('getUsers');
         Route::post('saveAssign', [LeadController::class, 'saveAssign'])->name('saveAssign');
         Route::post('changeStatus', [LeadController::class, 'changeStatus'])->name('changeStatus');
         Route::post('leadAttachment', [LeadController::class, 'leadAttachment'])->name('leadAttachment');

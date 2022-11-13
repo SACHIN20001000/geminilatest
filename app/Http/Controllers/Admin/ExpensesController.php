@@ -25,8 +25,7 @@ class ExpensesController extends Controller
                             {
                                 $action = '<span class="action-buttons">
                                 
-                        <a  href="' . route("expences.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
-                        </a>
+                    
 
                         <a href="' . route("expences.destroy", $row) . '"
                                 class="btn btn-sm btn-danger remove_us"

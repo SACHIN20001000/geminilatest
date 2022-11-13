@@ -32,76 +32,58 @@
                         <div class="pd-30 pd-sm-40 bg-gray-200">
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
-                                    <label class="form-label mg-b-0">Rent</label>
+                                    <label class="form-label mg-b-0">CHOOSE HEAD</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="rent"  type="text" value="{{isset($expences) ? $expences->rent : '' }}">
+                             
+                               <select name="choose" class="form-control">
+
+                               <option value="">Select</option>
+                               <option value="RENT">RENT</option>
+                               <option value="ELECTRICITY">ELECTRICITY</option>
+                               <option value="WATER BILL">WATER BILL</option>
+                               <option value="TEA & BEVERAGES">TEA & BEVERAGES</option>
+                               <option value="STATIONERY">STATIONERY</option>
+                               <option value="SALARIES & INCENTIVES">SALARIES & INCENTIVES</option>
+                               <option value="MOBILE AND INTERNET">MOBILE AND INTERNET</option>
+                               <option value="REPAIRS AND MAINTENANCE">REPAIRS AND MAINTENANCE</option>
+                               <option value="COMMISSION">COMMISSION</option>
+                               </select>
+                            </div>
+                            </div>
+                            <div class="row row-xs align-items-center mg-b-20">
+                                <div class="col-md-4">
+                                    <label class="form-label mg-b-0">Date</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                    <input class="form-control" name="date"  type="date" value="{{isset($expences) ? $expences->date : '' }}">
                                 </div>
                             </div>
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
-                                    <label class="form-label mg-b-0">ELECTRICITY</label>
+                                    <label class="form-label mg-b-0">Particulars</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="electricity"  type="text" value="{{isset($expences) ? $expences->electricity : '' }}">
+                                    <input class="form-control" name="particular"  type="text" value="{{isset($expences) ? $expences->particular : '' }}">
                                 </div>
                             </div>
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
-                                    <label class="form-label mg-b-0">WATER BILL</label>
+                                    <label class="form-label mg-b-0">Amounts</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="water_bill"  type="text" value="{{isset($expences) ? $expences->water_bill : '' }}">
+                                    <input class="form-control" name="amount"  type="text" value="{{isset($expences) ? $expences->amount : '' }}">
                                 </div>
                             </div>
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
-                                    <label class="form-label mg-b-0">TEA & BEVERAGES</label>
+                                    <label class="form-label mg-b-0">Bank Details</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="tea"  type="text" value="{{isset($expences) ? $expences->tea : '' }}">
+                                    <input class="form-control" name="bankdetail"  type="text" value="{{isset($expences) ? $expences->bankdetail : '' }}">
                                 </div>
                             </div>
-                            <div class="row row-xs align-items-center mg-b-20">
-                                <div class="col-md-4">
-                                    <label class="form-label mg-b-0">STATIONERY</label>
-                                </div>
-                                <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="stationery"  type="text" value="{{isset($expences) ? $expences->stationery : '' }}">
-                                </div>
-                            </div>
-                            <div class="row row-xs align-items-center mg-b-20">
-                                <div class="col-md-4">
-                                    <label class="form-label mg-b-0">SALARIES & INCENTIVES</label>
-                                </div>
-                                <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="salery"  type="text" value="{{isset($expences) ? $expences->salery : '' }}">
-                                </div>
-                            </div>
-                            <div class="row row-xs align-items-center mg-b-20">
-                                <div class="col-md-4">
-                                    <label class="form-label mg-b-0">MOBILE AND INTERNET</label>
-                                </div>
-                                <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="internet"  type="text" value="{{isset($expences) ? $expences->internet : '' }}">
-                                </div>
-                            </div>
-                            <div class="row row-xs align-items-center mg-b-20">
-                                <div class="col-md-4">
-                                    <label class="form-label mg-b-0">REPAIRS AND MAINTENANCE</label>
-                                </div>
-                                <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="repair"  type="text" value="{{isset($expences) ? $expences->repair : '' }}">
-                                </div>
-                            </div>
-                            <div class="row row-xs align-items-center mg-b-20">
-                                <div class="col-md-4">
-                                    <label class="form-label mg-b-0">COMMISSION</label>
-                                </div>
-                                <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="commision"  type="text" value="{{isset($expences) ? $expences->commision : '' }}">
-                                </div>
-                            </div>
+                          
               
                           
                             <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5" type="submit">{{isset($expences) ? 'Update' : 'Save' }}</button>

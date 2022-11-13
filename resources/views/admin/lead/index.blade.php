@@ -17,7 +17,7 @@
                         <div class="pe-4 mb-xl-0">
 							<div class="btn-group dropdown">
                             <a  href="{{ route('leads.index',['id'=> 2]) }}" class="@if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif ml_auto" 
-											>Quote Lead (<?php echo quote_lead() ?>)</a>
+											>Quote Generated (<?php echo quote_lead() ?>)</a>
 							</div>
 						</div>
                         <div class="pe-4 mb-xl-0">
@@ -159,11 +159,9 @@
                                 <tr>
                                     
                                 <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
+                                <th class="wd-lg-20p"><span>Reference Name</span></th>
                                 <th class="wd-lg-20p"><span>Holder Name</span></th>
-                                <th class="wd-lg-20p"><span>Phone No</span></th>
-                                <th class="wd-lg-20p"><span>Email</span></th>
-                                <th class="wd-lg-20p"><span>Insurance</span></th>
-                                <th class="wd-lg-20p"><span>Product</span></th>
+                                <th class="wd-lg-20p"><span>Transaction type</span></th>
                                 <th class="wd-lg-20p"><span>Sub Product</span></th>
                                 <th class="wd-lg-20p"><span>Created</span></th>
                                 <th class="wd-lg-20p"><span>Status</span></th>
@@ -174,13 +172,11 @@
                             <tbody>
                                 @if($leads->count())
                                 @foreach($leads as $lead)
-                                <tr style="@if($lead->mark_read == 0)  background: #bef1ff @endif">
+                                <tr style="@if($lead->mark_read == 0)  background: #bef1ff; font-weight: bold; @endif">
                                     <td><input type="checkbox" name="checked"  class="checkSingle" value="{{$lead->id}}"> </td>
+                                    <td>{{$lead->users->name??''}}</td>
                                     <td>{{$lead->holder_name??''}}</td>
-                                    <td>{{$lead->phone ??''}}</td>
-                                    <td>{{$lead->email??''}}</td>
-                                    <td>{{$lead->insurances->name ?? ''}}</td>
-                                    <td>{{$lead->products->name ?? ''}}</td>
+                                    <td>{{$lead->policy->mis_transaction_type ??''}}</td>
                                     <td>{{$lead->subProduct->name ?? ''}}</td>
                                     <td>{{$lead->created_at}}</td>
                                     <td>{{$lead->status}}</td>
@@ -189,9 +185,10 @@
                                     <td>
                                     <a class="btn btn-sm btn-info btn-b endrosment-btn" 
                                     data-id="{{$lead->id ?? ''}}"
+                                    data-toggle="tooltip" title="Endrosment Sent"
                                    >📜</a>
-                                    <a  href="{{route('leads.show',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
-                        </a>   <a  href="{{route('leads.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
+                                    <a  href="{{route('leads.show',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"  data-toggle="tooltip" title="View Lead"></i>
+                        </a>   <a  href="{{route('leads.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"  data-toggle="tooltip" title="Edit Lead"><i class="las la-pen"></i>
                         </a>  
                          <a href="{{route('leads.destroy',$lead->id)}}"
                                 class="btn btn-sm btn-danger remove_us"
@@ -201,7 +198,9 @@
                                 data-method="DELETE"
                                 data-confirm-title="Please Confirm"
                                 data-confirm-text="Are you sure that you want to delete this Lead?"
-                                data-confirm-delete="Yes, delete it!">
+                                data-confirm-delete="Yes, delete it!"
+                             
+                                >
                                 <i class="las la-trash"></i>
                             </a></td>
                                 </tr>
@@ -266,6 +265,10 @@
                         		<div class="modal-body">
                         <div class="row">
                             <div class="col-lg-12">                           
+                                  <label>Type </label>
+                                  <select name="type" id="type" class="form-control">
+                                    <option value="">Select</option>
+                                  </select>
                                   <label>File </label>
                                   <input type="file" name="image" id="image" class="form-control">
                                   <input type="hidden" name="lead_id" id="lead_id">

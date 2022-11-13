@@ -16,15 +16,11 @@ class CreateExpencesTable extends Migration
         Schema::create('expences', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->nullable();
-            $table->string('rent')->nullable();
-            $table->string('electricity')->nullable();
-            $table->string('water_bill')->nullable();
-            $table->string('tea')->nullable();
-            $table->string('stationery')->nullable();
-            $table->string('salery')->nullable();
-            $table->string('internet')->nullable();
-            $table->string('repair')->nullable();
-            $table->string('commision')->nullable();
+            $table->string('choose')->nullable();
+            $table->string('date')->nullable();
+            $table->string('particular')->nullable();
+            $table->string('amount')->nullable();
+            $table->string('bankdetail')->nullable();
             $table->timestamps();
         });
     }

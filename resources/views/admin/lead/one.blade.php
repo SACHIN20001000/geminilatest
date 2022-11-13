@@ -13,19 +13,30 @@
 					</div>
                  
 					<div class="d-flex my-xl-auto right-content">
+                       
+                        @if(in_array($lead->status,['REJECTED','LINK GENERATED BUT NOT PAID','LINK GENERATED','POLICY TO BE ISSUED','QUOTE GENERATED']))
                         <div class="pe-1 mb-xl-0">
 							<div class="btn-group dropdown">
 								<button  class="modal-effect btn btn-main-primary ml_auto "
 											data-bs-toggle="modal" href="#attachments"
-											data-bs-effect="effect-super-scaled">Attachment</button>
+											data-bs-effect="effect-super-scaled">
+                                            @if(in_array($lead->status ,['LINK GENERATED BUT NOT PAID','LINK GENERATED','POLICY TO BE ISSUED']))
+                                            Share Policy
+                                            @else
+                                            Attachment
+                                            @endif
+                                        </button>
 							</div>
 						</div>
+                        @endif
+                        @if(in_array($lead->status,['QUOTE GENERATED','PENDING/FRESH','IN PROCESS','MORE INFO REQUIRED','RE-QUOTE']))
                         <div class="pe-1 mb-xl-0">
 							<div class="btn-group dropdown">
 								<button  class="modal-effect btn btn-main-primary ml_auto " data-bs-toggle="modal" href="#quotes"
-											data-bs-effect="effect-super-scaled">Quotes</button>
+											data-bs-effect="effect-super-scaled">Share Quote</button>
 							</div>
 						</div>
+                        @endif
 						<div class="pe-1 mb-xl-0">
 							<div class="btn-group dropdown change-status">
 								<button  class="modal-effect btn btn-main-primary ml_auto "
@@ -40,72 +51,7 @@
 				<div class="row row-sm">
 				
 					<div class="col-lg-12">
-						<!-- <div class="row row-sm">
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-primary-transparent">
-												<i class="icon-layers text-primary"></i>
-											</div>
-											<div class="ms-auto">
-												<h5 class="tx-13">Orders</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">1,587</h2>
-												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success me-1"></i>increase</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-danger-transparent">
-												<i class="icon-paypal text-danger"></i>
-											</div>
-											<div class="ms-auto">
-												<h5 class="tx-13">Revenue</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">46,782</h2>
-												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success me-1"></i>increase</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-success-transparent">
-												<i class="icon-rocket text-success"></i>
-											</div>
-											<div class="ms-auto">
-												<h5 class="tx-13">Product sold</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">1,890</h2>
-												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success me-1"></i>increase</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-success-transparent">
-												<i class="icon-rocket text-success"></i>
-											</div>
-											<div class="ms-auto">
-												<h5 class="tx-13">Product sold</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">1,890</h2>
-												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success me-1"></i>increase</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> -->
+						
 						<div class="card">
 							<div class="card-body">
 								<div class="tabs-menu ">

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Expences extends Model
 {
     use HasFactory;
-    protected $fillable = ['rent','user_id','electricity','water_bill','tea','stationery','salery','internet','repair','commision'];
+    protected $fillable = ['bankdetail','user_id','amount','particular','date','choose'];
     protected $casts = [
         'created_at' => 'datetime:M d, Y h:i:s',
         'updated_at' => 'datetime:M d, Y h:i:s',
