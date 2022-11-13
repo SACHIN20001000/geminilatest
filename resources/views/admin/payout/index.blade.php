@@ -148,7 +148,7 @@
 		<!-- End Modal effects-->
 <!-- Modal effects -->
 <div class="modal fade" id="invoice-view">
-			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-dialog modal-dialog-centered" role="documents">
 				<div class="modal-content modal-content-demo">
 					<div class="modal-header">
 						<h6 class="modal-title">Invoice</h6><button aria-label="Close" class="close"

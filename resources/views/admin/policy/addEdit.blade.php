@@ -196,15 +196,15 @@
                      <input type="text" name="terrorism_premium" value="{{isset($policy) ? $policy->terrorism_premium : ''}}" class="form-control feild" id="terrorism_premium">
                      
                     </div>
-                     <!-- <div class="col-lg-6">
-											<p class="mg-t-10 mg-b-1">Case Type</p>
-                                            <select name="case_type" class="select2 form-control common-feild feild" id="case_type">
+                    <div class="col-lg-6">
+											<p class="mg-t-10 mg-b-1">TYPE OF VEHICLE</p>
+                                            <select name="case_type" class="select2 form-control common-feild feild" id="vehicle_type">
                                             <option value="">Select Below</option>
-                                            <option value="NEW" {{ (isset($policy) && "NEW" == $policy->case_type) ? 'selected' : '' }}>NEW</option>             
-                                            <option value="ROLLOVER" {{ (isset($policy) && "ROLLOVER" == $policy->case_type) ? 'selected' : '' }}>ROLLOVER</option>             
-                                            <option value="RENEWAL" {{ (isset($policy) && "RENEWAL" == $policy->case_type) ? 'selected' : '' }}>RENEWAL</option>             
+                                            <option value="3 WHEELER" {{ (isset($policy) && "3 WHEELER" == $policy->case_type) ? 'selected' : '' }}>3 WHEELER</option>             
+                                            <option value=" =>4 WHEELER" {{ (isset($policy) && " =>4 WHEELER" == $policy->case_type) ? 'selected' : '' }}> =>4 WHEELER</option>             
+                                                  
                                            </select>
-                     </div> -->
+                     </div>
                      <div class="col-lg-6">
 											<p class="mg-t-10 mg-b-1">Requirement</p>
                                            <input type="text" name="requirement" value="{{isset($policy) ? $policy->requirement : ''}}" class="form-control feild" id="requirement">
@@ -226,7 +226,7 @@
                                             <select name="type" class="select2 form-control feild" id="type">
                                             <option value="">Select Below</option>
                                             <option value="SINGLE TRANSIT" {{ (isset($policy) && "SINGLE TRANSIT" == $policy->type) ? 'selected' : '' }}>SINGLE TRANSIT</option>             
-                                            <option value="OPEN POLICY" {{ (isset($policy) && "OPEN POLICY" == $policy->case_type) ? 'selected' : '' }}>OPEN POLICY</option>          
+                                            <option value="OPEN POLICY" {{ (isset($policy) && "OPEN POLICY" == $policy->type) ? 'selected' : '' }}>OPEN POLICY</option>          
                                            </select>
                      </div>
                     <div class="col-lg-6">
@@ -1565,6 +1565,7 @@ function changeFeild(subproduct){
                  $('.feild').parent('div').hide()
                  $('.common-feild').parent('div').show();
                  $('#fuel_type').parent('div').show();   
+                 $('#vehicle_type').parent('div').show();   
                  $('#passenger_carrying_capacity').parent('div').show();   
                  $('#category').parent('div').show();   
                  $('#make').parent('div').show();  
