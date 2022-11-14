@@ -30,15 +30,15 @@
 									
 										<li class="">
 										
-                                                <a href="#five" data-bs-toggle="tab" class="active" aria-expanded="true"> <span class="visible-xs"><i class="las la-user-circle tx-16 me-1"></i></span> <span class="hidden-xs">Renew 5 Days</span> </a>
+                                                <a href="#five" data-bs-toggle="tab" class="active" aria-expanded="true"> <span class="visible-xs"><i class="las la-user-circle tx-16 me-1"></i></span> <span class="hidden-xs">Remainder 5 Days</span> </a>
 										</li>
 										<li class="">
 											<a href="#fifteen" data-bs-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-												<span class="hidden-xs">Renew 15 Days</span> </a>
+												<span class="hidden-xs">Remainder 15 Days</span> </a>
 										</li>
 										<li class="">
 											<a href="#thirty" data-bs-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
-												<span class="hidden-xs">Renew 30 Days</span> </a>
+												<span class="hidden-xs">Remainder 30 Days</span> </a>
 										</li>
 										
 									</ul>
