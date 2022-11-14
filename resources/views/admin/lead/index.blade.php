@@ -208,15 +208,9 @@
                                 @endif
 
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td>
-                                    {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','lead_id'=>$_GET['lead_id']?? ''])->links("vendor.pagination.bootstrap-4")}}
-                                    </td>
-                                </tr>
-                          
-                            </tfoot>
+                        
                         </table>
+                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','lead_id'=>$_GET['lead_id']?? ''])->links("vendor.pagination.bootstrap-4")}}
                      
                      
                   
