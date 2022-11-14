@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\NotepadController;
 use App\Http\Controllers\Admin\ExpensesController;
 use App\Http\Controllers\Admin\CommunicationController;
 use App\Http\Controllers\Admin\IncomeController;
+use App\Http\Controllers\Admin\RemainderController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -92,6 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('expences', ExpensesController::class);
         Route::resource('income', IncomeController::class);
         Route::resource('communications', CommunicationController::class);
+        Route::resource('remainder', RemainderController::class);
         Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
         Route::any('getStatusChange', [PayoutController::class, 'getStatusChange'])->name('getStatusChange');
         Route::any('getInvoiceDetail', [PayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');
