@@ -72,6 +72,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Policy::class, 'user_id','id');
     }
+    public function policies()
+    {
+        return $this->hasMany(Policy::class, 'user_id','id');
+    }
 
     public function messages()
     {

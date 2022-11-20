@@ -33,7 +33,11 @@
 							<button type="button" class="btn btn-danger btn-icon me-2"><i class="mdi mdi-star"></i></button>
 						</div>
 						<div class="pe-1 mb-xl-0">
-							<button type="button" class="btn btn-warning  btn-icon me-2"><i class="mdi mdi-refresh"></i></button>
+                     
+                            <a  class="btn btn-main-primary renew-btn "
+											 style="color:#fff"  
+											>Mail</a>
+						
 						</div>
                        
 						<div class="mb-xl-0">
@@ -128,7 +132,9 @@
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>
-                                    
+                                @if(isset($_GET['id']) && $_GET['id'] == 2)
+                                <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
+                                @endif  
                                 <th class="wd-lg-20p"><span>Reference Name</span></th>
                                 <th class="wd-lg-20p"><span>Policy Holder Name</span></th>
                                 <th class="wd-lg-20p"><span>Trasaction Type</span></th>
@@ -145,13 +151,15 @@
                                 @if($leads->count())
                                 @foreach($leads as $lead)
                                 <tr style="@if($lead->mark_read == 0)  background: #bef1ff; font-weight: bold; @endif">
-
-                                    <td>{{$lead->users->name ?? ''}}</td>
+                                @if(isset($_GET['id']) && $_GET['id'] == 2)
+                                <td><input type="checkbox" name="checked"  class="checkSingle checkLead" data-id="{{$lead->id}}"></td>
+                                @endif
+                                <td>{{$lead->users->name ?? ''}}</td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >
                                     {{$lead->lead->holder_name ?? $lead->holder_name}} </a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->mis_transaction_type ?? ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->subProduct->name ?? ''}}</a></td>
-                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->gwp ?? ''}}</a></td>
+                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->gross_premium ?? ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->is_paid == 0 ? 'Short' : 'Paid'}}</a></td>
                                   
@@ -171,7 +179,7 @@
                           
                                    
                                     <td>
-                                    <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->lead->holder_name ?? ''}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->email ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled"  data-toggle="tooltip" title="Send Mail!">📩</button>
+                                    <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->lead->holder_name ?? ''}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled"  data-toggle="tooltip" title="Send Mail!">📩</button>
                                             <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"  data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>
                                             </a>  
                                             <a href="{{route('policy.destroy',$lead->id)}}"
@@ -238,7 +246,7 @@
                              
                               
                                   <label>Content </label>
-                                 <textarea name="content" class="form-control editor" id="person_name" cols="30" rows="10">
+                                 <textarea name="content" class="form-control " id="person_name" cols="30" rows="10">
 
                                  </textarea>
                                
@@ -255,8 +263,26 @@
 				</div>
 			</div>
 		</div>
-
-
+			</div>
+		</div>
+    
+        <div class="modal fade show" id="renew-modal" aria-modal="true" role="dialog" >
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content modal-content-demo">
+					<div class="modal-header">
+						<h6 class="modal-title">Bulk Email</h6><button aria-label="Close" class="close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+					</div>
+                   
+					<div class="modal-footer">
+						<button class="btn ripple btn-primary bulkEmail" type="submit">Save</button>
+						<button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+					</div>
+                 
+				
+			</div>
+		</div>
+			</div>
+		</div>
 @endsection
 
 @section('scripts')
@@ -268,6 +294,17 @@
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+    $("#checkedAll").change(function() {
+    if (this.checked) {
+        $(".checkSingle").each(function() {
+            this.checked=true;
+        });
+    } else {
+        $(".checkSingle").each(function() {
+            this.checked=false;
+        });
+    }
     });
     $('.editor').summernote({
    
@@ -309,12 +346,20 @@
                 var sub_product =$(this).attr('data-subproduct');
                 var req_no =$(this).attr('data-policy');
                 var expiry =$(this).attr('data-expiry');
-                var meesage="Dear "+person_name+" This is for your information following case is due Please find details below: Customer Name :"+customer_name+" Product :"+product_name+" Sub Product:"+sub_product+" Registration No. : "+req_no+" Expiry Date : "+expiry+" This is an automated email. Please do not reply Regards GCS Services";
+                var meesage=
+`Dear ${person_name}
+This is for your information following case is due Please find details below:
+    Customer Name :${customer_name} 
+    Product :${product_name}
+    Sub Product:${sub_product}
+    Registration No. : ${req_no}
+    Expiry Date : ${expiry}
+This is an automated email. Please do not reply 
+Regards 
+GCS Services`;
                 $('#policy_single_id').val(policy_id);
                 $('#policy_single_email').val(email);
-                console.log(meesage);
-                // $('#person_name').code("your text");
-                $('#person_name').summernote('editor.insertText', meesage);
+                $('#person_name').text(meesage);
                 $('#common-btn').modal('show');
              })
             $('.endrosment').change(function() {
@@ -327,6 +372,33 @@
               
 
              });
+        $('.renew-btn').click(function() {
+                    
+                    const ids= [];
+                    $(".checkLead:checked").each(function(i) {
+                        ids.push($(this).data('id'));
+                    });
+                 
+                    if (ids != '') {
+                    $('#renew-modal').modal('show');
+
+                        $('.bulkEmail').click(function() {
+                            $.ajax
+                            ({
+                                type: "Post",
+                                url: "{{route('bulkEmail')}}",
+                                data: {id:ids},
+                                success: function(result)
+                                {
+                                    $('#renew-modal').modal('hide');
+                                }
+                            });  
+
+             });
+                    } else {
+                        alert('CheckBox and Lead Owner must not be empty');
+                    }
+                    });
     });
 </script>
 @endsection

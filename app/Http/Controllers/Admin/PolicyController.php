@@ -314,4 +314,26 @@ public function subEndrosment(Request $request){
         }
         return back()->with('success', 'Reply Sent successfully!');
 }
+public function bulkEmail(Request $request){
+
+    
+    $user= User::with('policies')->whereHas('policies', function($q) use ($request){
+        $q->whereIn('id', $request->id);
+    })->get();
+    
+  
+    foreach ($user as $key => $value) {
+        
+        try {
+            Mail::send('admin.email.bulkemail',['user' => $value],function($messages) use ($value) {            
+                   $messages->to($value->email);
+                   $subject ='Renewals Mis';
+                   $messages->subject($subject);     
+           }); 
+          } catch (Exception $e) {
+             
+           }
+    }
+
+}
 }

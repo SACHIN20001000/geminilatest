@@ -24,6 +24,7 @@ use App\Http\Requests\Admin\Lead\StoreLeadRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Mail;
+ini_set('max_execution_time', 1500); // 5 minutes
 
 class LeadController extends Controller
 {
@@ -432,6 +433,15 @@ class LeadController extends Controller
                             ]
                             );
                             $userClient->assignRole($client);
+                            try {
+                                Mail::send('admin.email.newPolicy',['lead' => $lead],function($messages) use ($lead) {            
+                                       $messages->to($lead->email);
+                                       $subject ='Policy Issued,'.($lead->holder_name??'').' ' . ($lead->subProduct->name??'');
+                                       $messages->subject($subject);     
+                               }); 
+                              } catch (Exception $e) {
+                                 
+                               }
                      }
                        
                     } 
@@ -466,16 +476,22 @@ class LeadController extends Controller
                 }
             }
         }
-       
+        $finalQuotes= Quote::where(['lead_id'=>$request->lead_id,'user_id'=>auth()->user()->id])->get();
             $lead = Lead::find($request->lead_id);
                 try {
-                    Mail::send('admin.email.commonemail',['policy' => $lead,'content'=>$request->remarks],function($messages) use ($request,$lead,$quote) {
-                        $messages->to($lead->email);
-                        $subject ='Gemini consultancy Service';
-                        if(isset($quote->file_name) && !empty($quote->file_name)){
-                            $fileurls = url('quotes',$quote->file_name);
-                            $messages->attach($fileurls);
+                    Mail::send('admin.email.commonemail',['policy' => $lead],function($messages) use ($lead,$finalQuotes) {
+                        $messages->to($lead->users->email);
+                        $subject ='Quote ' .$lead->holder_name.' '.$lead->subProduct->name;
+                        if($finalQuotes->count()){
+                            foreach ($finalQuotes as $key => $quotes) {
+                                if(isset($quotes->file_name) && !empty($quotes->file_name)){
+                                    $fileurls = url('quotes',$quotes->file_name);
+                                    $messages->attach($fileurls);
+                                }  
+                            }
                         }
+                     
+                      
                     
                         $messages->subject($subject);                 
                 });

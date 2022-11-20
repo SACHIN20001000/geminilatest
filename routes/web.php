@@ -103,6 +103,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::any('endrosments', [PolicyController::class, 'endrosment'])->name('endrosment');
         Route::any('sub-endrosment', [PolicyController::class, 'subEndrosment'])->name('subEndrosment');
         Route::any('commonEndrosment', [PolicyController::class, 'commonEndrosment'])->name('commonEndrosment');
+        Route::any('bulkEmail', [PolicyController::class, 'bulkEmail'])->name('bulkEmail');
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
         Route::any('getCompany', [LeadController::class, 'getCompany'])->name('getCompany');
         Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');
