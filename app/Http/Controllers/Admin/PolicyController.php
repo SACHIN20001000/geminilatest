@@ -280,21 +280,26 @@ class PolicyController extends Controller
    }
    public function commonEndrosment(Request $request){
     
-   
- $lead=   Lead::find($request->lead_id);
+        $lead=   Lead::find($request->lead_id);
 
         $endresoment=Endrosment::create([
         'created_to'=> $lead->user_id,
         'created_by'=> auth()->user()->id,
         'parent'=> 1,
         'lead_id'=> $request->lead_id,
-        'message'=> $request->message,
+        'previous_message'=> $request->previous_message,
+        'new_message'=> $request->new_message,
         'type'=> $request->type,
         ]);
         if(!empty($request->image)){
-            $attachment_filename = preg_replace('/\s+/', '', $request->image->getClientOriginalName());
-            $request->image->move(public_path('/endrosment'), $attachment_filename);
-            $endresoment->update(['image'=>$attachment_filename]);
+            $allImage=[];
+            foreach ($request->image as $key => $image) {
+                $attachment_filename = preg_replace('/\s+/', '', $image->getClientOriginalName());
+            $image->move(public_path('/endrosment'), $attachment_filename);
+            array_push($allImage,$attachment_filename);
+            }
+           
+            $endresoment->update(['image'=>json_encode($allImage)]);
         }
         return back()->with('success', 'Endrosment Sent successfully!');
 }
@@ -308,9 +313,14 @@ public function subEndrosment(Request $request){
         'message'=> $request->message,
         ]);
         if(!empty($request->image)){
-            $attachment_filename = preg_replace('/\s+/', '', $request->image->getClientOriginalName());
-            $request->image->move(public_path('/endrosment'), $attachment_filename);
-            $endresoment->update(['image'=>$attachment_filename]);
+            $allImage=[];
+            foreach ($request->image as $key => $image) {
+                $attachment_filename = preg_replace('/\s+/', '', $image->getClientOriginalName());
+            $image->move(public_path('/endrosment'), $attachment_filename);
+            array_push($allImage,$attachment_filename);
+            }
+           
+            $endresoment->update(['image'=>json_encode($allImage)]);
         }
         return back()->with('success', 'Reply Sent successfully!');
 }

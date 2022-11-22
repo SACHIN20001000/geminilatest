@@ -27,13 +27,8 @@ class EndrosmentController extends Controller
                                 $action = '<span class="action-buttons"><a  href="' . route("endrosment.show", $row) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i></a>';
                                 return $action;
                             })
-                            ->addColumn('attachments', function ($row)
-                            {
-                               
-                                $action = '<span class="action-buttons"><a  href="' . URL::asset('endrosment').'/'.$row->image . '" class="btn btn-sm btn-info btn-b" target="_blank">📁</a>';
-                                return $action;
-                            })
-                            ->rawColumns(['action','attachments'])
+                         
+                            ->rawColumns(['action'])
                             ->make(true);
         }
         return view('admin.endrosment.index');

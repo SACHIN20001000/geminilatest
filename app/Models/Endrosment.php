@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Endrosment extends Model
 {
     use HasFactory;
-    protected $fillable = ['message','image','lead_id','parent','created_by','created_to','type'];
+    protected $fillable = ['new_message','previous_message','image','lead_id','parent','created_by','created_to','type'];
     protected $casts = [
         'created_at' => 'datetime:M d, Y h:i:s',
         'updated_at' => 'datetime:M d, Y h:i:s',

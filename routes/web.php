@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\ExpensesController;
 use App\Http\Controllers\Admin\CommunicationController;
 use App\Http\Controllers\Admin\IncomeController;
 use App\Http\Controllers\Admin\RemainderController;
+use App\Http\Controllers\Admin\ExportController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -95,6 +96,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('communications', CommunicationController::class);
         Route::resource('remainder', RemainderController::class);
         Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
+        Route::any('export-policy', [ExportController::class, 'policyView'])->name('policyView');
+        Route::any('store-policy', [ExportController::class, 'exportPolicy'])->name('exportPolicy');
         Route::any('getStatusChange', [PayoutController::class, 'getStatusChange'])->name('getStatusChange');
         Route::any('getInvoiceDetail', [PayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');
         Route::any('invoiceStore', [PayoutController::class, 'invoiceStore'])->name('invoiceStore');

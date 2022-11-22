@@ -21,7 +21,8 @@ class CreateEndrosmentsTable extends Migration
             $table->integer('lead_id')->nullable();
             $table->string('image')->nullable();
             $table->string('type')->nullable();
-            $table->text('message')->nullable();
+            $table->text('previous_message')->nullable();
+            $table->text('new_message')->nullable();
             $table->timestamps();
         });
     }

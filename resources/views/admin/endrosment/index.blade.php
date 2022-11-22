@@ -29,9 +29,7 @@
                                                    
                                     <th class="wd-lg-20p">Policy Holder Name</th>               
                                     <th class="wd-lg-20p">Policy Number</th>               
-                                    <th class="wd-lg-20p">Endrosment Type</th>               
-                                    <th class="wd-lg-20p">Attachment</th>               
-                                    <th class="wd-lg-20p">Remarks</th>   
+                                    <th class="wd-lg-20p">Endrosment Type</th>      
                                     <th class="wd-lg-20p">Created By</th>            
                                     <th class="wd-lg-20p"><span>Created</span></th>
                                     <th class="wd-lg-20p">Action</th>
@@ -82,8 +80,6 @@
                 {data: 'lead.holder_name', holder_name: 'lead.holder_name'},
             {data: 'lead.id', name: 'lead.id'},
             {data: 'type', name: 'type'},
-            {data: 'attachments', name: 'attachments'},
-            {data: 'message', name: 'message'},
             {data: 'users.name', name: 'users.name'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},

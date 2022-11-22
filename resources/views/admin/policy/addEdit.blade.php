@@ -1638,8 +1638,9 @@ function grossPremium(){
     var add_on_premium=$("#add_on_premium").val();
     var others=$("#others").val();
     var gst=$("#gst").val();
-    var gross= od_premium + tp_premium + add_on_premium + others + gst;
-  
+    console.log(typeof parseFloat(od_premium))
+    var gross= parseFloat(od_premium) + parseFloat(tp_premium) + parseFloat(add_on_premium); // + parseFloat(others) + parseFloat(gst);
+  console.log(typeof gross, gross);
     $("#gross_premium").val(gross );
     console.log();
 }

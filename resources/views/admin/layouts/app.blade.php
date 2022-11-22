@@ -395,11 +395,11 @@ aside.app-sidebar.sidebar-scroll {overflow: scroll;}
             </div><!-- modal -->
 
             <!-- Footer opened -->
-            <!-- <div class="main-footer ht-40">
+            <div class="main-footer ht-40">
                 <div class="container-fluid pd-t-0-f ht-100p">
-                    <span>Copyright © 2021 <a href="#">Valex</a>. Designed by <a href="https://www.spruko.com/">Spruko</a> All rights reserved.</span>
+                    <span> Designed by Sachin Kumar(+918580831760). All rights reserved.</span>
                 </div>
-            </div> -->
+            </div>
             <!-- Footer closed -->
 
         </div>

@@ -19,22 +19,28 @@
 											</div>
 										</div>
 									</div>
-									<div class="eamil-body mt-5">
-										<p>{{$endrosment->message??''}}</p>
+									<div class="email-body mt-5">
+										<h6>Previous Message</h6>
+										<p>{{$endrosment->new_message  ?? ''}}</p>
+										<h6>New Message</h6>
+
+										<p>{{$endrosment->previous_message ?? ''}}</p>
 									
 										@if(!empty($endrosment->image))
+										@foreach(json_decode($endrosment->image) as $image)
 										<div class="email-attch">
 											
 											<div class="emai-img">
 												<div class="d-sm-flex">
 													<div class=" m-2">
-														<a href="{{URL::asset('endrosment')}}/{{$endrosment->image}}" target="_blank">View File</a>
+														<a href="{{URL::asset('endrosment')}}/{{$image}}" target="_blank">View File</a>
 														
 													</div>
 													
 												</div>
 											</div>
 										</div>
+										@endforeach
 										@endif
 										<hr>
 									</div>
@@ -63,18 +69,21 @@
 									
 										
 										@if(!empty($endrosments->image))
+										@foreach(json_decode($endrosments->image) as $Subimage)
 										<div class="email-attch">
 											
 											<div class="emai-img">
 												<div class="d-sm-flex">
 													<div class=" m-2">
-														<a href="{{URL::asset('endrosment')}}/{{$endrosments->image}}" target="_blank">View File</a>
+														<a href="{{URL::asset('endrosment')}}/{{$Subimage}}" target="_blank">View File</a>
 														
 													</div>
 													
 												</div>
 											</div>
 										</div>
+										@endforeach
+										
 										@endif
 										<hr>
 									</div>
@@ -98,7 +107,7 @@
                         <div class="row">
                             <div class="col-lg-12">                           
                                   <label>File </label>
-                                  <input type="file" name="image" id="image" class="form-control">
+                                  <input type="file" name="image[]" id="image" multiple class="form-control">
                                   <input type="hidden" name="lead_id" id="lead_id">
                              
                               

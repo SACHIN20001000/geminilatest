@@ -260,16 +260,35 @@
                         <div class="row">
                             <div class="col-lg-12">                           
                                   <label>Type </label>
-                                  <select name="type" id="type" class="form-control">
+                                  <select name="type" id="change_type" class="form-control">
                                     <option value="">Select</option>
+                                    <option data-id='1' value="NAME CORRECTION">NAME CORRECTION</option>
+                                    <option data-id='2' value="ADDRESS CHANGE">ADDRESS CHANGE</option>
+                                    <option data-id='3' value="NOMINEE">NOMINEE</option>
+                                    <option data-id='4' value="EMAIL/PHONE">EMAIL/PHONE</option>
+                                    <option data-id='5' value="VEHICLE REG NO">VEHICLE REG NO</option>
+                                    <option data-id='6' value="ENGINE/CHASSIS">ENGINE/CHASSIS</option>
+                                    <option data-id='7' value="HYPOTHECATION CHANGE/ REMOVAL">HYPOTHECATION CHANGE/ REMOVAL</option>
+                                    <option data-id='8' value="MAKE/MODEL/CC/MFR YEAR">MAKE/MODEL/CC/MFR YEAR</option>
+                                    <option data-id='9' value="RISK PERIOD">RISK PERIOD</option>
+                                    <option data-id='10' value="GST addition/correction">GST addition/correction</option>
+                                    <option data-id='11' value="IDV/electric/non electric accessories">IDV/electric/non electric accessories</option>
+                                    <option data-id='12' value="NCB CORRECTION">NCB CORRECTION</option>
+                                    <option data-id='13' value="NCB RESERVING">NCB RESERVING</option>
+                                    <option data-id='14' value="OWNERSHIP TRANSFER">OWNERSHIP TRANSFER</option>
+                                    <option data-id='15' value="OTHERS">OTHERS</option>
                                   </select>
                                   <label>File </label>
-                                  <input type="file" name="image" id="image" class="form-control">
+                                  <span class="error-message" style="color:red;"></span>
+                                  <input type="file" name="image[]" multiple id="image" class="form-control">
                                   <input type="hidden" name="lead_id" id="lead_id">
                              
+                                  <label>Previous Changes </label>
+                                 <textarea name="previous_message" class="form-control" id="message" cols="30" rows="10">
+                                 </textarea>
                               
-                                  <label>Message </label>
-                                 <textarea name="message" class="form-control" id="message" cols="30" rows="10">
+                                  <label>New Changes </label>
+                                 <textarea name="new_message" class="form-control" id="message" cols="30" rows="10">
 
                                  </textarea>
                                
@@ -365,5 +384,45 @@ $('.assigned-btn').click(function() {
     }
 });
     });
+    $('#change_type').on('change', function() {
+  var selected_option_value = $(this).find(":selected").data('id');
+  if(selected_option_value == 1){
+    $('.error-message').text('RC/PYP and client request letter')
+  }
+  if(selected_option_value == 2){
+    $('.error-message').text('ADDRESS PROOF AND REQUEST LETTER')
+  }
+  if(selected_option_value == 3){
+    $('.error-message').text('RELATION PROOF AND CLIENT REQUEST LETTER')
+  }
+  if(selected_option_value == 4){
+    $('.error-message').text('REQUEST LETTER')
+  }
+  if(selected_option_value == 5 || selected_option_value == 6 || selected_option_value == 8){
+    $('.error-message').text('RC AND REQUEST LETTER')
+  }
+  if(selected_option_value == 7){
+    $('.error-message').text('RC/ Financier letter and CLIENT REQUEST LETTER')
+  }
+  if(selected_option_value == 9){
+    $('.error-message').text('GST CERTIFICATE. REQUEST Letter')
+  }
+  if(selected_option_value == 10){
+    $('.error-message').text('PYP and valuation certificate and Insection report')
+  }
+  if(selected_option_value == 11){
+    $('.error-message').text('Previous year policy/ncb certificate from previous insurer')
+  }
+  if(selected_option_value == 12){
+    $('.error-message').text('Sale Deed  or transferred RC or Form 29/30 And Client Request letter')
+  }
+  if(selected_option_value == 13){
+    $('.error-message').text('transferred RC or Form 29/30, proposal form,  buyer seller request letter, inspection report')
+  }
+  if(selected_option_value == 14){
+    $('.error-message').text('PLS SHARE RELEVANT DOCUMENTS ALONG WITH REQUEST LETTER')
+  }
+
+});
 </script>
 @endsection
