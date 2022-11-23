@@ -151,7 +151,7 @@
                             <tbody>
                                 @if($leads->count())
                                 @foreach($leads as $lead)
-                                <tr style="@if($lead->mark_read == 0)  background: #bef1ff; font-weight: bold; @endif">
+                                <tr style="@if($lead->mark_read == 0)  font-weight: bold; @endif">
                                 @if(isset($_GET['id']) && $_GET['id'] == 2)
                                 <td><input type="checkbox" name="checked"  class="checkSingle checkLead" data-id="{{$lead->id}}"></td>
                                 @endif

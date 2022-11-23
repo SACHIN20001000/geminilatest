@@ -172,7 +172,7 @@
                             <tbody>
                                 @if($leads->count())
                                 @foreach($leads as $lead)
-                                <tr style="@if($lead->mark_read == 0)  background: #bef1ff; font-weight: bold; @endif">
+                                <tr style="@if($lead->mark_read == 0)  font-weight: bold; @endif">
                                     <td><input type="checkbox" name="checked"  class="checkSingle" value="{{$lead->id}}"> </td>
                                     <td>{{$lead->users->name??''}}</td>
                                     <td>{{$lead->holder_name??''}}</td>
