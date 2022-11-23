@@ -107,6 +107,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::any('sub-endrosment', [PolicyController::class, 'subEndrosment'])->name('subEndrosment');
         Route::any('commonEndrosment', [PolicyController::class, 'commonEndrosment'])->name('commonEndrosment');
         Route::any('bulkEmail', [PolicyController::class, 'bulkEmail'])->name('bulkEmail');
+        Route::any('renewFolloup', [PolicyController::class, 'renewFolloup'])->name('renewFolloup');
+        Route::any('renewAttachment', [PolicyController::class, 'renewAttachment'])->name('renewAttachment');
+        Route::any('acceptPolicyLead', [PolicyController::class, 'acceptPolicyLead'])->name('acceptPolicyLead');
+        Route::any('rejectpolicyLead', [PolicyController::class, 'rejectpolicyLead'])->name('rejectpolicyLead');
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
         Route::any('getCompany', [LeadController::class, 'getCompany'])->name('getCompany');
         Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');

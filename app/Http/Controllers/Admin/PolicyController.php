@@ -346,4 +346,71 @@ public function bulkEmail(Request $request){
     }
 
 }
+    public function renewFolloup(Request $request){
+        Policy::where('id',$request->id)->update(['follow_up'=>$request->date]);
+    }
+    public function renewAttachment(Request $request){
+        
+            if(!empty($request->image)){
+                $attachment_filename = preg_replace('/\s+/', '', $request->image->getClientOriginalName());
+                $request->image->move(public_path('/attachments'), $attachment_filename);
+                Attachment::create([
+                    'policy_id'=> $request->policy_id ??0,
+                    'user_id'=> Auth::user()->id ??'',
+                    'file_name'=> $attachment_filename ??'',
+                    'type'=> 'Renewal' ??  ''
+                ]);
+               
+            }
+          
+
+          return back()->with('success', 'Renewal Created successfully!');
+
+    }
+    public function acceptPolicyLead(Request $request){
+$policy=Policy::find($request->quote);
+
+if($policy->lead_id == 0){
+      $lead=  Lead::create([
+            'user_id'=> $policy->user_id ?? auth()->user()->id,
+            'holder_name'=> $policy->holder_name ?? '',
+            'phone'=> $policy->phone ?? '',
+            'email'=> $policy->email ?? '',
+            'insurance_id'=> $policy->insurance_id ??null,
+            'product_id'=> $policy->product_id ??null,
+            'subproduct_id'=> $policy->subproduct_id ??null,
+            'status'=> 'POLICY TO BE ISSUED' ??null,
+        ]);
+        $policy->update(['lead_id'=>$lead->id]);
+
+}else{
+    Lead::find($policy->lead_id)->update(['status'=> 'POLICY TO BE ISSUED','mark_read'=>0]);
+}
+$policy->update(['is_policy'=>0]);
+return redirect ()->route ('leads.index', ['id' => 3])->with ('success', ' Accepted successfully!');
+
+    }
+    public function rejectpolicyLead(Request $request){
+        $policy=Policy::find($request->quote);
+        $policy->update(['is_policy'=>0]);
+        if($policy->lead_id == 0){
+          $lead=  Lead::create([
+                'user_id'=> $policy->user_id ?? auth()->user()->id,
+                'holder_name'=> $policy->holder_name ?? '',
+                'phone'=> $policy->phone ?? '',
+                'email'=> $policy->email ?? '',
+                'insurance_id'=> $policy->insurance_id ??null,
+                'product_id'=> $policy->product_id ??null,
+                'subproduct_id'=> $policy->subproduct_id ??null,
+                'status'=> 'POLICY TO BE ISSUED' ??null,
+            ]);
+        
+            $policy->update(['lead_id'=>$lead->id]);
+        }else{
+            Lead::find($policy->lead_id)->update(['status'=> 'REJECTED','mark_read'=>0]);
+        }
+      
+return redirect ()->route ('leads.index', ['id' => 4])->with ('success', ' Rejected successfully!');
+
+    }
 }

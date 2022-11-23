@@ -112,6 +112,10 @@
 											<a href="#policy" data-bs-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
 												<span class="hidden-xs">Policy</span> </a>
 										</li>
+										<li class="">
+											<a href="#renewal" data-bs-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-images tx-15 me-1"></i></span>
+												<span class="hidden-xs">Renewal Quotes</span> </a>
+										</li>
 										
 									</ul>
 								</div>
@@ -1062,6 +1066,71 @@
                                             </table>
 										</div>
 									</div>
+									<div class="tab-pane" id="renewal">
+										<div class="row">
+											<table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Creted By 
+                                                        </th>
+                                                        <th>
+                                                            Creted At 
+                                                        </th>
+                                                        <th>
+                                                            File Name 
+                                                        </th>
+                                                        <th>
+                                                          Type 
+                                                        </th>
+                                                        <th>
+                                                          Action 
+                                                        </th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @if(!empty($policy->attachments))
+                                                        @foreach($policy->attachments as $attachment)
+                                                       @if($attachment->type == 'Renewal')
+                                                        <tr>
+                                                        <td>{{$attachment->users->name ?? ''}}</td>
+                                                        <td>{{$attachment->created_at}}</td>
+                                                        <td><a href="{{URL::asset('attachments')}}/{{$attachment->file_name}}" target="_blank">{{$attachment->file_name}}</a></td>
+                                                        <td>{{$attachment->type}}</td>
+                                                        <td> 
+                                                        <a href="{{ route('acceptPolicyLead',['id'=>$attachment->id,'quote'=> $policy->id]) }}"
+                                                                    class="btn btn-sm btn-primary remove_us"
+                                                                    title="Accept"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    data-method="DELETE"
+                                                                    data-confirm-title="Please Confirm"
+                                                                    data-confirm-text="Are you sure that you want to accept this quotes?"
+                                                                    data-confirm-delete="Yes, Accept it!">
+                                                                   Accept
+                                                                </a> 
+                                                            <a href="{{route('rejectpolicyLead',['id'=>$attachment->id,'quote'=> $policy->id])}}"
+                                                                    class="btn btn-sm btn-danger remove_us"
+                                                                    title="Reject"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    data-method="DELETE"
+                                                                    data-confirm-title="Please Confirm"
+                                                                    data-confirm-text="Are you sure that you want to reject this quotes?"
+                                                                    data-confirm-delete="Yes, Reject it!">
+                                                                   Reject
+                                                                </a>
+                                                              
+                                                            </td>
+                                                        </tr>
+                                                        @endif
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
+										</div>
+									</div>
 							
 								</div>
 							</div>
@@ -1097,7 +1166,6 @@
                                     <option value="Policy">Policy</option>
                                     <option value="Previous Year Policy">Previous Year Policy</option>
                                     <option value="Invoice Copy">Invoice Copy</option>
-                                    <option value="Renewals">Renewals</option>
                                     <option value="Other">Other</option>
                                 </select>
                             </div>

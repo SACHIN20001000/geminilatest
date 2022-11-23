@@ -139,10 +139,9 @@
                                 <th class="wd-lg-20p"><span>Policy Holder Name</span></th>
                                 <th class="wd-lg-20p"><span>Trasaction Type</span></th>
                                 <th class="wd-lg-20p"><span>Sub Product</span></th>
-                                <th class="wd-lg-20p"><span>Gwp</span></th>
                                 <th class="wd-lg-20p"><span>Due date</span></th>
-                                <th class="wd-lg-20p"><span>Payment</span></th>
-                                
+                                <th class="wd-lg-20p"><span>Followup Date</span></th>
+                                <th class="wd-lg-20p"><span>Attachment</span></th>
                                 <th class="wd-lg-20p"><span>Status</span></th>
                                 <th class="wd-lg-20p">Action</th>
                                 </tr>
@@ -159,28 +158,39 @@
                                     {{$lead->lead->holder_name ?? $lead->holder_name}} </a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->mis_transaction_type ?? ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->subProduct->name ?? ''}}</a></td>
-                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->gross_premium ?? ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
-                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->is_paid == 0 ? 'Short' : 'Paid'}}</a></td>
+                                    <td><input type="date" name="follow_up" value="{{$lead->follow_up ?? ''}}" data-id="{{$lead->id ?? ''}}" class="form-control follow_up"></td>
                                   
+                                    <td><input type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
+                                    @if(!empty($lead->attachments))
+                                                        @foreach($lead->attachments as $key => $attachment)
+                                                       @if($attachment->type == 'Renewal')
+                                                        <a href="{{URL::asset('attachments')}}/{{$attachment->file_name}}" target="_blank">View</a>
+                                                        
+                                                        @endif
+                                                        @endforeach
+                                                    @endif
+                                </td>
+                                   
                                     <td>
+                                        
                                     @if(isset($_GET['id']) && $_GET['id'] == 2)
                                         <select name="renew_status" id="renew_status" data-id="{{$lead->id}}" class="form-control renew_status">
-                                            <option value="POLICY ISSUED" {{isset($lead) && $lead->renew_status == 'POLICY ISSUED' ? 'selected' : ''}}>POLICY ISSUED</option>
+                                           <option value="">Select Below</option>
+                                            <option value="FOLLOW UP" {{isset($lead) && $lead->renew_status == 'FOLLOW UP' ? 'selected' : ''}}>FOLLOW UP</option>
                                             <option value="VEHICLE SOLD" {{isset($lead) && $lead->renew_status == 'VEHICLE SOLD' ? 'selected' : ''}}>VEHICLE SOLD</option>
                                             <option value="NOT INTERESTED" {{isset($lead) && $lead->renew_status == 'NOT INTERESTED' ? 'selected' : ''}}>NOT INTERESTED</option>
-                                            <option value="FOLLOW UP" {{isset($lead) && $lead->renew_status == 'FOLLOW UP' ? 'selected' : ''}}>FOLLOW UP</option>
-                                            <option value="OTHERS" {{isset($lead) && $lead->renew_status == 'OTHERS' ? 'selected' : ''}}>OTHERS</option>
+                                           
+                                            <option value="CLOSED" {{isset($lead) && $lead->renew_status == 'CLOSED' ? 'selected' : ''}}>CLOSED</option>
                                         </select>
                                     @else
                                     {{$lead->renew_status}}
                                     @endif
                                     </td>
-                          
-                                   
+                      
                                     <td>
                                     <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->lead->holder_name ?? ''}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled"  data-toggle="tooltip" title="Send Mail!">📩</button>
-                                            <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"  data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>
+                                    <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"  data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>
                                             </a>  
                                             <a href="{{route('policy.destroy',$lead->id)}}"
                                                 class="btn btn-sm btn-danger remove_us"
@@ -399,6 +409,41 @@ GCS Services`;
                         alert('CheckBox and Lead Owner must not be empty');
                     }
                     });
+    });
+    $(document).on('change','.follow_up',function(){
+        var id = $(this).data('id');
+        var date=$(this).val();
+        $.ajax
+        ({
+            type: "Post",
+            url: "{{route('renewFolloup')}}",
+            data: {id:id,date:date},
+            success: function(result)
+            {
+                
+            }
+        }); 
+    });
+    $(document).on('change','.renew-att',function(){
+        var id = $(this).data('id');
+        var file  = $(this).prop("files")[0];
+       
+        var form = new FormData();
+
+    // Adding the image to the form
+    form.append("image", file);
+    form.append("policy_id", id);
+        console.log(form);
+        $.ajax({
+        url: "{{route('renewAttachment')}}",
+        type: "POST",
+        data:  form,
+        contentType: false,
+        processData:false,
+        success: function(result){
+            location.reload()
+        }
+    });
     });
 </script>
 @endsection

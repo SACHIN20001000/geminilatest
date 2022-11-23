@@ -30,6 +30,7 @@ class CreatePoliciesTable extends Migration
             $table->integer('is_recovery')->default(0);
             $table->integer('mark_read')->default(0);
             $table->string('holder_name')->nullable();
+            $table->string('follow_up')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('renew_status')->default('POLICY ISSUED');
