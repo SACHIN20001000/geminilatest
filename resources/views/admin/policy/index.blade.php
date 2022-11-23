@@ -140,8 +140,10 @@
                                 <th class="wd-lg-20p"><span>Trasaction Type</span></th>
                                 <th class="wd-lg-20p"><span>Sub Product</span></th>
                                 <th class="wd-lg-20p"><span>Due date</span></th>
+                                @if(isset($_GET['id']) && $_GET['id'] == 2)
                                 <th class="wd-lg-20p"><span>Followup Date</span></th>
                                 <th class="wd-lg-20p"><span>Attachment</span></th>
+                                @endif
                                 <th class="wd-lg-20p"><span>Status</span></th>
                                 <th class="wd-lg-20p">Action</th>
                                 </tr>
@@ -159,8 +161,9 @@
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->mis_transaction_type ?? ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->subProduct->name ?? ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
+                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
                                     <td><input type="date" name="follow_up" value="{{$lead->follow_up ?? ''}}" data-id="{{$lead->id ?? ''}}" class="form-control follow_up"></td>
-                                  
+                                   
                                     <td><input type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
                                     @if(!empty($lead->attachments))
                                                         @foreach($lead->attachments as $key => $attachment)
@@ -171,6 +174,7 @@
                                                         @endforeach
                                                     @endif
                                 </td>
+                                @endif
                                    
                                     <td>
                                         
@@ -190,6 +194,7 @@
                       
                                     <td>
                                     <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->lead->holder_name ?? ''}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled"  data-toggle="tooltip" title="Send Mail!">📩</button>
+                                    @if(isset($_GET['id']) && $_GET['id'] == 1)
                                     <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"  data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>
                                             </a>  
                                             <a href="{{route('policy.destroy',$lead->id)}}"
@@ -203,6 +208,7 @@
                                                 data-confirm-delete="Yes, delete it!">
                                                 <i class="las la-trash"></i>
                                             </a>
+                                            @endif
                                     </td>
                                 </tr>
                                 @endforeach
