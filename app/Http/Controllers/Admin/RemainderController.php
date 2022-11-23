@@ -17,8 +17,9 @@ class RemainderController extends Controller
         $remainder= Remainder::where(['user_id'=>auth()->user()->id,'type'=>5])->first();
         $remainderfifteen= Remainder::where(['user_id'=>auth()->user()->id,'type'=>15])->first();
         $remainderthirty= Remainder::where(['user_id'=>auth()->user()->id,'type'=>30])->first();
+        $remainderone= Remainder::where(['user_id'=>auth()->user()->id,'type'=>1])->first();
 
-        return view('admin.remainder.index',compact('remainder','remainderfifteen','remainderthirty'));
+        return view('admin.remainder.index',compact('remainderone','remainder','remainderfifteen','remainderthirty'));
     }
 
     /**
@@ -39,9 +40,16 @@ class RemainderController extends Controller
      */
     public function store(Request $request)
     {
+       
         if($request->days == 5){
             Remainder::updateOrCreate(
                 ['user_id' => auth()->user()->id, 'type' => 5],
+                ['message' => $request->message]
+            );
+        }
+        if($request->days == 1){
+            Remainder::updateOrCreate(
+                ['user_id' => auth()->user()->id, 'type' => 1],
                 ['message' => $request->message]
             );
         }
