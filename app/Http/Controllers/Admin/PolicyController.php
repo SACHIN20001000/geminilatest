@@ -83,7 +83,12 @@ class PolicyController extends Controller
         }
         
        if(isset($request->product)   && !empty($request->product)){
-            $query->where('product_id', $request->product);
+       
+            $query->where('subproduct_id', $request->product);
+       }
+       if(isset($request->follow_up)   && !empty($request->follow_up)){
+       
+            $query->where('follow_up', $request->follow_up);
        }
        if(isset($request->search_anything)   && !empty($request->search_anything)){
            $searchParam=['user_id','insurance_id','product_id','net_premium','case_type','policy_no','channel_name','lead_id','company_id','attachment_id','subproduct_id','gross_premium','others','pa','tp_premium','add_on_premium','od_premium','gwp','gst','basic_premium','terrorism_premium','requirement','client_name','address','remarks','type','commodity_type','mode_of_transport','cover_type','per_sending_limit','per_location_limit','estimate_annual_sum','basic_of_valuation','policy_period','start_date','expiry_date','commodity_details','packing_description','libality','policy_type','liability_industrial','liability_nonindustrial','liability_act','professional_indeminity','comprehensive_general_liability','wc_policy','pincode','industry_type','worker_number','job_profile','salary_per_month','add_on_cover','medical_extension','occupation_disease','compressed_air_disease','terrorism_cover','terrorism_cover','multiple_location','occupancy','occupancy_tarriff','particular','building','plant_machine','furniture_fixure','stock_in_process','finished_stock','other_contents','clain_in_last_three_year','loss_details','loss_in_amount','loss_date','measures_taken_after_loss','address_risk_location','cover_opted','policy_inception_date','tenure','construction_type','age_of_building','basement_for_building','basement_for_content','claims','building_carpet_area','building_cost_of_construction','building_sum_insured','content_sum_insured','rent_alternative_accommodation','health_type','fresh','portability','dob','pre_existing_disease','hospitalization_history','upload_discharge_summary','dob_sr_most_member','dob_self','dob_spouse','dob_child','dob_father','dob_mother','sum_insured','visiting_country','date_of_departure','date_of_arrival','no_of_days','no_person','passport_datails','make','model','cubic_capacity','bussiness_type','rto','reg_no','mfr_year','reg_date','claims_in_existing_policy','ncb_in_existing_policy','gcv_type','gvw','fuel_type','passenger_carrying_capacity','category','varriant'];
@@ -103,10 +108,19 @@ class PolicyController extends Controller
                 $query->where('status', $request->status);
         }
           
-       $leads =  $query->orderby('id','DESC')->paginate(10);
+       $query->orderby('expiry_date','ASC');
+       if(isset($request->sort)   && !empty($request->sort)){
+        if($request->sort == 'all'){
+            $leads =  $query ->paginate(100000);
+        }else{
+            $leads =  $query ->paginate($request->sort);
+        }
+        
+
+       }else{
+        $leads =  $query ->paginate(10);
+       }     
       
-        
-        
        return view('admin.policy.index',compact('leads','products','users'));
     }
 
@@ -412,5 +426,9 @@ return redirect ()->route ('leads.index', ['id' => 3])->with ('success', ' Accep
       
 return redirect ()->route ('leads.index', ['id' => 4])->with ('success', ' Rejected successfully!');
 
+    }
+    public function delAttachment($id){
+        Attachment::find($id)->delete();
+        return back()->with('success', 'Deleted successfully!');
     }
 }

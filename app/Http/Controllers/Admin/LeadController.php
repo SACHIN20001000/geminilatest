@@ -45,7 +45,7 @@ class LeadController extends Controller
                  $q->whereBetween('expiry_date', [$request->expiry_from,$request->expiry_to]);
             }
             if(isset($request->product)   && !empty($request->product)){
-                 $q->where('product_id', $request->product);
+                 $q->where('subproduct_id', $request->product);
             }
              $q->where('is_policy',0);
             if(isset($request->search_anything)   && !empty($request->search_anything)){
@@ -102,7 +102,18 @@ class LeadController extends Controller
             
         });  
     }
-       $leads =  $query->orderby('id','DESC')->paginate(10);
+    $query->orderby('id','DESC');
+    if(isset($request->sort)   && !empty($request->sort)){
+     if($request->sort == 'all'){
+         $leads =  $query ->paginate(100000);
+     }else{
+         $leads =  $query ->paginate($request->sort);
+     }
+     
+
+    }else{
+     $leads =  $query ->paginate(10);
+    }     
       
        return view('admin.lead.index',compact('leads','products','users'));
     }

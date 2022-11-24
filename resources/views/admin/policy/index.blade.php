@@ -103,6 +103,10 @@
                                    
                                     <p class="mg-b-10">Search Anything</p>
                                     <input type="text" name="search_anything" value="{{isset($_GET['search_anything']) ? $_GET['search_anything'] : ''}}" class="form-control">
+                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
+                                    <p class="mg-b-10">Follow Up Date</p>
+                                 <input type="date" name="follow_up" id="" class="form-control" value="{{isset($_GET['follow_up']) ? $_GET['follow_up'] : ''}}">
+                                    @else
                                     <p class="mg-b-10">Status</p>
                                     <select name="is_paid"  class="form-control">
                                         <option value="">Select</option>
@@ -110,6 +114,8 @@
                                         <option value="0" {{ (isset($_GET['is_paid']) && (0 == $_GET['is_paid'])) ? 'selected' : '' }}>Pending</option>
 
                                     </select>
+                                    @endif
+                             
 									</div>
 								</div>
 							</div>
@@ -124,6 +130,17 @@
             <div class="card">
                 <div class="card-header pb-0">
                     <p class="tx-12 tx-gray-500 mb-2">Listing of All Policy...</p>
+                    <form action="" method="get" >
+                    <select name="sort" class="sort-table">
+                        <option value="10" {{ (isset($_GET['sort']) && (10 == $_GET['sort'])) ? 'selected' : '' }}>10</option>
+                        <option value="50" {{ (isset($_GET['sort']) && (50 == $_GET['sort'])) ? 'selected' : '' }}>50</option>
+                        <option value="100" {{ (isset($_GET['sort']) && (100 == $_GET['sort'])) ? 'selected' : '' }}>100</option>
+                        <option value="200" {{ (isset($_GET['sort']) && (200 == $_GET['sort'])) ? 'selected' : '' }}>200</option>
+                        <option value="all" {{ (isset($_GET['sort']) && ('all' == $_GET['sort'])) ? 'selected' : '' }}>All</option>
+                    </select>
+                    <input type="hidden" name="id" value="{{isset($_GET['id']) ? $_GET['id'] : ''}}">
+                    <button type="submit" class="submit-sort" style="display:none;"></button>
+                    </form>
                 </div>
                 <div class="card-body">
               
@@ -169,7 +186,17 @@
                                                         @foreach($lead->attachments as $key => $attachment)
                                                        @if($attachment->type == 'Renewal')
                                                         <a href="{{URL::asset('attachments')}}/{{$attachment->file_name}}" target="_blank">View</a>
-                                                        
+                                                        <a href="{{route('delAttachment',$attachment->id)}}"
+                                                class="remove_us"
+                                                title="Delete Lead"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                data-method="DELETE"
+                                                data-confirm-title="Please Confirm"
+                                                data-confirm-text="Are you sure that you want to delete this Attachment?"
+                                                data-confirm-delete="Yes, delete it!">
+                                               X
+                                            </a>
                                                         @endif
                                                         @endforeach
                                                     @endif
@@ -217,7 +244,7 @@
                             </tbody>
                          
                         </table>
-                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? ''])->links("vendor.pagination.bootstrap-4")}}
+                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','sort' => $_GET['sort'] ??'10'])->links("vendor.pagination.bootstrap-4")}}
                      
                      
                   
@@ -450,6 +477,10 @@ GCS Services`;
             location.reload()
         }
     });
+    });
+    $(document).on('change','.sort-table',function(){
+        $('.submit-sort').click()
+  
     });
 </script>
 @endsection

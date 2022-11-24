@@ -149,6 +149,17 @@
             <div class="card">
                 <div class="card-header pb-0">
                     <p class="tx-12 tx-gray-500 mb-2">Listing of All Leads...</p>
+                    <form action="" method="get" >
+                    <select name="sort" class="sort-table">
+                        <option value="10" {{ (isset($_GET['sort']) && (10 == $_GET['sort'])) ? 'selected' : '' }}>10</option>
+                        <option value="50" {{ (isset($_GET['sort']) && (50 == $_GET['sort'])) ? 'selected' : '' }}>50</option>
+                        <option value="100" {{ (isset($_GET['sort']) && (100 == $_GET['sort'])) ? 'selected' : '' }}>100</option>
+                        <option value="200" {{ (isset($_GET['sort']) && (200 == $_GET['sort'])) ? 'selected' : '' }}>200</option>
+                        <option value="all" {{ (isset($_GET['sort']) && ('all' == $_GET['sort'])) ? 'selected' : '' }}>All</option>
+                    </select>
+                    <input type="hidden" name="id" value="{{isset($_GET['id']) ? $_GET['id'] : ''}}">
+                    <button type="submit" class="submit-sort" style="display:none;"></button>
+                    </form>
                 </div>
                 <div class="card-body">
               
@@ -210,7 +221,7 @@
                             </tbody>
                         
                         </table>
-                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','lead_id'=>$_GET['lead_id']?? ''])->links("vendor.pagination.bootstrap-4")}}
+                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','lead_id'=>$_GET['lead_id']?? '','sort' => $_GET['sort'] ??'10'])->links("vendor.pagination.bootstrap-4")}}
                      
                      
                   
@@ -424,5 +435,9 @@ $('.assigned-btn').click(function() {
   }
 
 });
+$(document).on('change','.sort-table',function(){
+        $('.submit-sort').click()
+  
+    });
 </script>
 @endsection
