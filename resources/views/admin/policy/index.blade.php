@@ -126,11 +126,11 @@
                             </div>
                             
                         </div>
-                    </form>
+                  
             <div class="card">
                 <div class="card-header pb-0">
                     <p class="tx-12 tx-gray-500 mb-2">Listing of All Policy...</p>
-                    <form action="" method="get" >
+                  
                     <select name="sort" class="sort-table">
                         <option value="10" {{ (isset($_GET['sort']) && (10 == $_GET['sort'])) ? 'selected' : '' }}>10</option>
                         <option value="50" {{ (isset($_GET['sort']) && (50 == $_GET['sort'])) ? 'selected' : '' }}>50</option>
