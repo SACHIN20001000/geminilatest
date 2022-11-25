@@ -220,7 +220,7 @@
                                     </td>
                       
                                     <td>
-                                    <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{ $lead->lead->holder_name ??$lead->holder_name }}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled"  data-toggle="tooltip" title="Send Mail!">📩</button>
+                                    <button class="btn btn-sm btn-info btn-b common-btn" type="button"data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{ $lead->lead->holder_name ??$lead->holder_name }}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}"    data-toggle="tooltip" title="Send Mail!">📩</button>
                                     @if(isset($_GET['id']) && $_GET['id'] == 1)
                                     <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"  data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>
                                             </a>  
@@ -379,42 +379,7 @@
 
              });
 
-             $('.common-btn').click(function(){
-                var policy_id =$(this).attr('data-id');
-       
-                var email =$(this).attr('data-email');
-                var person_name =$(this).attr('data-name');
-                var customer_name =$(this).attr('data-customer');
-                var product_name =$(this).attr('data-product');
-                var sub_product =$(this).attr('data-subproduct');
-                var req_no =$(this).attr('data-policy');
-                var expiry =$(this).attr('data-expiry');
-                var meesage=
-`Dear Sir/Madam,
-This is for your information following case is due Please find details below:
-    Customer Name :${customer_name} 
-    Product :${product_name}
-    Sub Product:${sub_product}
-    Registration No. : ${req_no}
-    Expiry Date : ${expiry}
-This is an automated email. Please do not reply 
-Regards 
-GCS Services`;
-                $('#policy_single_id').val(policy_id);
-                $('#policy_single_email').val(email);
-                $('#person_name').text(meesage);
-                $('#common-btn').modal('show');
-             })
-            $('.endrosment').change(function() {
-            var type =$(this).find(":selected").val();
-           console.log('type',type);
-           
-            if(type == 'email'){
-                // $('.dynamic-data').append('')
-            }
-              
 
-             });
         $('.renew-btn').click(function() {
                     
                     const ids= [];
@@ -434,6 +399,7 @@ GCS Services`;
                                 success: function(result)
                                 {
                                     $('#renew-modal').modal('hide');
+                                    location.reload();
                                 }
                             });  
 
@@ -482,5 +448,31 @@ GCS Services`;
         $('.submit-sort').click()
   
     });
+        $(document).on('click','.common-btn',function(){
+                var policy_id =$(this).attr('data-id');
+       
+                var email =$(this).attr('data-email');
+                var person_name =$(this).attr('data-name');
+                var customer_name =$(this).attr('data-customer');
+                var product_name =$(this).attr('data-product');
+                var sub_product =$(this).attr('data-subproduct');
+                var req_no =$(this).attr('data-policy');
+                var expiry =$(this).attr('data-expiry');
+                var meesage=
+`Dear Sir/Madam,
+This is for your information following case is due Please find details below:
+    Customer Name :${customer_name} 
+    Product :${product_name}
+    Sub Product:${sub_product}
+    Registration No. : ${req_no}
+    Expiry Date : ${expiry}
+This is an automated email. Please do not reply 
+Regards 
+GCS Services`;
+                $('#policy_single_id').val(policy_id);
+                $('#policy_single_email').val(email);
+                $('#person_name').text(meesage);
+                $('#common-btn').modal('show');
+             })
 </script>
 @endsection

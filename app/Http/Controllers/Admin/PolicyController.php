@@ -269,7 +269,7 @@ class PolicyController extends Controller
 
             
             try {
-             Mail::send('admin.email.commonemail',['policy' => $policy,'content'=>$request->content],function($messages) use ($request,$policy) {            
+             Mail::send('admin.email.endrosment',['policy' => $policy,'content'=>$request->content],function($messages) use ($request,$policy) {            
                     $messages->to($request->to);
                     if(!empty($request->cc)){
                         $messages->cc($request->cc);
@@ -345,7 +345,6 @@ public function bulkEmail(Request $request){
         $q->whereIn('id', $request->id);
     })->get();
     
-  
     foreach ($user as $key => $value) {
         
         try {
