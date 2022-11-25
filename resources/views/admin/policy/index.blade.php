@@ -220,7 +220,7 @@
                                     </td>
                       
                                     <td>
-                                    <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->lead->holder_name ?? ''}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled"  data-toggle="tooltip" title="Send Mail!">📩</button>
+                                    <button class="btn btn-sm btn-info btn-b common-btn" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{$lead->holder_name ?? $lead->lead->holder_name}}"  data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->insurances->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}"  data-bs-toggle="modal" data-bs-effect="effect-super-scaled"  data-toggle="tooltip" title="Send Mail!">📩</button>
                                     @if(isset($_GET['id']) && $_GET['id'] == 1)
                                     <a  href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b"  data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>
                                             </a>  
@@ -390,7 +390,7 @@
                 var req_no =$(this).attr('data-policy');
                 var expiry =$(this).attr('data-expiry');
                 var meesage=
-`Dear ${person_name}
+`Dear Sir/Madam,
 This is for your information following case is due Please find details below:
     Customer Name :${customer_name} 
     Product :${product_name}

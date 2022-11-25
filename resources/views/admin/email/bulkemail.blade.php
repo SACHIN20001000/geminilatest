@@ -8,7 +8,7 @@
     <title>Mail</title>
 </head>
 <body>
-<h2>Dear {{$user->name ?? ''}}</h2>
+<h2>Dear Sir/Madam,</h2>
 <p>
 This is for your information following insurance policies are expiring in coming days</p>
 <p>Please find details below: </p>
@@ -29,10 +29,10 @@ This is for your information following insurance policies are expiring in coming
     @foreach($user->policies as $key => $policies)
     <tr>
         <td>{{++$key}}</td>
-        <td>{{$policies->expiry_date ??''}}</td>
+        <td>{{isset($policies->expiry_date) && !empty($policies->expiry_date) ? date("d/m/Y", strtotime($policies->expiry_date)) :  ''}}</td>
         <td>{{$policies->holder_name ?? ''}}</td>
         <td>{{$policies->subProduct->name ?? ''}}</td>
-        <td>{{$policies->model ?? ''}}</td>
+        <td>{{$policies->models->name ?? ''}}</td>
         <td>{{$policies->reg_no ?? ''}}</td>
         <td>{{$policies->gross_premium ?? ''}}</td>
         <td>{{$policies->ncb_in_existing_policy ?? ''}}</td>

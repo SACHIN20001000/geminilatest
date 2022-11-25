@@ -45,6 +45,10 @@ class Policy extends Model
     {
         return $this->belongsTo(Make::class, 'make');
     }
+    public function models()
+    {
+        return $this->belongsTo(ModelMake::class, 'model');
+    }
     public function varriants()
     {
         return $this->belongsTo(MakeModel::class, 'varriant');

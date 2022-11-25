@@ -71,14 +71,14 @@ class PolicyController extends Controller
             $date = strtotime(date('Y-m-d')); 
             $today= date('Y-m-d',strtotime('-1 days',$date));
             $daysabove = date('Y-m-d',strtotime('+15 days',$date));
-            if($request->id == 2){
+           
                 if(isset($request->expiry_from) && !empty($request->expiry_from) && !empty($request->expiry_to) && isset($request->expiry_to) ){
                     $query->whereBetween('expiry_date', [$request->expiry_from,$request->expiry_to]);
                }else{
                 $query->whereBetween('expiry_date', [$today, $daysabove]);
                }
                 
-            }
+            
             
         }
         
