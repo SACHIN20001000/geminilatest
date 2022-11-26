@@ -75,7 +75,10 @@ class PolicyController extends Controller
                 if(isset($request->expiry_from) && !empty($request->expiry_from) && !empty($request->expiry_to) && isset($request->expiry_to) ){
                     $query->whereBetween('expiry_date', [$request->expiry_from,$request->expiry_to]);
                }else{
-                $query->whereBetween('expiry_date', [$today, $daysabove]);
+                if($request->id == 2){
+                    $query->whereBetween('expiry_date', [$today, $daysabove]);
+
+                }
                }
                 
             
@@ -120,7 +123,7 @@ class PolicyController extends Controller
        }else{
         $leads =  $query ->paginate(10);
        }     
-      
+   
        return view('admin.policy.index',compact('leads','products','users'));
     }
 
