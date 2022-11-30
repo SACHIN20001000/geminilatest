@@ -469,9 +469,12 @@ This is for your information following case is due Please find details below:
 This is an automated email. Please do not reply 
 Regards 
 GCS Services`;
+                $('#person_name').summernote({
+                height: 400,
+                });
                 $('#policy_single_id').val(policy_id);
                 $('#policy_single_email').val(email);
-                $('#person_name').text(meesage);
+                $("#person_name").summernote('code',meesage); 
                 $('#common-btn').modal('show');
              })
 </script>
