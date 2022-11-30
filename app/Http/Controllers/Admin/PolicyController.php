@@ -344,10 +344,13 @@ public function subEndrosment(Request $request){
 public function bulkEmail(Request $request){
 
     
-    $user= User::with('policies')->whereHas('policies', function($q) use ($request){
+    $user= User::with(['policies' => function ($query) use($request) {
+        $query->whereIn('id', $request->id);
+    }])
+    ->whereHas('policies', function($q) use ($request){
         $q->whereIn('id', $request->id);
-    })->get();
-    
+    })
+    ->get();
     foreach ($user as $key => $value) {
         
         try {

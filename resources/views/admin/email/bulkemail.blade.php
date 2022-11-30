@@ -12,7 +12,7 @@
 <p>
 This is for your information following insurance policies are expiring in coming days</p>
 <p>Please find details below: </p>
-<table>
+<table style="border: 2px solid red;">
     <thead>
         <th>Sr No.</th>
         <th>Policy Expiry Date</th>
