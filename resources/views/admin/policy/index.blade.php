@@ -459,16 +459,18 @@
                 var req_no =$(this).attr('data-policy');
                 var expiry =$(this).attr('data-expiry');
                 var meesage=
-`Dear Sir/Madam,
-This is for your information following case is due Please find details below:
-    Customer Name :${customer_name} 
-    Product :${product_name}
-    Sub Product:${sub_product}
-    Registration No. : ${req_no}
-    Expiry Date : ${expiry}
-This is an automated email. Please do not reply 
-Regards 
-GCS Services`;
+`<h4>Dear Sir/Madam,</h4>
+<p>This is for your information following case is due Please find details below:</p>
+<ul>
+    <li>Customer Name :${customer_name}</li> 
+    <li>Product :${product_name}</li>
+    <li>Sub Product:${sub_product}</li>
+    <li>Registration No. : ${req_no}</li>
+    <li>Expiry Date : ${expiry}</li>
+    </ul>
+<p>This is an automated email. Please do not reply </p>
+<p>Regards </p>
+<h5>GCS Services</h5>`;
                 $('#person_name').summernote({
                 height: 400,
                 });
