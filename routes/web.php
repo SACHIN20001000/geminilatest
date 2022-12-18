@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
         Route::any('getCompany', [LeadController::class, 'getCompany'])->name('getCompany');
         Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');
+        Route::any('getMake', [LeadController::class, 'getMake'])->name('getMake');
         Route::any('getVarient', [LeadController::class, 'getVarient'])->name('getVarient');
         Route::any('getModel', [LeadController::class, 'getModel'])->name('getModel');
         Route::get('getStaff', [LeadController::class, 'getStaff'])->name('getStaff');

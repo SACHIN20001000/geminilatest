@@ -25,6 +25,7 @@ class StoreModelRequest extends FormRequest
     {
         return [
             'name'=>'required',
+            'subproduct_id'=>'required',
            
         ];
     }

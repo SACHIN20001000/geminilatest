@@ -122,52 +122,64 @@
 								<div class="tab-content border-start border-bottom border-right border-top-0 p-4 br-dark">
 									<div class="tab-pane active" id="home">
                                     <div class="row row-xs align-items-center mg-b-20">
-                                            @if(!empty($policy->lead->holder_name))
+                                            @if(!empty($policy->user_id))
+                                            <div class="col-lg-4">
+                                                            <p class="mg-b-10 fw-bolder" id="holder_name">Reference Name</p>
+                                                                            <p class="mg-b-10"> {{$policy->users->name}}</p>
+
+                                            </div>
+                                            <div class="col-lg-4">
+                                                            <p class="mg-b-10 fw-bolder" id="holder_name">Reference Email</p>
+                                                                            <p class="mg-b-10"> {{$policy->users->email}}</p>
+
+                                            </div>
+                                            @endif
+                                            @if(!empty($policy->holder_name))
                                             <div class="col-lg-4">
                                                             <p class="mg-b-10 fw-bolder" id="holder_name">Polciy Holder Name</p>
-                                                                            <p class="mg-b-10"> {{$policy->lead->holder_name}}</p>
+                                                                            <p class="mg-b-10"> {{$policy->holder_name}}</p>
 
                                             </div>
                                             @endif
-                                            @if(!empty($policy->lead->phone))
+                                            @if(!empty($policy->phone))
                                             <div class="col-lg-4">
                                                             <p class="mg-b-10 fw-bolder" id="phone">Phone Number</p>
-                                                                            <p class="mg-b-10"> {{$policy->lead->phone}}</p>
+                                                                            <p class="mg-b-10"> {{$policy->phone}}</p>
 
                                             </div>
                                             @endif
-                                            @if(!empty($policy->lead->email))
+                                            @if(!empty($policy->email))
                                             <div class="col-lg-4">
                                                             <p class="mg-b-10 fw-bolder" id="email">Email</p>
-                                                                            <p class="mg-b-10"> {{$policy->lead->email}}</p>
+                                                                            <p class="mg-b-10"> {{$policy->email}}</p>
 
                                             </div>
                                             @endif
-                                            @if(!empty($policy->lead->insurance_id))
+                                            @if(!empty($policy->insurance_id))
                                             <div class="col-lg-4">
                                                             <p class="mg-b-10 fw-bolder" id="insurance_id">Insurance</p>
-                                                                            <p class="mg-b-10"> {{$policy->lead->insurances->name ?? ''}}</p>
+                                                                            <p class="mg-b-10"> {{$policy->insurances->name ?? ''}}</p>
 
                                             </div>
                                             @endif
-                                            @if(!empty($policy->lead->product_id))
+                                            @if(!empty($policy->product_id))
                                             <div class="col-lg-4">
                                                             <p class="mg-b-10 fw-bolder" id="product_id">Product</p>
-                                                                            <p class="mg-b-10"> {{$policy->lead->products->name ?? ''}}</p>
+                                                                            <p class="mg-b-10"> {{$policy->products->name ?? ''}}</p>
 
                                             </div>
                                             @endif
-                                            @if(!empty($policy->lead->subproduct_id))
+                                            @if(!empty($policy->subproduct_id))
                                             <div class="col-lg-4">
                                                             <p class="mg-b-10 fw-bolder" id="subproduct_id">Sub Product</p>
-                                                                            <p class="mg-b-10"> {{$policy->lead->subProduct->name ?? ''}}</p>
+                                                                            <p class="mg-b-10"> {{$policy->subProduct->name ?? ''}}</p>
 
                                             </div>
                                             @endif
-                                            @if(!empty($policy->lead->remark))
+                                            @if(!empty($policy->remark))
                                             <div class="col-lg-4">
                                                             <p class="mg-b-10 fw-bolder" id="remark">Remarks</p>
-                                                                            <p class="mg-b-10"> {{$policy->lead->remark ?? ''}}</p>
+                                                                            <p class="mg-b-10"> {{$policy->remark ?? ''}}</p>
 
                                             </div>
                                             @endif
@@ -182,6 +194,13 @@
                                             <div class="col-lg-4">
                                                             <p class="mg-b-10 fw-bolder" id="channel_name">Channel Name</p>
                                                                             <p class="mg-b-10"> {{$policy->channel_name ?? ''}}</p>
+
+                                            </div>
+                                            @endif
+                                            @if(!empty($policy->mis_transaction_type))
+                                            <div class="col-lg-4">
+                                                            <p class="mg-b-10 fw-bolder" id="channel_name">Transaction Type</p>
+                                                                            <p class="mg-b-10"> {{$policy->mis_transaction_type ?? ''}}</p>
 
                                             </div>
                                             @endif
@@ -370,14 +389,14 @@
                                             @endif
                                             @if(!empty($policy->start_date))
                                             <div class="col-lg-4 feild">
-                                                            <p class="mg-b-10 fw-bolder" id="start_date">Start Date</p>
+                                                            <p class="mg-b-10 fw-bolder" id="start_date">Policy Start Date</p>
                                                                             <p class="mg-b-10"> {{$policy->start_date ?? ''}}</p>
 
                                             </div>
                                             @endif
                                             @if(!empty($policy->expiry_date))
                                             <div class="col-lg-4 feild">
-                                                            <p class="mg-b-10 fw-bolder" id="expiry_date">Expiry Date</p>
+                                                            <p class="mg-b-10 fw-bolder" id="expiry_date">Policy Expiry Date</p>
                                                                             <p class="mg-b-10"> {{$policy->expiry_date ?? ''}}</p>
 
                                             </div>
@@ -885,7 +904,7 @@
                                             @if(!empty($policy->model))
                                             <div class="col-lg-4 feild">
                                                             <p class="mg-b-10 fw-bolder" id="model">Model</p>
-                                                                            <p class="mg-b-10"> {{$policy->model ?? ''}}</p>
+                                                                            <p class="mg-b-10"> {{$policy->models->name ?? ''}}</p>
 
                                             </div>
                                             @endif
@@ -984,10 +1003,46 @@
                                             @if(!empty($policy->varriant))
                                             <div class="col-lg-4 feild">
                                                             <p class="mg-b-10 fw-bolder" id="varriant">Varriant</p>
-                                                                            <p class="mg-b-10"> {{$policy->varriants->name ?? ''}}</p>
+                                                                            <p class="mg-b-10"> {{$policy->varriant ?? ''}}</p>
 
                                             </div>
                                             @endif
+                                            @if(!empty($policy->cc))
+                                            <div class="col-lg-4 feild">
+                                                            <p class="mg-b-10 fw-bolder" id="cc">CC</p>
+                                                                            <p class="mg-b-10"> {{$policy->cc ?? ''}}</p>
+
+                                            </div>
+                                            @endif
+                                            @if(!empty($policy->fuel))
+                                            <div class="col-lg-4 feild">
+                                                            <p class="mg-b-10 fw-bolder" id="fuel">Fuel</p>
+                                                                            <p class="mg-b-10"> {{$policy->fuel ?? ''}}</p>
+
+                                            </div>
+                                            @endif
+                                            @if(!empty($policy->od))
+                                            <div class="col-lg-4 feild">
+                                                            <p class="mg-b-10 fw-bolder" id="od">OD Premium</p>
+                                                                            <p class="mg-b-10"> {{$policy->od ?? ''}}</p>
+
+                                            </div>
+                                            @endif
+                                            @if(!empty($policy->seating))
+                                            <div class="col-lg-4 feild">
+                                                            <p class="mg-b-10 fw-bolder" id="seating">Seating Capacity</p>
+                                                                            <p class="mg-b-10"> {{$policy->seating ?? ''}}</p>
+
+                                            </div>
+                                            @endif
+                                            @if(!empty($policy->showroom))
+                                            <div class="col-lg-4 feild">
+                                                            <p class="mg-b-10 fw-bolder" id="showroom">Ex Showroom Price</p>
+                                                                            <p class="mg-b-10"> {{$policy->showroom ?? ''}}</p>
+
+                                            </div>
+                                            @endif
+                                  
                                            
                                    
                                     </div>

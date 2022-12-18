@@ -16,6 +16,8 @@ class CreateMakesTable extends Migration
         Schema::create('makes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->integer('subproduct_id')->nullable();
+
             $table->timestamps();
         });
     }

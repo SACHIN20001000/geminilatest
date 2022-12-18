@@ -209,7 +209,7 @@ class LeadController extends Controller
         $subProducts = SubProduct::where('product_id',$lead->product_id)->get();
         $companies = Company::all();
         $policy= Policy::where('lead_id',$lead->id)->first();
-        $make = Make::all();
+        $make = Make::where('subproduct_id',$policy->subproduct_id)->get();
         $model=ModelMake::all();
         $varients=MakeModel::where('make_id',$policy->model)->get();
         $channels = Channel::all();
@@ -292,6 +292,15 @@ class LeadController extends Controller
     public function getSubProduct(Request $request){
         
         $product= SubProduct::where('product_id',$request->product_id)->get();
+        $output1="<option value=''>Select </option>";
+        foreach ($product as $val1) {
+            $output1 .= '<option value="' . $val1->id . '" data-id="'.$val1->name.'">' . $val1->name . '</option>';
+        }
+        echo $output1;
+    }
+    public function getMake(Request $request){
+        
+        $product= Make::where('subproduct_id',$request->subproduct_id)->get();
         $output1="<option value=''>Select </option>";
         foreach ($product as $val1) {
             $output1 .= '<option value="' . $val1->id . '" data-id="'.$val1->name.'">' . $val1->name . '</option>';

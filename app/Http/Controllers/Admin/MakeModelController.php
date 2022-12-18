@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Make;
+use App\Models\SubProduct;
+
 use DataTables;
 use App\Http\Requests\Admin\Make\StoreModelRequest;
 
@@ -47,6 +49,10 @@ class MakeModelController extends Controller
                     ';
                                 return $action;
                             })
+                            ->addColumn('subproduct', function ($row)
+                            {
+                                return isset($row->subProduct->name)?  $row->subProduct->name : '';
+                            })
                             ->rawColumns(['action'])
                             ->make(true);
         }
@@ -60,7 +66,8 @@ class MakeModelController extends Controller
      */
     public function create()
     {
-        return view('admin.models.addEdit');
+$subProducts= SubProduct::all();
+        return view('admin.models.addEdit',compact('subProducts'));
     }
 
     /**
@@ -71,7 +78,6 @@ class MakeModelController extends Controller
      */
     public function store(StoreModelRequest $request)
     {
-
         $inputs = $request->all();
         Make::create($inputs);
         
@@ -99,7 +105,8 @@ class MakeModelController extends Controller
     public function edit($id)
     {
         $makeModel=Make::find($id); 
-        return view('admin.models.addEdit', compact('makeModel'));
+        $subProducts= SubProduct::all();
+        return view('admin.models.addEdit', compact('makeModel','subProducts'));
     }
 
     /**
@@ -111,6 +118,7 @@ class MakeModelController extends Controller
      */
     public function update(StoreModelRequest $request, $id)
     {
+
        
         $makeModel=Make::find($id); 
         $inputs = $request->all();

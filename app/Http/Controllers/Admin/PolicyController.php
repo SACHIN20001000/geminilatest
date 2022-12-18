@@ -36,7 +36,11 @@ class PolicyController extends Controller
     {   
      
         $products= SubProduct::all();
-        $users= User::all();
+        $users= User::with('roles')->whereHas(
+            'roles', function ($q)
+            {
+                $q->where('name', '=', 'Broker');
+            })->get();
         $query= Policy::with('users','lead','insurances','products','subProduct','lead.assigns')->where(['is_policy'=>1]);
         if(isset($request->search_anything)   && !empty($request->search_anything)){
             $query  ->orwhereHas('lead', function ($q) use ($request){
@@ -203,7 +207,7 @@ class PolicyController extends Controller
         $products = Product::all();
         $subProducts = SubProduct::where('product_id',$policy->product_id)->get();
         $companies = Company::all();
-        $make = Make::all();
+        $make = Make::where('subproduct_id',$policy->subproduct_id)->get();
         $model=ModelMake::all();
         $varients=MakeModel::where('make_id',$policy->model)->get();
         $channels = Channel::all();

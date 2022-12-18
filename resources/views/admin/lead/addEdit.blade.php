@@ -1165,7 +1165,21 @@ $.ajaxSetup({
     $('#subproduct_id').change(function() {
        
    
+        if ($(this).val() != '') {
             
+            var subproduct_id = $(this).val();
+            $.ajax({
+                url: "{{ route('getMake') }}",
+                method: "post",
+                data: {
+                    subproduct_id: subproduct_id,
+                },
+                success: function(result) {
+                    console.log(result);
+                    $('#make').html(result);
+                }
+            });
+        }
             var subproduct = $(this).find(':selected').data("id");
             if(subproduct != ''){
                 subproduct= $.trim(subproduct).toLowerCase();

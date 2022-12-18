@@ -32,14 +32,15 @@
 						<div class="pe-1 mb-xl-0">
 							<button type="button" class="btn btn-danger btn-icon me-2"><i class="mdi mdi-star"></i></button>
 						</div>
+                        @if(isset($_GET['id']) && $_GET['id'] == 2)
 						<div class="pe-1 mb-xl-0">
                      
                             <a  class="btn btn-main-primary renew-btn "
 											 style="color:#fff"  
-											>Mail</a>
+											>Bulk email</a>
 						
 						</div>
-                       
+                       @endif
 						<div class="mb-xl-0">
 							<div class="btn-group dropdown">
                             <a class="btn btn-main-primary ml_auto" href="{{ route('policy.create') }}">Add Policy</a>
@@ -64,10 +65,10 @@
 								<div class="card ">
 									<div class="card-body">
                                    
-                                    <p class="mg-b-10">Expiry date from</p>
+                                    <p class="mg-b-10">Policy Start date </p>
                                     <input type="date" name="expiry_from" value="{{isset($_GET['expiry_from']) ? $_GET['expiry_from'] : ''}}" class="form-control">
                                     <input type="hidden" name="id" value="{{isset($_GET['id']) ? $_GET['id'] : ''}}">
-                                    <p class="mg-b-10">Expiry date to</p>
+                                    <p class="mg-b-10">Policy end date </p>
                                     <input type="date" name="expiry_to" value="{{isset($_GET['expiry_to']) ? $_GET['expiry_to'] : ''}}" class="form-control">
 									</div>
 								</div>
@@ -85,7 +86,7 @@
                                         @endforeach
                                     @endif
                                   </select>
-                                    <p class="mg-b-10">Broker/Staff</p>
+                                    <p class="mg-b-10">Broker</p>
                                     <select name="users" class="form-control">
                                     <option value="">Select</option>
                                     @if(isset($users) && $users->count())
@@ -152,16 +153,17 @@
                                 @if(isset($_GET['id']) && $_GET['id'] == 2)
                                 <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
                                 @endif  
+                                <th class="wd-lg-20p"><span>Created On</span></th>
                                 <th class="wd-lg-20p"><span>Reference Name</span></th>
                                 <th class="wd-lg-20p"><span>Policy Holder Name</span></th>
+                                <th class="wd-lg-20p"><span>Company Name</span></th>
                                 <th class="wd-lg-20p"><span>Trasaction Type</span></th>
                                 <th class="wd-lg-20p"><span>Sub Product</span></th>
-                                <th class="wd-lg-20p"><span>Due date</span></th>
                                 @if(isset($_GET['id']) && $_GET['id'] == 2)
                                 <th class="wd-lg-20p"><span>Followup Date</span></th>
                                 <th class="wd-lg-20p"><span>Attachment</span></th>
                                 @endif
-                                <th class="wd-lg-20p"><span>Status</span></th>
+                                <th class="wd-lg-20p"><span>Premium Status</span></th>
                                 <th class="wd-lg-20p">Action</th>
                                 </tr>
                             </thead>
@@ -172,14 +174,18 @@
                                 @if(isset($_GET['id']) && $_GET['id'] == 2)
                                 <td><input type="checkbox" name="checked"  class="checkSingle checkLead" data-id="{{$lead->id}}"></td>
                                 @endif
+                                <td> <a  href="{{route('policy.show',$lead->id)}}" >{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
                                 <td>{{$lead->users->name ?? ''}}</td>
+                                   
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >
                                     {{$lead->lead->holder_name ?? $lead->holder_name}} </a></td>
+                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >
+                                    {{$lead->company->name ?? ''}} </a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->mis_transaction_type ?? ''}}</a></td>
                                     <td> <a  href="{{route('policy.show',$lead->id)}}" >{{$lead->subProduct->name ?? ''}}</a></td>
-                                    <td> <a  href="{{route('policy.show',$lead->id)}}" >{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
+                                  
                                     @if(isset($_GET['id']) && $_GET['id'] == 2)
-                                    <td><input type="date" name="follow_up" value="{{$lead->follow_up ?? ''}}" data-id="{{$lead->id ?? ''}}" class="form-control follow_up"></td>
+                                    <td><input type="date" name="follow_up" value="{{$lead->follow_up ?? $lead->expiry_date }}" data-id="{{$lead->id ?? ''}}" class="form-control follow_up"></td>
                                    
                                     <td><input type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
                                     @if(!empty($lead->attachments))
@@ -207,7 +213,6 @@
                                         
                                     @if(isset($_GET['id']) && $_GET['id'] == 2)
                                         <select name="renew_status" id="renew_status" data-id="{{$lead->id}}" class="form-control renew_status">
-                                           <option value="">Select Below</option>
                                             <option value="FOLLOW UP" {{isset($lead) && $lead->renew_status == 'FOLLOW UP' ? 'selected' : ''}}>FOLLOW UP</option>
                                             <option value="VEHICLE SOLD" {{isset($lead) && $lead->renew_status == 'VEHICLE SOLD' ? 'selected' : ''}}>VEHICLE SOLD</option>
                                             <option value="NOT INTERESTED" {{isset($lead) && $lead->renew_status == 'NOT INTERESTED' ? 'selected' : ''}}>NOT INTERESTED</option>
@@ -273,7 +278,7 @@
                             <div class="col-lg-12">
                                 <h6>Type</h6>
                                 <select name="type" class="form-control endrosment" required>
-                                    <option value="">Select</option>
+                                    
                                     <option value="email">Email</option>
                                     <option value="sms">SMS</option>
                                     <option value="whatsapp">Whatsapp</option>
@@ -299,7 +304,7 @@
                       
                          
 					<div class="modal-footer">
-						<button class="btn ripple btn-primary save-status" type="submit">Save changes</button>
+						<button class="btn ripple btn-primary save-status" type="submit">Send Email</button>
 						<button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
 					</div>
                     </form>

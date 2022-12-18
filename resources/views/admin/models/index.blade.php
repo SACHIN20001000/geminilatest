@@ -28,6 +28,7 @@
                             <thead>
                                 <tr>
                                 <th class="wd-lg-20p"><span>Name</span></th>
+                                <th class="wd-lg-20p"><span>Sub Product</span></th>
 												<th class="wd-lg-20p"><span>Created</span></th>
 												<th class="wd-lg-20p">Action</th>
                                 </tr>
@@ -75,6 +76,7 @@
                     dom: 'Blfrtip',
             columns: [
               {data: 'name', name: 'name'},
+              {data: 'subproduct', name: 'subproduct'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
             ]

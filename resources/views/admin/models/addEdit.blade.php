@@ -39,6 +39,21 @@
                                <input type="text" name="name" class="form-control" value="{{isset($makeModel) ? $makeModel->name : '' }}">
                               </div>
                             </div>
+                            <div class="row row-xs align-items-center mg-b-20">
+                                <div class="col-md-4">
+                                    <label class="form-label mg-b-0">Sub Product</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                <select name="subproduct_id" class="select2 form-control" id="subproduct_id">
+                                            <option value="">Select Below</option>
+                                            @if(isset($subProducts) && $subProducts->count())
+                                                @foreach($subProducts as $subProduct)
+                                                       <option value="{{$subProduct->id}}" data-id="{{$subProduct->name}}" {{ (isset($makeModel) && $subProduct->id == $makeModel->subproduct_id) ? 'selected' : '' }}>{{$subProduct->name}}</option>             
+                                                @endforeach
+                                            @endif
+                                           </select>
+                              </div>
+                            </div>
                            
                           
                             <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5" type="submit">{{isset($makeModel) ? 'Update' : 'Save' }}</button>
