@@ -232,4 +232,22 @@ class PayoutController extends Controller
     {
         //
     }
+    public function download(){
+        $file= public_path(). "/csv/samplePolicy.csv";
+       
+    $headers = array(
+              'Content-Type: application/csv',
+            );
+
+    return \Response::download($file, 'samplePolicy.csv', $headers);
+    }
+    public function downloadsampleVeichel(){
+        $file= public_path(). "/csv/sampleVeichel.csv";
+       
+    $headers = array(
+              'Content-Type: application/csv',
+            );
+
+    return \Response::download($file, 'sampleVeichel.csv', $headers);
+    }
 }

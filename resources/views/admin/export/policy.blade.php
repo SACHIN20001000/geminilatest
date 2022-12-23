@@ -31,7 +31,7 @@
                              
                                 <div class="col-md-12 mg-t-5 mg-md-t-0">
                                   <input type="file" name="policy" id="">
-                                   <a href="{{URL::asset('csv')}}/samplePolicy.csv" target="_blank">Download Sample File</a>
+                                   <a href="{{route('download')}}">Download Sample File</a>
                                 </div>
                             </div>
               
