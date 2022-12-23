@@ -20,6 +20,9 @@ class ExportController extends Controller
     public function policyView(){
         return view('admin.export.policy');
     }
+    public function vecialView(){
+        return view('admin.export.vecial');
+    }
     public function exportPolicy(Request $request){
            /*data to add the*/
            if($request->file('policy')){
@@ -107,6 +110,117 @@ class ExportController extends Controller
                
              }
                return back()->with('success', 'Policy Imported successfully!');
+            
+              }
+              return back()->with('error', 'Error, Please Check the file!');
+             }
+            
+           }
+           
+           return back()->with('error', 'Error, Please upload the file!');
+        }
+    public function exportVecial(Request $request){
+           /*data to add the*/
+           if($request->file('vecial')){
+            $path = $request->file('vecial')->getRealPath();  /// DEFINE FILE PATH HERE///
+
+            //turn into array
+            $file = file($path);
+    
+            $header = array_slice($file,0,1);
+           
+            if(!empty($header))
+            {
+              foreach($header as $head)
+              {
+                $headerQuotes= str_replace('"', '', trim(strtolower($head)));
+    
+                $headerF=explode(',', str_replace(' ', '_', trim(strtolower($headerQuotes))));
+              }
+    
+            }
+            $csvdata = array_slice($file,1);
+         
+            if(!empty($csvdata))
+            {
+
+              if(in_array('manufacture', $headerF) && in_array('model', $headerF) && in_array('variant', $headerF) && in_array('fuel', $headerF) && in_array('cc', $headerF) && in_array('seating', $headerF) && in_array('showroom', $headerF) && in_array('tp', $headerF) && in_array('od', $headerF)  
+              )
+              {
+               foreach($csvdata as $key=>$csv)
+             {
+               $csvArrF=explode(",",trim($csv));
+ 
+               $finalCsvData[]=array_combine($headerF, $csvArrF);
+             }
+
+             foreach ($finalCsvData as $key => $finalCsv) {
+         
+              try {
+               $make= Make::updateOrCreate([
+                'name'=>$finalCsv['manufacture']
+               ]);
+               $model= ModelMake::updateOrCreate([
+                'name'=>$finalCsv['model'],
+                'make_id'=> $make->id
+               ]);
+              if(isset($finalCsv['variant']) && !empty($finalCsv['variant'])){
+                        MakeModel::updateOrCreate([
+                            'make_id'=> $model->id,
+                            'name'=> $finalCsv['variant'],
+                            'type' => 'varriant'
+                        ]);
+                }
+              if(isset($finalCsv['fuel']) && !empty($finalCsv['fuel'])){
+                        MakeModel::updateOrCreate([
+                            'make_id'=> $model->id,
+                            'name'=> $finalCsv['fuel'],
+                            'type' => 'fuel'
+                        ]);
+                }
+              if(isset($finalCsv['cc']) && !empty($finalCsv['cc'])){
+                        MakeModel::updateOrCreate([
+                            'make_id'=> $model->id,
+                            'name'=> $finalCsv['cc'],
+                            'type' => 'cc'
+                        ]);
+                }
+              if(isset($finalCsv['seating']) && !empty($finalCsv['seating'])){
+                        MakeModel::updateOrCreate([
+                            'make_id'=> $model->id,
+                            'name'=> $finalCsv['seating'],
+                            'type' => 'seating'
+                        ]);
+                }
+              if(isset($finalCsv['showroom']) && !empty($finalCsv['showroom'])){
+                        MakeModel::updateOrCreate([
+                            'make_id'=> $model->id,
+                            'name'=> $finalCsv['showroom'],
+                            'type' => 'showroom'
+                        ]);
+                }
+              if(isset($finalCsv['tp']) && !empty($finalCsv['tp'])){
+                        MakeModel::updateOrCreate([
+                            'make_id'=> $model->id,
+                            'name'=> $finalCsv['tp'],
+                            'type' => 'tp'
+                        ]);
+                }
+              if(isset($finalCsv['od']) && !empty($finalCsv['od'])){
+                        MakeModel::updateOrCreate([
+                            'make_id'=> $model->id,
+                            'name'=> $finalCsv['od'],
+                            'type' => 'od'
+                        ]);
+                }
+
+              
+              } catch (\Exception $e) {
+              }
+              
+               
+             }
+               return back()->with('success', 'File Imported successfully!');
             
               }
               return back()->with('error', 'Error, Please Check the file!');

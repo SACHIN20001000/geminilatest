@@ -98,6 +98,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
         Route::any('export-policy', [ExportController::class, 'policyView'])->name('policyView');
         Route::any('store-policy', [ExportController::class, 'exportPolicy'])->name('exportPolicy');
+        Route::any('export-vecial', [ExportController::class, 'vecialView'])->name('vecialView');
+        Route::any('store-vecial', [ExportController::class, 'exportVecial'])->name('exportVecial');
         Route::any('getStatusChange', [PayoutController::class, 'getStatusChange'])->name('getStatusChange');
         Route::any('getInvoiceDetail', [PayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');
         Route::any('invoiceStore', [PayoutController::class, 'invoiceStore'])->name('invoiceStore');
