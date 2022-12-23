@@ -77,6 +77,9 @@ class PolicyController extends Controller
                 }
             }
         }
+        if (Auth::user()->hasRole('Broker') ||  Auth::user()->hasRole('Client')) {
+            $query->where('user_id', Auth::user()->id);
+        }
 
         if (isset($request->product)   && !empty($request->product)) {
 
