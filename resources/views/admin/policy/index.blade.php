@@ -151,8 +151,7 @@
                             @endif
                             @if(isset($_GET['id']) && $_GET['id'] == 1)
                             <th class="wd-lg-20p"><span>Created On</span></th>
-                            @else
-                            <th class="wd-lg-20p"><span>Expiry Date</span></th>
+
                             @endif
                             <th class="wd-lg-20p"><span>Reference Name</span></th>
                             <th class="wd-lg-20p"><span>Policy Holder Name</span></th>
@@ -160,6 +159,8 @@
                             <th class="wd-lg-20p"><span>Trasaction Type</span></th>
                             <th class="wd-lg-20p"><span>Sub Product</span></th>
                             @if(isset($_GET['id']) && $_GET['id'] == 2)
+
+                            <th class="wd-lg-20p"><span>Expiry Date</span></th>
                             <th class="wd-lg-20p"><span>Followup Date</span></th>
                             <th class="wd-lg-20p"><span>Attachment</span></th>
                             @endif
@@ -177,8 +178,7 @@
                             @if(isset($_GET['id']) && $_GET['id'] == 1)
 
                             <td> <a href="{{route('policy.show',$lead->id)}}">{{!empty($lead->start_date) ? date('d-m-Y',strtotime($lead->start_date))  : ''}}</a></td>
-                            @else
-                            <td> <a href="{{route('policy.show',$lead->id)}}">{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
+
                             @endif
 
                             <td>{{$lead->users->name ?? ''}}</td>
@@ -191,6 +191,8 @@
                             <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->subProduct->name ?? ''}}</a></td>
 
                             @if(isset($_GET['id']) && $_GET['id'] == 2)
+
+                            <td> <a href="{{route('policy.show',$lead->id)}}">{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
                             <td><input type="date" name="follow_up" value="{{$lead->follow_up ?? $lead->expiry_date }}" data-id="{{$lead->id ?? ''}}" class="form-control follow_up"></td>
 
                             <td><input type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
