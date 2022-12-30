@@ -168,7 +168,7 @@ class PolicyExport implements FromCollection
                 $endDate = $end_date.' 23:59:59';
             }
             if($type == 'policy'){
-                $query->whereBetween('created_at', [$StartDate, $endDate]);
+                $query->whereBetween('start_date', [$StartDate, $endDate]);
             }else{
                 $query->whereBetween('expiry_date', [$StartDate, $endDate]);
             }

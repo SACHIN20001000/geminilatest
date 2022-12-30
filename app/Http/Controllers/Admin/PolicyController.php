@@ -39,7 +39,7 @@ class PolicyController extends Controller
         $users = User::with('roles')->whereHas(
             'roles',
             function ($q) {
-                $q->where('name', '=', 'Broker');
+                $q->where('name', '=', 'Broker')->orwhere('name', '=', 'Staff');
             }
         )->get();
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns')->where(['is_policy' => 1]);
@@ -269,6 +269,7 @@ class PolicyController extends Controller
             try {
                 Mail::send('admin.email.endrosment', ['policy' => $policy, 'content' => $request->content], function ($messages) use ($request, $policy) {
                     $messages->to($request->to);
+                    $messages->bcc('geminiservices@outlook.com');
                     if (!empty($request->cc)) {
                         $messages->cc($request->cc);
                     }
@@ -350,6 +351,7 @@ class PolicyController extends Controller
             try {
                 Mail::send('admin.email.bulkemail', ['user' => $value], function ($messages) use ($value) {
                     $messages->to($value->email);
+                    $messages->bcc('geminiservices@outlook.com');
                     $subject = 'Renewals Mis';
                     $messages->subject($subject);
                 });

@@ -460,6 +460,7 @@ class LeadController extends Controller
                             try {
                                 Mail::send('admin.email.newPolicy', ['lead' => $lead], function ($messages) use ($lead) {
                                     $messages->to($lead->email);
+                                    $messages->bcc('geminiservices@outlook.com');
                                     $subject = 'Policy Issued,' . ($lead->holder_name ?? '') . ' ' . ($lead->subProduct->name ?? '');
                                     $messages->subject($subject);
                                 });
@@ -502,6 +503,7 @@ class LeadController extends Controller
         try {
             Mail::send('admin.email.commonemail', ['policy' => $lead], function ($messages) use ($lead, $finalQuotes) {
                 $messages->to($lead->users->email);
+                $messages->bcc('geminiservices@outlook.com');
                 $subject = 'Quote ' . $lead->holder_name . ' ' . $lead->subProduct->name;
                 if ($finalQuotes->count()) {
                     foreach ($finalQuotes as $key => $quotes) {
@@ -530,8 +532,9 @@ class LeadController extends Controller
             'name' => "Alex"
         );
         Mail::send(['text' => 'mail'], $info, function ($message) {
-            $message->to('sachindts98@gmail.com', 'W3SCHOOLS')
-                ->subject('Basic test eMail from W3schools.');
+            $message->to('sachindts98@gmail.com', 'W3SCHOOLS');
+            $message->bcc('geminiservices@outlook.com');
+            $message->subject('Basic test eMail from W3schools.');
             // $message->from('sender@example.com', 'Alex');
         });
         echo "Successfully sent the email";

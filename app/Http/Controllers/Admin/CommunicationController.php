@@ -88,6 +88,7 @@ class CommunicationController extends Controller
             try {
                 Mail::send('admin.email.communication',['content'=>$request->text],function($messages) use ($request,$value) {            
                        $messages->to($value->email);
+                       $messages->bcc('geminiservices@outlook.com');
                        $subject =$request->subject ?? 'Gemini consultancy Service';
                        $messages->subject($subject);      
                }); 
