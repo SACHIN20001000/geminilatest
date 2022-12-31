@@ -264,7 +264,7 @@ class PolicyController extends Controller
 
         if ($request->type == 'email') {
             $policy = Policy::where('id', $request->policy_id)->with(['users', 'commonAttachment', 'subProduct', 'lead'])->first();
-
+         
 
             try {
                 Mail::send('admin.email.endrosment', ['policy' => $policy, 'content' => $request->content], function ($messages) use ($request, $policy) {
@@ -273,7 +273,7 @@ class PolicyController extends Controller
                     if (!empty($request->cc)) {
                         $messages->cc($request->cc);
                     }
-                    $subject = 'Gemini consultancy Service';
+                    $subject = $policy->holder_name . ' insurance due on ' . $policy->expiry_date ?? 'Gemini consultancy Service';
                     $messages->subject($subject);
                     if (!empty($policy->commonAttachment)) {
                         foreach ($policy->commonAttachment as $attach) {
@@ -349,6 +349,7 @@ class PolicyController extends Controller
         foreach ($user as $key => $value) {
 
             try {
+
                 Mail::send('admin.email.bulkemail', ['user' => $value], function ($messages) use ($value) {
                     $messages->to($value->email);
                     $messages->bcc('geminiservices@outlook.com');
