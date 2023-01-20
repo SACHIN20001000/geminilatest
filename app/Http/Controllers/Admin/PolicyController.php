@@ -24,9 +24,11 @@ use Mail;
 use Auth;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\Admin\Lead\StoreLeadRequest;
+use App\Traits\WhatsappApi;
 
 class PolicyController extends Controller
 {
+    use WhatsappApi;
     /**
      * Display a listing of the resource.
      *
@@ -261,29 +263,30 @@ class PolicyController extends Controller
 
     public function endrosment(Request $request)
     {
+        $policy = Policy::where('id', $request->policy_id)->with(['users', 'commonAttachment', 'subProduct', 'lead'])->first();
 
-        if ($request->type == 'email') {
-            $policy = Policy::where('id', $request->policy_id)->with(['users', 'commonAttachment', 'subProduct', 'lead'])->first();
-         
 
-            try {
-                Mail::send('admin.email.endrosment', ['policy' => $policy, 'content' => $request->content], function ($messages) use ($request, $policy) {
-                    $messages->to($request->to);
-                    $messages->bcc('geminiservices@outlook.com');
-                    if (!empty($request->cc)) {
-                        $messages->cc($request->cc);
+
+        try {
+            Mail::send('admin.email.endrosment', ['policy' => $policy, 'content' => $request->content], function ($messages) use ($request, $policy) {
+                $messages->to($request->to);
+                $messages->bcc('geminiservices@outlook.com');
+                if (!empty($request->cc)) {
+                    $messages->cc($request->cc);
+                }
+                $subject = $policy->holder_name . ' insurance due on ' . $policy->expiry_date ?? 'Gemini consultancy Service';
+                $messages->subject($subject);
+                if (!empty($policy->commonAttachment)) {
+                    foreach ($policy->commonAttachment as $attach) {
+                        $fileurls = url('attachments', $attach->file_name);
+                        $messages->attach($fileurls);
                     }
-                    $subject = $policy->holder_name . ' insurance due on ' . $policy->expiry_date ?? 'Gemini consultancy Service';
-                    $messages->subject($subject);
-                    if (!empty($policy->commonAttachment)) {
-                        foreach ($policy->commonAttachment as $attach) {
-                            $fileurls = url('attachments', $attach->file_name);
-                            $messages->attach($fileurls);
-                        }
-                    }
-                });
-            } catch (Exception $e) {
+                }
+            });
+            if (!empty($policy->users->phone)) {
+                $this->sendMessage($policy->users->phone, $request->content);
             }
+        } catch (Exception $e) {
         }
         return back()->with('success', 'Mail Sent successfully!');
     }
@@ -347,7 +350,6 @@ class PolicyController extends Controller
             })
             ->get();
         foreach ($user as $key => $value) {
-
             try {
 
                 Mail::send('admin.email.bulkemail', ['user' => $value], function ($messages) use ($value) {
@@ -356,6 +358,9 @@ class PolicyController extends Controller
                     $subject = 'Renewals Mis';
                     $messages->subject($subject);
                 });
+                if (!empty($value->phone)) {
+                    $this->sendMessage($value->phone, view('admin.email.bulkemail', ['user' => $value]));
+                }
             } catch (Exception $e) {
             }
         }

@@ -268,13 +268,7 @@
 
 
                         <div class="col-lg-12">
-                            <h6>Type</h6>
-                            <select name="type" class="form-control endrosment" required>
 
-                                <option value="email">Email</option>
-                                <option value="sms">SMS</option>
-                                <option value="whatsapp">Whatsapp</option>
-                            </select>
 
                             <label>To </label>
                             <input type="email" name="to" class="form-control" id="policy_single_email">
@@ -449,7 +443,6 @@
     });
     $(document).on('click', '.common-btn', function() {
         var policy_id = $(this).attr('data-id');
-
         var email = $(this).attr('data-email');
         var person_name = $(this).attr('data-name');
         var customer_name = $(this).attr('data-customer');

@@ -22,7 +22,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = ['name','email','profile','password','birthday','anniversary','account_no','bank_name','account_name','ifsc','upi','photo','pan_card','aadhar_card','gst','advance_payout'];
+    protected $fillable = ['name', 'email', 'profile', 'password', 'phone', 'birthday', 'anniversary', 'account_no', 'bank_name', 'account_name', 'ifsc', 'upi', 'photo', 'pan_card', 'aadhar_card', 'gst', 'advance_payout'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -56,25 +56,25 @@ class User extends Authenticatable
     }
     public function contacts()
     {
-        return $this->hasMany(ChatContact::class, 'contact_id','id');
+        return $this->hasMany(ChatContact::class, 'contact_id', 'id');
     }
 
     public function messagesSent()
     {
-        return $this->hasMany(Message::class, 'from_user','id');
+        return $this->hasMany(Message::class, 'from_user', 'id');
     }
 
     public function messagesReceived()
     {
-        return $this->hasMany(Message::class, 'user_id','id');
+        return $this->hasMany(Message::class, 'user_id', 'id');
     }
     public function policy()
     {
-        return $this->hasOne(Policy::class, 'user_id','id');
+        return $this->hasOne(Policy::class, 'user_id', 'id');
     }
     public function policies()
     {
-        return $this->hasMany(Policy::class, 'user_id','id');
+        return $this->hasMany(Policy::class, 'user_id', 'id');
     }
 
     public function messages()

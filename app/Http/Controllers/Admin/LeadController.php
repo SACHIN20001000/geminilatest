@@ -24,11 +24,14 @@ use App\Http\Requests\Admin\Lead\StoreLeadRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Mail;
+use App\Traits\WhatsappApi;
 
 ini_set('max_execution_time', 1500); // 5 minutes
 
 class LeadController extends Controller
 {
+    use WhatsappApi;
+
     /**
      * Display a listing of the resource.
      *
@@ -464,6 +467,9 @@ class LeadController extends Controller
                                     $subject = 'Policy Issued,' . ($lead->holder_name ?? '') . ' ' . ($lead->subProduct->name ?? '');
                                     $messages->subject($subject);
                                 });
+                                if (!empty($lead->phone)) {
+                                    $this->sendMessage($lead->phone, view('admin.email.newPolicy', ['lead' => $lead]));
+                                }
                             } catch (Exception $e) {
                             }
                         }
@@ -518,6 +524,9 @@ class LeadController extends Controller
 
                 $messages->subject($subject);
             });
+            if (!empty($lead->users->phone)) {
+                $this->sendMessage($lead->users->phone, view('admin.email.commonemail', ['policy' => $lead]));
+            }
         } catch (\Exception $e) {
             //throw $th;
         }
