@@ -11,10 +11,11 @@ trait WhatsappApi
     {
 
         $data = rawurlencode(strip_tags($message));
+        $url = 'https://bulkchatbot.co.in/api/send.php?number=' . $number . '&type=text&message=' . $data . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://bulkchatbot.co.in/api/send.php?number=' . '918580831760' . '&type=text&message=' . $data . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2',
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
