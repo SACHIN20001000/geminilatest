@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\ExportController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\WebhookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BacklinkController;
 
@@ -44,42 +45,38 @@ use App\Http\Controllers\BacklinkController;
   | contains the "web" middleware group. Now create something great!
   |
  */
-Route::get('logout', function ()
-{
+
+Route::get('logout', function () {
     Auth::logout();
     return redirect('/admin');
 });
 
-Route::get('home', function ()
-{
+Route::get('home', function () {
     Auth::logout();
-   return redirect('/admin');
+    return redirect('/admin');
 });
 
 
 Route::resource('backlink', BacklinkController::class);
 Route::any('backlink-delete/{id}', [BacklinkController::class, 'deleted'])->name('deleted');
 
-Route::prefix('admin')->group(function ()
-{
+Route::prefix('admin')->group(function () {
+    Route::any('/webhook', [WebhookController::class, 'index'])->name('index')->middleware(['guest']);
 
-    Route::get('/', function ()
-    {
+    Route::get('/', function () {
         return view('admin.login');
     })->middleware(['guest']);
-    Route::get('register', function ()
-        {
-            return view('admin.register');
-        })->middleware(['guest']);
-    Route::get('/forgotPassword', function ()
-    {
+    Route::get('register', function () {
+        return view('admin.register');
+    })->middleware(['guest']);
+    Route::get('/forgotPassword', function () {
         return view('admin.forgotPassword');
     })->middleware(['guest']);
 
-Route::group(['middleware' => ['auth']], function () { 
-   
+    Route::group(['middleware' => ['auth']], function () {
+
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-       
+
         Route::resource('users', UserController::class);
         Route::resource('company', CompanyController::class);
         Route::resource('product', ProductController::class);
@@ -130,12 +127,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('saveAssign', [LeadController::class, 'saveAssign'])->name('saveAssign');
         Route::post('changeStatus', [LeadController::class, 'changeStatus'])->name('changeStatus');
         Route::post('leadAttachment', [LeadController::class, 'leadAttachment'])->name('leadAttachment');
-       
-   
+
+
         Route::get('dummyMail', [LeadController::class, 'dummyMail'])->name('dummyMail');
         Route::get('chat', [ChatsController::class, 'index'])->name('chat');
         Route::post('send', [ChatsController::class, 'postSendMessage']);
-        Route::post('getmessage',[ChatsController::class, 'getOldMessages']);
+        Route::post('getmessage', [ChatsController::class, 'getOldMessages']);
         Route::post('search',  [ChatsController::class, 'search'])->name('search');
         Route::post('chat-view', [ChatsController::class, 'chatView'])->name('chat_view');
         Route::get('message-data', [ChatsController::class, 'lastMessage'])->name('lastMessage');
@@ -143,22 +140,18 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('update-profile', [App\Http\Controllers\Admin\AdminController::class, 'updateProfile'])->name('updateProfile');
         Route::post('update-user-profile/{id}', [App\Http\Controllers\Admin\AdminController::class, 'updateUserProfile'])->name('updateUserProfile');
         Route::post('leadQuotes', [LeadController::class, 'leadQuotes'])->name('leadQuotes');
-});
-Route::any('acceptLead', [LeadController::class, 'acceptLead'])->name('acceptLead');
+    });
+    Route::any('acceptLead', [LeadController::class, 'acceptLead'])->name('acceptLead');
 
-Route::any('rejectLead', [LeadController::class, 'rejectLead'])->name('rejectLead');
+    Route::any('rejectLead', [LeadController::class, 'rejectLead'])->name('rejectLead');
 });
 
 Auth::routes([
     'register' => true
 ]);
 
-Route::prefix('')->group(function ()
-{
-    Route::get('{any}', function ()
-    {
+Route::prefix('')->group(function () {
+    Route::get('{any}', function () {
         return redirect('/admin');
     })->where('any', '.*');
 });
-
-
