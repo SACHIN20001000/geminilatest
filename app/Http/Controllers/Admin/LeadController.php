@@ -468,7 +468,10 @@ class LeadController extends Controller
                                     $messages->subject($subject);
                                 });
                                 if (!empty($lead->phone)) {
-                                    $this->sendMessage($lead->phone, view('admin.email.newPolicy', ['lead' => $lead]));
+                                    $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $lead->phone . '&type=text&message=' . view('admin.email.newPolicy', ['lead' => $lead]) . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+
+                                    $this->sendMessage($texturl);
+                                   
                                 }
                             } catch (Exception $e) {
                             }
@@ -525,7 +528,20 @@ class LeadController extends Controller
                 $messages->subject($subject);
             });
             if (!empty($lead->users->phone)) {
-                $this->sendMessage($lead->users->phone, view('admin.email.commonemail', ['policy' => $lead]));
+                if ($finalQuotes->count()) {
+                    foreach ($finalQuotes as $key => $quotes) {
+                        if (isset($quotes->file_name) && !empty($quotes->file_name)) {
+                            $fileurls = url('quotes', $quotes->file_name);
+                            $media = '&media_url=' . $fileurls . '&filename=' . $fileurls;
+                            $type = '&type=media';
+                            $messagefile = rawurlencode(strip_tags($quotes->file_name));
+                            $url = 'https://bulkchatbot.co.in/api/send.php?number=' . $lead->users->phone . $type . $media . '&message=' . $messagefile . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                            $this->sendFileMessage($url);
+                        }
+                    }
+                }
+                $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $lead->users->phone . '&type=text&message=' . view('admin.email.commonemail', ['policy' => $lead]) . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                $this->sendMessage($texturl);
             }
         } catch (\Exception $e) {
             //throw $th;

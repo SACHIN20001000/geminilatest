@@ -266,7 +266,6 @@ class PolicyController extends Controller
         $policy = Policy::where('id', $request->policy_id)->with(['users', 'commonAttachment', 'subProduct', 'lead'])->first();
 
 
-
         try {
             Mail::send('admin.email.endrosment', ['policy' => $policy, 'content' => $request->content], function ($messages) use ($request, $policy) {
                 $messages->to($request->to);
@@ -283,8 +282,26 @@ class PolicyController extends Controller
                     }
                 }
             });
+
             if (!empty($policy->users->phone)) {
-                $this->sendMessage($policy->users->phone, $request->content);
+                $data = rawurlencode(strip_tags($request->content));
+                $media = '';
+                $type = '&type=text';
+                if (!empty($policy->commonAttachment)) {
+
+                    foreach ($policy->commonAttachment as $attach) {
+                        $fileurls = url('attachments', $attach->file_name);
+                        $media = '&media_url=' . $fileurls . '&filename=' . $fileurls;
+                        $type = '&type=media';
+                        $messagefile = rawurlencode(strip_tags($attach->file_name));
+                        $url = 'https://bulkchatbot.co.in/api/send.php?number=' . $policy->users->phone . $type . $media . '&message=' . $messagefile . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                        $this->sendFileMessage($url);
+                    }
+                }
+
+                $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $policy->users->phone . '&type=text&message=' . $data . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+
+                $this->sendMessage($texturl);
             }
         } catch (Exception $e) {
         }
@@ -359,7 +376,9 @@ class PolicyController extends Controller
                     $messages->subject($subject);
                 });
                 if (!empty($value->phone)) {
-                    $this->sendMessage($value->phone, view('admin.email.bulkemail', ['user' => $value]));
+                    $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $value->phone . '&type=text&message=' . view('admin.email.bulkemail', ['user' => $value]) . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+
+                    $this->sendMessage($texturl);
                 }
             } catch (Exception $e) {
             }
