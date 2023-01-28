@@ -16,8 +16,10 @@ class CreateBachlinksTable extends Migration
         Schema::create('bachlinks', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->nullable();
-            $table->string('time')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
             $table->text('name')->nullable();
+            $table->text('url')->nullable();
             $table->timestamps();
         });
     }

@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\ExportController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BacklinkController;
 
 
 
@@ -56,6 +57,8 @@ Route::get('home', function ()
 });
 
 
+Route::resource('backlink', BacklinkController::class);
+Route::any('backlink-delete/{id}', [BacklinkController::class, 'deleted'])->name('deleted');
 
 Route::prefix('admin')->group(function ()
 {
