@@ -64,7 +64,21 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'from_user', 'id');
     }
 
+
     public function messagesReceived()
+    {
+        return $this->hasMany(Message::class, 'user_id', 'id');
+    }
+    public function whatsappContacts()
+    {
+        return $this->hasMany(WhatsappChatContact::class, 'contact_id', 'id');
+    }
+
+    public function whatsappMessagesSent()
+    {
+        return $this->hasMany(WhatsappMessage::class, 'from_user', 'id');
+    }
+    public function whatsappMessagesReceived()
     {
         return $this->hasMany(Message::class, 'user_id', 'id');
     }
@@ -80,5 +94,9 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->messagesSent()->union($this->messagesReceived()->toBase());
+    }
+    public function whatsappMessages()
+    {
+        return $this->whatsappMessagesSent()->union($this->whatsappMessagesReceived()->toBase());
     }
 }

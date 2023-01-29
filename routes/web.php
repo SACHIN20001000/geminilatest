@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\ExportController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\WebhookController;
+use App\Http\Controllers\Admin\WhatsappChatsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BacklinkController;
 
@@ -95,6 +96,16 @@ Route::prefix('admin')->group(function () {
         Route::resource('income', IncomeController::class);
         Route::resource('communications', CommunicationController::class);
         Route::resource('remainder', RemainderController::class);
+        // whatsapp
+        Route::any('whatsapp-message-data', [WhatsappChatsController::class, 'lastMessageWhatapp'])->name('lastMessagewhatsapp');
+
+        Route::get('whatsapp', [WhatsappChatsController::class, 'index'])->name('whatsapp');
+        Route::post('whatsapp-send', [WhatsappChatsController::class, 'postSendMessage']);
+        Route::post('getmessage', [WhatsappChatsController::class, 'getOldMessages']);
+        Route::post('whatsapp-search',  [WhatsappChatsController::class, 'search'])->name('search');
+        Route::post('whatsapp-chat-view', [WhatsappChatsController::class, 'chatView'])->name('chat_view');
+
+        //     whatsapp
         Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
         Route::any('download/{filename?}', [PayoutController::class, 'download'])->name('download');
         Route::any('downloadsampleVeichel/{filename?}', [PayoutController::class, 'downloadsampleVeichel'])->name('downloadsampleVeichel');
