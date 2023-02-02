@@ -4,7 +4,7 @@
                 @if($message->from_user==$user->id)
 
                  <li class="message-item friend">
-                  <img src="{{(isset($message->fromUser->profile) && !empty($message->fromUser->profile))?  {{URL::asset('profile')}}/{{$message->fromUser->profile}} : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="avatar">
+                  <img src="{{(isset($message->fromUser->profile) && !empty($message->fromUser->profile))?  URL::asset('profile')/$message->fromUser->profile : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="avatar">
                   <div class="content">
                     <div class="message">
                       <div class="bubble">
@@ -16,7 +16,7 @@
                 </li>
                 @else
                 <li class="message-item me">
-                  <img src="{{(isset($message->fromUser->profile) && !empty($message->fromUser->profile))? {{URL::asset('profile')}}/{{$message->fromUser->profile }} : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="avatar">
+                  <img src="{{(isset($message->fromUser->profile) && !empty($message->fromUser->profile))? URL::asset('profile')/$message->fromUser->profile  : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="avatar">
                   <div class="content">
                     
                     <div class="message">
@@ -35,7 +35,7 @@
                 <div class="d-flex align-items-center">
                   <i data-feather="corner-up-left" id="backToChatList" class="icon-lg me-2 ms-n2 text-muted d-lg-none"></i>
                   <figure class="mb-0 me-2">
-                    <img src="{{(isset($user->profile) && !empty($user->profile))? {{URL::asset('profile')}}/{{$user->profile}}: url('https://via.placeholder.com/37x37') }}" class="img-sm rounded-circle" alt="image">
+                    <img src="{{(isset($user->profile) && !empty($user->profile))? URL::asset('profile')/$user->profile: url('https://via.placeholder.com/37x37') }}" class="img-sm rounded-circle" alt="image">
                     <div class="status online"></div>
                     <div class="status online"></div>
                   </figure>
@@ -55,7 +55,7 @@
            
                 @if($message->from_user==$user->id)
                  <li class="message-item friend">
-                  <img src="{{(isset($message->fromUser->profile) && !empty($message->fromUser->profile))? $message->fromUser->profile {{URL::asset('profile')}}/{{$message->fromUser->profile}} : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="avatar">
+                  <img src="{{(isset($message->fromUser->profile) && !empty($message->fromUser->profile))? $message->fromUser->profile URL::asset('profile')/$message->fromUser->profile : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="avatar">
                   <div class="content">
                     <div class="message">
                       <div class="bubble">
@@ -74,7 +74,7 @@
                 </li>
                 @else
                 <li class="message-item me">
-                  <img src="{{(isset($message->fromUser->profile) && !empty($message->fromUser->profile))?  {{URL::asset('profile')}}/{{$message->fromUser->profile}} : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="avatar">
+                  <img src="{{(isset($message->fromUser->profile) && !empty($message->fromUser->profile))?  URL::asset('profile')/$message->fromUser->profile : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="avatar">
                   <div class="content">
                     
                     <div class="message">

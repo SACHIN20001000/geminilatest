@@ -8,7 +8,7 @@
   <li class="chat-item pe-1" onclick="chatsEvent.clickChatContact({{$user->id}});">
     <a href="javascript:;" class="d-flex align-items-center chatlistdetails">
       <figure class="mb-0 me-2">
-        <img src="{{(isset($user->profile) && !empty($user->profile))? {{URL::asset('profile')}}/{{$user->profile}} : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
+        <img src="{{(isset($user->profile) && !empty($user->profile))? URL::asset('profile')/$user->profile : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
         <div class="status online"></div>
       </figure>
       <div class="d-flex justify-content-between flex-grow-1 border-bottom">
@@ -42,7 +42,7 @@
   <li class="chat-item pe-1" id="recent_contact_{{$contact->contact_id}}">
     <a href="javascript:;" class="d-flex align-items-center chatlistdetails">
       <figure class="mb-0 me-2">
-        <img src="{{(isset($contact->user->profile) && !empty($contact->user->profile))? $contact->user->profile : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
+        <img src="{{(isset($contact->user->profile) && !empty($contact->user->profile))?  URL::asset('profile')/$contact->user->profile : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
         <div class="status online"></div>
       </figure>
       <div class="d-flex justify-content-between flex-grow-1 border-bottom" onclick="chatsEvent.clickChatContact({{$contact->contact_id}});">

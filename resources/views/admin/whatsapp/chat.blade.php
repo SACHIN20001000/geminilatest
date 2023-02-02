@@ -198,7 +198,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                 <div class="d-flex justify-content-between align-items-center pb-2 mb-2">
                   <div class="d-flex align-items-center">
                     <figure class="me-2 mb-0">
-                      <img src="{{(isset(Auth()->user()->profile) && !empty(Auth()->user()->profile))? {{URL::asset('profile')}}/{{Auth()->user()->profile}} : url('https://via.placeholder.com/37x37') }}" class="img-sm rounded-circle" alt="profile">
+                      <img src="{{(isset(Auth()->user()->profile) && !empty(Auth()->user()->profile))? URL::asset('profile')/Auth()->user()->profile : url('https://via.placeholder.com/37x37') }}" class="img-sm rounded-circle" alt="profile">
                       <div class="status online"></div>
                     </figure>
                     <div>
