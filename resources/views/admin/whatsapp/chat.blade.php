@@ -198,7 +198,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                 <div class="d-flex justify-content-between align-items-center pb-2 mb-2">
                   <div class="d-flex align-items-center">
                     <figure class="me-2 mb-0">
-                      <img src="{{(isset(Auth()->user()->profile) && !empty(Auth()->user()->profile))? URL::asset('profile')/Auth()->user()->profile : url('https://via.placeholder.com/37x37') }}" class="img-sm rounded-circle" alt="profile">
+                      <img src="{{(isset(Auth()->user()->profile_photo_path) && !empty(Auth()->user()->profile_photo_path))? Auth()->user()->profile_photo_path : url('https://via.placeholder.com/37x37') }}" class="img-sm rounded-circle" alt="profile">
                       <div class="status online"></div>
                     </figure>
                     <div>
@@ -508,7 +508,7 @@ var  urlUser="{{$_GET['user'] ?? ''}}";
           //   message= 'file';
           // }
           // let count_message= $('.count_element').length;
-          // let profile=data.data.from_user.profile ?? 'https://via.placeholder.com/37x37';
+          // let profile=data.data.from_user.profile_photo_path ?? 'https://via.placeholder.com/37x37';
           // if(count_message < 3){
           //   $(".prev_user_"+data.data.from_user.id).empty();
           
@@ -584,7 +584,7 @@ var  urlUser="{{$_GET['user'] ?? ''}}";
              success: function(response) {
            
               $.each(response, function(index, value) {
-                  let profile= value.from_user.profile ?? 'https://via.placeholder.com/37x37';
+                  let profile= value.from_user.profile_photo_path ?? 'https://via.placeholder.com/37x37';
                   let message = value.message.substring(0, 30)+'...';
                 
                   $(".chat-append").prepend('<div class="prev_user_'+value.from_user.id+'"><div class="count_element"><a href="/apps/chat?user='+value.from_user.id+'" class="dropdown-item d-flex align-items-center px-1 py-2"><img src="'+profile+'" height="40px" width="40px" class="rounded-circle me-2"/><i class="icon-sm text-white" data-feather="gift"></i><div><p class="chat-notification fw-bold">'+value.from_user.name+'</p><span>'+message+' </span></div></div></a></div></div>');
@@ -666,8 +666,8 @@ var  urlUser="{{$_GET['user'] ?? ''}}";
                       recentMessage= atttype;
                     }
                     
-                    let profile=response.data.from_user.profile ?? 'https://via.placeholder.com/37x37';
-                    let to_profile=response.data.to_user.profile ?? 'https://via.placeholder.com/37x37';
+                    let profile=response.data.from_user.profile_photo_path ?? 'https://via.placeholder.com/37x37';
+                    let to_profile=response.data.to_user.profile_photo_path ?? 'https://via.placeholder.com/37x37';
                  
                      chatsEvent.appendRecent(name, contact_id, recentMessage, date,'', to_profile);
                      chatsEvent.appendChat(type = 'me', chat_message, 'chat_messages_' + contact_id,'Just now','',path,atttype,profile);
@@ -716,8 +716,8 @@ var  urlUser="{{$_GET['user'] ?? ''}}";
         path=message;
       }
      
-      let  profile = messageData.data.from_user.profile ?? 'https://via.placeholder.com/37x37';
-      let to_profile=messageData.data.from_user.profile ?? 'https://via.placeholder.com/37x37';
+      let  profile = messageData.data.from_user.profile_photo_path ?? 'https://via.placeholder.com/37x37';
+      let to_profile=messageData.data.from_user.profile_photo_path ?? 'https://via.placeholder.com/37x37';
       if($("#chat_messages_"+senderId).length > 0) {
         
         chatsEvent.appendChat('friend', message, 'chat_messages_' + senderId,time,'',path,atttype,profile);
