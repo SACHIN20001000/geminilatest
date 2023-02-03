@@ -42,6 +42,7 @@ class WhatsappChatsController extends Controller
     public function postSendMessage(Request $request)
     {
 
+
         if (!$request->to_user && (!$request->message || !$request->file)) {
             return;
         }
@@ -56,8 +57,19 @@ class WhatsappChatsController extends Controller
 
         if ($request->hasFile('file')) {
             $file = $request->file->extension();
-            $path =  Storage::disk('do_spaces')->putFile('uploads', request()->file, 'public');
-            $imageName = Storage::disk('do_spaces')->url($path);
+            $imageName = $request->file('file')->getClientOriginalName();
+            $request->file->move(public_path('/file'), $imageName);
+            if (!empty($user->phone)) {
+                $fileurls = url('file',  $imageName);
+            
+                $media = '&media_url=' . $fileurls . '&filename=' . $fileurls;
+                $type = '&type=media';
+                $messagefile = rawurlencode(strip_tags($imageName));
+                $url = 'https://bulkchatbot.co.in/api/send.php?number=' . $user->phone . $type . $media . '&message=' . $messagefile . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+
+                $this->sendFileMessage($url);
+            }
+
 
             $message = new WhatsappMessage();
             $message->from_user = Auth::user()->id;

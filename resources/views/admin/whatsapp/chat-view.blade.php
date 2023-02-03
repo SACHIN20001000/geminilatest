@@ -60,9 +60,9 @@
                     <div class="message">
                       <div class="bubble">
                       @if($message->is_image == 1)
-                      <a href="{{$message->message}}" target="_blank"> <img src="{{$message->message}}" alt="" srcset="" height="100px" width="100px"></a>
+                      <a href="{{url('file',  $message->message)}}" target="_blank"> <img src="{{url('file',  $message->message)}}" alt="" srcset="" height="100px" width="100px"></a>
                           @elseif($message->is_attachment == 1)
-                         <a href="{{$message->message}}" target="_blank">Attachment </a>
+                         <a href="{{url('file',  $message->message)}}" target="_blank">Attachment </a>
                           @else
 
                           <p>{{$message->message}}</p>
@@ -80,9 +80,9 @@
                     <div class="message">
                       <div class="bubble">
                         @if($message->is_image == 1)
-                           <a href="{{$message->message}}" target="_blank"> <img src="{{$message->message}}" alt="" srcset="" height="100px" width="100px"></a>
+                           <a href="{{url('file',  $message->message)}}" target="_blank"> <img src="{{url('file',  $message->message)}}" alt="" srcset="" height="100px" width="100px"></a>
                           @elseif($message->is_attachment == 1)
-                          <a href="{{$message->message}}" target="_blank">Attachment </a>
+                          <a href="{{url('file',  $message->message)}}" target="_blank">Attachment </a>
                           @else
 
                           <p>{{$message->message}}</p>
