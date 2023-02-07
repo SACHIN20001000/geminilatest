@@ -4,7 +4,7 @@
 <style>
   .chat-wrapper .chat-content .chat-body {
     overflow: auto;
-    min-height: calc(100vh - 340px);
+    min-height: calc(100vh - 120px);
   }
 
   .load-more-messeges {
@@ -114,7 +114,7 @@
 
   .chat-wrapper .chat-aside .aside-body .tab-content .tab-pane {
     position: relative;
-    max-height: calc(100vh - 385px);
+    max-height: calc(100vh - 60px);
   }
 
   .chat-wrapper .chat-aside .aside-body .tab-content .tab-pane .chat-list .chat-item a>div {
@@ -144,9 +144,9 @@
 
   .chat-wrapper .chat-content .chat-body {
     position: relative;
-    max-height: calc(100vh - 340px);
-    margin-top: 20px;
-    margin-bottom: 20px;
+    max-height: calc(100vh - 60px);
+    margin-top: 0px;
+    margin-bottom: 0px;
   }
 
   @media (max-width: 767px) {
@@ -288,6 +288,47 @@
 
   .chat-wrapper figure .status.offline {
     background: #7987a1;
+  }
+
+
+
+  /* deppak css  */
+  ul#user_search_results {
+    height: 300px;
+    overflow: scroll;
+  }
+
+  input#chat-files {
+    opacity: 0;
+  }
+
+  .btn-chat {
+    background: #ccc;
+    padding: 0 !important;
+  }
+
+  .btn-chat:hover {
+    background: #ccc;
+  }
+
+  input#chatForm {
+    box-shadow: 0 0 10px rgb(0 0 0 / 25%);
+    background: #fff !important;
+  }
+
+  .btn-chat img.text-muted {
+    opacity: .5;
+    padding-right: 3px;
+  }
+
+  div#chat_view {
+    position: relative;
+  }
+
+  .chat-footer {
+    position: absolute;
+    width: 100%;
+    bottom: 30px;
   }
 </style>
 <div class="row chat-wrapper">
