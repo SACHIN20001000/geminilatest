@@ -348,6 +348,7 @@
         $('.filter-btn').click(function() {
             $('.filter-box').toggleClass("hidden");
         })
+        $('.filter-box').toggleClass("hidden");
         $('.filter').click(function() {
             var url = "{{url('admin/leads')}}";
             window.location.replace(url);

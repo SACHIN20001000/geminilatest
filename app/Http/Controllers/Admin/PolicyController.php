@@ -154,7 +154,7 @@ class PolicyController extends Controller
         $policyInputs = $request->except('_token', 'attachment', 'type');
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         $policyInputs['is_policy'] = 1;
-        Policy::create($policyInputs);
+        $policy = Policy::create($policyInputs);
         if (isset($request->attachment) && (!empty($request->attachment))) {
             foreach ($request->attachment as $key => $value) {
                 if (!empty($value)) {
@@ -167,6 +167,16 @@ class PolicyController extends Controller
                         'file_name' => $attachment_filename ?? '',
                         'type' => $request->type[$key] ??  ''
                     ]);
+                    try {
+                        Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
+                            $messages->to($policy->email);
+                            $messages->bcc('geminiservices@outlook.com');
+                            $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
+                            $messages->subject($subject);
+                        });
+                    } catch (\Exception $th) {
+                        //throw $th;
+                    }
                 }
             }
         }

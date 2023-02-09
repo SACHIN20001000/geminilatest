@@ -4,7 +4,7 @@
 <style>
   .chat-wrapper .chat-content .chat-body {
     overflow: auto;
-    min-height: calc(100vh - 120px);
+    min-height: calc(87vh - 120px);
   }
 
   .load-more-messeges {
@@ -144,9 +144,9 @@
 
   .chat-wrapper .chat-content .chat-body {
     position: relative;
-    max-height: calc(100vh - 60px);
+    max-height: calc(19vh - 60px);
     margin-top: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 58px;
   }
 
   @media (max-width: 767px) {

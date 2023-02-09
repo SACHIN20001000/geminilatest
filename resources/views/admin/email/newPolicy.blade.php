@@ -9,16 +9,18 @@
 </head>
 
 <body>
-    Dear {{$lead->holder_name ?? ''}}
+    <h2> Dear {{$lead->holder_name ?? ''}}
+    </h2>
+    <p>Thank you for your business, we appreciate the opportunity given to serve you. We are committed to providing the best possible service and coverage to our clients.</p>
+    <p> Your policy is attached herewith for your reference. If you have any query or need any assistance, please do not hesitate to contact us.</p>
+    <p> Thank you!</p>
+    <h4> Warm regards,</h4>
+    <h4> Team GCS</h4>
 
-    Thank you for your business, we appreciate the opportunity given to serve you. We are committed to providing the best possible service and coverage to our clients.
-    Your policy is attached herewith for your reference. If you have any query or need any assistance, please do not hesitate to contact us.
-
-    Thank you!
 
 
-    Warm regards,
-    Team GCS
+
+
 
 
 </body>
