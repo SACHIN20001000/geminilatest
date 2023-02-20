@@ -48,23 +48,23 @@ class PolicyController extends Controller
         if (isset($request->search_anything)   && !empty($request->search_anything)) {
             $query->orwhereHas('lead', function ($q) use ($request) {
 
-                $searchParam = ['holder_name', 'phone', 'email'];
+                $searchParam = ['holder_name', 'phone', 'email', 'reg_no', 'policy_no'];
                 foreach ($searchParam as $key => $value) {
                     $q->orwhere($value, 'like', '%' . $request->search_anything . '%');
                 }
-            })
-                ->orwhereHas('insurances', function ($q) use ($request) {
+            });
+            // ->orwhereHas('insurances', function ($q) use ($request) {
 
-                    $q->where('name',  $request->search_anything);
-                })
-                ->orwhereHas('products', function ($q) use ($request) {
+            //     $q->where('name',  $request->search_anything);
+            // })
+            // ->orwhereHas('products', function ($q) use ($request) {
 
-                    $q->where('name',  $request->search_anything);
-                })
-                ->orwhereHas('subProduct', function ($q) use ($request) {
+            //     $q->where('name',  $request->search_anything);
+            // })
+            // ->orwhereHas('subProduct', function ($q) use ($request) {
 
-                    $q->where('name',  $request->search_anything);
-                });
+            //     $q->where('name',  $request->search_anything);
+            // });
         }
         if (isset($request->id) && !empty($request->id)) {
             $date = strtotime(date('Y-m-d'));
