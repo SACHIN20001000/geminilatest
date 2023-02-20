@@ -158,7 +158,36 @@
             </form>
         </div>
         <div class="card-body">
+            <style>
+                @media (max-width: 1650px) {
+                    td {
+                        font-size: 12px !important;
+                        padding: 0 9px !important;
+                    }
 
+                    .userlist-table .table th {
+                        padding: 0 9px !important;
+                    }
+
+                    .userlist-table .table {
+                        white-space: unset !important;
+                    }
+
+                    .btn-group {
+                        white-space: nowrap !important;
+                    }
+                }
+
+                @media (max-width: 1400px) {
+                    td {
+                        padding: 0 5px !important;
+                    }
+
+                    .userlist-table .table th {
+                        padding: 0 5px !important;
+                    }
+                }
+            </style>
             <!-- Listing all data in user tables -->
             <div class="table-responsive border-top userlist-table">
                 <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
