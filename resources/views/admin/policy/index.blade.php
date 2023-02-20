@@ -2,6 +2,37 @@
 
 @section('content')
 
+<style>
+    @media (max-width: 1650px) {
+        td {
+            font-size: 12px !important;
+            padding: 0 9px !important;
+        }
+
+        .userlist-table .table th {
+            padding: 0 9px !important;
+        }
+
+        .userlist-table .table {
+            white-space: unset !important;
+        }
+
+        .btn-group {
+            white-space: nowrap !important;
+        }
+    }
+
+    @media (max-width: 1400px) {
+        td {
+            padding: 0 5px !important;
+        }
+
+        .userlist-table .table th {
+            padding: 0 5px !important;
+        }
+    }
+</style>
+
 <div class="container-fluid">
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
@@ -150,22 +181,22 @@
                             <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
                             @endif
                             @if(isset($_GET['id']) && $_GET['id'] == 1)
-                            <th class="wd-lg-20p"><span>Created On</span></th>
+                            <th><span>Created On</span></th>
 
                             @endif
-                            <th class="wd-lg-20p"><span>Reference Name</span></th>
-                            <th class="wd-lg-20p"><span>Policy Holder Name</span></th>
-                            <th class="wd-lg-20p"><span>Company Name</span></th>
-                            <th class="wd-lg-20p"><span>Trasaction Type</span></th>
-                            <th class="wd-lg-20p"><span>Sub Product</span></th>
+                            <th><span>Reference Name</span></th>
+                            <th><span>Policy Holder Name</span></th>
+                            <th><span>Company Name</span></th>
+                            <th><span>Trasaction Type</span></th>
+                            <th><span>Sub Product</span></th>
                             @if(isset($_GET['id']) && $_GET['id'] == 2)
 
-                            <th class="wd-lg-20p"><span>Expiry Date</span></th>
-                            <th class="wd-lg-20p"><span>Followup Date</span></th>
-                            <th class="wd-lg-20p"><span>Attachment</span></th>
+                            <th><span>Expiry Date</span></th>
+                            <th><span>Followup Date</span></th>
+                            <th><span>Attachment</span></th>
                             @endif
-                            <th class="wd-lg-20p"><span>Premium Status</span></th>
-                            <th class="wd-lg-20p">Action</th>
+                            <th><span>Premium Status</span></th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -224,7 +255,7 @@
                                 @endif
                             </td>
 
-                            <td>
+                            <td class="btn-group">
                                 <button class="btn btn-sm btn-info btn-b common-btn" type="button" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{ $lead->lead->holder_name ??$lead->holder_name }}" data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->subProduct->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}" data-toggle="tooltip" title="Send Mail!">📩</button>
                                 @if(isset($_GET['id']) && $_GET['id'] == 1)
                                 <a href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b" data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>

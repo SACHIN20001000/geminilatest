@@ -275,7 +275,6 @@ class PolicyController extends Controller
     {
         $policy = Policy::where('id', $request->policy_id)->with(['users', 'commonAttachment', 'subProduct', 'lead'])->first();
 
-
         try {
             Mail::send('admin.email.endrosment', ['policy' => $policy, 'content' => $request->content], function ($messages) use ($request, $policy) {
                 $messages->to($request->to);
