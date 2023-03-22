@@ -195,7 +195,7 @@
                             <th><span>Followup Date</span></th>
                             <th><span>Attachment</span></th>
                             @endif
-                            <th><span>Premium Status</span></th>
+                            <!-- <th><span>Premium Status</span></th> -->
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -240,9 +240,10 @@
                             </td>
                             @endif
 
-                            <td>
 
-                                @if(isset($_GET['id']) && $_GET['id'] == 2)
+
+                            @if(isset($_GET['id']) && $_GET['id'] == 2)
+                            <td>
                                 <select name="renew_status" id="renew_status" data-id="{{$lead->id}}" class="form-control renew_status">
                                     <option value="FOLLOW UP" {{isset($lead) && $lead->renew_status == 'FOLLOW UP' ? 'selected' : ''}}>FOLLOW UP</option>
                                     <option value="VEHICLE SOLD" {{isset($lead) && $lead->renew_status == 'VEHICLE SOLD' ? 'selected' : ''}}>VEHICLE SOLD</option>
@@ -250,12 +251,14 @@
 
                                     <option value="CLOSED" {{isset($lead) && $lead->renew_status == 'CLOSED' ? 'selected' : ''}}>CLOSED</option>
                                 </select>
-                                @else
-                                {{$lead->renew_status}}
-                                @endif
                             </td>
+                            @else
+                            <!-- {{$lead->renew_status}} -->
+                            @endif
+
 
                             <td class="btn-group">
+                                <!-- <a class="btn btn-sm btn-info btn-b endrosment-btn" data-id="{{$lead->id ?? ''}}" data-toggle="tooltip" title="Endrosment Sent">📜</a> -->
                                 <button class="btn btn-sm btn-info btn-b common-btn" type="button" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{ $lead->lead->holder_name ??$lead->holder_name }}" data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->subProduct->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}" data-toggle="tooltip" title="Send Mail!">📩</button>
                                 @if(isset($_GET['id']) && $_GET['id'] == 1)
                                 <a href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b" data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>

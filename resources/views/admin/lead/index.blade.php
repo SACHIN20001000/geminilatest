@@ -219,7 +219,7 @@
 
                             <td>{{$lead->assigns->name ?? ''}}</td>
                             <td class="btn-group">
-                                <a class="btn btn-sm btn-info btn-b endrosment-btn" data-id="{{$lead->id ?? ''}}" data-toggle="tooltip" title="Endrosment Sent">📜</a>
+                                <!-- <a class="btn btn-sm btn-info btn-b endrosment-btn" data-id="{{$lead->id ?? ''}}" data-toggle="tooltip" title="Endrosment Sent">📜</a> -->
                                 <a href="{{route('leads.show',$lead->id)}}" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye" data-toggle="tooltip" title="View Lead"></i>
                                 </a> <a href="{{route('leads.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b" data-toggle="tooltip" title="Edit Lead"><i class="las la-pen"></i>
                                 </a>

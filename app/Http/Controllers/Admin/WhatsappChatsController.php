@@ -61,7 +61,7 @@ class WhatsappChatsController extends Controller
             $request->file->move(public_path('/file'), $imageName);
             if (!empty($user->phone)) {
                 $fileurls = url('file',  $imageName);
-            
+
                 $media = '&media_url=' . $fileurls . '&filename=' . $fileurls;
                 $type = '&type=media';
                 $messagefile = rawurlencode(strip_tags($imageName));
@@ -154,7 +154,7 @@ class WhatsappChatsController extends Controller
             $users = User::with("roles")
                 ->where("name", "like", "%" . $keyword . "%")
                 ->where("id", "!=", $user_id)
-                ->whereNotNull('phone')
+
                 ->get();
         }
 
@@ -164,7 +164,7 @@ class WhatsappChatsController extends Controller
             })
             ->where("name", "like", "%" . $keyword . "%")
             ->where("id", "!=", $user_id)
-            ->whereNotNull('phone')
+
             ->get()
             ->sortBy("whatsappContacts.updated_at");
 
