@@ -41,12 +41,12 @@
                 <h4 class="  content-title mb-0 my-auto pe-4">Policy </h4>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                        <a href="{{ route('policy.index',['id'=> 1]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto">MIS (<?php echo new_policy() ?>)</a>
+                        <a href="{{ route('policy.index',['id'=> 1]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto">MIS (<?php echo   new_policy() ?>)</a>
                     </div>
                 </div>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                        <a href="{{ route('policy.index',['id'=> 2]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif  ml_auto">Renewals (<?php echo renew_policy() ?>)</a>
+                        <a href="{{ route('policy.index',['id'=> 2]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif  ml_auto">Renewals (<?php echo   renew_policy() ?>)</a>
                     </div>
                 </div>
 
@@ -88,7 +88,7 @@
             <form action="" method="get">
                 <div class="row row-sm filter-box hidden">
 
-                    <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
+                    <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
                         <div class="card ">
                             <div class="card-body">
 
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
+                    <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
                         <div class="card ">
                             <div class="card-body">
 
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
+                    <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
                         <div class="card ">
                             <div class="card-body">
 
@@ -147,6 +147,33 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
+                        <div class="card ">
+                            <div class="card-body">
+                                @if(isset($_GET['id']) && $_GET['id'] == 2)
+                                <p class="mg-b-10">Status</p>
+                                <select name="renew_status_search" class="form-control ">
+                                    <option value="">Select</option>
+                                    <option value="FOLLOW UP" {{ (isset($_GET['renew_status_search']) && ("FOLLOW UP" == $_GET['renew_status_search'])) ? 'selected' : '' }}>FOLLOW UP</option>
+                                    <option value="VEHICLE SOLD" {{ (isset($_GET['renew_status_search']) && ("VEHICLE SOLD" == $_GET['renew_status_search'])) ? 'selected' : '' }}>VEHICLE SOLD</option>
+                                    <option value="NOT INTERESTED" {{ (isset($_GET['renew_status_search']) && ("NOT INTERESTED" == $_GET['renew_status_search'])) ? 'selected' : '' }}>NOT INTERESTED</option>
+                                    <option value="CLOSED" {{ (isset($_GET['renew_status_search']) && ("CLOSED" == $_GET['renew_status_search'])) ? 'selected' : '' }}>CLOSED</option>
+                                </select>
+                                @endif
+
+                                <p class="mg-b-10">Transaction</p>
+                                <select name="mis_transaction_type" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="Package" {{ (isset($_GET['mis_transaction_type']) && ("Package" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>Package</option>
+                                    <option value="SOAD" {{ (isset($_GET['mis_transaction_type']) && ("SOAD" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>SOAD</option>
+                                    <option value="TP" {{ (isset($_GET['mis_transaction_type']) && ("TP" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>TP</option>
+                                    <option value="Endorsement" {{ (isset($_GET['mis_transaction_type']) && ("Endorsement" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>Endorsement</option>
+                                </select>
+
+
+                            </div>
+                        </div>
+                    </div>
                     <div>
                         <button type="submit" class="btn btn-primary">Search</button>
                         <button class="btn btn-info filter">Filter</button>
@@ -158,6 +185,7 @@
                 <div class="card">
                     <div class="card-header pb-0">
                         <p class="tx-12 tx-gray-500 mb-2">Listing of All Policy...</p>
+                        <h6>Total records {{$count }}</h6>
 
                         <select name="sort" class="sort-table">
                             <option value="10" {{ (isset($_GET['sort']) && (10 == $_GET['sort'])) ? 'selected' : '' }}>10</option>
@@ -275,7 +303,7 @@
                     </tbody>
 
                 </table>
-                {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','sort' => $_GET['sort'] ??'10'])->links("vendor.pagination.bootstrap-4")}}
+                {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','renew_status_search'=>$_GET['renew_status_search']?? '','mis_transaction_type'=>$_GET['mis_transaction_type']?? '','sort' => $_GET['sort'] ??'10'])->links("vendor.pagination.bootstrap-4")}}
 
 
 

@@ -46,25 +46,19 @@ class PolicyController extends Controller
         )->get();
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns')->where(['is_policy' => 1]);
         if (isset($request->search_anything)   && !empty($request->search_anything)) {
-            $query->orwhereHas('lead', function ($q) use ($request) {
+            // $query->orwhereHas('lead', function ($q) use ($request) {
 
-                $searchParam = ['holder_name', 'phone', 'email', 'reg_no', 'policy_no'];
-                foreach ($searchParam as $key => $value) {
-                    $q->orwhere($value, 'like', '%' . $request->search_anything . '%');
-                }
-            });
-            // ->orwhereHas('insurances', function ($q) use ($request) {
 
-            //     $q->where('name',  $request->search_anything);
-            // })
-            // ->orwhereHas('products', function ($q) use ($request) {
-
-            //     $q->where('name',  $request->search_anything);
-            // })
-            // ->orwhereHas('subProduct', function ($q) use ($request) {
-
-            //     $q->where('name',  $request->search_anything);
             // });
+            $searchParam = ['holder_name', 'phone', 'email', 'reg_no', 'policy_no'];
+            foreach ($searchParam as $key => $value) {
+
+                if ($key == 0) {
+                    $query->where($value, 'like', '%' . $request->search_anything . '%');
+                } else {
+                    $query->orwhere($value, 'like', '%' . $request->search_anything . '%');
+                }
+            }
         }
         if (isset($request->id) && !empty($request->id)) {
             $date = strtotime(date('Y-m-d'));
@@ -87,19 +81,26 @@ class PolicyController extends Controller
 
             $query->where('subproduct_id', $request->product);
         }
+        if (isset($request->renew_status_search)   && !empty($request->renew_status_search)) {
+            $query->where('renew_status', 'like', '%' . $request->renew_status_search . '%');
+        }
+        if (isset($request->mis_transaction_type)   && !empty($request->mis_transaction_type)) {
+
+            $query->where('mis_transaction_type', 'like', '%' . $request->mis_transaction_type . '%');
+        }
         if (isset($request->follow_ups)   && !empty($request->follow_ups)) {
 
             $query->where('follow_up', $request->follow_ups);
         }
-        if (isset($request->search_anything)   && !empty($request->search_anything)) {
-            $searchParam = ['user_id', 'insurance_id', 'product_id', 'net_premium', 'case_type', 'policy_no', 'channel_name', 'lead_id', 'company_id', 'attachment_id', 'subproduct_id', 'gross_premium', 'others', 'pa', 'tp_premium', 'add_on_premium', 'od_premium', 'gwp', 'gst', 'basic_premium', 'terrorism_premium', 'requirement', 'client_name', 'address', 'remarks', 'type', 'commodity_type', 'mode_of_transport', 'cover_type', 'per_sending_limit', 'per_location_limit', 'estimate_annual_sum', 'basic_of_valuation', 'policy_period', 'start_date', 'expiry_date', 'commodity_details', 'packing_description', 'libality', 'policy_type', 'liability_industrial', 'liability_nonindustrial', 'liability_act', 'professional_indeminity', 'comprehensive_general_liability', 'wc_policy', 'pincode', 'industry_type', 'worker_number', 'job_profile', 'salary_per_month', 'add_on_cover', 'medical_extension', 'occupation_disease', 'compressed_air_disease', 'terrorism_cover', 'terrorism_cover', 'multiple_location', 'occupancy', 'occupancy_tarriff', 'particular', 'building', 'plant_machine', 'furniture_fixure', 'stock_in_process', 'finished_stock', 'other_contents', 'clain_in_last_three_year', 'loss_details', 'loss_in_amount', 'loss_date', 'measures_taken_after_loss', 'address_risk_location', 'cover_opted', 'policy_inception_date', 'tenure', 'construction_type', 'age_of_building', 'basement_for_building', 'basement_for_content', 'claims', 'building_carpet_area', 'building_cost_of_construction', 'building_sum_insured', 'content_sum_insured', 'rent_alternative_accommodation', 'health_type', 'fresh', 'portability', 'dob', 'pre_existing_disease', 'hospitalization_history', 'upload_discharge_summary', 'dob_sr_most_member', 'dob_self', 'dob_spouse', 'dob_child', 'dob_father', 'dob_mother', 'sum_insured', 'visiting_country', 'date_of_departure', 'date_of_arrival', 'no_of_days', 'no_person', 'passport_datails', 'make', 'model', 'cubic_capacity', 'bussiness_type', 'rto', 'reg_no', 'mfr_year', 'reg_date', 'claims_in_existing_policy', 'ncb_in_existing_policy', 'gcv_type', 'gvw', 'fuel_type', 'passenger_carrying_capacity', 'category', 'varriant'];
-            foreach ($searchParam as $key => $value) {
-                $query->orwhere($value, 'like', '%' . $request->search_anything . '%');
-            }
-            if (isset($request->users)   && !empty($request->users)) {
-                $query->where('assigned', $request->users);
-            }
-        }
+        // if (isset($request->search_anything)   && !empty($request->search_anything)) {
+        //     $searchParam = ['user_id', 'insurance_id', 'product_id', 'net_premium', 'case_type', 'policy_no', 'channel_name', 'lead_id', 'company_id', 'attachment_id', 'subproduct_id', 'gross_premium', 'others', 'pa', 'tp_premium', 'add_on_premium', 'od_premium', 'gwp', 'gst', 'basic_premium', 'terrorism_premium', 'requirement', 'client_name', 'address', 'remarks', 'type', 'commodity_type', 'mode_of_transport', 'cover_type', 'per_sending_limit', 'per_location_limit', 'estimate_annual_sum', 'basic_of_valuation', 'policy_period', 'start_date', 'expiry_date', 'commodity_details', 'packing_description', 'libality', 'policy_type', 'liability_industrial', 'liability_nonindustrial', 'liability_act', 'professional_indeminity', 'comprehensive_general_liability', 'wc_policy', 'pincode', 'industry_type', 'worker_number', 'job_profile', 'salary_per_month', 'add_on_cover', 'medical_extension', 'occupation_disease', 'compressed_air_disease', 'terrorism_cover', 'terrorism_cover', 'multiple_location', 'occupancy', 'occupancy_tarriff', 'particular', 'building', 'plant_machine', 'furniture_fixure', 'stock_in_process', 'finished_stock', 'other_contents', 'clain_in_last_three_year', 'loss_details', 'loss_in_amount', 'loss_date', 'measures_taken_after_loss', 'address_risk_location', 'cover_opted', 'policy_inception_date', 'tenure', 'construction_type', 'age_of_building', 'basement_for_building', 'basement_for_content', 'claims', 'building_carpet_area', 'building_cost_of_construction', 'building_sum_insured', 'content_sum_insured', 'rent_alternative_accommodation', 'health_type', 'fresh', 'portability', 'dob', 'pre_existing_disease', 'hospitalization_history', 'upload_discharge_summary', 'dob_sr_most_member', 'dob_self', 'dob_spouse', 'dob_child', 'dob_father', 'dob_mother', 'sum_insured', 'visiting_country', 'date_of_departure', 'date_of_arrival', 'no_of_days', 'no_person', 'passport_datails', 'make', 'model', 'cubic_capacity', 'bussiness_type', 'rto', 'reg_no', 'mfr_year', 'reg_date', 'claims_in_existing_policy', 'ncb_in_existing_policy', 'gcv_type', 'gvw', 'fuel_type', 'passenger_carrying_capacity', 'category', 'varriant'];
+        //     foreach ($searchParam as $key => $value) {
+        //         $query->orwhere($value, 'like', '%' . $request->search_anything . '%');
+        //     }
+        //     if (isset($request->users)   && !empty($request->users)) {
+        //         $query->where('assigned', $request->users);
+        //     }
+        // }
 
         if (isset($request->users)   && !empty($request->users)) {
             $query->where('user_id', $request->users);
@@ -112,17 +113,17 @@ class PolicyController extends Controller
         } else {
             $query->orderby('expiry_date', 'ASC');
         }
+        $count =  $query->count();
         if (isset($request->sort)   && !empty($request->sort)) {
             if ($request->sort == 'all') {
-                $leads =  $query->paginate(100000);
+                $leads =  $query->paginate(100000000);
             } else {
                 $leads =  $query->paginate($request->sort);
             }
         } else {
             $leads =  $query->paginate(10);
         }
-
-        return view('admin.policy.index', compact('leads', 'products', 'users'));
+        return view('admin.policy.index', compact('leads', 'products', 'users', 'count'));
     }
 
     /**
