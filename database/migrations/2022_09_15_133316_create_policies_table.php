@@ -45,6 +45,7 @@ class CreatePoliciesTable extends Migration
             $table->string('fuel')->nullable();
             $table->string('cc')->nullable();
             $table->text('gwp')->nullable();
+            $table->text('voyage')->nullable();
             $table->text('od_premium')->nullable();
             $table->text('add_on_premium')->nullable();
             $table->text('tp_premium')->nullable();
@@ -119,6 +120,7 @@ class CreatePoliciesTable extends Migration
             $table->text('content_sum_insured')->nullable();
             $table->text('rent_alternative_accommodation')->nullable();
             $table->text('health_type')->nullable();
+            $table->text('travel_type')->nullable();
             $table->text('fresh')->nullable();
             $table->text('portability')->nullable();
             $table->text('dob')->nullable();

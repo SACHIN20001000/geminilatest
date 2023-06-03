@@ -155,6 +155,43 @@ class PolicyController extends Controller
         $policyInputs = $request->except('_token', 'attachment', 'type');
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         $policyInputs['is_policy'] = 1;
+        if ($request->health_name && !empty($request->health_name)) {
+            $health_hospitalization_upload = [];
+            if (isset($request->health_hospitalization_upload) && !empty($request->health_hospitalization_upload)) {
+
+                foreach ($request->health_hospitalization_upload as $key => $value) {
+                    if (!empty($value)) {
+                        $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
+                        $value->move(public_path('/attachments'), $attachment_filename);
+                        array_push($health_hospitalization_upload, $attachment_filename);
+                    }
+                }
+            }
+
+            $Healthdata = [
+                'health_name' => $request->health_name,
+                'health_dob' => $request->health_dob,
+                'health_age' => $request->health_age,
+                'health_relation' => $request->health_relation,
+                'health_sum_insured' => $request->health_sum_insured,
+                'health_pre_existing_disease' => $request->health_pre_existing_disease,
+                'health_hospitalization_upload' => $health_hospitalization_upload,
+            ];
+
+            $policyInputs['health_type'] = json_encode($Healthdata);
+        }
+        if ($request->travel_name && !empty($request->travel_name)) {
+
+
+            $traveldata = [
+                'travel_name' => $request->travel_name,
+                'travel_dob' => $request->travel_dob,
+                'travel_age' => $request->travel_age,
+                'travel_sum_insured' => $request->travel_sum_insured,
+            ];
+
+            $policyInputs['travel_type'] = json_encode($traveldata);
+        }
         $policy = Policy::create($policyInputs);
         if (isset($request->attachment) && (!empty($request->attachment))) {
             foreach ($request->attachment as $key => $value) {
@@ -193,8 +230,22 @@ class PolicyController extends Controller
     public function show(Policy $policy)
     {
         $policy->update(['mark_read' => 1]);
-        $company = Company::all();
-        return view('admin.policy.one', compact('policy', 'company'));
+        $insurances = Insurance::all();
+        $products = Product::all();
+        $subProducts = SubProduct::where('product_id', $policy->product_id)->get();
+        $companies = Company::all();
+        $make = Make::where('subproduct_id', $policy->subproduct_id)->get();
+        $model = ModelMake::all();
+        $varients = MakeModel::where('make_id', $policy->model)->get();
+        $channels = Channel::all();
+        $roles = Role::all();
+        $users =  User::with('roles')->whereHas(
+            'roles',
+            function ($q) use ($policy) {
+                $q->where('id', '=', $policy->user_type);
+            }
+        )->get();
+        return view('admin.policy.one', compact('roles', 'model', 'users', 'channels', 'insurances', 'companies', 'policy', 'make', 'products', 'subProducts', 'varients'));
     }
 
     /**
@@ -232,9 +283,47 @@ class PolicyController extends Controller
      */
     public function update(Request $request, Policy $policy)
     {
+
         $policyInputs = $request->except('_token', '_method', 'attachment', 'type');
         if ($request->mis_commission && !empty($request->mis_commission)) {
             $policyInputs['is_mis'] = 1;
+        }
+        if ($request->health_name && !empty($request->health_name)) {
+            $health_hospitalization_upload = [];
+            if (isset($request->health_hospitalization_upload) && !empty($request->health_hospitalization_upload)) {
+
+                foreach ($request->health_hospitalization_upload as $key => $value) {
+                    if (!empty($value)) {
+                        $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
+                        $value->move(public_path('/attachments'), $attachment_filename);
+                        array_push($health_hospitalization_upload, $attachment_filename);
+                    }
+                }
+            }
+
+            $Healthdata = [
+                'health_name' => $request->health_name,
+                'health_dob' => $request->health_dob,
+                'health_age' => $request->health_age,
+                'health_relation' => $request->health_relation,
+                'health_sum_insured' => $request->health_sum_insured,
+                'health_pre_existing_disease' => $request->health_pre_existing_disease,
+                'health_hospitalization_upload' => $health_hospitalization_upload,
+            ];
+
+            $policyInputs['health_type'] = json_encode($Healthdata);
+        }
+        if ($request->travel_name && !empty($request->travel_name)) {
+
+
+            $traveldata = [
+                'travel_name' => $request->travel_name,
+                'travel_dob' => $request->travel_dob,
+                'travel_age' => $request->travel_age,
+                'travel_sum_insured' => $request->travel_sum_insured,
+            ];
+
+            $policyInputs['travel_type'] = json_encode($traveldata);
         }
         $policy->update($policyInputs);
         if (isset($request->attachment) && (!empty($request->attachment))) {

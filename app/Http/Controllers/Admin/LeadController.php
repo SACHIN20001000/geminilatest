@@ -157,7 +157,43 @@ class LeadController extends Controller
         $policyInputs = $request->except('holder_name', '_token', 'phone', 'email', 'type', 'user_type');
         $policyInputs['lead_id'] = $lead->id;
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
+        if ($request->health_name && !empty($request->health_name)) {
+            $health_hospitalization_upload = [];
+            if (isset($request->health_hospitalization_upload) && !empty($request->health_hospitalization_upload)) {
 
+                foreach ($request->health_hospitalization_upload as $key => $value) {
+                    if (!empty($value)) {
+                        $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
+                        $value->move(public_path('/attachments'), $attachment_filename);
+                        array_push($health_hospitalization_upload, $attachment_filename);
+                    }
+                }
+            }
+
+            $Healthdata = [
+                'health_name' => $request->health_name,
+                'health_dob' => $request->health_dob,
+                'health_age' => $request->health_age,
+                'health_relation' => $request->health_relation,
+                'health_sum_insured' => $request->health_sum_insured,
+                'health_pre_existing_disease' => $request->health_pre_existing_disease,
+                'health_hospitalization_upload' => $health_hospitalization_upload,
+            ];
+
+            $policyInputs['health_type'] = json_encode($Healthdata);
+        }
+        if ($request->travel_name && !empty($request->travel_name)) {
+
+
+            $traveldata = [
+                'travel_name' => $request->travel_name,
+                'travel_dob' => $request->travel_dob,
+                'travel_age' => $request->travel_age,
+                'travel_sum_insured' => $request->travel_sum_insured,
+            ];
+
+            $policyInputs['travel_type'] = json_encode($traveldata);
+        }
         $policy =  Policy::create($policyInputs);
 
         if (isset($request->attachment) && (!empty($request->attachment))) {
@@ -241,6 +277,43 @@ class LeadController extends Controller
         $lead->update($leadData);
         $policyInputs = $request->except('holder_name', '_token', '_method', 'phone', 'email', 'type', 'user_type');
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
+        if ($request->health_name && !empty($request->health_name)) {
+            $health_hospitalization_upload = [];
+            if (isset($request->health_hospitalization_upload) && !empty($request->health_hospitalization_upload)) {
+
+                foreach ($request->health_hospitalization_upload as $key => $value) {
+                    if (!empty($value)) {
+                        $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
+                        $value->move(public_path('/attachments'), $attachment_filename);
+                        array_push($health_hospitalization_upload, $attachment_filename);
+                    }
+                }
+            }
+
+            $Healthdata = [
+                'health_name' => $request->health_name,
+                'health_dob' => $request->health_dob,
+                'health_age' => $request->health_age,
+                'health_relation' => $request->health_relation,
+                'health_sum_insured' => $request->health_sum_insured,
+                'health_pre_existing_disease' => $request->health_pre_existing_disease,
+                'health_hospitalization_upload' => $health_hospitalization_upload,
+            ];
+
+            $policyInputs['health_type'] = json_encode($Healthdata);
+        }
+        if ($request->travel_name && !empty($request->travel_name)) {
+
+
+            $traveldata = [
+                'travel_name' => $request->travel_name,
+                'travel_dob' => $request->travel_dob,
+                'travel_age' => $request->travel_age,
+                'travel_sum_insured' => $request->travel_sum_insured,
+            ];
+
+            $policyInputs['travel_type'] = json_encode($traveldata);
+        }
         $policy = Policy::where('lead_id', $lead->id)->update($policyInputs);
         if (isset($request->attachment) && (!empty($request->attachment))) {
             foreach ($request->attachment as $key => $value) {
@@ -471,7 +544,6 @@ class LeadController extends Controller
                                     $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $lead->phone . '&type=text&message=' . view('admin.email.newPolicy', ['lead' => $lead]) . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
 
                                     $this->sendMessage($texturl);
-                                   
                                 }
                             } catch (Exception $e) {
                             }
@@ -556,13 +628,14 @@ class LeadController extends Controller
         $info = array(
             'name' => "Alex"
         );
-        Mail::send(['text' => 'mail'], $info, function ($message) {
+        $mail =  Mail::send(['text' => 'mail'], $info, function ($message) {
             $message->to('sachindts98@gmail.com', 'W3SCHOOLS');
-            $message->bcc('geminiservices@outlook.com');
-            $message->subject('Basic test eMail from W3schools.');
-            // $message->from('sender@example.com', 'Alex');
+            // $message->bcc('geminiservices@outlook.com');
+            $message->subject('Basic');
+            $message->from('info@geminiservice.in', 'info@geminiservice.in');
         });
-        echo "Successfully sent the email";
+        echo  "Successfully sent the email";
+        print_r($mail);
     }
     public function rejectLead(Request $request)
     {
