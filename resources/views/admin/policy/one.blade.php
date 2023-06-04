@@ -23,7 +23,51 @@
     </div>
     <!-- breadcrumb -->
 
+    <style type="text/css">
+        #home .row.main-row {
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+            background: #e8eaf3;
+            margin-bottom: 15px;
+        }
 
+        #home .select2-container--default.select2-container--disabled .select2-selection--single {
+            background-color: transparent;
+        }
+
+        #home.select2-container--default .select2-selection--single {
+            height: 18px;
+        }
+
+        #home .select2-container--default .select2-selection--single .select2-selection__arrow {
+            opacity: 0;
+        }
+
+        #home .main-form-group {
+            padding: 10px;
+            border: 0px solid #e3e8f7;
+        }
+
+        #home .formgroup-wrapper .main-form-group .form-label {
+            margin-bottom: 8px;
+            font-size: 12px;
+            text-align: left;
+            font-weight: 700;
+            color: #031b4e;
+        }
+
+        #home .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding: 0;
+            font-size: 12px;
+        }
+
+        #home .formgroup-wrapper .form-control {
+            height: 20px !important;
+            font-size: 12px;
+            background: transparent;
+            color: #6e7f96;
+        }
+    </style>
     <!-- row -->
     <div class="row row-sm">
 
@@ -248,19 +292,19 @@
                                                             <div class="col-lg-3  text-center">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">Policy Holder Name</label>
-                                                                    <input class="form-control" name="holder_name" placeholder="Enter your name" type="text" value="{{isset($policy) ? $policy->holder_name : '' }}">
+                                                                    <input class="form-control" name="holder_name" type="text" value="{{isset($policy) ? $policy->holder_name : '' }}">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3  text-center">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">Policy Holder Phone Number</label>
-                                                                    <input class="form-control" name="phone" placeholder="Enter your Number" type="text" value="{{isset($policy) ? $policy->phone : '' }}">
+                                                                    <input class="form-control" name="phone" type="text" value="{{isset($policy) ? $policy->phone : '' }}">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3  text-center">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">Policy Holder Email</label>
-                                                                    <input class="form-control" name="email" placeholder="Enter your email" type="email" value="{{isset($policy) ? $policy->email : '' }}">
+                                                                    <input class="form-control" name="email" type="email" value="{{isset($policy) ? $policy->email : '' }}">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3  text-center">
@@ -1469,13 +1513,13 @@
                                                             <div class="col-lg-3  text-center">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">PREMIUM RECEIVED </label>
-                                                                    <input type="number" name="mis_amount_paid" value="{{isset($policy) ? $policy->mis_amount_paid : ''}}" class="form-control" placeholder="enter amount paid" id="">
+                                                                    <input type="number" name="mis_amount_paid" value="{{isset($policy) ? $policy->mis_amount_paid : ''}}" class="form-control" id="">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">PREMIUM RECEIVED IN a/c</label>
-                                                                    <input type="number" name="mis_received_bank_detail" value="{{isset($policy) ? $policy->mis_received_bank_detail : ''}}" class="form-control" placeholder="enter bank details = todo ">
+                                                                    <input type="number" name="mis_received_bank_detail" value="{{isset($policy) ? $policy->mis_received_bank_detail : ''}}" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
@@ -1494,7 +1538,7 @@
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">PREMIUM SHORT
                                                                     </label>
-                                                                    <input type="number" name="mis_short_premium" value="{{isset($policy) ? $policy->mis_short_premium : ''}}" class="form-control" placeholder="GROSS PREMIUM - PREMIUM RECEIVED AMOUNT = todo ">
+                                                                    <input type="number" name="mis_short_premium" value="{{isset($policy) ? $policy->mis_short_premium : ''}}" class="form-control">
                                                                 </div>
                                                             </div>
 
@@ -1504,13 +1548,13 @@
                                                             <div class="col-lg-3 ">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">PREMIUM DEPOSITED</label>
-                                                                    <input type="number" name="mis_premium_deposit" value="{{isset($policy) ? $policy->mis_premium_deposit : ''}}" class="form-control" placeholder="PREMIUM DEPOSITED = todo ">
+                                                                    <input type="number" name="mis_premium_deposit" value="{{isset($policy) ? $policy->mis_premium_deposit : ''}}" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3  text-center">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">PREMIUM DEPOSITED TO a/c</label>
-                                                                    <input type="number" name="mis_deposit_bank_detail" value="{{isset($policy) ? $policy->mis_deposit_bank_detail : ''}}" class="form-control" placeholder="enter bank details = todo ">
+                                                                    <input type="number" name="mis_deposit_bank_detail" value="{{isset($policy) ? $policy->mis_deposit_bank_detail : ''}}" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
@@ -1518,17 +1562,17 @@
                                                                     <label class="form-label">PAYMENT METHOD</label>
                                                                     <select name="mis_deposit_payment_method" class="form-control">
                                                                         <option value="">Select</option>
-                                                                        <option value="Cheque" {{ (isset($policy->mis_payment_method) && 'Cheque' == $policy->mis_payment_method) ? 'selected' : '' }}>Cheque</option>
-                                                                        <option value="DD/Draft" {{ (isset($policy->mis_payment_method) && 'DD/Draft' == $policy->mis_payment_method) ? 'selected' : '' }}>DD/Draft</option>
-                                                                        <option value="Bank Transfer" {{ (isset($policy->mis_payment_method) && 'Bank Transfer' == $policy->mis_payment_method) ? 'selected' : '' }}>Bank Transfer</option>
-                                                                        <option value="Online" {{ (isset($policy->mis_payment_method) && 'Online' == $policy->mis_payment_method) ? 'selected' : '' }}>Online</option>
+                                                                        <option value="Cheque" {{ (isset($policy->mis_deposit_payment_method) && 'Cheque' == $policy->mis_deposit_payment_method) ? 'selected' : '' }}>Cheque</option>
+                                                                        <option value="DD/Draft" {{ (isset($policy->mis_deposit_payment_method) && 'DD/Draft' == $policy->mis_deposit_payment_method) ? 'selected' : '' }}>DD/Draft</option>
+                                                                        <option value="Bank Transfer" {{ (isset($policy->mis_deposit_payment_method) && 'Bank Transfer' == $policy->mis_deposit_payment_method) ? 'selected' : '' }}>Bank Transfer</option>
+                                                                        <option value="Online" {{ (isset($policy->mis_deposit_payment_method) && 'Online' == $policy->mis_deposit_payment_method) ? 'selected' : '' }}>Online</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">PREMIUM PAYMENT SOURCE</label>
-                                                                    <input type="text" name="premium_payment_source" value="{{isset($policy) ? $policy->premium_payment_source : ''}}" class="form-control " placeholder="Remarks" id="premium_payment_source">
+                                                                    <input type="text" name="premium_payment_source" value="{{isset($policy) ? $policy->premium_payment_source : ''}}" class="form-control " id="premium_payment_source">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1557,28 +1601,28 @@
                                                                     </label>
                                                                     <select name="commission_base" class="form-control" id="">
                                                                         <option value="">Select Below</option>
-                                                                        <option value="od">OD</option>
-                                                                        <option value="net">Net</option>
+                                                                        <option value="od" {{ (isset($policy->commission_base) && 'od' == $policy->commission_base) ? 'selected' : '' }}>OD</option>
+                                                                        <option value="net" {{ (isset($policy->commission_base) && 'net' == $policy->commission_base) ? 'selected' : '' }}>Net</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">COMMISSIONABLE AMOUNT</label>
-                                                                    <input type="number" name="mis_commissionable_amount" value="{{isset($policy) ? $policy->mis_commissionable_amount : ''}}" onkeyup="commission()" class="form-control" placeholder="enter commission amount" id="mis_commissionable_amount">
+                                                                    <input type="number" name="mis_commissionable_amount" value="{{isset($policy) ? $policy->mis_commissionable_amount : ''}}" onkeyup="commission()" class="form-control" id="mis_commissionable_amount">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">PERCENTAGE</label>
-                                                                    <input type="number" name="mis_percentage" value="{{isset($policy) ? $policy->mis_percentage : ''}}" onkeyup="commission()" class="form-control" placeholder="enter percentage" id="mis_percentage">
+                                                                    <input type="number" name="mis_percentage" value="{{isset($policy) ? $policy->mis_percentage : ''}}" onkeyup="commission()" class="form-control" id="mis_percentage">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3 ">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">AMOUNT
                                                                     </label>
-                                                                    <input type="text" name="mis_commission" value="{{isset($policy) ? $policy->mis_commission : ''}}" class="form-control" placeholder="enter commision" id="mis_commission">
+                                                                    <input type="text" name="mis_commission" value="{{isset($policy) ? $policy->mis_commission : ''}}" class="form-control" id="mis_commission">
                                                                 </div>
                                                             </div>
 
@@ -1588,26 +1632,26 @@
                                                             <div class="col-lg-3 ">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">PAYOUT SETTLED</label>
-                                                                    <input type="number" name="payout_settled" value="{{isset($policy) ? $policy->payout_settled : ''}}" class="form-control" placeholder="PREMIUM DEPOSITED = todo ">
+                                                                    <input type="number" name="payout_settled" value="{{isset($policy) ? $policy->payout_settled : ''}}" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3  text-center">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">INVOICE
                                                                     </label>
-                                                                    <input type="number" name="mis_invoice" value="{{isset($policy) ? $policy->mis_invoice : ''}}" class="form-control" placeholder="enter bank details = todo ">
+                                                                    <input type="number" name="mis_invoice" value="{{isset($policy) ? $policy->mis_invoice : ''}}" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">MONTH SETTLED</label>
-                                                                    <input type="number" name="month_settled" value="{{isset($policy) ? $policy->month_settled : ''}}" class="form-control" placeholder="enter bank details = todo ">
+                                                                    <input type="number" name="month_settled" value="{{isset($policy) ? $policy->month_settled : ''}}" class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="main-form-group background">
                                                                     <label class="form-label">RECOVERY</label>
-                                                                    <input type="text" name="payout_recovery" value="{{isset($policy) ? $policy->payout_recovery : ''}}" class="form-control " placeholder="Remarks" id="payout_recovery">
+                                                                    <input type="text" name="payout_recovery" value="{{isset($policy) ? $policy->payout_recovery : ''}}" class="form-control " id="payout_recovery">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1810,7 +1854,7 @@
         $("#home input").prop("disabled", true);
         $("#home select").prop("disabled", true);
 
-        $("select").select2();
+        $("#home select").select2();
         $('.motor-policy-details').hide();
         $('.vehicle-details').hide();
         $('.non-motor-policy-details').hide();
