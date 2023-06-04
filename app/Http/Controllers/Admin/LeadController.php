@@ -224,7 +224,23 @@ class LeadController extends Controller
     {
         $lead->update(['mark_read' => 1]);
         $company = Company::all();
-        return view('admin.lead.one', compact('lead', 'company'));
+        $insurances = Insurance::all();
+        $products = Product::all();
+        $subProducts = SubProduct::where('product_id', $lead->product_id)->get();
+        $companiess = Company::all();
+        $make = Make::where('subproduct_id', $lead->subproduct_id)->get();
+        $model = ModelMake::all();
+        $varients = MakeModel::where('make_id', $lead->model)->get();
+        $channels = Channel::all();
+        $roles = Role::all();
+        $users =  User::with('roles')->whereHas(
+            'roles',
+            function ($q) use ($lead) {
+                $q->where('id', '=', $lead->user_type);
+            }
+        )->get();
+
+        return view('admin.lead.one', compact('channels', 'lead', 'company', 'insurances', 'products', 'subProducts', 'companiess', 'make', 'model', 'varients', 'roles', 'users'));
     }
 
     /**

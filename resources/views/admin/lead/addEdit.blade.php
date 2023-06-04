@@ -16,10 +16,56 @@
         </div>
 
 
-        <style>
+        <style type="text/css">
             .background {
-                background-color: #ecf0fa !important;
-                margin: 8px;
+                margin: 10px 5px;
+            }
+
+            .main-form-group {
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+                background: #e8eaf3;
+                border: 0px solid #e3e8f7;
+            }
+
+            .main-form-group .form-label {
+                font-size: 12px;
+                text-align: left;
+                font-weight: 700;
+                color: #031b4e;
+            }
+
+            .select2-container--default .select2-selection--single {
+                border-color: #ebebff;
+                height: 30px;
+            }
+
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+                font-size: 12px !important;
+                line-height: 1 !important;
+                padding-left: 8px;
+                color: #6e7f96;
+            }
+
+            .main-form-group .form-control {
+                color: #6e7f96;
+            }
+
+            .formgroup-wrapper .form-control {
+                height: 30px !important;
+                font-size: 12px;
+                padding: 8px;
+                border: 1px solid #ebebff;
+            }
+
+            .card-body {
+                padding: 10px;
+            }
+
+            .select2-container--default .select2-selection--single .select2-selection__arrow {
+                width: 18px;
+                height: 30px;
             }
         </style>
     </div>
