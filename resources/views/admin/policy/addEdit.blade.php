@@ -1889,7 +1889,7 @@
         $('.health-section').hide();
         $('.wc-details').hide();
         $('.home-details').hide();
-        
+
         $('.fire-details').hide();
         $('.travel-details').hide();
         $('.travel-busness').hide();

@@ -3,6 +3,53 @@
 @section('content')
 
 <style>
+    .filter-box .card-body {
+        padding: 10px 15px !important;
+    }
+
+    .filter-box .form-control {
+        height: 30px;
+        line-height: 1.25;
+        margin-bottom: 5px;
+    }
+
+    .filter-box .mg-b-10 {
+        margin-bottom: 5px;
+    }
+
+    label[for="file-up"] {
+        text-align: center;
+        display: block;
+    }
+
+    label[for="file-up"] svg {
+        width: 24px;
+        cursor: pointer;
+    }
+
+    input#file-up {
+        display: none;
+    }
+
+    a.remove_us svg {
+        width: 12px;
+        height: 12px;
+        fill: #dd0909;
+        transform: translateY(-4px) translateX(-3px);
+        cursor: pointer;
+    }
+
+    a.view_files,
+    a.remove_us {
+        cursor: pointer !important;
+    }
+
+    a.view_files svg {
+        width: 18px;
+        stroke: #363636;
+        cursor: pointer;
+    }
+
     @media (max-width: 1650px) {
         td {
             font-size: 12px !important;
@@ -52,268 +99,289 @@
 
             </div>
         </div>
+        <form action="" method="get">
+            <div class="d-flex my-xl-auto right-content">
+                <div class="pe-1 mb-xl-0">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+                <div class="pe-1 mb-xl-0 filter-btn">
 
-        <div class="d-flex my-xl-auto right-content">
-            <div class="pe-1 mb-xl-0 filter-btn">
+                    <button type="button" class="btn btn-info btn-icon me-2 btn-b"><i class="mdi mdi-filter-variant"></i></button>
+                </div>
+                <div class="pe-1 mb-xl-0">
+                    <button type="button" class="btn btn-danger btn-icon me-2"><i class="mdi mdi-star"></i></button>
+                </div>
+                @if(isset($_GET['id']) && $_GET['id'] == 2)
+                <div class="pe-1 mb-xl-0">
 
-                <button type="button" class="btn btn-info btn-icon me-2 btn-b"><i class="mdi mdi-filter-variant"></i></button>
-            </div>
-            <div class="pe-1 mb-xl-0">
-                <button type="button" class="btn btn-danger btn-icon me-2"><i class="mdi mdi-star"></i></button>
-            </div>
-            @if(isset($_GET['id']) && $_GET['id'] == 2)
-            <div class="pe-1 mb-xl-0">
+                    <a class="btn btn-main-primary renew-btn " style="color:#fff">Bulk email</a>
 
-                <a class="btn btn-main-primary renew-btn " style="color:#fff">Bulk email</a>
-
-            </div>
-            @endif
-            <div class="mb-xl-0">
-                <div class="btn-group dropdown">
-                    <a class="btn btn-main-primary ml_auto" href="{{ route('policy.create') }}">Add Policy</a>
+                </div>
+                @endif
+                <div class="mb-xl-0">
+                    <div class="btn-group dropdown">
+                        <a class="btn btn-main-primary ml_auto" href="{{ route('policy.create') }}">Add Policy</a>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
     <!-- breadcrumb -->
-    <div class="card-body tableBody">
+    <!-- <div class="card-body tableBody">
         <div class="orderSearchHistory">
             @include('admin.policy.search')
         </div>
 
     </div>
-
+ -->
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
-            <form action="" method="get">
-                <div class="row row-sm filter-box hidden">
 
-                    <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-                        <div class="card ">
-                            <div class="card-body">
+            <div class="row row-sm filter-box hidden">
 
-                                <p class="mg-b-10">Policy Start date </p>
-                                <input type="date" name="expiry_from" value="{{isset($_GET['expiry_from']) ? $_GET['expiry_from'] : ''}}" class="form-control">
-                                <input type="hidden" name="id" value="{{isset($_GET['id']) ? $_GET['id'] : ''}}">
-                                <p class="mg-b-10">Policy end date </p>
-                                <input type="date" name="expiry_to" value="{{isset($_GET['expiry_to']) ? $_GET['expiry_to'] : ''}}" class="form-control">
-                            </div>
+                <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
+                    <div class="card ">
+                        <div class="card-body">
+
+                            <p class="mg-b-10">Policy Start date </p>
+                            <input type="date" name="expiry_from" value="{{isset($_GET['expiry_from']) ? $_GET['expiry_from'] : ''}}" class="form-control">
+                            <input type="hidden" name="id" value="{{isset($_GET['id']) ? $_GET['id'] : ''}}">
+                            <p class="mg-b-10">Policy end date </p>
+                            <input type="date" name="expiry_to" value="{{isset($_GET['expiry_to']) ? $_GET['expiry_to'] : ''}}" class="form-control">
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-                        <div class="card ">
-                            <div class="card-body">
+                </div>
+                <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
+                    <div class="card ">
+                        <div class="card-body">
 
-                                <p class="mg-b-10">Product</p>
-                                <select name="product" class="form-control">
-                                    <option value="">Select</option>
-                                    @if(isset($products) && $products->count())
-                                    @foreach($products as $product)
-                                    <option value="{{$product->id}}" {{ (isset($_GET['product']) && $product->id == $_GET['product']) ? 'selected' : '' }}>{{$product->name}}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                                <p class="mg-b-10">Broker</p>
-                                <select name="users" class="form-control">
-                                    <option value="">Select</option>
-                                    @if(isset($users) && $users->count())
-                                    @foreach($users as $user)
-                                    <option value="{{$user->id}}" {{ (isset($_GET['users']) && $user->id == $_GET['users']) ? 'selected' : '' }}>{{$user->name}}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                            </div>
+                            <p class="mg-b-10">Product</p>
+                            <select name="product" class="form-control">
+                                <option value="">Select</option>
+                                @if(isset($products) && $products->count())
+                                @foreach($products as $product)
+                                <option value="{{$product->id}}" {{ (isset($_GET['product']) && $product->id == $_GET['product']) ? 'selected' : '' }}>{{$product->name}}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                            <p class="mg-b-10">Broker</p>
+                            <select name="users" class="form-control">
+                                <option value="">Select</option>
+                                @if(isset($users) && $users->count())
+                                @foreach($users as $user)
+                                <option value="{{$user->id}}" {{ (isset($_GET['users']) && $user->id == $_GET['users']) ? 'selected' : '' }}>{{$user->name}}</option>
+                                @endforeach
+                                @endif
+                            </select>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-                        <div class="card ">
-                            <div class="card-body">
+                </div>
+                <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
+                    <div class="card ">
+                        <div class="card-body">
 
-                                <p class="mg-b-10">Search Anything</p>
-                                <input type="text" name="search_anything" value="{{isset($_GET['search_anything']) ? $_GET['search_anything'] : ''}}" class="form-control">
-                                @if(isset($_GET['id']) && $_GET['id'] == 2)
-                                <p class="mg-b-10">Follow Up Date</p>
-                                <input type="date" name="follow_ups" id="" class="form-control" value="{{isset($_GET['follow_ups']) ? $_GET['follow_ups'] : ''}}">
-                                @else
-                                <p class="mg-b-10">Status</p>
-                                <select name="is_paid" class="form-control">
-                                    <option value="">Select</option>
-                                    <option value="1" {{ (isset($_GET['is_paid']) && (1 == $_GET['is_paid'])) ? 'selected' : '' }}>Paid</option>
-                                    <option value="0" {{ (isset($_GET['is_paid']) && (0 == $_GET['is_paid'])) ? 'selected' : '' }}>Pending</option>
+                            <p class="mg-b-10">Search Anything</p>
+                            <input type="text" name="search_anything" value="{{isset($_GET['search_anything']) ? $_GET['search_anything'] : ''}}" class="form-control">
+                            @if(isset($_GET['id']) && $_GET['id'] == 2)
+                            <p class="mg-b-10">Follow Up Date</p>
+                            <input type="date" name="follow_ups" id="" class="form-control" value="{{isset($_GET['follow_ups']) ? $_GET['follow_ups'] : ''}}">
+                            @else
+                            <p class="mg-b-10">Status</p>
+                            <select name="is_paid" class="form-control">
+                                <option value="">Select</option>
+                                <option value="1" {{ (isset($_GET['is_paid']) && (1 == $_GET['is_paid'])) ? 'selected' : '' }}>Paid</option>
+                                <option value="0" {{ (isset($_GET['is_paid']) && (0 == $_GET['is_paid'])) ? 'selected' : '' }}>Pending</option>
 
-                                </select>
+                            </select>
+                            @endif
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
+                    <div class="card ">
+                        <div class="card-body">
+                            @if(isset($_GET['id']) && $_GET['id'] == 2)
+                            <p class="mg-b-10">Status</p>
+                            <select name="renew_status_search" class="form-control ">
+                                <option value="">Select</option>
+                                <option value="FOLLOW UP" {{ (isset($_GET['renew_status_search']) && ("FOLLOW UP" == $_GET['renew_status_search'])) ? 'selected' : '' }}>FOLLOW UP</option>
+                                <option value="VEHICLE SOLD" {{ (isset($_GET['renew_status_search']) && ("VEHICLE SOLD" == $_GET['renew_status_search'])) ? 'selected' : '' }}>VEHICLE SOLD</option>
+                                <option value="NOT INTERESTED" {{ (isset($_GET['renew_status_search']) && ("NOT INTERESTED" == $_GET['renew_status_search'])) ? 'selected' : '' }}>NOT INTERESTED</option>
+                                <option value="CLOSED" {{ (isset($_GET['renew_status_search']) && ("CLOSED" == $_GET['renew_status_search'])) ? 'selected' : '' }}>CLOSED</option>
+                            </select>
+                            @endif
+
+                            <p class="mg-b-10">Transaction</p>
+                            <select name="mis_transaction_type" class="form-control">
+                                <option value="">Select</option>
+                                <option value="Package" {{ (isset($_GET['mis_transaction_type']) && ("Package" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>Package</option>
+                                <option value="SOAD" {{ (isset($_GET['mis_transaction_type']) && ("SOAD" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>SOAD</option>
+                                <option value="TP" {{ (isset($_GET['mis_transaction_type']) && ("TP" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>TP</option>
+                                <option value="Endorsement" {{ (isset($_GET['mis_transaction_type']) && ("Endorsement" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>Endorsement</option>
+                            </select>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                    <!-- <button class="btn btn-info filter">Filter</button> -->
+
+                </div>
+
+            </div>
+
+            <div class="card">
+                <div class="card-header pb-0">
+                    <p class="tx-12 tx-gray-500 mb-2">Listing of All Policy...</p>
+                    <h6>Total records {{$count }}</h6>
+
+                    <select name="sort" class="sort-table">
+                        <option value="10" {{ (isset($_GET['sort']) && (10 == $_GET['sort'])) ? 'selected' : '' }}>10</option>
+                        <option value="50" {{ (isset($_GET['sort']) && (50 == $_GET['sort'])) ? 'selected' : '' }}>50</option>
+                        <option value="100" {{ (isset($_GET['sort']) && (100 == $_GET['sort'])) ? 'selected' : '' }}>100</option>
+                        <option value="200" {{ (isset($_GET['sort']) && (200 == $_GET['sort'])) ? 'selected' : '' }}>200</option>
+                        <option value="all" {{ (isset($_GET['sort']) && ('all' == $_GET['sort'])) ? 'selected' : '' }}>All</option>
+                    </select>
+                    <input type="hidden" name="id" value="{{isset($_GET['id']) ? $_GET['id'] : ''}}">
+                    <button type="submit" class="submit-sort" style="display:none;"></button>
+                    </form>
+                </div>
+                <div class="card-body">
+
+                    <!-- Listing all data in user tables -->
+                    <div class="table-responsive border-top userlist-table">
+                        <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
+                            <thead>
+                                <tr>
+                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
+                                    <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
+                                    @endif
+                                    @if(isset($_GET['id']) && $_GET['id'] == 1)
+                                    <th><span>Created On</span></th>
+
+                                    @endif
+                                    <th><span>Reference Name</span></th>
+                                    <th><span>Policy Holder Name</span></th>
+                                    <th><span>Company Name</span></th>
+                                    <th><span>Trasaction Type</span></th>
+                                    <th><span>Sub Product</span></th>
+                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
+
+                                    <th><span>Expiry Date</span></th>
+                                    <th><span>Followup Date</span></th>
+                                    <th><span>Attachment</span></th>
+                                    @endif
+                                    <!-- <th><span>Premium Status</span></th> -->
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if($leads->count())
+                                @foreach($leads as $lead)
+                                <tr style="@if($lead->mark_read == 0)  font-weight: bold; @endif">
+                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
+                                    <td><input type="checkbox" name="checked" class="checkSingle checkLead" data-id="{{$lead->id}}"></td>
+                                    @endif
+                                    @if(isset($_GET['id']) && $_GET['id'] == 1)
+
+                                    <td> <a href="{{route('policy.show',$lead->id)}}">{{!empty($lead->start_date) ? date('d-m-Y',strtotime($lead->start_date))  : ''}}</a></td>
+
+                                    @endif
+
+                                    <td>{{$lead->users->name ?? ''}}</td>
+
+                                    <td> <a href="{{route('policy.show',$lead->id)}}">
+                                            {{$lead->lead->holder_name ?? $lead->holder_name}} </a></td>
+                                    <td> <a href="{{route('policy.show',$lead->id)}}">
+                                            {{$lead->company->name ?? ''}} </a></td>
+                                    <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->mis_transaction_type ?? ''}}</a></td>
+                                    <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->subProduct->name ?? ''}}</a></td>
+
+                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
+
+                                    <td> <a href="{{route('policy.show',$lead->id)}}">{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
+                                    <td><input type="date" name="follow_up" value="{{$lead->follow_up ?? $lead->expiry_date }}" data-id="{{$lead->id ?? ''}}" class="form-control follow_up"></td>
+
+                                    <td>
+                                        <label for="file-up"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                                <title />
+                                                <g data-name="1" id="_1">
+                                                    <path d="M324.3,387.69H186a15,15,0,0,1-15-15V235.8H114.81a15,15,0,0,1-11.14-25.05L244,55.1a15,15,0,0,1,22.29,0L406.6,210.75a15,15,0,0,1-11.14,25.05H339.3V372.69A15,15,0,0,1,324.3,387.69ZM201,357.69H309.3V220.8a15,15,0,0,1,15-15h37.44L255.13,87.55,148.53,205.8H186a15,15,0,0,1,15,15Z" />
+                                                    <path d="M390.84,452.15H119.43a65.37,65.37,0,0,1-65.3-65.3V348.68a15,15,0,0,1,30,0v38.17a35.34,35.34,0,0,0,35.3,35.3H390.84a35.33,35.33,0,0,0,35.29-35.3V348.68a15,15,0,1,1,30,0v38.17A65.37,65.37,0,0,1,390.84,452.15Z" />
+                                                </g>
+                                            </svg></label>
+                                        <input id="file-up" type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
+                                        @if(!empty($lead->attachments))
+                                        @foreach($lead->attachments as $key => $attachment)
+                                        @if($attachment->type == 'Renewal')
+                                        <a class="view_files" href="{{URL::asset('attachments')}}/{{$attachment->file_name}}" target="_blank"><svg class="feather feather-file-text" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                                <polyline points="14 2 14 8 20 8" />
+                                                <line x1="16" x2="8" y1="13" y2="13" />
+                                                <line x1="16" x2="8" y1="17" y2="17" />
+                                                <polyline points="10 9 9 9 8 9" />
+                                            </svg></a>
+                                        <a href="{{route('delAttachment',$attachment->id)}}" class="remove_us" title="Delete Lead" data-toggle="tooltip" data-placement="top" data-method="DELETE" data-confirm-title="Please Confirm" data-confirm-text="Are you sure that you want to delete this Attachment?" data-confirm-delete="Yes, delete it!">
+                                            <svg height="512px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                <g>
+                                                    <path d="M256,33C132.3,33,32,133.3,32,257c0,123.7,100.3,224,224,224c123.7,0,224-100.3,224-224C480,133.3,379.7,33,256,33z    M364.3,332.5c1.5,1.5,2.3,3.5,2.3,5.6c0,2.1-0.8,4.2-2.3,5.6l-21.6,21.7c-1.6,1.6-3.6,2.3-5.6,2.3c-2,0-4.1-0.8-5.6-2.3L256,289.8   l-75.4,75.7c-1.5,1.6-3.6,2.3-5.6,2.3c-2,0-4.1-0.8-5.6-2.3l-21.6-21.7c-1.5-1.5-2.3-3.5-2.3-5.6c0-2.1,0.8-4.2,2.3-5.6l75.7-76   l-75.9-75c-3.1-3.1-3.1-8.2,0-11.3l21.6-21.7c1.5-1.5,3.5-2.3,5.6-2.3c2.1,0,4.1,0.8,5.6,2.3l75.7,74.7l75.7-74.7   c1.5-1.5,3.5-2.3,5.6-2.3c2.1,0,4.1,0.8,5.6,2.3l21.6,21.7c3.1,3.1,3.1,8.2,0,11.3l-75.9,75L364.3,332.5z" />
+                                                </g>
+                                            </svg>
+                                        </a>
+                                        @endif
+                                        @endforeach
+                                        @endif
+                                    </td>
+                                    @endif
+
+
+
+                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
+                                    <td>
+                                        <select name="renew_status" id="renew_status" data-id="{{$lead->id}}" class="form-control renew_status">
+                                            <option value="FOLLOW UP" {{isset($lead) && $lead->renew_status == 'FOLLOW UP' ? 'selected' : ''}}>FOLLOW UP</option>
+                                            <option value="VEHICLE SOLD" {{isset($lead) && $lead->renew_status == 'VEHICLE SOLD' ? 'selected' : ''}}>VEHICLE SOLD</option>
+                                            <option value="NOT INTERESTED" {{isset($lead) && $lead->renew_status == 'NOT INTERESTED' ? 'selected' : ''}}>NOT INTERESTED</option>
+
+                                            <option value="CLOSED" {{isset($lead) && $lead->renew_status == 'CLOSED' ? 'selected' : ''}}>CLOSED</option>
+                                        </select>
+                                    </td>
+                                    @else
+                                    <!-- {{$lead->renew_status}} -->
+                                    @endif
+
+
+                                    <td class="btn-group">
+                                        <!-- <a class="btn btn-sm btn-info btn-b endrosment-btn" data-id="{{$lead->id ?? ''}}" data-toggle="tooltip" title="Endrosment Sent">📜</a> -->
+                                        <button class="btn btn-sm btn-info btn-b common-btn" type="button" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{ $lead->lead->holder_name ??$lead->holder_name }}" data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->subProduct->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}" data-toggle="tooltip" title="Send Mail!">📩</button>
+                                        @if(isset($_GET['id']) && $_GET['id'] == 1)
+                                        <a href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b" data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>
+                                        </a>
+                                        <a href="{{route('policy.destroy',$lead->id)}}" class="btn btn-sm btn-danger remove_us" title="Delete Lead" data-toggle="tooltip" data-placement="top" data-method="DELETE" data-confirm-title="Please Confirm" data-confirm-text="Are you sure that you want to delete this Lead?" data-confirm-delete="Yes, delete it!">
+                                            <i class="las la-trash"></i>
+                                        </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
                                 @endif
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-                        <div class="card ">
-                            <div class="card-body">
-                                @if(isset($_GET['id']) && $_GET['id'] == 2)
-                                <p class="mg-b-10">Status</p>
-                                <select name="renew_status_search" class="form-control ">
-                                    <option value="">Select</option>
-                                    <option value="FOLLOW UP" {{ (isset($_GET['renew_status_search']) && ("FOLLOW UP" == $_GET['renew_status_search'])) ? 'selected' : '' }}>FOLLOW UP</option>
-                                    <option value="VEHICLE SOLD" {{ (isset($_GET['renew_status_search']) && ("VEHICLE SOLD" == $_GET['renew_status_search'])) ? 'selected' : '' }}>VEHICLE SOLD</option>
-                                    <option value="NOT INTERESTED" {{ (isset($_GET['renew_status_search']) && ("NOT INTERESTED" == $_GET['renew_status_search'])) ? 'selected' : '' }}>NOT INTERESTED</option>
-                                    <option value="CLOSED" {{ (isset($_GET['renew_status_search']) && ("CLOSED" == $_GET['renew_status_search'])) ? 'selected' : '' }}>CLOSED</option>
-                                </select>
-                                @endif
+                            </tbody>
 
-                                <p class="mg-b-10">Transaction</p>
-                                <select name="mis_transaction_type" class="form-control">
-                                    <option value="">Select</option>
-                                    <option value="Package" {{ (isset($_GET['mis_transaction_type']) && ("Package" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>Package</option>
-                                    <option value="SOAD" {{ (isset($_GET['mis_transaction_type']) && ("SOAD" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>SOAD</option>
-                                    <option value="TP" {{ (isset($_GET['mis_transaction_type']) && ("TP" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>TP</option>
-                                    <option value="Endorsement" {{ (isset($_GET['mis_transaction_type']) && ("Endorsement" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>Endorsement</option>
-                                </select>
+                        </table>
+                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','renew_status_search'=>$_GET['renew_status_search']?? '','mis_transaction_type'=>$_GET['mis_transaction_type']?? '','sort' => $_GET['sort'] ??'10'])->links("vendor.pagination.bootstrap-4")}}
 
 
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                        <button class="btn btn-info filter">Filter</button>
 
                     </div>
 
                 </div>
-
-                <div class="card">
-                    <div class="card-header pb-0">
-                        <p class="tx-12 tx-gray-500 mb-2">Listing of All Policy...</p>
-                        <h6>Total records {{$count }}</h6>
-
-                        <select name="sort" class="sort-table">
-                            <option value="10" {{ (isset($_GET['sort']) && (10 == $_GET['sort'])) ? 'selected' : '' }}>10</option>
-                            <option value="50" {{ (isset($_GET['sort']) && (50 == $_GET['sort'])) ? 'selected' : '' }}>50</option>
-                            <option value="100" {{ (isset($_GET['sort']) && (100 == $_GET['sort'])) ? 'selected' : '' }}>100</option>
-                            <option value="200" {{ (isset($_GET['sort']) && (200 == $_GET['sort'])) ? 'selected' : '' }}>200</option>
-                            <option value="all" {{ (isset($_GET['sort']) && ('all' == $_GET['sort'])) ? 'selected' : '' }}>All</option>
-                        </select>
-                        <input type="hidden" name="id" value="{{isset($_GET['id']) ? $_GET['id'] : ''}}">
-                        <button type="submit" class="submit-sort" style="display:none;"></button>
-            </form>
-        </div>
-        <div class="card-body">
-
-            <!-- Listing all data in user tables -->
-            <div class="table-responsive border-top userlist-table">
-                <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
-                    <thead>
-                        <tr>
-                            @if(isset($_GET['id']) && $_GET['id'] == 2)
-                            <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
-                            @endif
-                            @if(isset($_GET['id']) && $_GET['id'] == 1)
-                            <th><span>Created On</span></th>
-
-                            @endif
-                            <th><span>Reference Name</span></th>
-                            <th><span>Policy Holder Name</span></th>
-                            <th><span>Company Name</span></th>
-                            <th><span>Trasaction Type</span></th>
-                            <th><span>Sub Product</span></th>
-                            @if(isset($_GET['id']) && $_GET['id'] == 2)
-
-                            <th><span>Expiry Date</span></th>
-                            <th><span>Followup Date</span></th>
-                            <th><span>Attachment</span></th>
-                            @endif
-                            <!-- <th><span>Premium Status</span></th> -->
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if($leads->count())
-                        @foreach($leads as $lead)
-                        <tr style="@if($lead->mark_read == 0)  font-weight: bold; @endif">
-                            @if(isset($_GET['id']) && $_GET['id'] == 2)
-                            <td><input type="checkbox" name="checked" class="checkSingle checkLead" data-id="{{$lead->id}}"></td>
-                            @endif
-                            @if(isset($_GET['id']) && $_GET['id'] == 1)
-
-                            <td> <a href="{{route('policy.show',$lead->id)}}">{{!empty($lead->start_date) ? date('d-m-Y',strtotime($lead->start_date))  : ''}}</a></td>
-
-                            @endif
-
-                            <td>{{$lead->users->name ?? ''}}</td>
-
-                            <td> <a href="{{route('policy.show',$lead->id)}}">
-                                    {{$lead->lead->holder_name ?? $lead->holder_name}} </a></td>
-                            <td> <a href="{{route('policy.show',$lead->id)}}">
-                                    {{$lead->company->name ?? ''}} </a></td>
-                            <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->mis_transaction_type ?? ''}}</a></td>
-                            <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->subProduct->name ?? ''}}</a></td>
-
-                            @if(isset($_GET['id']) && $_GET['id'] == 2)
-
-                            <td> <a href="{{route('policy.show',$lead->id)}}">{{!empty($lead->expiry_date) ? date('d-m-Y',strtotime($lead->expiry_date))  : ''}}</a></td>
-                            <td><input type="date" name="follow_up" value="{{$lead->follow_up ?? $lead->expiry_date }}" data-id="{{$lead->id ?? ''}}" class="form-control follow_up"></td>
-
-                            <td><input type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
-                                @if(!empty($lead->attachments))
-                                @foreach($lead->attachments as $key => $attachment)
-                                @if($attachment->type == 'Renewal')
-                                <a href="{{URL::asset('attachments')}}/{{$attachment->file_name}}" target="_blank">View</a>
-                                <a href="{{route('delAttachment',$attachment->id)}}" class="remove_us" title="Delete Lead" data-toggle="tooltip" data-placement="top" data-method="DELETE" data-confirm-title="Please Confirm" data-confirm-text="Are you sure that you want to delete this Attachment?" data-confirm-delete="Yes, delete it!">
-                                    X
-                                </a>
-                                @endif
-                                @endforeach
-                                @endif
-                            </td>
-                            @endif
-
-
-
-                            @if(isset($_GET['id']) && $_GET['id'] == 2)
-                            <td>
-                                <select name="renew_status" id="renew_status" data-id="{{$lead->id}}" class="form-control renew_status">
-                                    <option value="FOLLOW UP" {{isset($lead) && $lead->renew_status == 'FOLLOW UP' ? 'selected' : ''}}>FOLLOW UP</option>
-                                    <option value="VEHICLE SOLD" {{isset($lead) && $lead->renew_status == 'VEHICLE SOLD' ? 'selected' : ''}}>VEHICLE SOLD</option>
-                                    <option value="NOT INTERESTED" {{isset($lead) && $lead->renew_status == 'NOT INTERESTED' ? 'selected' : ''}}>NOT INTERESTED</option>
-
-                                    <option value="CLOSED" {{isset($lead) && $lead->renew_status == 'CLOSED' ? 'selected' : ''}}>CLOSED</option>
-                                </select>
-                            </td>
-                            @else
-                            <!-- {{$lead->renew_status}} -->
-                            @endif
-
-
-                            <td class="btn-group">
-                                <!-- <a class="btn btn-sm btn-info btn-b endrosment-btn" data-id="{{$lead->id ?? ''}}" data-toggle="tooltip" title="Endrosment Sent">📜</a> -->
-                                <button class="btn btn-sm btn-info btn-b common-btn" type="button" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{ $lead->lead->holder_name ??$lead->holder_name }}" data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->subProduct->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}" data-toggle="tooltip" title="Send Mail!">📩</button>
-                                @if(isset($_GET['id']) && $_GET['id'] == 1)
-                                <a href="{{route('policy.edit',$lead->id)}}" class="btn btn-sm btn-info btn-b" data-toggle="tooltip" title="Edit Policy"><i class="las la-pen"></i>
-                                </a>
-                                <a href="{{route('policy.destroy',$lead->id)}}" class="btn btn-sm btn-danger remove_us" title="Delete Lead" data-toggle="tooltip" data-placement="top" data-method="DELETE" data-confirm-title="Please Confirm" data-confirm-text="Are you sure that you want to delete this Lead?" data-confirm-delete="Yes, delete it!">
-                                    <i class="las la-trash"></i>
-                                </a>
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
-                        @endif
-
-                    </tbody>
-
-                </table>
-                {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','renew_status_search'=>$_GET['renew_status_search']?? '','mis_transaction_type'=>$_GET['mis_transaction_type']?? '','sort' => $_GET['sort'] ??'10'])->links("vendor.pagination.bootstrap-4")}}
-
-
-
             </div>
-
         </div>
+        <!-- COL END -->
     </div>
-</div>
-<!-- COL END -->
-</div>
 
 </div>
 
