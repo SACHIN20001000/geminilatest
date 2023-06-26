@@ -147,7 +147,7 @@
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
-                                                                <label class="form-label">INSURANCE COMPANY</label>
+                                                                <label class="form-label">Insurer</label>
                                                                 <select name="company_id" class="select2 form-control common- " id="company_id">
                                                                     <option value="">Select Below</option>
                                                                     @if($companies->count())
@@ -188,33 +188,184 @@
                                                     </div>
                                                 </div>
                                                 <div class="row main-row">
-                                                    <div class="row row-xs formgroup-wrapper">
-                                                        <div class="col-lg-6  text-center">
-                                                            <div class="main-form-group background">
-                                                                <label class="form-label">TYPE OF BUSINESS</label>
-                                                                <select name="bussiness_type" class="form-control" id="bussiness_type">
-                                                                    <option value="">Select</option>
-                                                                    <option value="New" {{ (isset($policy) && "New" == $policy->bussiness_type) ? 'selected' : '' }}>New</option>
-                                                                    <option value="Rollover" {{ (isset($policy) && "Rollover" == $policy->bussiness_type) ? 'selected' : '' }}>Rollover</option>
-                                                                    <option value="Renewal" {{ (isset($policy) && "Renewal" == $policy->bussiness_type) ? 'selected' : '' }}>Renewal</option>
-                                                                    <option value="Used" {{ (isset($policy) && "Used" == $policy->bussiness_type) ? 'selected' : '' }}>Used</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6  text-center">
-                                                            <div class="main-form-group background">
-                                                                <label class="form-label "> TRANSACTION TYPE</label>
-                                                                <select name="mis_transaction_type" class="form-control">
-                                                                    <option value="">Select</option>
-                                                                    <option value="Package" {{ (isset($policy->mis_transaction_type) && 'Package' == $policy->mis_transaction_type) ? 'selected' : '' }}>Package</option>
-                                                                    <option value="SOAD" {{ (isset($policy->mis_transaction_type) && 'SOAD' == $policy->mis_transaction_type) ? 'selected' : '' }}>SOAD</option>
-                                                                    <option value="TP" {{ (isset($policy->mis_transaction_type) && 'TP' == $policy->mis_transaction_type) ? 'selected' : '' }}>TP</option>
-                                                                    <option value="Endorsement" {{ (isset($policy->mis_transaction_type) && 'Endorsement' == $policy->mis_transaction_type) ? 'selected' : '' }}>Endorsement</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
+                                                    <div class="normal">
+                                                        <div class="row row-xs formgroup-wrapper">
 
+                                                            <div class="col-lg-6  text-center   travel-busness">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">TYPE OF BUSINESS</label>
+                                                                    <select name="bussiness_type" class="form-control" id="bussiness_type">
+                                                                        <option value="">Select</option>
+                                                                        <option value="New" {{ (isset($policy) && "New" == $policy->bussiness_type) ? 'selected' : '' }}>New</option>
+                                                                        <option value="Extension" {{ (isset($policy) && "Extension" == $policy->bussiness_type) ? 'selected' : '' }}>Extension</option>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6  text-center normal-business ">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">TYPE OF BUSINESS</label>
+                                                                    <select name="bussiness_type" class="form-control" id="bussiness_type">
+                                                                        <option value="">Select</option>
+                                                                        <option value="New" {{ (isset($policy) && "New" == $policy->bussiness_type) ? 'selected' : '' }}>New</option>
+                                                                        <option value="Rollover" {{ (isset($policy) && "Rollover" == $policy->bussiness_type) ? 'selected' : '' }}>Rollover</option>
+                                                                        <option value="Renewal" {{ (isset($policy) && "Renewal" == $policy->bussiness_type) ? 'selected' : '' }}>Renewal</option>
+                                                                        <option value="Used" {{ (isset($policy) && "Used" == $policy->bussiness_type) ? 'selected' : '' }}>Used</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6  text-center">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label "> TRANSACTION TYPE</label>
+                                                                    <select name="mis_transaction_type" class="form-control">
+                                                                        <option value="">Select</option>
+                                                                        <option value="Package" {{ (isset($policy->mis_transaction_type) && 'Package' == $policy->mis_transaction_type) ? 'selected' : '' }}>Package</option>
+                                                                        <option value="SOAD" {{ (isset($policy->mis_transaction_type) && 'SOAD' == $policy->mis_transaction_type) ? 'selected' : '' }}>SOAD</option>
+                                                                        <option value="TP" {{ (isset($policy->mis_transaction_type) && 'TP' == $policy->mis_transaction_type) ? 'selected' : '' }}>TP</option>
+                                                                        <option value="Endorsement" {{ (isset($policy->mis_transaction_type) && 'Endorsement' == $policy->mis_transaction_type) ? 'selected' : '' }}>Endorsement</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
+                                                    <div class="health">
+                                                        <div class="row row-xs formgroup-wrapper">
+
+                                                            <div class="col-lg-6  text-center ">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">TYPE OF BUSINESS</label>
+                                                                    <select name="bussiness_type" class="form-control" id="bussiness_type">
+                                                                        <option value="">Select</option>
+                                                                        <option value="Fresh" {{ (isset($policy) && "Fresh" == $policy->bussiness_type) ? 'selected' : '' }}>Fresh</option>
+                                                                        <option value="Port" {{ (isset($policy) && "Port" == $policy->bussiness_type) ? 'selected' : '' }}>Port</option>
+                                                                        <option value="Renewal" {{ (isset($policy) && "Renewal" == $policy->bussiness_type) ? 'selected' : '' }}>Renewal</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-6  text-center">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label "> TRANSACTION TYPE</label>
+                                                                    <select name="mis_transaction_type" class="form-control">
+                                                                        <option value="">Select</option>
+                                                                        <option value="Base" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Base') ? 'selected' : '' }}>Base</option>
+                                                                        <option value="Topup" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Topup') ? 'selected' : '' }}>Topup</option>
+                                                                        <option value="Critical" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Critical') ? 'selected' : '' }}>Critical</option>
+                                                                        <option value="PA" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'PA') ? 'selected' : '' }}>PA</option>
+                                                                        <option value="Others" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Others') ? 'selected' : '' }}>Others</option>
+                                                                        <option value="Endorsement" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Endorsement') ? 'selected' : '' }}>Endorsement</option>
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="fire">
+                                                        <div class="row row-xs formgroup-wrapper">
+
+                                                            <div class="col-lg-6  text-center  ">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">TYPE OF BUSINESS</label>
+                                                                    <select name="bussiness_type" class="form-control" id="bussiness_type">
+                                                                        <option value="">Select</option>
+                                                                        <option value="New" {{ (isset($policy) && $policy->bussiness_type === 'New') ? 'selected' : '' }}>New</option>
+                                                                        <option value="Rollover" {{ (isset($policy) && $policy->bussiness_type === 'Rollover') ? 'selected' : '' }}>Rollover</option>
+                                                                        <option value="Renewal" {{ (isset($policy) && $policy->bussiness_type === 'Renewal') ? 'selected' : '' }}>Renewal</option>
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-6  text-center">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label "> TRANSACTION TYPE</label>
+                                                                    <select name="mis_transaction_type" class="form-control">
+                                                                        <option value="">Select</option>
+                                                                        <option value="Laghu" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Laghu') ? 'selected' : '' }}>Laghu</option>
+                                                                        <option value="Sooksham" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Sooksham') ? 'selected' : '' }}>Sooksham</option>
+                                                                        <option value="Package" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Package') ? 'selected' : '' }}>Package</option>
+                                                                        <option value="Others" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Others') ? 'selected' : '' }}>Others</option>
+                                                                        <option value="Endorsement" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Endorsement') ? 'selected' : '' }}>Endorsement</option>
+                                                                    </select>
+
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="wc">
+                                                        <div class="row row-xs formgroup-wrapper">
+
+                                                            <div class="col-lg-6  text-center  ">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">TYPE OF BUSINESS</label>
+                                                                    <select name="bussiness_type" class="form-control" id="bussiness_type">
+                                                                        <option value="">Select</option>
+                                                                        <option value="New" {{ (isset($policy) && $policy->bussiness_type === 'New') ? 'selected' : '' }}>New</option>
+                                                                        <option value="Rollover" {{ (isset($policy) && $policy->bussiness_type === 'Rollover') ? 'selected' : '' }}>Rollover</option>
+                                                                        <option value="Renewal" {{ (isset($policy) && $policy->bussiness_type === 'Renewal') ? 'selected' : '' }}>Renewal</option>
+                                                                        <option value="Enhancement" {{ (isset($policy) && $policy->bussiness_type === 'Enhancement') ? 'selected' : '' }}>Enhancement</option>
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-6  text-center">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label "> TRANSACTION TYPE</label>
+                                                                    <select name="mis_transaction_type" class="form-control">
+                                                                        <option value="">Select</option>
+                                                                        <option value="Package" {{ (isset($policy->mis_transaction_type) && 'Package' == $policy->mis_transaction_type) ? 'selected' : '' }}>Package</option>
+                                                                        <option value="SOAD" {{ (isset($policy->mis_transaction_type) && 'SOAD' == $policy->mis_transaction_type) ? 'selected' : '' }}>SOAD</option>
+                                                                        <option value="TP" {{ (isset($policy->mis_transaction_type) && 'TP' == $policy->mis_transaction_type) ? 'selected' : '' }}>TP</option>
+                                                                        <option value="Endorsement" {{ (isset($policy->mis_transaction_type) && 'Endorsement' == $policy->mis_transaction_type) ? 'selected' : '' }}>Endorsement</option>
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="marine">
+                                                        <div class="row row-xs formgroup-wrapper">
+
+                                                            <div class="col-lg-6  text-center  ">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">TYPE OF BUSINESS</label>
+                                                                    <select name="bussiness_type" class="form-control" id="bussiness_type">
+                                                                        <option value="">Select</option>
+                                                                        <option value="New" {{ (isset($policy) && $policy->bussiness_type === 'New') ? 'selected' : '' }}>New</option>
+                                                                        <option value="Rollover" {{ (isset($policy) && $policy->bussiness_type === 'Rollover') ? 'selected' : '' }}>Rollover</option>
+                                                                        <option value="Renewal" {{ (isset($policy) && $policy->bussiness_type === 'Renewal') ? 'selected' : '' }}>Renewal</option>
+                                                                        <option value="Enhancement" {{ (isset($policy) && $policy->bussiness_type === 'Enhancement') ? 'selected' : '' }}>Enhancement</option>
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-6  text-center">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label "> TRANSACTION TYPE</label>
+                                                                    <select name="mis_transaction_type" class="form-control">
+                                                                        <option value="">Select</option>
+                                                                        <option value="RAIL" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'RAIL') ? 'selected' : '' }}>RAIL</option>
+                                                                        <option value="ROAD" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'ROAD') ? 'selected' : '' }}>ROAD</option>
+                                                                        <option value="AIR" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'AIR') ? 'selected' : '' }}>AIR</option>
+                                                                        <option value="SEA" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'SEA') ? 'selected' : '' }}>SEA</option>
+                                                                        <option value="COURIER" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'COURIER') ? 'selected' : '' }}>COURIER</option>
+                                                                        <option value="ALL" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'ALL') ? 'selected' : '' }}>ALL</option>
+                                                                    </select>
+
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
                                                     <div class="row row-xs formgroup-wrapper">
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
@@ -224,7 +375,7 @@
                                                         </div>
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
-                                                                <label class="form-label">Policy Holder Phone Number</label>
+                                                                <label class="form-label">Policy Holder Phone </label>
                                                                 <input class="form-control" name="phone" type="text" value="{{isset($policy) ? $policy->phone : '' }}">
                                                             </div>
                                                         </div>
@@ -250,6 +401,56 @@
                                                     </div>
 
                                                 </div>
+
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container liability-details">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="row align-items-center ">
+                                            <div class="col-sm-2">
+                                                <div>Details</div>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <div class="row main-row">
+                                                    <div class="row row-xs formgroup-wrapper">
+
+                                                        <div class="col-lg-4  text-center">
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">COVERAGES REQUIRED
+                                                                </label>
+                                                                <input type="text" name="measures_taken_after_loss" value="{{isset($policy) ? $policy->measures_taken_after_loss : ''}}" class="form-control feild" id="measures_taken_after_loss">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="main-form-group background">
+
+                                                                <p class="mg-t-10 mg-b-1">Sum Insured</p>
+                                                                <input type="text" name="sum_insured" value="{{isset($policy) ? $policy->sum_insured : ''}}" class="form-control " id="sum_insured">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">Remarks
+                                                                </label>
+                                                                <textarea name="remarks" class="form-control " cols="30" rows="30" id="remarks">{{isset($policy) ? $policy->remarks : ''}}</textarea>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+
+                                                </div>
+
 
 
 
@@ -337,6 +538,20 @@
                                                                 </select>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-3  text-center vehicle-sub-class">
+                                                            <div class="main-form-group background vehicle-sub-class">
+                                                                <label class="form-label">Vehicle Sub Class </label>
+                                                                <select name="cc" class="select2 form-control" id="cc">
+                                                                    <option value="">Select Below</option>
+                                                                    <option value="tractor" {{ (isset($policy) && $policy->cc === 'tractor') ? 'selected' : '' }}>Tractor</option>
+                                                                    <option value="ambulance" {{ (isset($policy) && $policy->cc === 'ambulance') ? 'selected' : '' }}>Ambulance</option>
+                                                                    <option value="excavator" {{ (isset($policy) && $policy->cc === 'excavator') ? 'selected' : '' }}>Excavator</option>
+                                                                    <option value="crane" {{ (isset($policy) && $policy->cc === 'crane') ? 'selected' : '' }}>Crane</option>
+                                                                    <option value="others" {{ (isset($policy) && $policy->cc === 'others') ? 'selected' : '' }}>Others</option>
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-3  text-center gvw">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">GVW </label>
@@ -370,7 +585,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
-                                                            <div class="main-form-group background">
+                                                            <div class="main-form-group background seating">
                                                                 <label class="form-label">Seating Capacity</label>
                                                                 <select name="seating_capacity" class="select2 form-control " id="seating">
                                                                     <option value="">Select Below</option>
@@ -382,6 +597,10 @@
                                                                     @endforeach
                                                                     @endif
                                                                 </select>
+                                                            </div>
+                                                            <div class="main-form-group background seating-pcv">
+                                                                <label class="form-label">Pax carrying limit</label>
+                                                                <input type="number" name="seating_capacity" value="{{isset($policy) ? $policy->seating_capacity : ''}}" class="form-control " id="seating_capacity">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
@@ -455,7 +674,7 @@
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
-                                                                <label class="form-label">NCB IN CURRENT POLICY</label>
+                                                                <label class="form-label">Eligible NCB</label>
                                                                 <select name="ncb_in_existing_policy" id="ncb_in_existing_policy" class="form-control ">
                                                                     <option value="">Select</option>
                                                                     <option value="0" {{ (isset($policy) && "0" == $policy->ncb_in_existing_policy) ? 'selected' : '' }}>0</option>
@@ -485,20 +704,20 @@
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">IDV/Sum insured</label>
-                                                                <input type="text" name="sum_insured" value="{{isset($policy) ? $policy->sum_insured : ''}}" class="form-control" id="sum_insured">
+                                                                <input type="number" name="sum_insured" value="{{isset($policy) ? $policy->sum_insured : ''}}" class="form-control" id="sum_insured">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">OD Premium</label>
-                                                                <input type="text" name="od_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->od_premium : ''}}" class="form-control " id="od_premium">
+                                                                <input type="number" name="od_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->od_premium : ''}}" class="form-control " id="od_premium">
 
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Add On Premium</label>
-                                                                <input type="text" name="add_on_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->add_on_premium : ''}}" class="form-control " id="add_on_premium">
+                                                                <input type="number" name="add_on_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->add_on_premium : ''}}" class="form-control " id="add_on_premium">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
@@ -522,27 +741,27 @@
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">PA+OTHERS</label>
-                                                                <input type="text" name="others" value="{{isset($policy) ? $policy->others : ''}}" onkeyup="grossPremium()" class="form-control " id="others">
+                                                                <input type="number" name="others" value="{{isset($policy) ? $policy->others : ''}}" onkeyup="grossPremium()" class="form-control " id="others">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Net Premium</label>
-                                                                <input type="text" name="net_premium" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control " id="net_premium">
+                                                                <input type="number" name="net_premium" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium">
 
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">GST</label>
-                                                                <input type="text" name="gst" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control " id="gst">
+                                                                <input type="number" name="gst" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control gst">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">GROSS PREMIUM
                                                                 </label>
-                                                                <input type="text" name="gross_premium" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control " id="gross_premium">
+                                                                <input type="number" name="gross_premium" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control gross_premium ">
 
                                                             </div>
                                                         </div>
@@ -596,21 +815,21 @@
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Net Premium</label>
-                                                                <input type="text" name="net_premium" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control " id="net_premium">
+                                                                <input type="number" name="net_premium" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium">
 
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">GST</label>
-                                                                <input type="text" name="gst" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control " id="gst">
+                                                                <input type="number" name="gst" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control gst">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label "> GROSS PREMIUM
                                                                 </label>
-                                                                <input type="text" name="gross_premium" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control " id="gross_premium">
+                                                                <input type="number" name="gross_premium" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control gross_premium">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -626,6 +845,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="container health-section">
                                 <div class="card">
                                     <div class="card-body">
@@ -638,8 +858,8 @@
                                                         <th>AGE</th>
                                                         <th>RELATION</th>
                                                         <th>SUM INSURED</th>
-                                                        <th>PRE EXISTING DISEASE</th>
-                                                        <th>HOSPITLIZATION HISTORY</th>
+                                                        <th>PED</th>
+                                                        <th>Hx HISTORY</th>
                                                         <th>UPLOAD</th>
                                                         <th>
                                                             <div class="btn-info btn add-health">Add</div>
@@ -1341,6 +1561,11 @@
                                                                 <label class="form-label">Visiting Country
                                                                 </label>
                                                                 <input type="text" name="visiting_country" value="{{isset($policy) ? $policy->visiting_country : ''}}" class="form-control feild" id="visiting_country">
+                                                                <select name="visiting_country" class="form-control" id="visiting_country">
+                                                                    <option value="">Select</option>
+                                                                    <option value="INCUDING US/CANADA" {{ (isset($policy) && "INCUDING US/CANADA" == $policy->visiting_country) ? 'selected' : '' }}>INCUDING US/CANADA</option>
+                                                                    <option value="EXCLUDING US/CANADA" {{ (isset($policy) && "EXCLUDING US/CANADA" == $policy->visiting_country) ? 'selected' : '' }}>EXCLUDING US/CANADA</option>
+                                                                </select>
                                                             </div>
                                                         </div>
 
@@ -1469,7 +1694,8 @@
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
-                                                                <label class="form-label">PREMIUM RECEIVED IN a/c</label>
+                                                                <label class="form-label">IN A/C
+                                                                </label>
                                                                 <input type="number" name="mis_received_bank_detail" value="{{isset($policy) ? $policy->mis_received_bank_detail : ''}}" class="form-control">
                                                             </div>
                                                         </div>
@@ -1504,7 +1730,8 @@
                                                         </div>
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
-                                                                <label class="form-label">PREMIUM DEPOSITED TO a/c</label>
+                                                                <label class="form-label">TO A/C
+                                                                </label>
                                                                 <input type="number" name="mis_deposit_bank_detail" value="{{isset($policy) ? $policy->mis_deposit_bank_detail : ''}}" class="form-control">
                                                             </div>
                                                         </div>
@@ -1522,7 +1749,8 @@
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
-                                                                <label class="form-label">PREMIUM PAYMENT SOURCE</label>
+                                                                <label class="form-label">PAYMENT SOURCE
+                                                                </label>
                                                                 <input type="text" name="premium_payment_source" value="{{isset($policy) ? $policy->premium_payment_source : ''}}" class="form-control " id="premium_payment_source">
                                                             </div>
                                                         </div>
@@ -1550,7 +1778,7 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">COMMISSION BASE
                                                                 </label>
-                                                                <select name="commission_base" class="form-control" id="">
+                                                                <select name="commission_base" class="form-control" id="commission_base">
                                                                     <option value="">Select Below</option>
                                                                     <option value="od" {{ (isset($policy->commission_base) && 'od' == $policy->commission_base) ? 'selected' : '' }}>OD</option>
                                                                     <option value="net" {{ (isset($policy->commission_base) && 'net' == $policy->commission_base) ? 'selected' : '' }}>Net</option>
@@ -1649,6 +1877,11 @@
 <script>
     $(document).ready(function() {
         $("select").select2();
+        $('.normal').show();
+        $('.health').hide();
+        $('.fire').hide();
+        $('.wc').hide();
+        $('.marine').hide();
         $('.motor-policy-details').hide();
         $('.vehicle-details').hide();
         $('.non-motor-policy-details').hide();
@@ -1658,6 +1891,12 @@
         $('.home-details').hide();
         $('.fire-details').hide();
         $('.travel-details').hide();
+        $('.travel-busness').hide();
+        $('.normal-business').show();
+        $('.seating').show();
+        $('.seating-pcv').hide();
+        $('.liability-details').hide();
+
 
         $(document).on('click', '.add-health', function() {
             $(".health-body").append(`  <tr>
@@ -1725,6 +1964,19 @@
                 });
             }
         });
+        $('#commission_base').change(function() {
+            if ($(this).val() !== '') {
+                var val = $(this).val();
+                if (val === 'net') {
+                    $('#mis_commissionable_amount').val(parseFloat($('#net_premium').val()));
+                } else {
+                    var odPremium = parseFloat($('#od_premium').val());
+                    var addOnPremium = parseFloat($('#add_on_premium').val());
+                    $('#mis_commissionable_amount').val(odPremium + addOnPremium);
+                }
+            }
+        });
+
         $('.reference_type').change(function() {
             if ($(this).val() != '') {
 
@@ -1841,18 +2093,29 @@
 
     function change(subproduct) {
 
-        if (subproduct == 'others' || subproduct == 'cpm' || subproduct == 'car' || subproduct == 'miscd') {
+        if (subproduct == 'cpm' || subproduct == 'car' || subproduct == 'miscd') {
             $('.motor-policy-details').show();
             $('.vehicle-details').show();
             $('.non-motor-policy-details').hide();
             $('.gvw').hide();
-            $('.cc-kw').show();
+            $('.cc-kw').hide();
+            $('.vehicle-sub-class').show();
             $('.health-section').hide();
             $('.marine-details').hide();
             $('.wc-details').hide();
             $('.home-details').hide();
             $('.fire-details').hide();
             $('.travel-details').hide();
+            $('.travel-busness').hide();
+            $('.normal-business').show();
+            $('.seating').show();
+            $('.seating-pcv').hide();
+            $('.normal').show();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
 
 
@@ -1868,12 +2131,20 @@
             $('.home-details').hide();
             $('.fire-details').hide();
             $('.travel-details').hide();
+            $('.travel-busness').hide();
+            $('.normal-business').show();
+            $('.liability-details').hide();
 
-
-
+            $('.seating').show();
+            $('.seating-pcv').hide();
+            $('.normal').hide();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').show();
 
         }
-        if (subproduct == 'liability') {
+        if (subproduct == 'liability' || subproduct == 'others') {
             $('.motor-policy-details').hide();
             $('.vehicle-details').hide();
             $('.non-motor-policy-details').show();
@@ -1881,26 +2152,42 @@
             $('.marine-details').hide();
             $('.wc-details').hide();
             $('.fire-details').hide();
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
             $('.home-details').hide();
             $('.travel-details').hide();
+            $('.normal').show();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').show();
 
         }
 
         if (subproduct == 'wc') {
             $('.gvw').hide();
             $('.cc-kw').show();
-            $('.motor-policy-details').show();
-            $('.vehicle-details').show();
-            $('.non-motor-policy-details').hide();
+            $('.vehicle-sub-class').hide();
+            $('.motor-policy-details').hide();
+            $('.vehicle-details').hide();
+            $('.non-motor-policy-details').show();
             $('.health-section').hide();
             $('.wc-details').show();
             $('.marine-details').hide();
             $('.home-details').hide();
             $('.fire-details').hide();
             $('.travel-details').hide();
-
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
+            $('.seating').show();
+            $('.seating-pcv').hide();
+            $('.normal').hide();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').show();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
         }
         if (subproduct == 'fire' || subproduct == 'burglary') {
@@ -1912,10 +2199,16 @@
             $('.wc-details').hide();
             $('.fire-details').show();
             $('.travel-details').hide();
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
+            $('.liability-details').hide();
 
             $('.home-details').hide();
-
+            $('.normal').hide();
+            $('.health').hide();
+            $('.fire').show();
+            $('.wc').hide();
+            $('.marine').hide();
         }
         if (subproduct == 'home') {
             $('.motor-policy-details').hide();
@@ -1927,7 +2220,14 @@
             $('.home-details').show();
             $('.fire-details').hide();
             $('.travel-details').hide();
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
+            $('.normal').show();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
         }
         if (subproduct == 'health') {
@@ -1941,7 +2241,14 @@
             $('.fire-details').hide();
             $('.home-details').hide();
             $('.travel-details').hide();
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
+            $('.normal').hide();
+            $('.health').show();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
         }
         if (subproduct == 'travel') {
@@ -1953,8 +2260,15 @@
             $('.wc-details').hide();
             $('.fire-details').hide();
             $('.travel-details').show();
-
+            $('.travel-busness').show();
+            $('.normal-business').hide();
             $('.home-details').hide();
+            $('.normal').show();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
 
         }
@@ -1963,6 +2277,7 @@
         if (subproduct == 'pvr') {
             $('.gvw').hide();
             $('.cc-kw').show();
+            $('.vehicle-sub-class').hide();
             $('.motor-policy-details').show();
             $('.health-section').hide();
             $('.vehicle-details').show();
@@ -1972,14 +2287,23 @@
             $('.home-details').hide();
             $('.fire-details').hide();
             $('.travel-details').hide();
-
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
+            $('.seating').show();
+            $('.seating-pcv').hide();
+            $('.normal').show();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
 
         }
         if (subproduct == 'pvt car') {
             $('.gvw').hide();
             $('.cc-kw').show();
+            $('.vehicle-sub-class').hide();
             $('.motor-policy-details').show();
             $('.vehicle-details').show();
             $('.non-motor-policy-details').hide();
@@ -1987,16 +2311,25 @@
             $('.marine-details').hide();
             $('.wc-details').hide();
             $('.travel-details').hide();
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
             $('.home-details').hide();
             $('.fire-details').hide();
-
+            $('.seating').show();
+            $('.seating-pcv').hide();
+            $('.normal').show();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
         }
         if (subproduct == 'gcv') {
             $('.motor-policy-details').show();
             $('.gvw').show();
             $('.cc-kw').hide();
+            $('.vehicle-sub-class').hide();
             $('.vehicle-details').show();
             $('.non-motor-policy-details').hide();
             $('.health-section').hide();
@@ -2005,12 +2338,22 @@
             $('.home-details').hide();
             $('.fire-details').hide();
             $('.travel-details').hide();
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
+            $('.seating').show();
+            $('.seating-pcv').hide();
+            $('.normal').show();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
         }
         if (subproduct == 'pcv') {
             $('.gvw').hide();
             $('.cc-kw').show();
+            $('.vehicle-sub-class').hide();
             $('.motor-policy-details').show();
             $('.vehicle-details').show();
             $('.non-motor-policy-details').hide();
@@ -2019,13 +2362,23 @@
             $('.wc-details').hide();
             $('.fire-details').hide();
             $('.travel-details').hide();
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
             $('.home-details').hide();
+            $('.seating').hide();
+            $('.seating-pcv').show();
+            $('.normal').show();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
         }
         if (subproduct == 'tw') {
             $('.gvw').hide();
             $('.cc-kw').show();
+            $('.vehicle-sub-class').hide();
             $('.motor-policy-details').show();
             $('.vehicle-details').show();
             $('.non-motor-policy-details').hide();
@@ -2033,9 +2386,18 @@
             $('.marine-details').hide();
             $('.wc-details').hide();
             $('.fire-details').hide();
-
+            $('.travel-busness').hide();
+            $('.normal-business').show();
             $('.home-details').hide();
             $('.travel-details').hide();
+            $('.seating').show();
+            $('.seating-pcv').hide();
+            $('.normal').show();
+            $('.health').hide();
+            $('.fire').hide();
+            $('.wc').hide();
+            $('.marine').hide();
+            $('.liability-details').hide();
 
         }
 
@@ -2044,23 +2406,26 @@
     }
 
     function commission() {
-        var commission_amount = $("#mis_commissionable_amount").val();
-        var commission_perc = $("#mis_percentage").val();
+        var commission_amount = parseFloat($("#mis_commissionable_amount").val());
+        var commission_perc = parseFloat($("#mis_percentage").val());
         var commission_calc = commission_amount * commission_perc / 100;
         $("#mis_commission").val(commission_calc);
     }
 
     function grossPremium() {
-        var od_premium = $("#od_premium").val();
-        var tp_premium = $("#tp_premium").val();
-        var add_on_premium = $("#add_on_premium").val();
-        var others = $("#others").val();
-        var gst = $("#gst").val();
-        console.log(typeof parseFloat(od_premium))
-        var gross = parseFloat(od_premium) + parseFloat(tp_premium) + parseFloat(add_on_premium); // + parseFloat(others) + parseFloat(gst);
-        console.log(typeof gross, gross);
-        $("#gross_premium").val(gross);
-        console.log();
+        var od_premium = $("#od_premium").val()
+        var tp_premium = $("#tp_premium").val()
+        var add_on_premium = $("#add_on_premium").val()
+        var others = $("#others").val()
+        var gst = $(".gst").val()
+
+        var gross = parseFloat(od_premium ?? 0) + parseFloat(tp_premium ?? 0) + parseFloat(add_on_premium ?? 0) + parseFloat(others ?? 0) + parseFloat(gst ?? 0);
+        console.log([gross, 'gross', od_premium, tp_premium, add_on_premium, others, gst]);
+        if (!isNaN(gross)) {
+            $(".gross_premium").val(gross);
+        } else {
+            $(".gross_premium").val('');
+        }
     }
 </script>
 
