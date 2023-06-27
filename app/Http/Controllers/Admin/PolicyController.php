@@ -155,6 +155,8 @@ class PolicyController extends Controller
         $policyInputs = $request->except('_token', 'attachment', 'type');
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         $policyInputs['is_policy'] = 1;
+        $policyInputs['cc'] = $request->cc ?? $request->vehicle_cc ?? null;
+
         if ($request->health_name && !empty($request->health_name)) {
             $health_hospitalization_upload = [];
             if (isset($request->health_hospitalization_upload) && !empty($request->health_hospitalization_upload)) {
@@ -285,9 +287,12 @@ class PolicyController extends Controller
     {
 
         $policyInputs = $request->except('_token', '_method', 'attachment', 'type');
+
         if ($request->mis_commission && !empty($request->mis_commission)) {
             $policyInputs['is_mis'] = 1;
         }
+        $policyInputs['cc'] = $request->cc ?? $request->vehicle_cc ?? null;
+
         if ($request->health_name && !empty($request->health_name)) {
             $health_hospitalization_upload = [];
             if (isset($request->health_hospitalization_upload) && !empty($request->health_hospitalization_upload)) {

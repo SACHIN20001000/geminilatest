@@ -156,6 +156,8 @@ class LeadController extends Controller
 
         $policyInputs = $request->except('holder_name', '_token', 'phone', 'email', 'type', 'user_type');
         $policyInputs['lead_id'] = $lead->id;
+        $policyInputs['cc'] = $request->cc ?? $request->vehicle_cc ?? null;
+
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         if ($request->health_name && !empty($request->health_name)) {
             $health_hospitalization_upload = [];
@@ -293,6 +295,8 @@ class LeadController extends Controller
         $lead->update($leadData);
         $policyInputs = $request->except('holder_name', '_token', '_method', 'phone', 'email', 'type', 'user_type');
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
+        $policyInputs['cc'] = $request->cc ?? $request->vehicle_cc ?? null;
+
         if ($request->health_name && !empty($request->health_name)) {
             $health_hospitalization_upload = [];
             if (isset($request->health_hospitalization_upload) && !empty($request->health_hospitalization_upload)) {

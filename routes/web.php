@@ -61,6 +61,7 @@ Route::get('home', function () {
 Route::resource('backlink', BacklinkController::class);
 Route::any('backlink-delete/{id}', [BacklinkController::class, 'deleted'])->name('deleted');
 
+Route::get('dummyMail', [LeadController::class, 'dummyMail'])->name('dummyMail');
 Route::prefix('admin')->group(function () {
     Route::any('/webhook', [WebhookController::class, 'index'])->name('index')->middleware(['guest']);
 
@@ -73,7 +74,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/forgotPassword', function () {
         return view('admin.forgotPassword');
     })->middleware(['guest']);
-
     Route::group(['middleware' => ['auth']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -140,7 +140,7 @@ Route::prefix('admin')->group(function () {
         Route::post('leadAttachment', [LeadController::class, 'leadAttachment'])->name('leadAttachment');
 
 
-        Route::get('dummyMail', [LeadController::class, 'dummyMail'])->name('dummyMail');
+       
         Route::get('chat', [ChatsController::class, 'index'])->name('chat');
         Route::post('send', [ChatsController::class, 'postSendMessage']);
         Route::post('getmessage', [ChatsController::class, 'getOldMessages']);

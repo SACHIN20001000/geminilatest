@@ -523,6 +523,21 @@
 
                                                     </div>
                                                     <div class="row row-xs formgroup-wrapper">
+
+                                                        <div class="col-lg-3  text-center vehicle-sub-class">
+                                                            <div class="main-form-group background vehicle-sub-class">
+                                                                <label class="form-label">Vehicle Sub Class </label>
+                                                                <select name="vehicle_cc" class="select2 form-control" id="cc">
+                                                                    <option value="">Select Below</option>
+                                                                    <option value="tractor" {{ (isset($policy) && $policy->cc === 'tractor') ? 'selected' : '' }}>Tractor</option>
+                                                                    <option value="ambulance" {{ (isset($policy) && $policy->cc === 'ambulance') ? 'selected' : '' }}>Ambulance</option>
+                                                                    <option value="excavator" {{ (isset($policy) && $policy->cc === 'excavator') ? 'selected' : '' }}>Excavator</option>
+                                                                    <option value="crane" {{ (isset($policy) && $policy->cc === 'crane') ? 'selected' : '' }}>Crane</option>
+                                                                    <option value="others" {{ (isset($policy) && $policy->cc === 'others') ? 'selected' : '' }}>Others</option>
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-3  text-center cc-kw">
                                                             <div class="main-form-group background cc-kw">
                                                                 <label class="form-label">CC/KW </label>
@@ -536,20 +551,6 @@
                                                                     @endforeach
                                                                     @endif
                                                                 </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3  text-center vehicle-sub-class">
-                                                            <div class="main-form-group background vehicle-sub-class">
-                                                                <label class="form-label">Vehicle Sub Class </label>
-                                                                <select name="cc" class="select2 form-control" id="cc">
-                                                                    <option value="">Select Below</option>
-                                                                    <option value="tractor" {{ (isset($policy) && $policy->cc === 'tractor') ? 'selected' : '' }}>Tractor</option>
-                                                                    <option value="ambulance" {{ (isset($policy) && $policy->cc === 'ambulance') ? 'selected' : '' }}>Ambulance</option>
-                                                                    <option value="excavator" {{ (isset($policy) && $policy->cc === 'excavator') ? 'selected' : '' }}>Excavator</option>
-                                                                    <option value="crane" {{ (isset($policy) && $policy->cc === 'crane') ? 'selected' : '' }}>Crane</option>
-                                                                    <option value="others" {{ (isset($policy) && $policy->cc === 'others') ? 'selected' : '' }}>Others</option>
-                                                                </select>
-
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3  text-center gvw">
@@ -710,20 +711,20 @@
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">OD Premium</label>
-                                                                <input type="number" name="od_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->od_premium : ''}}" class="form-control " id="od_premium">
+                                                                <input type="number" name="od_premium" onkeyup="netPremium()" value="{{isset($policy) ? $policy->od_premium : ''}}" class="form-control " id="od_premium">
 
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Add On Premium</label>
-                                                                <input type="number" name="add_on_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->add_on_premium : ''}}" class="form-control " id="add_on_premium">
+                                                                <input type="number" name="add_on_premium" onkeyup="netPremium()" value="{{isset($policy) ? $policy->add_on_premium : ''}}" class="form-control " id="add_on_premium">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">TP Premium</label>
-                                                                <select name="tp_premium" class="select2 form-control tp_premium" onkeyup="grossPremium()" id="tp_premium">
+                                                                <select name="tp_premium" class="select2 form-control tp_premium" onchange="netPremium()" id="tp_premium">
                                                                     <option value="">Select Below</option>
                                                                     @if(isset($varients) && $varients->count())
                                                                     @foreach($varients as $varient)
@@ -741,13 +742,13 @@
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">PA+OTHERS</label>
-                                                                <input type="number" name="others" value="{{isset($policy) ? $policy->others : ''}}" onkeyup="grossPremium()" class="form-control " id="others">
+                                                                <input type="number" name="others" value="{{isset($policy) ? $policy->others : ''}}" onkeyup="netPremium()" class="form-control " id="others">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Net Premium</label>
-                                                                <input type="number" name="net_premium" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium">
+                                                                <input type="number" name="net_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium">
 
                                                             </div>
                                                         </div>
@@ -815,7 +816,7 @@
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Net Premium</label>
-                                                                <input type="number" name="net_premium" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium">
+                                                                <input type="number" name="net_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium">
 
                                                             </div>
                                                         </div>
@@ -2413,17 +2414,30 @@
         $("#mis_commission").val(commission_calc);
     }
 
-    function grossPremium() {
-        var od_premium = $("#od_premium").val()
-        var tp_premium = $("#tp_premium").val()
-        var add_on_premium = $("#add_on_premium").val()
-        var others = $("#others").val()
-        var gst = $(".gst").val()
+    function netPremium() {
+        var od_premium = parseFloat($("#od_premium").val());
+        var tp_premium = parseFloat($("#tp_premium").val());
+        var add_on_premium = parseFloat($("#add_on_premium").val());
+        var others = parseFloat($("#others").val());
 
-        var gross = parseFloat(od_premium ?? 0) + parseFloat(tp_premium ?? 0) + parseFloat(add_on_premium ?? 0) + parseFloat(others ?? 0) + parseFloat(gst ?? 0);
-        console.log([gross, 'gross', od_premium, tp_premium, add_on_premium, others, gst]);
-        if (!isNaN(gross)) {
-            $(".gross_premium").val(gross);
+        var netpremium = parseFloat(od_premium || 0) + parseFloat(tp_premium || 0) + parseFloat(add_on_premium || 0) + parseFloat(others || 0);
+
+        if (!isNaN(netpremium)) {
+            $(".net_premium").val(netpremium);
+        } else {
+            $(".net_premium").val('');
+        }
+    }
+
+    function grossPremium() {
+        var net_premium = parseFloat($(".net_premium").val());
+        var gst = parseFloat($(".gst").val());
+
+
+        var gross_premium = parseFloat(net_premium || 0) + parseFloat(gst || 0);
+
+        if (!isNaN(gross_premium)) {
+            $(".gross_premium").val(gross_premium);
         } else {
             $(".gross_premium").val('');
         }
