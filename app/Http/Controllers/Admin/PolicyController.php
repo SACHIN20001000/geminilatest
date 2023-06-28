@@ -38,12 +38,7 @@ class PolicyController extends Controller
     {
 
         $products = SubProduct::all();
-        $users = User::with('roles')->whereHas(
-            'roles',
-            function ($q) {
-                $q->where('name', '=', 'Broker')->orwhere('name', '=', 'Staff');
-            }
-        )->get();
+        $users = User::all();
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns')->where(['is_policy' => 1]);
         if (isset($request->search_anything)   && !empty($request->search_anything)) {
             // $query->orwhereHas('lead', function ($q) use ($request) {
@@ -93,7 +88,7 @@ class PolicyController extends Controller
             $query->where('follow_up', $request->follow_ups);
         }
         if (isset($request->is_paid)   && !empty($request->is_paid)) {
-           
+
             if ($request->is_paid == 1) {
                 $query->whereColumn('mis_amount_paid', '=', 'gross_premium');
             } else {

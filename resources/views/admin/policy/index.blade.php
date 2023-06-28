@@ -233,7 +233,7 @@
             </div>
 
             <div class="card">
-                <div class="card-header pb-0">
+                <div class="card-header pb-0 " style="width: 20%;">
                     <p class="tx-12 tx-gray-500 mb-2">Listing of All Policy...</p>
                     <h6>Total records {{$count }}</h6>
 
@@ -456,6 +456,8 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $("select").select2();
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
