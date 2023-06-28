@@ -376,7 +376,7 @@
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Policy Holder Phone </label>
-                                                                <input class="form-control" name="phone" type="text" value="{{isset($policy) ? $policy->phone : '' }}">
+                                                                <input class="form-control" name="phone" type="number" value="{{isset($policy) ? $policy->phone : '' }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3  text-center">
@@ -670,7 +670,7 @@
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">POLICY NO </label>
-                                                                <input type="text" name="policy_no" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control " id="policy_no">
+                                                                <input type="number" name="policy_no" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control " id="policy_no">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -724,16 +724,8 @@
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">TP Premium</label>
-                                                                <select name="tp_premium" class="select2 form-control tp_premium" onchange="netPremium()" id="tp_premium">
-                                                                    <option value="">Select Below</option>
-                                                                    @if(isset($varients) && $varients->count())
-                                                                    @foreach($varients as $varient)
-                                                                    @if($varient->type == 'tp')
-                                                                    <option value="{{$varient->name}}" {{ (isset($policy) && $varient->name == $policy->tp_premium) ? 'selected' : '' }}>{{$varient->name}}</option>
-                                                                    @endif
-                                                                    @endforeach
-                                                                    @endif
-                                                                </select>
+
+                                                                <input type="number" name="tp_premium" onkeyup="netPremium()" value="{{isset($policy) ? $policy->tp_premium : ''}}" class="form-control " id="tp_premium">
                                                             </div>
                                                         </div>
 
@@ -794,20 +786,20 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">POLICY NO
                                                                 </label>
-                                                                <input type="text" name="policy_no" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control common- " id="policy_no">
+                                                                <input type="number" name="policy_no_normal" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control common- " id="policy_no">
                                                             </div>
                                                         </div>
 
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">POLICY START DATE</label>
-                                                                <input type="date" name="start_date" value="{{isset($policy) ? $policy->start_date : ''}}" class="form-control " id="start_date">
+                                                                <input type="date" name="start_date_normal" value="{{isset($policy) ? $policy->start_date : ''}}" class="form-control " id="start_date">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Policy Expiry Date</label>
-                                                                <input type="date" name="expiry_date" value="{{isset($policy) ? $policy->expiry_date : ''}}" class="form-control " id="expiry_date">
+                                                                <input type="date" name="expiry_date_normal" value="{{isset($policy) ? $policy->expiry_date : ''}}" class="form-control " id="expiry_date">
                                                             </div>
                                                         </div>
 
@@ -816,21 +808,21 @@
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Net Premium</label>
-                                                                <input type="number" name="net_premium" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium">
+                                                                <input type="number" name="net_premium_normal" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium">
 
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">GST</label>
-                                                                <input type="number" name="gst" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control gst">
+                                                                <input type="number" name="gst_normal" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control gst">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label "> GROSS PREMIUM
                                                                 </label>
-                                                                <input type="number" name="gross_premium" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control gross_premium">
+                                                                <input type="number" name="gross_premium_normal" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control gross_premium">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1495,37 +1487,9 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Claim In last 3 Years
                                                                 </label>
-                                                                <input type="radio" name="clain_in_last_three_year" value="Yes" class="feild mg-b-0" id="clain_in_last_three_year">Yes
-                                                                <input type="radio" name="clain_in_last_three_year" value="No" class=" feild mg-b-0" id="clain_in_last_three_year">No
+                                                                <input type="radio" name="clain_in_last_three_year" <?php if(isset($policy) && $policy->clain_in_last_three_year === 'Yes') echo 'checked'; ?> value="Yes" class="feild mg-b-0" id="clain_in_last_three_year">Yes
+                                                                <input type="radio" name="clain_in_last_three_year" <?php if(isset($policy) && $policy->clain_in_last_three_year === 'No') echo 'checked'; ?> value="No" class=" feild mg-b-0" id="clain_in_last_three_year">No
 
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3 clain_in_last_three_year_yes">
-                                                            <div class="main-form-group background">
-                                                                <label class="form-label">Loss Details
-                                                                </label>
-                                                                <input type="text" name="loss_details" value="{{isset($policy) ? $policy->loss_details : ''}}" class="form-control feild" id="loss_details">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3 clain_in_last_three_year_yes">
-                                                            <div class="main-form-group background">
-                                                                <label class="form-label">Loss In Amount
-                                                                </label>
-                                                                <input type="text" name="loss_in_amount" value="{{isset($policy) ? $policy->loss_in_amount : ''}}" class="form-control feild" id="loss_in_amount">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3 clain_in_last_three_year_yes">
-                                                            <div class="main-form-group background">
-                                                                <label class="form-label">Loss Date
-                                                                </label>
-                                                                <input type="text" name="loss_date" value="{{isset($policy) ? $policy->loss_date : ''}}" class="form-control feild" id="loss_date">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3 clain_in_last_three_year_yes">
-                                                            <div class="main-form-group background">
-                                                                <label class="form-label">Measures Taken After Loss
-                                                                </label>
-                                                                <input type="text" name="measures_taken_after_loss" value="{{isset($policy) ? $policy->measures_taken_after_loss : ''}}" class="form-control feild" id="measures_taken_after_loss">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
@@ -1535,6 +1499,37 @@
                                                                 <input type="text" name="remarks" value="{{isset($policy) ? $policy->remarks : ''}}" class="form-control feild" id="remarks">
                                                             </div>
                                                         </div>
+                                                        <div class="claim-yes" style="display:flex">
+                                                            <div class="col-lg-3 clain_in_last_three_year_yes">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">Loss Details
+                                                                    </label>
+                                                                    <input type="text" name="loss_details" value="{{isset($policy) ? $policy->loss_details : ''}}" class="form-control feild" id="loss_details">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 clain_in_last_three_year_yes">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">Loss In Amount
+                                                                    </label>
+                                                                    <input type="text" name="loss_in_amount" value="{{isset($policy) ? $policy->loss_in_amount : ''}}" class="form-control feild" id="loss_in_amount">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 clain_in_last_three_year_yes">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">Loss Date
+                                                                    </label>
+                                                                    <input type="text" name="loss_date" value="{{isset($policy) ? $policy->loss_date : ''}}" class="form-control feild" id="loss_date">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 clain_in_last_three_year_yes">
+                                                                <div class="main-form-group background">
+                                                                    <label class="form-label">Measures Taken After Loss
+                                                                    </label>
+                                                                    <input type="text" name="measures_taken_after_loss" value="{{isset($policy) ? $policy->measures_taken_after_loss : ''}}" class="form-control feild" id="measures_taken_after_loss">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
 
 
                                                     </div>
@@ -1690,14 +1685,14 @@
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">PREMIUM RECEIVED </label>
-                                                                <input type="number" name="mis_amount_paid" value="{{isset($policy) ? $policy->mis_amount_paid : ''}}" class="form-control">
+                                                                <input type="number" name="mis_amount_paid" onkeyup="findShortAMOUNT()" value="{{isset($policy) ? $policy->mis_amount_paid : ''}}" class="form-control mis_amount_paid">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">IN A/C
                                                                 </label>
-                                                                <input type="number" name="mis_received_bank_detail" value="{{isset($policy) ? $policy->mis_received_bank_detail : ''}}" class="form-control">
+                                                                <input type="text" name="mis_received_bank_detail" value="{{isset($policy) ? $policy->mis_received_bank_detail : ''}}" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -1716,7 +1711,7 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">PREMIUM SHORT
                                                                 </label>
-                                                                <input type="number" name="mis_short_premium" value="{{isset($policy) ? $policy->mis_short_premium : ''}}" class="form-control">
+                                                                <input type="number" name="mis_short_premium" value="{{isset($policy) ? $policy->mis_short_premium : ''}}" class="form-control mis_short_premium">
                                                             </div>
                                                         </div>
 
@@ -1733,7 +1728,7 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">TO A/C
                                                                 </label>
-                                                                <input type="number" name="mis_deposit_bank_detail" value="{{isset($policy) ? $policy->mis_deposit_bank_detail : ''}}" class="form-control">
+                                                                <input type="text" name="mis_deposit_bank_detail" value="{{isset($policy) ? $policy->mis_deposit_bank_detail : ''}}" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -1941,7 +1936,19 @@
             $(this).parents('tr').remove()
 
         });
+        $('.claim-yes').hide();
+        if ($('#clain_in_last_three_year').is(':checked')) {
+            $('.claim-yes').show();
+        }
 
+        // Show/hide the claim-yes div based on radio button selection
+        $('input[name="clain_in_last_three_year"]').change(function() {
+            if ($(this).val() == 'Yes') {
+                $('.claim-yes').show();
+            } else {
+                $('.claim-yes').hide();
+            }
+        });
 
         $.ajaxSetup({
             headers: {
@@ -1970,7 +1977,7 @@
             if ($(this).val() !== '') {
                 var val = $(this).val();
                 if (val === 'net') {
-                    $('#mis_commissionable_amount').val(parseFloat($('#net_premium').val()));
+                    $('#mis_commissionable_amount').val(parseFloat($('.net_premium').val()));
                 } else {
                     var odPremium = parseFloat($('#od_premium').val());
                     var addOnPremium = parseFloat($('#add_on_premium').val());
@@ -2440,6 +2447,20 @@
             $(".gross_premium").val(gross_premium);
         } else {
             $(".gross_premium").val('');
+        }
+    }
+
+    function findShortAMOUNT() {
+        var gross_premium = parseFloat($(".gross_premium").val());
+        var mis_amount_paid = parseFloat($(".mis_amount_paid").val());
+
+
+        var mis_short_premium = parseFloat(gross_premium || 0) - parseFloat(mis_amount_paid || 0);
+
+        if (!isNaN(mis_short_premium)) {
+            $(".mis_short_premium").val(mis_short_premium);
+        } else {
+            $(".mis_short_premium").val('');
         }
     }
 </script>

@@ -185,11 +185,11 @@
                             <p class="mg-b-10">Follow Up Date</p>
                             <input type="date" name="follow_ups" id="" class="form-control" value="{{isset($_GET['follow_ups']) ? $_GET['follow_ups'] : ''}}">
                             @else
-                            <p class="mg-b-10">Status</p>
+                            <p class="mg-b-10">Payment Status</p>
                             <select name="is_paid" class="form-control">
                                 <option value="">Select</option>
                                 <option value="1" {{ (isset($_GET['is_paid']) && (1 == $_GET['is_paid'])) ? 'selected' : '' }}>Paid</option>
-                                <option value="0" {{ (isset($_GET['is_paid']) && (0 == $_GET['is_paid'])) ? 'selected' : '' }}>Pending</option>
+                                <option value="2" {{ (isset($_GET['is_paid']) && (2 == $_GET['is_paid'])) ? 'selected' : '' }}>Pending</option>
 
                             </select>
                             @endif
@@ -267,6 +267,7 @@
                                     <th><span>Company Name</span></th>
                                     <th><span>Trasaction Type</span></th>
                                     <th><span>Sub Product</span></th>
+                                    <th><span>Payment Status</span></th>
                                     @if(isset($_GET['id']) && $_GET['id'] == 2)
 
                                     <th><span>Expiry Date</span></th>
@@ -298,6 +299,7 @@
                                             {{$lead->company->name ?? ''}} </a></td>
                                     <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->mis_transaction_type ?? ''}}</a></td>
                                     <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->subProduct->name ?? ''}}</a></td>
+                                    <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->mis_amount_paid !== $lead->gross_premium ?'Short' : 'Paid'}}</a></td>
 
                                     @if(isset($_GET['id']) && $_GET['id'] == 2)
 
