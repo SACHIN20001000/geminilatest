@@ -1848,7 +1848,7 @@
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="main-form-group background">
-                                                                    <label class="form-label">COMMISSIONABLE AMOUNT</label>
+                                                                    <label class="form-label">Base amount</label>
                                                                     <input type="number" name="mis_commissionable_amount" value="{{isset($policy) ? $policy->mis_commissionable_amount : ''}}" onkeyup="commission()" class="form-control" id="mis_commissionable_amount">
                                                                 </div>
                                                             </div>

@@ -1487,8 +1487,8 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Claim In last 3 Years
                                                                 </label>
-                                                                <input type="radio" name="clain_in_last_three_year" <?php if(isset($policy) && $policy->clain_in_last_three_year === 'Yes') echo 'checked'; ?> value="Yes" class="feild mg-b-0" id="clain_in_last_three_year">Yes
-                                                                <input type="radio" name="clain_in_last_three_year" <?php if(isset($policy) && $policy->clain_in_last_three_year === 'No') echo 'checked'; ?> value="No" class=" feild mg-b-0" id="clain_in_last_three_year">No
+                                                                <input type="radio" name="clain_in_last_three_year" <?php if (isset($policy) && $policy->clain_in_last_three_year === 'Yes') echo 'checked'; ?> value="Yes" class="feild mg-b-0" id="clain_in_last_three_year">Yes
+                                                                <input type="radio" name="clain_in_last_three_year" <?php if (isset($policy) && $policy->clain_in_last_three_year === 'No') echo 'checked'; ?> value="No" class=" feild mg-b-0" id="clain_in_last_three_year">No
 
                                                             </div>
                                                         </div>
@@ -1556,7 +1556,7 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Visiting Country
                                                                 </label>
-                                                                <input type="text" name="visiting_country" value="{{isset($policy) ? $policy->visiting_country : ''}}" class="form-control feild" id="visiting_country">
+
                                                                 <select name="visiting_country" class="form-control" id="visiting_country">
                                                                     <option value="">Select</option>
                                                                     <option value="INCUDING US/CANADA" {{ (isset($policy) && "INCUDING US/CANADA" == $policy->visiting_country) ? 'selected' : '' }}>INCUDING US/CANADA</option>
@@ -1586,7 +1586,7 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">No Of Days
                                                                 </label>
-                                                                <input type="text" name="no_of_days" value="{{isset($policy) ? $policy->no_of_days : ''}}" class="form-control feild" id="no_of_days">
+                                                                <input type="number" name="no_of_days" value="{{isset($policy) ? $policy->no_of_days : ''}}" class="form-control feild" id="no_of_days">
 
                                                             </div>
                                                         </div>
@@ -1783,7 +1783,7 @@
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
-                                                                <label class="form-label">COMMISSIONABLE AMOUNT</label>
+                                                                <label class="form-label">Base amount</label>
                                                                 <input type="number" name="mis_commissionable_amount" value="{{isset($policy) ? $policy->mis_commissionable_amount : ''}}" onkeyup="commission()" class="form-control" id="mis_commissionable_amount">
                                                             </div>
                                                         </div>

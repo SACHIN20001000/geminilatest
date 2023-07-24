@@ -1335,7 +1335,11 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Visiting Country
                                                                 </label>
-                                                                <input type="text" name="visiting_country" value="{{isset($policy) ? $policy->visiting_country : ''}}" class="form-control feild" id="visiting_country">
+                                                                <select name="visiting_country" class="form-control" id="visiting_country">
+                                                                    <option value="">Select</option>
+                                                                    <option value="INCUDING US/CANADA" {{ (isset($policy) && "INCUDING US/CANADA" == $policy->visiting_country) ? 'selected' : '' }}>INCUDING US/CANADA</option>
+                                                                    <option value="EXCLUDING US/CANADA" {{ (isset($policy) && "EXCLUDING US/CANADA" == $policy->visiting_country) ? 'selected' : '' }}>EXCLUDING US/CANADA</option>
+                                                                </select>
                                                             </div>
                                                         </div>
 

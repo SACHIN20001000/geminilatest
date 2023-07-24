@@ -1077,7 +1077,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="col-md-4 mb-2">
-                                                <label class="form-label mg-b-0"> Commissionable Amount</label>
+                                                <label class="form-label mg-b-0"> Base amount</label>
                                             </div>
                                             <div class="col-md-8 mg-t-5 mg-md-t-0 tp">
                                                 <input type="number" name="mis_commissionable_amount" value="{{isset($policy) ? $policy->mis_commissionable_amount : ''}}" onkeyup="commission()" class="form-control" placeholder="enter commission amount" id="mis_commissionable_amount">
