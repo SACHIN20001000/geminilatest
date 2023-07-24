@@ -2123,7 +2123,7 @@
         let subproduct = "{{$policy->subProduct->name ?? ''}}";
         if (subproduct != '') {
             subproduct = $.trim(subproduct).toLowerCase();
-            changeFeild(subproduct);
+            change(subproduct);
         }
         $('.filter-btn').click(function() {
             $('.filter-box').toggleClass("hidden");
