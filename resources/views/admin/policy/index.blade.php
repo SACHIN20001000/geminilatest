@@ -163,7 +163,7 @@
                                 @endforeach
                                 @endif
                             </select>
-                            <p class="mg-b-10">Broker</p>
+                            <p class="mg-b-10">Reference</p>
                             <select name="users" class="form-control">
                                 <option value="">Select</option>
                                 @if(isset($users) && $users->count())

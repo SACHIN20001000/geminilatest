@@ -1419,14 +1419,14 @@
 
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3  text-center">
+                                                        <div class="col-lg-6 text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Occupancy Tarriff
                                                                 </label>
                                                                 <input type="text" name="occupancy_tarriff" value="{{isset($policy) ? $policy->occupancy_tarriff : ''}}" class="form-control feild" id="occupancy_tarriff">
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <!-- <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Particular
 
@@ -1434,7 +1434,7 @@
                                                                 <input type="text" name="particular" value="{{isset($policy) ? $policy->particular : ''}}" class="form-control feild" id="particular">
 
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <div class="row row-xs formgroup-wrapper">
                                                         <div class="col-lg-3  text-center">
