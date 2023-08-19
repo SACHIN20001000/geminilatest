@@ -413,12 +413,12 @@ class PolicyController extends Controller
                         $media = '&media_url=' . $fileurls . '&filename=' . $fileurls;
                         $type = '&type=media';
                         $messagefile = rawurlencode(strip_tags($attach->file_name));
-                        $url = 'https://bulkchatbot.co.in/api/send.php?number=' . $policy->users->phone . $type . $media . '&message=' . $messagefile . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                        $url = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $policy->users->phone . $type . $media . '&message=' . $messagefile . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token='.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
                         $this->sendFileMessage($url);
                     }
                 }
 
-                $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $policy->users->phone . '&type=text&message=' . $data . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $policy->users->phone . '&type=text&message=' . $data . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token='.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
 
                 $this->sendMessage($texturl);
             }
@@ -495,7 +495,7 @@ class PolicyController extends Controller
                     $messages->subject($subject);
                 });
                 if (!empty($value->phone)) {
-                    $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $value->phone . '&type=text&message=' . view('admin.email.bulkemail', ['user' => $value]) . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                    $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $value->phone . '&type=text&message=' . view('admin.email.bulkemail', ['user' => $value]) . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token'.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
 
                     $this->sendMessage($texturl);
                 }

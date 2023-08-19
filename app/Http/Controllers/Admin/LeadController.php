@@ -561,7 +561,7 @@ class LeadController extends Controller
                                     $messages->subject($subject);
                                 });
                                 if (!empty($lead->phone)) {
-                                    $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $lead->phone . '&type=text&message=' . view('admin.email.newPolicy', ['lead' => $lead]) . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                                    $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $lead->phone . '&type=text&message=' . view('admin.email.newPolicy', ['lead' => $lead]) . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token='.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
 
                                     $this->sendMessage($texturl);
                                 }
@@ -627,12 +627,12 @@ class LeadController extends Controller
                             $media = '&media_url=' . $fileurls . '&filename=' . $fileurls;
                             $type = '&type=media';
                             $messagefile = rawurlencode(strip_tags($quotes->file_name));
-                            $url = 'https://bulkchatbot.co.in/api/send.php?number=' . $lead->users->phone . $type . $media . '&message=' . $messagefile . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                            $url = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $lead->users->phone . $type . $media . '&message=' . $messagefile . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token='.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
                             $this->sendFileMessage($url);
                         }
                     }
                 }
-                $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $lead->users->phone . '&type=text&message=' . view('admin.email.commonemail', ['policy' => $lead]) . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $lead->users->phone . '&type=text&message=' . view('admin.email.commonemail', ['policy' => $lead]) . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token='.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
                 $this->sendMessage($texturl);
             }
         } catch (\Exception $e) {

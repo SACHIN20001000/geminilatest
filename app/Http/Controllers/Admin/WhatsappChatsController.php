@@ -49,7 +49,7 @@ class WhatsappChatsController extends Controller
         $user = User::find($request->to_user);
         if (!empty($user->phone)) {
             $data = rawurlencode(strip_tags($request->message));
-            $texturl = 'https://bulkchatbot.co.in/api/send.php?number=' . $user->phone . '&type=text&message=' . $data . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+            $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $user->phone . '&type=text&message=' . $data . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token='.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
             $this->sendMessage($texturl);
         }
 
@@ -65,7 +65,7 @@ class WhatsappChatsController extends Controller
                 $media = '&media_url=' . $fileurls . '&filename=' . $fileurls;
                 $type = '&type=media';
                 $messagefile = rawurlencode(strip_tags($imageName));
-                $url = 'https://bulkchatbot.co.in/api/send.php?number=' . $user->phone . $type . $media . '&message=' . $messagefile . '&instance_id=63B293D6D4019&access_token=d947472c111c73ec8b4187b3dad025a2';
+                $url = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $user->phone . $type . $media . '&message=' . $messagefile . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token='.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
 
                 $this->sendFileMessage($url);
             }

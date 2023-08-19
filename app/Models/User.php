@@ -99,4 +99,9 @@ class User extends Authenticatable
     {
         return $this->whatsappMessagesSent()->union($this->whatsappMessagesReceived()->toBase());
     }
+
+    public function shortPremium()
+    {
+        return $this->policies->sum('mis_short_premium');
+    }
 }

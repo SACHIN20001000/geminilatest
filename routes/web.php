@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\ExportController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\NewPayoutController;
 use App\Http\Controllers\Admin\WebhookController;
 use App\Http\Controllers\Admin\WhatsappChatsController;
 use App\Http\Controllers\HomeController;
@@ -140,7 +141,7 @@ Route::prefix('admin')->group(function () {
         Route::post('leadAttachment', [LeadController::class, 'leadAttachment'])->name('leadAttachment');
 
 
-       
+
         Route::get('chat', [ChatsController::class, 'index'])->name('chat');
         Route::post('send', [ChatsController::class, 'postSendMessage']);
         Route::post('getmessage', [ChatsController::class, 'getOldMessages']);
@@ -151,6 +152,8 @@ Route::prefix('admin')->group(function () {
         Route::get('update-profile', [App\Http\Controllers\Admin\AdminController::class, 'updateProfile'])->name('updateProfile');
         Route::post('update-user-profile/{id}', [App\Http\Controllers\Admin\AdminController::class, 'updateUserProfile'])->name('updateUserProfile');
         Route::post('leadQuotes', [LeadController::class, 'leadQuotes'])->name('leadQuotes');
+        Route::any('new-payout', [NewPayoutController::class, 'index'])->name('new-payout.index');
+        Route::any('get-payout', [NewPayoutController::class, 'getPayouts'])->name('getPayouts');
     });
     Route::any('acceptLead', [LeadController::class, 'acceptLead'])->name('acceptLead');
 
