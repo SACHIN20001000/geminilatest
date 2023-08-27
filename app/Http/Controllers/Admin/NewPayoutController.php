@@ -43,7 +43,7 @@ class NewPayoutController extends Controller
                 $totalAmount = $user->policies->sum('mis_commissionable_amount')
                     - $user->policies->sum('mis_short_premium')
                     - $user->policies->sum('payout_recovery');
-                return $totalAmount > 0;
+                return $totalAmount != 0;
             });
 
             return DataTables::of($data)
@@ -187,7 +187,7 @@ class NewPayoutController extends Controller
                 $totalAmount = $user->sum('mis_commissionable_amount')
                     - $user->sum('mis_short_premium')
                     - $user->sum('payout_recovery');
-                return $totalAmount > 0;
+                return $totalAmount != 0;
             });
 
             return DataTables::of($data)
