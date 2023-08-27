@@ -169,6 +169,7 @@
                     </svg><span class="side-menu__label">Payouts</span><i class="angle fe fe-chevron-down"></i></a>
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="{{ route('new-payout.index') }}">Payout</a></li>
+                    <li><a class="slide-item" href="{{ route('invoice') }}">Invoice</a></li>
                     <li><a class="slide-item" href="{{ route('users.index',['id'=> 2,'advance'=>1]) }}">Advance Payment</a></li>
                 </ul>
 

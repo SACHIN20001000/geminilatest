@@ -167,6 +167,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $.ajaxSetup({
@@ -270,11 +273,48 @@
                 endDate: moment()
             },
             function(start, end, range) {
-                console.log(range);
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
                 $('#dynamicDate').html(range)
                 $('.staticDays').hide();
             });
+
+        //GENERATE INVOICE 
+        $('#generate-invoice').click(function() {
+
+            const ids = [];
+
+            $("input:checkbox:checked").each(function(i) {
+                ids.push($(this).val());
+
+            });
+            if (ids != '') {
+
+                $.ajax({
+                    url: "{{ route('getInvoiceDetail')}}",
+                    method: "get",
+                    data: {
+                        ids: ids,
+                        interval: $('#reportrange span').text(),
+                        reference_name: $('#reference_name').val(),
+                        status: $('#status').val()
+                    },
+                    success: function(result) {
+                        console.log(result, 'result');
+                        if (result.success) {
+                            toastr.success(result.message, 'Invoice Generated', {
+                                closeButton: true,
+                                progressBar: true,
+                            });
+
+                        }
+                    }
+                });
+                $('#invoice-modal').modal('show');
+
+            } else {
+                alert('CheckBox must not be empty');
+            }
+        });
 
 
     });

@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\ExportController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\NewPayoutController;
 use App\Http\Controllers\Admin\WebhookController;
 use App\Http\Controllers\Admin\WhatsappChatsController;
@@ -115,7 +116,7 @@ Route::prefix('admin')->group(function () {
         Route::any('export-vecial', [ExportController::class, 'vecialView'])->name('vecialView');
         Route::any('store-vecial', [ExportController::class, 'exportVecial'])->name('exportVecial');
         Route::any('getStatusChange', [PayoutController::class, 'getStatusChange'])->name('getStatusChange');
-        Route::any('getInvoiceDetail', [PayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');
+        Route::any('getInvoiceDetail', [NewPayoutController::class, 'getInvoiceDetail'])->name('getInvoiceDetail');
         Route::any('invoiceStore', [PayoutController::class, 'invoiceStore'])->name('invoiceStore');
         Route::any('getInvoice', [PayoutController::class, 'getInvoice'])->name('getInvoice');
         Route::any('renew_status', [PolicyController::class, 'renew_status'])->name('renew_status');
@@ -154,6 +155,11 @@ Route::prefix('admin')->group(function () {
         Route::post('leadQuotes', [LeadController::class, 'leadQuotes'])->name('leadQuotes');
         Route::any('new-payout', [NewPayoutController::class, 'index'])->name('new-payout.index');
         Route::any('get-payout', [NewPayoutController::class, 'getPayouts'])->name('getPayouts');
+        Route::any('payoutList', [NewPayoutController::class, 'payoutList'])->name('payoutList');
+        Route::any('generateInvoice', [NewPayoutController::class, 'generateInvoice'])->name('generateInvoice');
+        Route::any('invoice', [InvoiceController::class, 'index'])->name('invoice');
+
+
     });
     Route::any('acceptLead', [LeadController::class, 'acceptLead'])->name('acceptLead');
 
