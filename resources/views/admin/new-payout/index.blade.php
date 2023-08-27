@@ -198,7 +198,9 @@
                 },
                 {
                     data: 'roles[0].name',
-                    name: 'roles[0].name'
+                    name: 'roles[0].name',
+                    defaultContent: '' // Provide a default value here
+
                 },
                 {
                     data: 'name',

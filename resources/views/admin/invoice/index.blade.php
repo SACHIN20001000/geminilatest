@@ -93,7 +93,9 @@
                     name: 'id'
                 }, {
                     data: 'users.name',
-                    name: 'users'
+                    name: 'users',
+                    defaultContent: '' // Provide a default value here
+
                 }, {
                     data: 'amount_transfer',
                     name: 'amount_transfer'
