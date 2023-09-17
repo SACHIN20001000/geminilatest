@@ -127,8 +127,8 @@
                     data: 'mis_transaction_type',
                     name: 'mis_transaction_type',
                 },{
-                    data: 'sub_product.name',
-                    name: 'sub_product.name',
+                    data: 'subProduct.name',
+                    name: 'subProduct.name',
                     defaultContent: '' // Provide a default value here
 
                 }, {

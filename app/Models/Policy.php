@@ -62,4 +62,8 @@ class Policy extends Model
     {
         return $this->hasMany(Attachment::class, 'policy_id', 'id')->whereIn('type', ['Policy', 'Renewal']);
     }
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class, 'id', 'invoice_id');
+    }
 }

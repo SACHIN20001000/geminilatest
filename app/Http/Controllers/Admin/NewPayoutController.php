@@ -40,7 +40,7 @@ class NewPayoutController extends Controller
                 ->get();
             // Filter users where totalAmount is greater than 0
             $data = $data->filter(function ($user) {
-                $totalAmount = $user->policies->sum('mis_commissionable_amount')
+                $totalAmount = $user->policies->sum('mis_commission')
                     - $user->policies->sum('mis_short_premium')
                     - $user->policies->sum('payout_recovery');
                 return $totalAmount != 0;
@@ -61,7 +61,7 @@ class NewPayoutController extends Controller
                     return $link;
                 })
                 ->addColumn('totalAmount', function ($row) {
-                    $commission = $row->policies->sum('mis_commissionable_amount');
+                    $commission = $row->policies->sum('mis_commission');
                     $shortPremium = $row->policies->sum('mis_short_premium');
                     $recovery = $row->policies->sum('payout_recovery');
                     $totalAmount = $commission - $shortPremium - $recovery;
@@ -112,19 +112,23 @@ class NewPayoutController extends Controller
         if ($request->ids) {
             $query->whereIn('id', $request->ids);
         }
+        $query->whereHas('policies', function ($q) {
+            $q->whereNull('invoice_id')->where('is_mis', 1);
+        });
         $data = $query
             ->orderBy('id', 'DESC')
             ->get();
 
         $data = $data->filter(function ($user) {
-            $totalAmount = $user->policies->sum('mis_commissionable_amount')
+            $totalAmount = $user->policies->sum('mis_commission')
                 - $user->policies->sum('mis_short_premium')
                 - $user->policies->sum('payout_recovery');
-            return $totalAmount > 0;
+            return $totalAmount != 0;
         });
+
         if ($data->count()) {
             foreach ($data as $key => $user) {
-                $totalAmount = $user->policies->sum('mis_commissionable_amount') - $user->policies->sum('mis_short_premium') - $user->policies->sum('payout_recovery');
+                $totalAmount = $user->policies->sum('mis_commission') - $user->policies->sum('mis_short_premium') - $user->policies->sum('payout_recovery');
                 $tdsPercentage = $user->tds_percentage ?? 0; // Default to 0 if tds_percentage is not set
                 $invoiceAmount = $totalAmount * (1 - ($tdsPercentage / 100));
 
@@ -152,8 +156,9 @@ class NewPayoutController extends Controller
 
 
                 $subject = "Payment Notification: Payouts for <$request->interval> Month's Insurance Policies";
+              
 
-                Mail::send('admin.email.invoicePolicy', ['policy' => $user], function ($messages) use ($user, $subject) {
+                Mail::send('admin.email.invoicePolicy', ['invoice' => $invoice], function ($messages) use ($user, $subject) {
                     $messages->to($user->email);
                     $messages->bcc('geminiservices@outlook.com');
                     $messages->subject($subject);
@@ -182,9 +187,8 @@ class NewPayoutController extends Controller
             $data = $query
                 ->orderBy('id', 'DESC')
                 ->get();
-            // Filter users where totalAmount is greater than 0
             $data = $data->filter(function ($user) {
-                $totalAmount = $user->sum('mis_commissionable_amount')
+                $totalAmount = $user->sum('mis_commission')
                     - $user->sum('mis_short_premium')
                     - $user->sum('payout_recovery');
                 return $totalAmount != 0;
@@ -213,7 +217,7 @@ class NewPayoutController extends Controller
 
 
         if ($policies->count()) {
-            $totalAmount = $policies->sum('mis_commissionable_amount') - $policies->sum('mis_short_premium') - $policies->sum('payout_recovery');
+            $totalAmount = $policies->sum('mis_commission') - $policies->sum('mis_short_premium') - $policies->sum('payout_recovery');
             $tdsPercentage = $user->tds_percentage ?? 0; // Default to 0 if tds_percentage is not set
             $invoiceAmount = $totalAmount * (1 - ($tdsPercentage / 100));
 

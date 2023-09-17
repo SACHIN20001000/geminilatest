@@ -296,7 +296,6 @@ class PolicyController extends Controller
     {
 
         $policyInputs = $request->except('_token', '_method', 'attachment', 'type');
-
         if ($request->mis_commission && !empty($request->mis_commission)) {
             $policyInputs['is_mis'] = 1;
         }
@@ -361,7 +360,9 @@ class PolicyController extends Controller
                 }
             }
         }
-        return redirect()->route('policy.index', ['id' => 1])->with('success', 'Policy Update successfully!');
+        return back()->with('success', 'Policy Deleted successfully!');
+
+        // return redirect()->route('policy.index', ['id' => 1])->with('success', 'Policy Update successfully!');
     }
 
     /**

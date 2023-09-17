@@ -17,5 +17,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function policy()
+    {
+        return $this->hasMany(Policy::class, 'invoice_id');
+    }
 }
 

@@ -38,6 +38,7 @@
                                     <th class="wd-lg-20p"><span>Short Premium</span></th>
                                     <th class="wd-lg-20p"><span>Tds</span></th>
                                     <th class="wd-lg-20p"><span>Total Payout</span></th>
+                                    <th class="wd-lg-20p"><span>Action</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -120,6 +121,11 @@
                 }, {
                     data: 'total_Payout',
                     name: 'total_Payout'
+                },{
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
                 }
 
 
