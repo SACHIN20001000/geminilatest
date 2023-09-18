@@ -165,7 +165,9 @@ class PolicyController extends Controller
         $policyInputs['expiry_date'] = $request->expiry_date ?? $request->expiry_date_normal ?? null;
         $policyInputs['start_date'] = $request->start_date ?? $request->start_date_normal ?? null;
         $policyInputs['expiry_date'] = $request->expiry_date ?? $request->expiry_date_normal ?? null;
-
+        if ($request->mis_commission && !empty($request->mis_commission)) {
+            $policyInputs['is_mis'] = 1;
+        }
         if ($request->health_name && !empty($request->health_name)) {
             $health_hospitalization_upload = [];
             if (isset($request->health_hospitalization_upload) && !empty($request->health_hospitalization_upload)) {

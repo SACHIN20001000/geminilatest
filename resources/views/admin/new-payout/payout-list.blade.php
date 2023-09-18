@@ -1,19 +1,58 @@
 @extends('admin.layouts.app')
 
 @section('content')
+
+<style>
+    /* CSS for loading indicator */
+    #loadingIndicator {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        /* Semi-transparent background */
+        z-index: 9999;
+    }
+
+    .loader {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<div id="loadingIndicator" style="display: none;">
+    <div class="loader"></div>
+</div>
 <div class="container-fluid">
 
 
     <!-- filter  -->
- <!-- breadcrumb -->
- <div class="breadcrumb-header justify-content-between">
-       
+    <!-- breadcrumb -->
+    <div class="breadcrumb-header justify-content-between">
+
 
         <button class="btn btn-main-primary ml_auto" id="generate-invoice">Generate Invoice</button>
-      
+
     </div>
     <!-- breadcrumb -->
-   
+
 
     <!-- filter  -->
 
@@ -126,7 +165,7 @@
                 }, {
                     data: 'mis_transaction_type',
                     name: 'mis_transaction_type',
-                },{
+                }, {
                     data: 'subProduct.name',
                     name: 'subProduct.name',
                     defaultContent: '' // Provide a default value here
@@ -203,18 +242,19 @@
 
             });
             if (ids != '') {
+                $("#loadingIndicator").show();
 
                 $.ajax({
                     url: "{{ route('generateInvoice')}}",
                     method: "get",
                     data: {
                         ids: ids,
-                        user_id : "<?php echo $_GET['reference_name'] ?? '' ?>",
-                        interval : "<?php echo $_GET['interval'] ?? '' ?>",
+                        user_id: "<?php echo $_GET['reference_name'] ?? '' ?>",
+                        interval: "<?php echo $_GET['interval'] ?? '' ?>",
 
                     },
                     success: function(result) {
-                        console.log(result, 'result');
+                        $("#loadingIndicator").hide();
                         if (result.success) {
                             toastr.success(result.message, 'Invoice Generated', {
                                 closeButton: true,
@@ -223,14 +263,21 @@
                             table.draw();
 
                         }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $("#loadingIndicator").hide();
+                        toastr.error('An error occurred: ' + errorThrown, 'Error', {
+                            closeButton: true,
+                            progressBar: true,
+                        });
                     }
                 });
 
             } else {
-                toastr.error('', 'CheckBox must not be empty', {
-                                closeButton: true,
-                                progressBar: true,
-                            });
+                toastr.error('Error', 'CheckBox must not be empty', {
+                    closeButton: true,
+                    progressBar: true,
+                });
             }
         });
 

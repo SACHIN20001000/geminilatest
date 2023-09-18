@@ -1,6 +1,44 @@
 @extends('admin.layouts.app')
 
 @section('content')
+<style>
+    /* CSS for loading indicator */
+    #loadingIndicator {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        /* Semi-transparent background */
+        z-index: 9999;
+    }
+
+    .loader {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<div id="loadingIndicator" style="display: none;">
+    <div class="loader"></div>
+</div>
 <div class="container-fluid">
     <div class="row row-sm">
         <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
@@ -172,6 +210,8 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -282,7 +322,6 @@
 
         //GENERATE INVOICE 
         $('#generate-invoice').click(function() {
-
             const ids = [];
 
             $("input:checkbox:checked").each(function(i) {
@@ -290,6 +329,7 @@
 
             });
             if (ids != '') {
+                $("#loadingIndicator").show();
 
                 $.ajax({
                     url: "{{ route('getInvoiceDetail')}}",
@@ -301,8 +341,9 @@
                         status: $('#status').val()
                     },
                     success: function(result) {
-                        console.log(result, 'result');
+                        $("#loadingIndicator").hide();
                         if (result.success) {
+
                             toastr.success(result.message, 'Invoice Generated', {
                                 closeButton: true,
                                 progressBar: true,
@@ -310,12 +351,22 @@
                             table.draw();
 
                         }
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $("#loadingIndicator").hide();
+                        toastr.error('An error occurred: ' + errorThrown, 'Error', {
+                            closeButton: true,
+                            progressBar: true,
+                        });
                     }
                 });
-                $('#invoice-modal').modal('show');
 
             } else {
-                alert('CheckBox must not be empty');
+                toastr.error('Error', 'CheckBox must not be empty', {
+                    closeButton: true,
+                    progressBar: true,
+                });
             }
         });
 
