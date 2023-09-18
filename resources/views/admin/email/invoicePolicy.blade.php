@@ -147,7 +147,7 @@
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">{{$policy->mis_transaction_type}}</td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">{{$policy->bussiness_type}}</td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">{{$policy->subProduct->name ?? ''}}</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">{{$policy->models->name}}</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">{{$policy->models->name ?? ''}}</td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">{{$policy->reg_no}}</td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">{{$policy->gross_premium}}</td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: left;">{{$policy->net_premium}}</td>

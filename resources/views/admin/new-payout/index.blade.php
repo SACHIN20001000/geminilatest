@@ -307,6 +307,7 @@
                                 closeButton: true,
                                 progressBar: true,
                             });
+                            table.draw();
 
                         }
                     }

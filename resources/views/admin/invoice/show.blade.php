@@ -95,7 +95,7 @@
                     <td>{{$policy->mis_transaction_type}}</td>
                     <td>{{$policy->bussiness_type}}</td>
                     <td>{{$policy->subProduct->name ?? ''}}</td>
-                    <td>{{$policy->models->name}}</td>
+                    <td>{{$policy->models->name ?? ''}}</td>
                     <td>{{$policy->reg_no}}</td>
                     <td>{{$policy->gross_premium}}</td>
                     <td>{{$policy->net_premium}}</td>
