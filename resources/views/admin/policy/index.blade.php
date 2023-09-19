@@ -307,7 +307,7 @@
                                     <td><input type="date" name="follow_up" value="{{$lead->follow_up ?? $lead->expiry_date }}" data-id="{{$lead->id ?? ''}}" class="form-control follow_up"></td>
 
                                     <td>
-                                        <input  type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
+                                        <input type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
                                         @if(!empty($lead->attachments))
                                         @foreach($lead->attachments as $key => $attachment)
                                         @if($attachment->type == 'Renewal')
@@ -447,6 +447,8 @@
 @section('scripts')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $("select").select2();
@@ -553,17 +555,23 @@
         // Adding the image to the form
         form.append("image", file);
         form.append("policy_id", id);
-        console.log(form,'test',id);
-        // $.ajax({
-        //     url: "{{route('renewAttachment')}}",
-        //     type: "POST",
-        //     data: form,
-        //     contentType: false,
-        //     processData: false,
-        //     success: function(result) {
-        //     //  location.reload()
-        //     }
-        // });
+        console.log(form, 'test', id);
+        $.ajax({
+            url: "{{route('renewAttachment')}}",
+            type: "POST",
+            data: form,
+            contentType: false,
+            processData: false,
+            success: function(result) {
+                toastr.success(result.message, 'Attachment Uploaded Successfully', {
+                    closeButton: true,
+                    progressBar: true,
+                });
+                setTimeout(function() {
+                    location.reload();
+                }, 500);
+            }
+        });
     });
     $(document).on('change', '.sort-table', function() {
         $('.submit-sort').click()
