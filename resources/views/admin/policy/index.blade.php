@@ -307,14 +307,7 @@
                                     <td><input type="date" name="follow_up" value="{{$lead->follow_up ?? $lead->expiry_date }}" data-id="{{$lead->id ?? ''}}" class="form-control follow_up"></td>
 
                                     <td>
-                                        <label for="file-up"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                                <title />
-                                                <g data-name="1" id="_1">
-                                                    <path d="M324.3,387.69H186a15,15,0,0,1-15-15V235.8H114.81a15,15,0,0,1-11.14-25.05L244,55.1a15,15,0,0,1,22.29,0L406.6,210.75a15,15,0,0,1-11.14,25.05H339.3V372.69A15,15,0,0,1,324.3,387.69ZM201,357.69H309.3V220.8a15,15,0,0,1,15-15h37.44L255.13,87.55,148.53,205.8H186a15,15,0,0,1,15,15Z" />
-                                                    <path d="M390.84,452.15H119.43a65.37,65.37,0,0,1-65.3-65.3V348.68a15,15,0,0,1,30,0v38.17a35.34,35.34,0,0,0,35.3,35.3H390.84a35.33,35.33,0,0,0,35.29-35.3V348.68a15,15,0,1,1,30,0v38.17A65.37,65.37,0,0,1,390.84,452.15Z" />
-                                                </g>
-                                            </svg></label>
-                                        <input id="file-up" type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
+                                        <input  type="file" data-id="{{$lead->id ?? ''}}" class="form-control renew-att">
                                         @if(!empty($lead->attachments))
                                         @foreach($lead->attachments as $key => $attachment)
                                         @if($attachment->type == 'Renewal')
@@ -560,17 +553,17 @@
         // Adding the image to the form
         form.append("image", file);
         form.append("policy_id", id);
-        console.log(form);
-        $.ajax({
-            url: "{{route('renewAttachment')}}",
-            type: "POST",
-            data: form,
-            contentType: false,
-            processData: false,
-            success: function(result) {
-                location.reload()
-            }
-        });
+        console.log(form,'test',id);
+        // $.ajax({
+        //     url: "{{route('renewAttachment')}}",
+        //     type: "POST",
+        //     data: form,
+        //     contentType: false,
+        //     processData: false,
+        //     success: function(result) {
+        //     //  location.reload()
+        //     }
+        // });
     });
     $(document).on('change', '.sort-table', function() {
         $('.submit-sort').click()
