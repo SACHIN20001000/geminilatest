@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.app')
 @section('content')
 
@@ -1734,7 +1735,6 @@
                                             <div class="col-sm-10">
                                                 <div class="row main-row">
 
-
                                                     <div class="row row-xs formgroup-wrapper">
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
@@ -1808,7 +1808,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h4>Attachment</h4>
-                                        <button type="button" name="add" onclick="addAttachment()" class="btn btn-success">Save</button>
+                                        <button type="button" name="add" onclick="addAttachment()" class="btn btn-success">Upload</button>
                                         <table class="table table-bordered" id="attachment_dynamic">
                                             <tbody>
 
@@ -1819,7 +1819,8 @@
                             </div>
 
 
-                            <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5" type="submit">{{isset($policy) ? 'Update' : 'Save' }}</button>
+                            <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5" type="submit" value="upload">{{isset($policy) ? 'Update' : 'Save' }}</button>
+                            <input name="button-type" type="submit" class="btn btn-info pd-x-30 mg-r-5 mg-t-5" value="{{isset($policy) ? 'Update & Email' : 'Save & Email' }}">
                         </div>
                 </div>
                 </form>
@@ -1945,10 +1946,11 @@
                 if (val === 'net') {
                     $('#mis_commissionable_amount').val(parseFloat($('.net_premium').val()));
                 } else {
-                    var odPremium = parseFloat($('#od_premium').val());
-                    var addOnPremium = parseFloat($('#add_on_premium').val());
+                    var odPremium = parseFloat($('#od_premium').val() || 0);
+                    var addOnPremium = parseFloat($('#add_on_premium').val() || 0);
                     $('#mis_commissionable_amount').val(odPremium + addOnPremium);
                 }
+                $('#mis_percentage').trigger('keyup');
             }
         });
 

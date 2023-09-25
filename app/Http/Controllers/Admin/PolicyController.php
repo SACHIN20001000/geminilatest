@@ -218,17 +218,22 @@ class PolicyController extends Controller
                         'file_name' => $attachment_filename ?? '',
                         'type' => $request->type[$key] ??  ''
                     ]);
-                    try {
-                        Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
-                            $messages->to($policy->email);
-                            $messages->bcc('geminiservices@outlook.com');
-                            $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
-                            $messages->subject($subject);
-                        });
-                    } catch (\Exception $th) {
-                        //throw $th;
-                    }
+              
                 }
+            }
+        }
+
+        if(isset($request['button-type']))
+        {
+            try {
+                Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
+                    $messages->to($policy->email);
+                    $messages->bcc('geminiservices@outlook.com');
+                    $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
+                    $messages->subject($subject);
+                });
+            } catch (\Exception $th) {
+                //throw $th;
             }
         }
         return redirect()->route('policy.index', ['id' => 1])->with('success', 'Policy Added successfully!');
@@ -296,6 +301,7 @@ class PolicyController extends Controller
      */
     public function update(Request $request, Policy $policy)
     {
+        // echo "<PRE>"; print_r(); die();
 
         $policyInputs = $request->except('_token', '_method', 'attachment', 'type');
         if ($request->mis_commission && !empty($request->mis_commission)) {
@@ -362,9 +368,22 @@ class PolicyController extends Controller
                 }
             }
         }
-        return back()->with('success', 'Policy Deleted successfully!');
+        if(isset($request['button-type']))
+        {
+            try {
+                Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
+                    $messages->to($policy->email);
+                    $messages->bcc('geminiservices@outlook.com');
+                    $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
+                    $messages->subject($subject);
+                });
+            } catch (\Exception $th) {
+                //throw $th;
+            }
+        }
 
-        // return redirect()->route('policy.index', ['id' => 1])->with('success', 'Policy Update successfully!');
+
+        return redirect()->route('policy.index', ['id' => 1])->with('success', 'Policy Update successfully!');
     }
 
     /**
