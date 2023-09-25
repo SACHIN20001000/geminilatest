@@ -1819,8 +1819,8 @@
                             </div>
 
 
-                            <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5" type="submit" value="upload">{{isset($policy) ? 'Update' : 'Save' }}</button>
-                            <input name="button-type" type="submit" class="btn btn-info pd-x-30 mg-r-5 mg-t-5" value="{{isset($policy) ? 'Update & Email' : 'Save & Email' }}">
+                            <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5 submit-btn" type="submit" value="upload">{{isset($policy) ? 'Update' : 'Save' }}</button>
+                            <input name="button-type" type="submit" class="btn btn-info pd-x-30 mg-r-5 mg-t-5 submit-btn" value="{{isset($policy) ? 'Update & Email' : 'Save & Email' }}">
                         </div>
                 </div>
                 </form>
@@ -1861,6 +1861,11 @@
         $('.seating-pcv').hide();
         $('.liability-details').hide();
 
+        document.getElementById('user-add-edit').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Enter key press ko rokna
+        }
+    });
 
         $(document).on('click', '.add-health', function() {
             $(".health-body").append(`  <tr>
