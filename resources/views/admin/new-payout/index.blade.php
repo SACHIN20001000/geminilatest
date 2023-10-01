@@ -257,7 +257,9 @@
                 },
                 {
                     data: 'totalAmount',
-                    name: 'totalAmount'
+                    name: 'totalAmount',
+                    defaultContent: '' // Provide a default value here
+
                 }
 
             ]

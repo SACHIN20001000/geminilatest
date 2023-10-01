@@ -764,21 +764,21 @@
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Net Premium</label>
-                                                                <input type="number" name="net_premium_normal" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium">
+                                                                <input type="number" name="net_premium_normal" onkeyup="grossFirePremium()" value="{{isset($policy) ? $policy->net_premium : ''}}" class="form-control net_premium gross_net_premium">
 
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3 ">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">GST</label>
-                                                                <input type="number" name="gst_normal" onkeyup="grossPremium()" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control gst">
+                                                                <input type="number" name="gst_normal" onkeyup="grossFirePremium()" value="{{isset($policy) ? $policy->gst : ''}}" class="form-control gst gross_gst">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label "> GROSS PREMIUM
                                                                 </label>
-                                                                <input type="number" name="gross_premium_normal" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control gross_premium">
+                                                                <input type="number" name="gross_premium_normal" value="{{isset($policy) ? $policy->gross_premium : ''}}" class="form-control gross_premium grossFirePremium">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2461,11 +2461,22 @@
 
 
         var gross_premium = parseFloat(net_premium || 0) + parseFloat(gst || 0);
-
         if (!isNaN(gross_premium)) {
             $(".gross_premium").val(gross_premium);
         } else {
             $(".gross_premium").val('');
+        }
+    }
+    function grossFirePremium() {
+        var net_premium = parseFloat($(".gross_net_premium").val());
+        var gst = parseFloat($(".gross_gst").val());
+
+
+        var gross_premium = parseFloat(net_premium || 0) + parseFloat(gst || 0);
+        if (!isNaN(gross_premium)) {
+            $(".grossFirePremium").val(gross_premium);
+        } else {
+            $(".grossFirePremium").val('');
         }
     }
 
@@ -2487,10 +2498,11 @@
     $(document).ready(function() {
         $(document).on('change', '.start_date', function() {
             const selectedStartDate = new Date($(this).val());
-            const expiryDate = new Date(selectedStartDate);
-            expiryDate.setFullYear(selectedStartDate.getFullYear() + 1);
-            const formattedExpiryDate = expiryDate.toISOString().split('T')[0];
-            $('.expiry_date').val(formattedExpiryDate);
+    const expiryDate = new Date(selectedStartDate);
+    expiryDate.setFullYear(selectedStartDate.getFullYear() + 1);
+    expiryDate.setDate(selectedStartDate.getDate() - 1); // Subtract one day
+    const formattedExpiryDate = expiryDate.toISOString().split('T')[0];
+    $('.expiry_date').val(formattedExpiryDate);
         });
         const phoneInput = document.getElementById('phoneInput');
         const phoneError = document.getElementById('phoneError');

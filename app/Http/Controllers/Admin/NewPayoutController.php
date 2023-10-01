@@ -38,14 +38,25 @@ class NewPayoutController extends Controller
             $data = $query
                 ->orderBy('id', 'DESC')
                 ->get();
-            // Filter users where totalAmount is greater than 0
-            $data = $data->filter(function ($user) {
-                $totalAmount = $user->policies->sum('mis_commission')
-                    - $user->policies->sum('mis_short_premium')
-                    - $user->policies->sum('payout_recovery');
-                return $totalAmount != 0;
-            });
-
+                $data = $data->filter(function ($user) {
+                    $commission = 0;
+                    $shortPremium = 0;
+                    $recovery = 0;
+                    $totalAmount = 0;
+                    foreach ($user->policies as $policy) {
+                        $commission += (float) $policy->mis_commission;
+                        $shortPremium += (float) $policy->mis_short_premium;
+                        $recovery += (float) $policy->payout_recovery;
+                    }
+                
+                    // Check if any of the sums are not numeric
+                    if (!is_numeric($commission) || !is_numeric($shortPremium) || !is_numeric($recovery)) {
+                        $totalAmount = 0;                    }
+                
+                    $totalAmount = $commission - $shortPremium - $recovery;
+                
+                    return $totalAmount != 0;
+                });
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('checkbox', function ($row) {
@@ -61,9 +72,21 @@ class NewPayoutController extends Controller
                     return $link;
                 })
                 ->addColumn('totalAmount', function ($row) {
-                    $commission = $row->policies->sum('mis_commission');
-                    $shortPremium = $row->policies->sum('mis_short_premium');
-                    $recovery = $row->policies->sum('payout_recovery');
+                    $commission = 0;
+                    $shortPremium = 0;
+                    $recovery = 0;
+                
+                    foreach ($row->policies as $policy) {
+                        $commission += (float) $policy->mis_commission;
+                        $shortPremium += (float) $policy->mis_short_premium;
+                        $recovery += (float) $policy->payout_recovery;
+                    }
+                
+                    // Check if any of the sums are not numeric
+                    if (!is_numeric($commission) || !is_numeric($shortPremium) || !is_numeric($recovery)) {
+                        return 0; // or handle the error in a way that makes sense for your application
+                    }
+                
                     $totalAmount = $commission - $shortPremium - $recovery;
                     return $totalAmount;
                 })

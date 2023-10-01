@@ -159,6 +159,7 @@ Route::prefix('admin')->group(function () {
         Route::any('generateInvoice', [NewPayoutController::class, 'generateInvoice'])->name('generateInvoice');
         Route::any('invoice', [InvoiceController::class, 'index'])->name('invoice');
         Route::any('invoice/{id}', [InvoiceController::class, 'show'])->name('invoice.show');
+        Route::any('invoice/{id}/edit', [InvoiceController::class, 'edit'])->name('invoice.edit');
         Route::get('/pdf/download/{id}', [InvoiceController::class, 'downloadInvoice'])->name('pdf.download');
 
 
