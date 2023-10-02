@@ -159,12 +159,11 @@ class PolicyController extends Controller
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         $policyInputs['is_policy'] = 1;
         $policyInputs['cc'] = $request->cc ?? $request->vehicle_cc ?? null;
-        $policyInputs['gross_premium'] = $request->gross_premium ?? $request->gross_premium_normal ?? null;
-        $policyInputs['gst'] = $request->gst ?? $request->gst_normal ?? null;
-        $policyInputs['net_premium'] = $request->net_premium ?? $request->net_premium_normal ?? null;
-        $policyInputs['expiry_date'] = $request->expiry_date ?? $request->expiry_date_normal ?? null;
-        $policyInputs['start_date'] = $request->start_date ?? $request->start_date_normal ?? null;
-        $policyInputs['expiry_date'] = $request->expiry_date ?? $request->expiry_date_normal ?? null;
+        $policyInputs['gross_premium'] =$request->product_id != 2 ? $request->gross_premium : $request->gross_premium_normal;
+        $policyInputs['gst'] =$request->product_id != 2 ? $request->gst :$request->gst_normal ;
+        $policyInputs['net_premium'] =$request->product_id != 2 ? $request->net_premium : $request->net_premium_normal ;
+        $policyInputs['expiry_date'] = $request->product_id != 2 ? $request->expiry_date : $request->expiry_date_normal ;
+        $policyInputs['start_date'] = $request->product_id != 2 ? $request->start_date : $request->start_date_normal ;
         if ($request->mis_commission && !empty($request->mis_commission)) {
             $policyInputs['is_mis'] = 1;
         }
@@ -301,19 +300,17 @@ class PolicyController extends Controller
      */
     public function update(Request $request, Policy $policy)
     {
-        // echo "<PRE>"; print_r(); die();
 
         $policyInputs = $request->except('_token', '_method', 'attachment', 'type');
         if ($request->mis_commission && !empty($request->mis_commission)) {
             $policyInputs['is_mis'] = 1;
         }
         $policyInputs['cc'] = $request->cc ?? $request->vehicle_cc ?? null;
-        $policyInputs['gross_premium'] = $request->gross_premium ?? $request->gross_premium_normal ?? null;
-        $policyInputs['gst'] = $request->gst ?? $request->gst_normal ?? null;
-        $policyInputs['net_premium'] = $request->net_premium ?? $request->net_premium_normal ?? null;
-        $policyInputs['expiry_date'] = $request->expiry_date ?? $request->expiry_date_normal ?? null;
-        $policyInputs['start_date'] = $request->start_date ?? $request->start_date_normal ?? null;
-        $policyInputs['expiry_date'] = $request->expiry_date ?? $request->expiry_date_normal ?? null;
+        $policyInputs['gross_premium'] =$request->product_id != 2 ? $request->gross_premium : $request->gross_premium_normal;
+        $policyInputs['gst'] =$request->product_id != 2 ? $request->gst :$request->gst_normal ;
+        $policyInputs['net_premium'] =$request->product_id != 2 ? $request->net_premium : $request->net_premium_normal ;
+        $policyInputs['expiry_date'] = $request->product_id != 2 ? $request->expiry_date : $request->expiry_date_normal ;
+        $policyInputs['start_date'] = $request->product_id != 2 ? $request->start_date : $request->start_date_normal ;
 
         if ($request->health_name && !empty($request->health_name)) {
             $health_hospitalization_upload = [];

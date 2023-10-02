@@ -1,4 +1,3 @@
-
 @extends('admin.layouts.app')
 @section('content')
 
@@ -1862,10 +1861,10 @@
         $('.liability-details').hide();
 
         document.getElementById('user-add-edit').addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault(); // Enter key press ko rokna
-        }
-    });
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Enter key press ko rokna
+            }
+        });
 
         $(document).on('click', '.add-health', function() {
             $(".health-body").append(`  <tr>
@@ -2034,7 +2033,6 @@
         });
 
         $('#subproduct_id').change(function() {
-            console.log($(this).val(), 'subproduct');
             if ($(this).val() != '') {
 
                 var subproduct_id = $(this).val();
@@ -2467,6 +2465,7 @@
             $(".gross_premium").val('');
         }
     }
+
     function grossFirePremium() {
         var net_premium = parseFloat($(".gross_net_premium").val());
         var gst = parseFloat($(".gross_gst").val());
@@ -2481,7 +2480,14 @@
     }
 
     function findShortAMOUNT() {
-        var gross_premium = parseFloat($(".gross_premium").val());
+        var product_id = $("#product_id").val();
+        if (product_id == 2) {
+
+            var gross_premium = parseFloat($(".grossFirePremium").val());
+        } else {
+            var gross_premium = parseFloat($(".gross_premium").val());
+
+        }
         var mis_amount_paid = parseFloat($(".mis_amount_paid").val());
 
 
@@ -2498,11 +2504,11 @@
     $(document).ready(function() {
         $(document).on('change', '.start_date', function() {
             const selectedStartDate = new Date($(this).val());
-    const expiryDate = new Date(selectedStartDate);
-    expiryDate.setFullYear(selectedStartDate.getFullYear() + 1);
-    expiryDate.setDate(selectedStartDate.getDate() - 1); // Subtract one day
-    const formattedExpiryDate = expiryDate.toISOString().split('T')[0];
-    $('.expiry_date').val(formattedExpiryDate);
+            const expiryDate = new Date(selectedStartDate);
+            expiryDate.setFullYear(selectedStartDate.getFullYear() + 1);
+            expiryDate.setDate(selectedStartDate.getDate() - 1); // Subtract one day
+            const formattedExpiryDate = expiryDate.toISOString().split('T')[0];
+            $('.expiry_date').val(formattedExpiryDate);
         });
         const phoneInput = document.getElementById('phoneInput');
         const phoneError = document.getElementById('phoneError');
