@@ -37,6 +37,8 @@ class PolicyController extends Controller
     public function index(Request $request)
     {
 
+
+        // echo '<pre>'; print_r($request->all()); die;
         $products = SubProduct::all();
         $users = User::all();
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns')->where(['is_policy' => 1]);
@@ -74,7 +76,7 @@ class PolicyController extends Controller
 
         if (isset($request->product)   && !empty($request->product)) {
 
-            $query->where('subproduct_id', $request->product);
+            $query->whereIn('subproduct_id', $request->product);
         }
         if (isset($request->renew_status_search)   && !empty($request->renew_status_search)) {
             $query->where('renew_status', 'like', '%' . $request->renew_status_search . '%');
@@ -106,7 +108,7 @@ class PolicyController extends Controller
         // }
 
         if (isset($request->users)   && !empty($request->users)) {
-            $query->where('user_id', $request->users);
+            $query->whereIn('user_id', $request->users);
         }
         if (isset($request->status)   && !empty($request->status)) {
             $query->where('status', $request->status);

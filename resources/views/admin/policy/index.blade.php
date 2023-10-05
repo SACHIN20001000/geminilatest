@@ -155,20 +155,20 @@
                         <div class="card-body">
 
                             <p class="mg-b-10">Product</p>
-                            <select name="product" class="form-control">
+                            <select name="product[]"  multiple="multiple" class="form-control">
                                 <option value="">Select</option>
                                 @if(isset($products) && $products->count())
                                 @foreach($products as $product)
-                                <option value="{{$product->id}}" {{ (isset($_GET['product']) && $product->id == $_GET['product']) ? 'selected' : '' }}>{{$product->name}}</option>
+                                <option value="{{$product->id}}" {{ (isset($_GET['product']) && is_array($_GET['product']) && in_array($product->id, $_GET['product'])) ? 'selected' : '' }}>{{$product->name}}</option>
                                 @endforeach
                                 @endif
                             </select>
                             <p class="mg-b-10">Reference</p>
-                            <select name="users" class="form-control">
+                            <select name="users[]" multiple="multiple" class="form-control">
                                 <option value="">Select</option>
                                 @if(isset($users) && $users->count())
                                 @foreach($users as $user)
-                                <option value="{{$user->id}}" {{ (isset($_GET['users']) && $user->id == $_GET['users']) ? 'selected' : '' }}>{{$user->name}}</option>
+                                <option value="{{$user->id}}" {{ (isset($_GET['users']) && (is_array($_GET['users']) ? in_array($user->id, $_GET['users']) : $_GET['users'] == $user->id)) ? 'selected' : '' }}>{{$user->name}}</option>
                                 @endforeach
                                 @endif
                             </select>
