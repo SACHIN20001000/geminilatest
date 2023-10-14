@@ -1,53 +1,53 @@
 @extends('admin.layouts.app')
 
-@section('content') 
+@section('content')
 
 <div class="container-fluid">
-  <!-- breadcrumb -->
+    <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="content-title mb-0 my-auto pe-4">All Users</h4>
-              @if(!($_GET['advance'] ?? ''))
+                @if(!($_GET['advance'] ?? ''))
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                    <a class="@if(isset($_GET['id']) && $_GET['id'] == 0) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 0]) }}">All</a>
+                        <a class="@if(isset($_GET['id']) && $_GET['id'] == 0) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 0]) }}">All</a>
                     </div>
                 </div>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                    <a class="@if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 1]) }}">Admin</a>
+                        <a class="@if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 1]) }}">Admin</a>
                     </div>
                 </div>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                    <a class="@if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 2]) }}">Broker</a>
+                        <a class="@if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 2]) }}">Broker</a>
                     </div>
                 </div>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                    <a class="@if(isset($_GET['id']) && $_GET['id'] == 3) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 3]) }}">Staff</a>
+                        <a class="@if(isset($_GET['id']) && $_GET['id'] == 3) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 3]) }}">Staff</a>
                     </div>
                 </div>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                    <a class="@if(isset($_GET['id']) && $_GET['id'] == 4) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 4]) }}">Client</a>
+                        <a class="@if(isset($_GET['id']) && $_GET['id'] == 4) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 4]) }}">Client</a>
                     </div>
                 </div>
                 @endif
             </div>
         </div>
-       
 
-        
-       
+
+
+
         @if(!($_GET['advance'] ?? ''))
-       
+
         <a class="btn btn-main-primary ml_auto" href="{{ route('users.create') }}">Add User</a>
         @endif
     </div>
     <!-- breadcrumb -->
-   
+
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
@@ -61,14 +61,14 @@
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>
-                                <th class="wd-lg-20p"><span>Name</span></th>
-												<th class="wd-lg-20p"><span>Role</span></th>
-                                                @if(isset($_GET['id']) && $_GET['id'] == 2)
-												<th class="wd-lg-20p"><span>Advance Payout</span></th>
-                                                @endif
-												<th class="wd-lg-20p"><span>Created</span></th>
-                                                
-												<th class="wd-lg-20p">Action</th>
+                                    <th class="wd-lg-20p"><span>Name</span></th>
+                                    <th class="wd-lg-20p"><span>Role</span></th>
+                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
+                                    <th class="wd-lg-20p"><span>Advance Payout</span></th>
+                                    @endif
+                                    <th class="wd-lg-20p"><span>Created</span></th>
+
+                                    <th class="wd-lg-20p">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,34 +102,51 @@
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        let id= '{{ $_GET['id'] ?? ''}}';
-        let advance= '{{ $_GET['advance'] ?? ''}}';
-    
+    $(document).ready(function() {
+        let id = @json(request('id', ''));
+        let advance = @json(request('advance', ''));
+
         var table = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                    url: "{{ route('users.index') }}",
-                        data: function(d) {
-                            d.id = id;
-                            d.advance = advance;
+                url: "{{ route('users.index') }}",
+                data: function(d) {
+                    d.id = id;
+                    d.advance = advance;
 
-                        }
+                }
+            },
+            dom: 'Blfrtip',
+
+            columns: [{
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'roles[0].name',
+                    name: 'roles[0].name',
+                    orderable: false,
+                    searchable: false
+                },
+                <?php if (isset($_GET['id']) && $_GET['id'] == 2) { ?> {
+                        data: 'advance_payout',
+                        name: 'advance_payout'
                     },
-                    dom: 'Blfrtip',
-                  
-            columns: [
-              {data: 'name', name: 'name'},
-            {data: 'roles[0].name', name: 'roles[0].name', orderable: false,searchable: false},
-            <?php if(isset($_GET['id']) && $_GET['id'] == 2) {?>
-                {data: 'advance_payout', name: 'advance_payout'},
- <?php } ?>               
+                <?php } ?>
 
 
 
-            {data: 'created_at', name: 'created_at'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+                {
+                    data: 'created_at',
+                    name: 'created_at'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                },
             ]
         });
 

@@ -109,6 +109,7 @@ class NewPayoutController extends Controller
         if ($request->reference_name) {
             $query->where('user_id', $request->reference_name);
         }
+        $query->whereNull('invoice_id')->where('is_mis', 1);
         $payable = $query->sum('mis_commission');
         $receivable = $query->sum('mis_short_premium');
         $recovery = $query->sum('payout_recovery');

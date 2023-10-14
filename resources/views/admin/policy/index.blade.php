@@ -155,7 +155,7 @@
                         <div class="card-body">
 
                             <p class="mg-b-10">Product</p>
-                            <select name="product[]"  multiple="multiple" class="form-control">
+                            <select name="product[]" multiple="multiple" class="form-control">
                                 <option value="">Select</option>
                                 @if(isset($products) && $products->count())
                                 @foreach($products as $product)

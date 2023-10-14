@@ -157,12 +157,13 @@ Route::prefix('admin')->group(function () {
         Route::any('get-payout', [NewPayoutController::class, 'getPayouts'])->name('getPayouts');
         Route::any('payoutList', [NewPayoutController::class, 'payoutList'])->name('payoutList');
         Route::any('generateInvoice', [NewPayoutController::class, 'generateInvoice'])->name('generateInvoice');
-        Route::any('invoice', [InvoiceController::class, 'index'])->name('invoice');
+        Route::any('pending-invoice', [InvoiceController::class, 'index'])->name('invoice');
         Route::any('invoice/{id}', [InvoiceController::class, 'show'])->name('invoice.show');
         Route::any('invoice/{id}/edit', [InvoiceController::class, 'edit'])->name('invoice.edit');
         Route::get('/pdf/download/{id}', [InvoiceController::class, 'downloadInvoice'])->name('pdf.download');
-
-
+        Route::any('invoice', [InvoiceController::class, 'verifiedInvoice'])->name('invoice.verified');
+        Route::any('changeStatus/{id}', [InvoiceController::class, 'changeStatus'])->name('invoice.changeStatus');
+        Route::any('/update-payment-status', [InvoiceController::class, 'updatePaymentStatus'])->name('invoice.updatePaymentStatus');
 
     });
     Route::any('acceptLead', [LeadController::class, 'acceptLead'])->name('acceptLead');

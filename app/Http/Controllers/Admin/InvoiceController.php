@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\Policy;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Mail;
 
 class InvoiceController extends Controller
 {
@@ -18,14 +19,26 @@ class InvoiceController extends Controller
             $query = Invoice::query();
             $query->with('users');
             $data = $query
+                ->where('status', 'pending') // Filter invoices with 'pending' status
                 ->orderBy('id', 'DESC')
                 ->get();
             // Filter users where totalAmount is greater than 0
-         
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('invoice.show', $row->id) . '" class="edit btn btn-primary btn-sm">View</a><a href="' . route('invoice.edit', $row->id) . '" class=" btn btn-success btn-sm">Sync</a>';
+                    $btn = '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+                    <a href="' . route('invoice.show', $row->id) . '" class="edit btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="View Invoice">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                    <a href="' . route('invoice.edit', $row->id) . '" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Sync Invoice">
+                        <i class="zmdi zmdi-refresh-alt" aria-label="zmdi zmdi-refresh-alt"></i>
+                    </a>
+                    <a href="' . route("invoice.changeStatus", $row) . '" class="btn btn-sm btn-info remove_us" data-toggle="tooltip" data-placement="top" title="Verified Invoice" data-method="DELETE" data-confirm-title="Please Confirm" data-confirm-text="Are you sure that you want to verify this invoice?" data-confirm-delete="Yes, verify it!">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </a>
+                </div>
+                ';
                     return $btn;
                 })
                 ->make(true);
@@ -39,11 +52,11 @@ class InvoiceController extends Controller
         return view('admin.invoice.show', compact('invoice'));
     }
 
-    public function edit( $id)
+    public function edit($id)
 
     {
         $invoice = Invoice::with('users')->find($id);
-        $policy= Policy::where('invoice_id', $invoice->id)->get();
+        $policy = Policy::where('invoice_id', $invoice->id)->get();
         $totalAmount = $policy->sum('mis_commission') - $policy->sum('mis_short_premium') - $policy->sum('payout_recovery');
         $tdsPercentage = $invoice->users->tds_percentage ?? 0; // Default to 0 if tds_percentage is not set
         $invoiceAmount = $totalAmount * (1 - ($tdsPercentage / 100));
@@ -64,15 +77,74 @@ class InvoiceController extends Controller
             'short_premium' => $policy->sum('mis_short_premium'),
             'total_Payout' => $policy->sum('mis_commission'),
         ]);
-    
+
         return redirect()->route('invoice')->with('success', 'Invoice Synced Successfully');
-       
-    
     }
-    public function downloadInvoice($id){
+    public function downloadInvoice($id)
+    {
         // $invoice = Invoice::with('users')->find($id);
 
         // $pdf = \PDF::loadView('admin.invoice.show', compact('invoice'));
         // return $pdf->download('invoice.pdf');
+    }
+
+    public function verifiedInvoice(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $query = Invoice::with('users')
+                ->where('status', 'verified')
+                ->orderBy('id', 'DESC');
+
+            $payment_status = [
+                1 => 'pending',
+                2 => 'paid',
+                3 => 'canceled',
+            ];
+
+            $data = $query->where('payment_status', $payment_status[$request->id] ?? 'pending')->get();
+
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<div style="display: grid; grid-template-columns: 1fr 1fr;"><a href="' . route('invoice.show', $row->id) . '" class="edit btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="View Invoice">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </a> <a href="#" class="change-status-icon btn btn-info btn-sm" data-toggle="modal" data-target="#changePaymentStatusModal" data-id="'.$row->id.'">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+            </a></div>';
+                    return $btn;
+                })
+                ->make(true);
+        }
+        return view('admin.invoice.verified');
+    }
+    public function changeStatus($id)
+    {
+
+        $invoice = Invoice::find($id);
+        $invoice->update([
+            'status' => 'verified',
+        ]);
+        // $user = $invoice->users;
+        
+        // $subject = "Payment Notification: Payouts for <$request->interval> Month's Insurance Policies";
+
+        // Mail::send('admin.email.invoicePolicy', ['policy' => $user], function ($messages) use ($user, $subject) {
+        //     $messages->to($user->email);
+        //     $messages->bcc('geminiservices@outlook.com');
+        //     $messages->subject($subject);
+        // });
+        return redirect()->route('invoice.verified', ['id' => 1])->with('success', 'Invoice Verified Successfully');
+    }
+
+    public function updatePaymentStatus(Request $request) {
+        $invoice = Invoice::find($request->invoice_id);
+        $invoice->update([
+            'payment_status' => $request->new_status,
+        ]);
+        return response()->json(['success' => true, 'message' => 'Status Updated Successfully']);
+
     }
 }
