@@ -228,7 +228,7 @@ class PolicyController extends Controller
         {
             try {
                 Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
-                    $messages->to($policy->email);
+                    $messages->to($policy->users->email);
                     $messages->bcc('geminiservices@outlook.com');
                     $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
                     $messages->subject($subject);
@@ -302,7 +302,6 @@ class PolicyController extends Controller
      */
     public function update(Request $request, Policy $policy)
     {
-
         $policyInputs = $request->except('_token', '_method', 'attachment', 'type');
         if ($request->mis_commission && !empty($request->mis_commission)) {
             $policyInputs['is_mis'] = 1;
@@ -371,13 +370,13 @@ class PolicyController extends Controller
         {
             try {
                 Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
-                    $messages->to($policy->email);
+                    $messages->to($policy->users->email);
                     $messages->bcc('geminiservices@outlook.com');
                     $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
                     $messages->subject($subject);
                 });
             } catch (\Exception $th) {
-                //throw $th;
+                // throw $th;
             }
         }
 

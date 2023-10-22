@@ -74,7 +74,6 @@
                         <table id="policies-table" class="card-table table-striped table-vcenter  mb-0">
                             <thead>
                                 <tr>
-                                    <th>SR NO</th>
                                     <th>POLICY HOLDER NAME</th>
                                     <th>TRANSACTION TYPE</th>
                                     <th>TYPE OF BUSINESS</th>
@@ -95,7 +94,6 @@
                                 @if($invoice->policy->count())
                                 @foreach($invoice->policy as $policy)
                                 <tr>
-                                    <td>{{$policy->id}}</td>
                                     <td>{{$policy->holder_name}}</td>
                                     <td>{{$policy->mis_transaction_type}}</td>
                                     <td>{{$policy->bussiness_type}}</td>

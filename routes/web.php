@@ -156,6 +156,8 @@ Route::prefix('admin')->group(function () {
         Route::any('new-payout', [NewPayoutController::class, 'index'])->name('new-payout.index');
         Route::any('get-payout', [NewPayoutController::class, 'getPayouts'])->name('getPayouts');
         Route::any('payoutList', [NewPayoutController::class, 'payoutList'])->name('payoutList');
+        Route::get('generate-pdf', [NewPayoutController::class, 'generatePDF']);
+
         Route::any('generateInvoice', [NewPayoutController::class, 'generateInvoice'])->name('generateInvoice');
         Route::any('pending-invoice', [InvoiceController::class, 'index'])->name('invoice');
         Route::any('invoice/{id}', [InvoiceController::class, 'show'])->name('invoice.show');

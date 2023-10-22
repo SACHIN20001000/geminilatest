@@ -70,7 +70,6 @@
                                 <tr>
                                     <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
                                     <th class="wd-lg-20p"><span>MONTH</span></th>
-                                    <th class="wd-lg-20p"><span>SR NO</span></th>
                                     <th class="wd-lg-20p"><span>POLICY HOLDER NAME</span></th>
                                     <th class="wd-lg-20p"><span>POLICY TYPE</span></th>
                                     <th class="wd-lg-20p"><span>TRANSACTION TYPE</span></th>
@@ -150,10 +149,9 @@
                 {
                     data: 'created_at',
                     name: 'created_at',
-                },
-                {
-                    data: 'id',
-                    name: 'id',
+                    render: function(data, type, row) {
+                        return moment(data).format('MMM D, YYYY');
+                    }
                 }, {
                     data: 'holder_name',
                     name: 'holder_name',
@@ -166,8 +164,8 @@
                     data: 'mis_transaction_type',
                     name: 'mis_transaction_type',
                 }, {
-                    data: 'subProduct.name',
-                    name: 'subProduct.name',
+                    data: 'sub_product.name',
+                    name: 'sub_product.name',
                     defaultContent: '' // Provide a default value here
 
                 }, {

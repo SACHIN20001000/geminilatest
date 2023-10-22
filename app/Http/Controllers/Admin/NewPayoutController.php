@@ -11,6 +11,8 @@ use DataTables;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use PDF;
+use Illuminate\Support\Facades\File;
 
 class NewPayoutController extends Controller
 {
@@ -38,25 +40,26 @@ class NewPayoutController extends Controller
             $data = $query
                 ->orderBy('id', 'DESC')
                 ->get();
-                $data = $data->filter(function ($user) {
-                    $commission = 0;
-                    $shortPremium = 0;
-                    $recovery = 0;
+            $data = $data->filter(function ($user) {
+                $commission = 0;
+                $shortPremium = 0;
+                $recovery = 0;
+                $totalAmount = 0;
+                foreach ($user->policies as $policy) {
+                    $commission += (float) $policy->mis_commission;
+                    $shortPremium += (float) $policy->mis_short_premium;
+                    $recovery += (float) $policy->payout_recovery;
+                }
+
+                // Check if any of the sums are not numeric
+                if (!is_numeric($commission) || !is_numeric($shortPremium) || !is_numeric($recovery)) {
                     $totalAmount = 0;
-                    foreach ($user->policies as $policy) {
-                        $commission += (float) $policy->mis_commission;
-                        $shortPremium += (float) $policy->mis_short_premium;
-                        $recovery += (float) $policy->payout_recovery;
-                    }
-                
-                    // Check if any of the sums are not numeric
-                    if (!is_numeric($commission) || !is_numeric($shortPremium) || !is_numeric($recovery)) {
-                        $totalAmount = 0;                    }
-                
-                    $totalAmount = $commission - $shortPremium - $recovery;
-                
-                    return $totalAmount != 0;
-                });
+                }
+
+                $totalAmount = $commission - $shortPremium - $recovery;
+
+                return $totalAmount != 0;
+            });
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('checkbox', function ($row) {
@@ -75,18 +78,18 @@ class NewPayoutController extends Controller
                     $commission = 0;
                     $shortPremium = 0;
                     $recovery = 0;
-                
+
                     foreach ($row->policies as $policy) {
                         $commission += (float) $policy->mis_commission;
                         $shortPremium += (float) $policy->mis_short_premium;
                         $recovery += (float) $policy->payout_recovery;
                     }
-                
+
                     // Check if any of the sums are not numeric
                     if (!is_numeric($commission) || !is_numeric($shortPremium) || !is_numeric($recovery)) {
                         return 0; // or handle the error in a way that makes sense for your application
                     }
-                
+
                     $totalAmount = $commission - $shortPremium - $recovery;
                     return $totalAmount;
                 })
@@ -179,13 +182,28 @@ class NewPayoutController extends Controller
                 $user->policies()->update(['invoice_id' => $invoice->id]);
 
 
-                $subject = "Payment Notification: Payouts for <$request->interval> Month's Insurance Policies";
-              
+                $pdf = PDF::loadView('admin.pdf.invoicePolicy', ['invoice' => $invoice]);
+                $pdf->setPaper('A3', 'landscape'); // Larger page size with landscape orientation
+                $pdf->setOptions(['dpi' => 150, 'defaultFont' => 'Arial']); // Adjust DPI and font
 
-                Mail::send('admin.email.invoicePolicy', ['invoice' => $invoice], function ($messages) use ($user, $subject) {
+                $publicPdfDirectory = public_path('pdf');
+                $pdfPath = public_path('pdf/invoice_' . $invoice->invoice_id . '.pdf');
+
+                if (!File::exists($publicPdfDirectory)) {
+                    File::makeDirectory($publicPdfDirectory, 0755, true);
+                }
+
+                $pdfData = $pdf->output();
+                file_put_contents($pdfPath, $pdfData);
+
+                $subject = "Payment Notification: Payouts for <$request->interval> Month's Insurance Policies";
+
+
+                Mail::send('admin.email.invoicePolicy', ['invoice' => $invoice], function ($messages) use ($user, $subject, $pdfPath) {
                     $messages->to($user->email);
                     $messages->bcc('geminiservices@outlook.com');
                     $messages->subject($subject);
+                    $messages->attach($pdfPath, ['as' => 'invoice.pdf']);
                 });
             }
 
@@ -268,17 +286,55 @@ class NewPayoutController extends Controller
             foreach ($policies as $policy) {
                 $policy->update(['invoice_id' => $invoice->id]);
             }
+
+            $pdf = PDF::loadView('admin.pdf.invoicePolicy', ['invoice' => $invoice]);
+            $pdf->setPaper('A3', 'landscape'); // Larger page size with landscape orientation
+            $pdf->setOptions(['dpi' => 150, 'defaultFont' => 'Arial']); // Adjust DPI and font
+
+            $publicPdfDirectory = public_path('pdf');
+            $pdfPath = public_path('pdf/invoice_' . $invoice->invoice_id . '.pdf');
+
+            if (!File::exists($publicPdfDirectory)) {
+                File::makeDirectory($publicPdfDirectory, 0755, true);
+            }
+
+            $pdfData = $pdf->output();
+            file_put_contents($pdfPath, $pdfData);
+
             $subject = "Payment Notification: Payouts for <$request->interval> Month's Insurance Policies";
 
-            Mail::send('admin.email.invoicePolicy', ['policy' => $user], function ($messages) use ($user, $subject) {
+            Mail::send('admin.email.invoicePolicy', ['invoice' => $invoice], function ($messages) use ($user, $subject, $pdfPath) {
                 $messages->to($user->email);
                 $messages->bcc('geminiservices@outlook.com');
                 $messages->subject($subject);
+                $messages->attach($pdfPath, ['as' => 'invoice.pdf']);
             });
 
 
 
             return response()->json(['success' => true, 'message' => 'Invoice generated successfully']);
         }
+    }
+
+    public function generatePDF()
+    {
+        $data = [
+            'title' => 'Welcome to CodeSolutionStuff.com',
+            'date' => date('m/d/Y')
+        ];
+
+        $pdf = PDF::loadView('myPDF', $data);
+
+        $publicPdfDirectory = public_path('pdf');
+        $publicPdfPath = public_path('pdf/codesolutionstuff.pdf');
+
+        if (!File::exists($publicPdfDirectory)) {
+            File::makeDirectory($publicPdfDirectory, 0755, true);
+        }
+
+        $pdfData = $pdf->output();
+        file_put_contents($publicPdfPath, $pdfData);
+
+        return $pdf->download('codesolutionstuff.pdf');
     }
 }

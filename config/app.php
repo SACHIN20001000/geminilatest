@@ -193,7 +193,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         'Intervention\Image\ImageServiceProvider',
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        // Barryvdh\DomPDF\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -251,7 +251,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Image' => 'Intervention\Image\Facades\Image',
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        // 'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 
