@@ -162,6 +162,7 @@ Route::prefix('admin')->group(function () {
         Route::any('pending-invoice', [InvoiceController::class, 'index'])->name('invoice');
         Route::any('invoice/{id}', [InvoiceController::class, 'show'])->name('invoice.show');
         Route::any('invoice/{id}/edit', [InvoiceController::class, 'edit'])->name('invoice.edit');
+        Route::any('invoice/{id}/delete', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
         Route::get('/pdf/download/{id}', [InvoiceController::class, 'downloadInvoice'])->name('pdf.download');
         Route::any('invoice', [InvoiceController::class, 'verifiedInvoice'])->name('invoice.verified');
         Route::any('changeStatus/{id}', [InvoiceController::class, 'changeStatus'])->name('invoice.changeStatus');
