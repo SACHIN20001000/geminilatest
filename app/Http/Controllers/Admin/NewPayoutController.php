@@ -91,7 +91,7 @@ class NewPayoutController extends Controller
                     }
 
                     $totalAmount = $commission - $shortPremium - $recovery;
-                    return $totalAmount;
+                    return round($totalAmount, 0);
                 })
                 ->rawColumns(['checkbox', 'name'])
                 ->make(true);
@@ -126,7 +126,7 @@ class NewPayoutController extends Controller
     public function getInvoiceDetail(Request $request)
     {
 
-        $query = User::with(['policies'=>function($q){
+        $query = User::with(['policies' => function ($q) {
             $q->whereNull('invoice_id')->where('is_mis', 1);
         }])->has('policies');
         if ($request->interval) {
@@ -156,7 +156,7 @@ class NewPayoutController extends Controller
             foreach ($data as $key => $user) {
                 $totalAmount = $user->policies->sum('mis_commission') - $user->policies->sum('mis_short_premium') - $user->policies->sum('payout_recovery');
                 $tdsPercentage = $user->tds_percentage ?? 0; // Default to 0 if tds_percentage is not set
-                $invoiceAmount = $totalAmount * (1 - ($tdsPercentage / 100));
+                $invoiceAmount = round($totalAmount * (1 - ($tdsPercentage / 100)), 0);
 
                 $invoice =   Invoice::create([
                     'user_id' => $user->id,
