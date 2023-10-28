@@ -110,6 +110,9 @@ class PolicyController extends Controller
         if (isset($request->users)   && !empty($request->users)) {
             $query->whereIn('user_id', $request->users);
         }
+        if (isset($request->company_id)   && !empty($request->company_id)) {
+            $query->whereIn('company_id', $request->company_id);
+        }
         if (isset($request->status)   && !empty($request->status)) {
             $query->where('status', $request->status);
         }
@@ -128,7 +131,9 @@ class PolicyController extends Controller
         } else {
             $leads =  $query->paginate(10);
         }
-        return view('admin.policy.index', compact('leads', 'products', 'users', 'count'));
+        $companies = Company::all();
+
+        return view('admin.policy.index', compact('leads', 'products', 'users', 'count', 'companies'));
     }
 
     /**

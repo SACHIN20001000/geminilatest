@@ -220,7 +220,17 @@
                                 <option value="Endorsement" {{ (isset($_GET['mis_transaction_type']) && ("Endorsement" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>Endorsement</option>
                             </select>
 
-
+                            @if(isset($_GET['id']) && $_GET['id'] == 1)
+                            <p class="mg-b-10">Insurance Company</p>
+                            <select " multiple=" multiple" name="company_id[]" class="form-control ">
+                                <option value="">Select Below</option>
+                                @if($companies->count())
+                                @foreach($companies as $company)
+                                <option value="{{$company->id}}" {{ (isset($_GET['company_id']) && (is_array($_GET['company_id']) ? in_array($company->id, $_GET['company_id']) : $_GET['company_id'] == $company->id)) ? 'selected' : '' }}>{{$company->name}}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                            @endif
                         </div>
                     </div>
                 </div>
