@@ -385,7 +385,7 @@ class PolicyController extends Controller
                     }
                 });
             } catch (\Exception $th) {
-                throw $th;
+                // throw $th;
             }
         }
 
