@@ -625,7 +625,7 @@
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">POLICY NO </label>
-                                                                <input type="number" name="policy_no" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control " id="policy_no">
+                                                                <input type="text" name="policy_no" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control " id="policy_no">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -741,7 +741,7 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">POLICY NO
                                                                 </label>
-                                                                <input type="number" name="policy_no_normal" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control common- " id="policy_no">
+                                                                <input type="text" name="policy_no_normal" value="{{isset($policy) ? $policy->policy_no : ''}}" class="form-control common- " id="policy_no">
                                                             </div>
                                                         </div>
 
@@ -1807,12 +1807,31 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h4>Attachment</h4>
-                                        <button type="button" name="add" onclick="addAttachment()" class="btn btn-success">Upload</button>
-                                        <table class="table table-bordered" id="attachment_dynamic">
-                                            <tbody>
+                                        <input type="file" name="attachment[]" id="attachment" multiple class="form-control  tableData">
+                                        @if(isset($policy->policyAttachment) && !empty($policy->policyAttachment))
 
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>File Name</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($policy->policyAttachment as $key => $attachment)
+                                                <tr>
+                                                    <td>
+                                                        <a href="{{ URL::asset('attachments') }}/{{ $attachment->file_name }}" target="_blank">{{ $attachment->file_name }}</a>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger delete-attachment" data-attachment-id="{{ $attachment->id }}">Delete</button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
@@ -1835,10 +1854,46 @@
 
 
 @section('scripts')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
     $(document).ready(function() {
+        $('.delete-attachment').on('click', function() {
+            var attachmentId = $(this).data('attachment-id');
+            var row = $(this).closest('tr');
+
+            Swal.fire({
+                title: 'Delete Attachment?',
+                text: 'Are you sure you want to delete this attachment?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '{{ route("delAttachment", ":attachmentId") }}'.replace(':attachmentId', attachmentId),
+                        success: function(data) {
+                            row.remove();
+                            toastr.success('Attachment deleted successfully');
+                        },
+                        error: function() {
+                            toastr.error('An error occurred while deleting the attachment.');
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    $(document).ready(function() {
         $("select").select2();
+        $('.dropify').dropify();
         $('.normal').show();
         $('.health').hide();
         $('.fire').hide();
@@ -1948,7 +2003,11 @@
             if ($(this).val() !== '') {
                 var val = $(this).val();
                 if (val === 'net') {
-                    $('#mis_commissionable_amount').val(parseFloat($('.net_premium').val()));
+                    if ($('#product_id').val() == 1) {
+                        $('#mis_commissionable_amount').val(parseFloat($('.net_premium').val()));
+                    } else {
+                        $('#mis_commissionable_amount').val(parseFloat($('.gross_net_premium').val()));
+                    }
                 } else {
                     var odPremium = parseFloat($('#od_premium').val() || 0);
                     var addOnPremium = parseFloat($('#add_on_premium').val() || 0);
@@ -2067,7 +2126,9 @@
     });
 
     function addAttachment() {
-        $("#attachment_dynamic").append('  <tr> <td><input type="file" name="attachment[]"  id="attachment"  class="form-control tableData"></td> <td><select name="type[]" class="form-control" ><option value="">Select</option><option value="Attachment">Policy Copy</option><option value="RC">RC</option><option value="Previous Year Policy">Previous Year Policy</option><option value="Invoice Copy">Invoice Copy</option> <option value="Other">Other</option> </select> </td><td><button type="button"  class="btn btn-danger deleteatt" style="background: red">Delete</button></td></tr>')
+        $("#attachment_dynamic").append('  <tr> <td><input type="file" name="attachment[]"  id="attachment"  class="form-control dropify tableData"></td><td><button type="button"  class="btn btn-danger deleteatt" style="background: red">Delete</button></td></tr>')
+        $('.dropify').dropify();
+
     }
     $(document).on('click', '.deleteatt', function() {
         $(this).closest('tr').remove();

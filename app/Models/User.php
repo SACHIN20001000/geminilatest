@@ -90,6 +90,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Policy::class, 'user_id', 'id');
     }
+    public function invoicePolicy()
+    {
+        return $this->hasMany(Policy::class, 'user_id', 'id')->whereNull('invoice_id')->where('is_mis', 1);
+    }
 
     public function messages()
     {

@@ -60,6 +60,7 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $invoice = Invoice::with('users')->find($id);
+
         return view('admin.invoice.show', compact('invoice'));
     }
 

@@ -161,11 +161,11 @@ class PolicyController extends Controller
         $policyInputs['user_id'] = $request->user_id ?? auth()->user()->id;
         $policyInputs['is_policy'] = 1;
         $policyInputs['cc'] = $request->cc ?? $request->vehicle_cc ?? null;
-        $policyInputs['gross_premium'] =$request->product_id != 2 ? $request->gross_premium : $request->gross_premium_normal;
-        $policyInputs['gst'] =$request->product_id != 2 ? $request->gst :$request->gst_normal ;
-        $policyInputs['net_premium'] =$request->product_id != 2 ? $request->net_premium : $request->net_premium_normal ;
-        $policyInputs['expiry_date'] = $request->product_id != 2 ? $request->expiry_date : $request->expiry_date_normal ;
-        $policyInputs['start_date'] = $request->product_id != 2 ? $request->start_date : $request->start_date_normal ;
+        $policyInputs['gross_premium'] = $request->product_id != 2 ? $request->gross_premium : $request->gross_premium_normal;
+        $policyInputs['gst'] = $request->product_id != 2 ? $request->gst : $request->gst_normal;
+        $policyInputs['net_premium'] = $request->product_id != 2 ? $request->net_premium : $request->net_premium_normal;
+        $policyInputs['expiry_date'] = $request->product_id != 2 ? $request->expiry_date : $request->expiry_date_normal;
+        $policyInputs['start_date'] = $request->product_id != 2 ? $request->start_date : $request->start_date_normal;
         if ($request->mis_commission && !empty($request->mis_commission)) {
             $policyInputs['is_mis'] = 1;
         }
@@ -217,21 +217,25 @@ class PolicyController extends Controller
                         'policy_id' => $policy->id ?? 0,
                         'user_id' => Auth::user()->id ?? '',
                         'file_name' => $attachment_filename ?? '',
-                        'type' => $request->type[$key] ??  ''
+                        'type' => 'Policy'
                     ]);
-              
                 }
             }
         }
 
-        if(isset($request['button-type']))
-        {
+        if (isset($request['button-type'])) {
             try {
                 Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
                     $messages->to($policy->users->email);
                     $messages->bcc('geminiservices@outlook.com');
                     $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
                     $messages->subject($subject);
+                    if (!empty($policy->policyAttachment)) {
+                        foreach ($policy->policyAttachment as $attach) {
+                            $fileurls = url('attachments', $attach->file_name);
+                            $messages->attach($fileurls);
+                        }
+                    }
                 });
             } catch (\Exception $th) {
                 //throw $th;
@@ -307,11 +311,11 @@ class PolicyController extends Controller
             $policyInputs['is_mis'] = 1;
         }
         $policyInputs['cc'] = $request->cc ?? $request->vehicle_cc ?? null;
-        $policyInputs['gross_premium'] =$request->product_id != 2 ? $request->gross_premium : $request->gross_premium_normal;
-        $policyInputs['gst'] =$request->product_id != 2 ? $request->gst :$request->gst_normal ;
-        $policyInputs['net_premium'] =$request->product_id != 2 ? $request->net_premium : $request->net_premium_normal ;
-        $policyInputs['expiry_date'] = $request->product_id != 2 ? $request->expiry_date : $request->expiry_date_normal ;
-        $policyInputs['start_date'] = $request->product_id != 2 ? $request->start_date : $request->start_date_normal ;
+        $policyInputs['gross_premium'] = $request->product_id != 2 ? $request->gross_premium : $request->gross_premium_normal;
+        $policyInputs['gst'] = $request->product_id != 2 ? $request->gst : $request->gst_normal;
+        $policyInputs['net_premium'] = $request->product_id != 2 ? $request->net_premium : $request->net_premium_normal;
+        $policyInputs['expiry_date'] = $request->product_id != 2 ? $request->expiry_date : $request->expiry_date_normal;
+        $policyInputs['start_date'] = $request->product_id != 2 ? $request->start_date : $request->start_date_normal;
 
         if ($request->health_name && !empty($request->health_name)) {
             $health_hospitalization_upload = [];
@@ -361,22 +365,27 @@ class PolicyController extends Controller
                         'policy_id' => $policy->id ?? 0,
                         'user_id' => Auth::user()->id ?? '',
                         'file_name' => $attachment_filename ?? '',
-                        'type' => $request->type[$key] ??  ''
+                        'type' => 'Policy'
                     ]);
                 }
             }
         }
-        if(isset($request['button-type']))
-        {
+        if (isset($request['button-type'])) {
             try {
                 Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
                     $messages->to($policy->users->email);
                     $messages->bcc('geminiservices@outlook.com');
                     $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
                     $messages->subject($subject);
+                    if (!empty($policy->policyAttachment)) {
+                        foreach ($policy->policyAttachment as $attach) {
+                            $fileurls = url('attachments', $attach->file_name);
+                            $messages->attach($fileurls);
+                        }
+                    }
                 });
             } catch (\Exception $th) {
-                // throw $th;
+                throw $th;
             }
         }
 
@@ -433,12 +442,12 @@ class PolicyController extends Controller
                         $media = '&media_url=' . $fileurls . '&filename=' . $fileurls;
                         $type = '&type=media';
                         $messagefile = rawurlencode(strip_tags($attach->file_name));
-                        $url = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $policy->users->phone . $type . $media . '&message=' . $messagefile . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token='.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
+                        $url = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $policy->users->phone . $type . $media . '&message=' . $messagefile . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
                         $this->sendFileMessage($url);
                     }
                 }
 
-                $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $policy->users->phone . '&type=text&message=' . $data . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token='.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
+                $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $policy->users->phone . '&type=text&message=' . $data . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
 
                 $this->sendMessage($texturl);
             }
@@ -515,7 +524,7 @@ class PolicyController extends Controller
                     $messages->subject($subject);
                 });
                 if (!empty($value->phone)) {
-                    $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php").'?number=' . $value->phone . '&type=text&message=' . view('admin.email.bulkemail', ['user' => $value]) . '&instance_id='.env("WHATSAPP_INSTANCE", "63B293D6D4019").'&access_token'.env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
+                    $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $value->phone . '&type=text&message=' . view('admin.email.bulkemail', ['user' => $value]) . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
 
                     $this->sendMessage($texturl);
                 }

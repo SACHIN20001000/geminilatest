@@ -126,7 +126,9 @@ class NewPayoutController extends Controller
     public function getInvoiceDetail(Request $request)
     {
 
-        $query = User::with(['policies'])->has('policies');
+        $query = User::with(['policies'=>function($q){
+            $q->whereNull('invoice_id')->where('is_mis', 1);
+        }])->has('policies');
         if ($request->interval) {
             $intervalParts = explode(' - ', $request->interval);
             $startDate = Carbon::parse($intervalParts[0]);
@@ -139,9 +141,6 @@ class NewPayoutController extends Controller
         if ($request->ids) {
             $query->whereIn('id', $request->ids);
         }
-        $query->whereHas('policies', function ($q) {
-            $q->whereNull('invoice_id')->where('is_mis', 1);
-        });
         $data = $query
             ->orderBy('id', 'DESC')
             ->get();

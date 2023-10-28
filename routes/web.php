@@ -128,7 +128,7 @@ Route::prefix('admin')->group(function () {
         Route::any('renewAttachment', [PolicyController::class, 'renewAttachment'])->name('renewAttachment');
         Route::any('acceptPolicyLead', [PolicyController::class, 'acceptPolicyLead'])->name('acceptPolicyLead');
         Route::any('rejectpolicyLead', [PolicyController::class, 'rejectpolicyLead'])->name('rejectpolicyLead');
-        Route::delete('delAttachment/{id}', [PolicyController::class, 'delAttachment'])->name('delAttachment');
+        Route::any('delAttachment/{id}', [PolicyController::class, 'delAttachment'])->name('delAttachment');
         Route::any('getProduct', [LeadController::class, 'getProduct'])->name('getProduct');
         Route::any('getCompany', [LeadController::class, 'getCompany'])->name('getCompany');
         Route::any('getSubProduct', [LeadController::class, 'getSubProduct'])->name('getSubProduct');
