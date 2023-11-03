@@ -131,6 +131,7 @@
             }
         });
         let id = @json(request('id', ''));
+        let date = @json(request('date', ''));
 
          table = $('#datatable').DataTable({
             processing: true,

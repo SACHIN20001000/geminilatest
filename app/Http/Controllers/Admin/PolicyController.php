@@ -69,6 +69,18 @@ class PolicyController extends Controller
                     $query->whereBetween('expiry_date', [$today, $daysabove]);
                 }
             }
+
+            if($request->id == 1 && $request->date == 'today'){
+                $query->whereDate('created_at', today());
+            }elseif ($request->id == 1 && $request->date == 'month') {
+                $query->whereMonth('created_at', date('m'));
+            }elseif ($request->id == 2 && $request->date == 'today') {
+                $query->whereDate('expiry_date', today());
+               
+            }elseif ($request->id == 2 && $request->date == 'month') {
+                $query->whereMonth('expiry_date', date('m'));
+            }
+
         }
         if (Auth::user()->hasRole('Broker') ||  Auth::user()->hasRole('Client')) {
             $query->where('user_id', Auth::user()->id);
@@ -117,6 +129,7 @@ class PolicyController extends Controller
             $query->where('status', $request->status);
         }
         if ($request->id == 1) {
+            
             $query->orderby('id', 'desc');
         } else {
             $query->orderby('expiry_date', 'ASC');

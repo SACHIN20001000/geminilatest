@@ -105,6 +105,7 @@
     $(document).ready(function() {
         let id = @json(request('id', ''));
         let advance = @json(request('advance', ''));
+        let date = @json(request('date', ''));
 
         var table = $('#datatable').DataTable({
             processing: true,
@@ -114,6 +115,7 @@
                 data: function(d) {
                     d.id = id;
                     d.advance = advance;
+                    d.date = date;
 
                 }
             },

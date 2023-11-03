@@ -35,7 +35,7 @@
     <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden sales-card bg-primary-gradient">
                 <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
-                <a href="#">
+                <a href="{{ route('policy.index',['id'=> 1 , 'date' => 'today']) }}">
                     <div class="">
                         <h6 class="mb-3 tx-12 text-white">TODAY NEW POLICY</h6>
                     </div>
@@ -59,9 +59,9 @@
         <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden sales-card bg-danger-gradient">
                 <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
-                <a href="#">
+                <a href="{{route('users.index',['id'=> 0, 'date' => 'today'])}}">
                     <div class="">
-                        <h6 class="mb-3 tx-12 text-white">TOTAL NEW USER</h6>
+                        <h6 class="mb-3 tx-12 text-white">TODAY NEW USER</h6>
                     </div>
                     <div class="pb-0 mt-0">
                         <div class="d-flex">
@@ -83,7 +83,7 @@
         <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden sales-card bg-success-gradient">
                 <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
-                <a href="#">
+                <a href="{{ route('policy.index',['id'=> 2 , 'date' => 'today']) }}">
                     <div class="">
                         <h6 class="mb-3 tx-12 text-white">TODAY RENEWAL</h6>
                     </div>
@@ -113,7 +113,7 @@
   <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden sales-card bg-warning-gradient">
                 <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
-                <a href="#">
+                <a href="{{ route('invoice.verified',['id'=> 1,'date'=>'today'])  }}">
                     <div class="">
                         <h6 class="mb-3 tx-12 text-white">TODAY INVOICE</h6>
                     </div>
@@ -137,7 +137,7 @@
 <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
         <div class="card overflow-hidden sales-card bg-primary-gradient">
             <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
-            <a href="#">
+            <a href="{{ route('policy.index',['id'=> 1 , 'date' => 'month']) }}">
                 <div class="">
                     <h6 class="mb-3 tx-12 text-white">THIS MONTH POLICY</h6>
                 </div>
@@ -161,7 +161,7 @@
     <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
         <div class="card overflow-hidden sales-card bg-danger-gradient">
             <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
-            <a href="#">
+            <a href="{{ route('policy.index',['id'=> 2 , 'date' => 'month']) }}">
                 <div class="">
                     <h6 class="mb-3 tx-12 text-white">THIS MONTH RENEWALS</h6>
                 </div>

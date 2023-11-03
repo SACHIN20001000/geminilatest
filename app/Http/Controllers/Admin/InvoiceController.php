@@ -115,6 +115,9 @@ class InvoiceController extends Controller
                 3 => 'canceled',
             ];
 
+            if(isset($request->date) && !empty($request->date)){
+                $query->whereDate('created_at', today());
+            }
             $data = $query->where('payment_status', $payment_status[$request->id] ?? 'pending')->get();
 
 

@@ -34,12 +34,12 @@ class DashboardController extends Controller
     public function index()
     {
            
-$todayNewPolicy= Policy::whereDate('created_at', today())->count();
+$todayNewPolicy= Policy::whereDate('created_at', today())->where(['is_policy' => 1])->count();
 $todayNewUser= User::whereDate('created_at', today())->count();
-$todayRenewal= Policy::whereDate('expiry_date', today())->count();
+$todayRenewal= Policy::whereDate('expiry_date', today())->where(['is_policy' => 1])->count();
 $todayInvoice= Invoice::whereDate('created_at', today())->count();
-$thisMonthNewPolicy= Policy::whereMonth('created_at', date('m'))->count();
-$thisMonthRenewal= Policy::whereMonth('expiry_date', date('m'))->count();
+$thisMonthNewPolicy= Policy::whereMonth('created_at', date('m'))->where(['is_policy' => 1])->count();
+$thisMonthRenewal= Policy::whereMonth('expiry_date', date('m'))->where(['is_policy' => 1])->count();
 
         return view('admin.dashboard',compact('todayNewPolicy','todayNewUser','todayRenewal','todayInvoice','thisMonthNewPolicy','thisMonthRenewal'));
     }

@@ -59,9 +59,12 @@ class UserController extends Controller
                             $q->where('name', '=', 'Client');
                         });
                 }
+              
             }
          
-           
+            if(isset($request->date) && !empty($request->date)){
+                $query->whereDate('created_at', today());
+            }
                
             $data=$query->orderby('id','DESC');
 
