@@ -98,7 +98,7 @@ class CommunicationController extends Controller
             }
             if ($request->type == 'Group') {
                 $group = CommunicationGroup::find($request->group_id);
-                if ($group->users_id) {
+                if ($group && $group->users_id) {
                     $query->whereIn('id', explode(',', $group->users_id));
                 } else {
                     $query->where('id', 0);
@@ -106,11 +106,11 @@ class CommunicationController extends Controller
             }
         }
 
-        $data = $query->orderby('id', 'DESC')->get('email', 'phone');
+        $data = $query->orderby('id', 'DESC')->get(['email', 'phone']);
         if ($data->count()) {
             foreach ($data as $key => $value) {
-
                 try {
+
                     if (($request->sentWhere == 'whatsapp'  || $request->sentWhere == 'both') && $value->phone) {
 
                         $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $value->phone  . '&type=text&message=' . $request->text . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
