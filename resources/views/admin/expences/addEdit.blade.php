@@ -9,7 +9,7 @@
                 <h4 class="content-title mb-0 my-auto">Expences</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ {{isset($expences) ? 'Update' : 'Add New' }}</span>
             </div>
         </div>
-        <a class="btn btn-main-primary ml_auto" style="margin-left: 740px;" href="{{ route('expences.index') }}">View Ecpences</a>
+        <a class="btn btn-main-primary ml_auto" style="margin-left: 740px;" href="{{ route('expences.index') }}">View Expences</a>
 
 
     </div>
