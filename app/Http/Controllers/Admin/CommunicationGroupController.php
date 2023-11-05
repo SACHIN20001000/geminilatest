@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Group\StoreCommunicationGroupRequest;
 use Illuminate\Http\Request;
-use App\Models\Insurance;
+use App\Models\CommunicationGroup;
+use App\Models\User;
 use DataTables;
-use App\Http\Requests\Admin\Insurance\StoreInsuranceRequest;
 
-class InsuranceController extends Controller
+class CommunicationGroupController extends Controller
 {
 
     /**
@@ -18,22 +19,20 @@ class InsuranceController extends Controller
      */
     public function index(Request $request)
     {
-       
-       
-        if ($request->ajax())
-        {
-            $data = Insurance::orderby('id','DESC')->get();
+
+
+        if ($request->ajax()) {
+            $data = CommunicationGroup::orderby('id', 'DESC')->get();
 
             return Datatables::of($data)
-                            ->addIndexColumn()
-                            ->addColumn('action', function ($row)
-                            {
-                                $action = '<span class="action-buttons">
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $action = '<span class="action-buttons">
                                 
-                        <a  href="' . route("insurance.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
+                        <a  href="' . route("group.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
                         </a>
 
-                        <a href="' . route("insurance.destroy", $row) . '"
+                        <a href="' . route("group.destroy", $row) . '"
                                 class="btn btn-sm btn-danger remove_us"
                                 title="Delete User"
                                 data-toggle="tooltip"
@@ -45,12 +44,12 @@ class InsuranceController extends Controller
                                 <i class="las la-trash"></i>
                             </a>
                     ';
-                                return $action;
-                            })
-                            ->rawColumns(['action'])
-                            ->make(true);
+                    return $action;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
-        return view('admin.insurance.index');
+        return view('admin.group.index');
     }
 
     /**
@@ -61,8 +60,9 @@ class InsuranceController extends Controller
     public function create()
     {
 
+        $users = User::all();
 
-        return view('admin.insurance.addEdit');
+        return view('admin.group.addEdit', compact('users'));
     }
 
     /**
@@ -71,13 +71,13 @@ class InsuranceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreInsuranceRequest $request)
+    public function store(StoreCommunicationGroupRequest $request)
     {
 
         $inputs = $request->all();
-        Insurance::create($inputs);
-        
-        return back()->with('success', 'Insurance added successfully!');
+        $inputs['users_id'] = implode(',', $inputs['users_id']);
+        CommunicationGroup::create($inputs);
+        return back()->with('success', 'Group added successfully!');
     }
 
     /**
@@ -89,7 +89,7 @@ class InsuranceController extends Controller
     public function show($id)
     {
 
-        return view('admin.insurance.index',compact('id'));
+        return view('admin.group.index', compact('id'));
     }
 
     /**
@@ -98,10 +98,11 @@ class InsuranceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Insurance $insurance)
+    public function edit(CommunicationGroup $group)
     {
-        
-        return view('admin.insurance.addEdit', compact('insurance'));
+        $users = User::all();
+    
+        return view('admin.group.addEdit', compact('group', 'users'));
     }
 
     /**
@@ -111,13 +112,15 @@ class InsuranceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreInsuranceRequest $request, Insurance $insurance)
+    public function update(StoreCommunicationGroupRequest $request, CommunicationGroup $group)
     {
 
         $inputs = $request->all();
-        $insurance->update($inputs);
-        
-        return back()->with('success', 'Insurance updated successfully!');
+        if (isset($inputs['users_id']) && is_array($inputs['users_id'])) {
+            $inputs['users_id'] = implode(',', $inputs['users_id']);
+        }
+        $group->update($inputs);
+        return back()->with('success', 'Group updated successfully!');
     }
 
     /**
@@ -126,10 +129,9 @@ class InsuranceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Insurance $insurance)
+    public function destroy(CommunicationGroup $group)
     {
-        $insurance->delete();
-        return back()->with('success', 'Insurance deleted successfully!');
+        $group->delete();
+        return back()->with('success', 'Group deleted successfully!');
     }
-
 }

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -28,12 +27,11 @@ use App\Http\Controllers\Admin\ExportController;
 
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CommunicationGroupController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\NewPayoutController;
 use App\Http\Controllers\Admin\WebhookController;
 use App\Http\Controllers\Admin\WhatsappChatsController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BacklinkController;
 
 
@@ -98,6 +96,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('income', IncomeController::class);
         Route::resource('communications', CommunicationController::class);
         Route::resource('remainder', RemainderController::class);
+        Route::resource('group', CommunicationGroupController::class);
         // whatsapp
         Route::any('whatsapp-message-data', [WhatsappChatsController::class, 'lastMessageWhatapp'])->name('lastMessagewhatsapp');
 

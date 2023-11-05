@@ -5,11 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Communication;
+use App\Models\CommunicationGroup;
 use App\Models\User;
 use DataTables;
 use Mail;
+use App\Traits\WhatsappApi;
+
+set_time_limit(600);
+
+
+
 class CommunicationController extends Controller
 {
+    use WhatsappApi;
+
     /**
      * Display a listing of the resource.
      *
@@ -17,13 +26,12 @@ class CommunicationController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax())
-        {
-            $data = Communication::with('users')->orderby('id','DESC')->get();
+        if ($request->ajax()) {
+            $data = Communication::with('users', 'group')->orderby('id', 'DESC')->get();
 
             return Datatables::of($data)
-                            ->addIndexColumn()
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
         }
         return view('admin.communication.index');
     }
@@ -35,7 +43,9 @@ class CommunicationController extends Controller
      */
     public function create()
     {
-       return view('admin.communication.addEdit');
+        $groups = CommunicationGroup::all();
+
+        return view('admin.communication.addEdit', compact('groups'));
     }
 
     /**
@@ -46,62 +56,82 @@ class CommunicationController extends Controller
      */
     public function store(Request $request)
     {
-        
-          
-        $communication= $request->except( '_token');
+
+
+
+        $communication = $request->except('_token');
         $communication['created_by'] = auth()->user()->id;
         Communication::create($communication);
-       $query = User::with('roles');
-       if(isset($request->type) && $request->type == 'Admin Only'){
+        $query = User::with('roles');
+        if (isset($request->type)) {
+            if ($request->type == 'Admin Only') {
                 $query->whereHas(
-                    'roles', function ($q)
-                    {
+                    'roles',
+                    function ($q) {
                         $q->where('name', '=', 'Admin');
-                    });
+                    }
+                );
             }
-            if(isset($request->type) && $request->type == 'Broker Only'){
+            if ($request->type == 'Broker Only') {
                 $query->whereHas(
-                    'roles', function ($q)
-                    {
+                    'roles',
+                    function ($q) {
                         $q->where('name', '=', 'Broker');
-                    });
+                    }
+                );
             }
-            if(isset($request->type) && $request->type == 'Staff Only'){
+            if ($request->type == 'Staff Only') {
                 $query->whereHas(
-                    'roles', function ($q)
-                    {
+                    'roles',
+                    function ($q) {
                         $q->where('name', '=', 'Staff');
-                    });
+                    }
+                );
             }
-            if(isset($request->type) && $request->type == 'Client Only'){
+            if ($request->type == 'Client Only') {
                 $query->whereHas(
-                    'roles', function ($q)
-                    {
+                    'roles',
+                    function ($q) {
                         $q->where('name', '=', 'Client');
-                    });
+                    }
+                );
             }
-
-       $data=$query->orderby('id','DESC')->get('email');
-       if($data->count()){
-           foreach ($data as $key => $value) {
-          
-            try {
-                Mail::send('admin.email.communication',['content'=>$request->text],function($messages) use ($request,$value) {            
-                       $messages->to($value->email);
-                       $messages->bcc('geminiservices@outlook.com');
-                       $subject =$request->subject ?? 'Gemini consultancy Service';
-                       $messages->subject($subject);      
-               }); 
-                 
-              } catch (Exception $e) {
-                 
-               }
-            
+            if ($request->type == 'Group') {
+                $group = CommunicationGroup::find($request->group_id);
+                if ($group->users_id) {
+                    $query->whereIn('id', explode(',', $group->users_id));
+                } else {
+                    $query->where('id', 0);
+                }
+            }
         }
-       }
-    
-       return redirect ()->route ('communications.index')->with ('success', 'Mail Send successfully!');
 
+        $data = $query->orderby('id', 'DESC')->get('email', 'phone');
+        if ($data->count()) {
+            foreach ($data as $key => $value) {
+
+                try {
+                    if (($request->sentWhere == 'whatsapp'  || $request->sentWhere == 'both') && $value->phone) {
+
+                        $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $value->phone  . '&type=text&message=' . $request->text . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
+
+                        $this->sendMessage($texturl);
+                    }
+                    if (($request->sentWhere == 'email'  || $request->sentWhere == 'both')  && $value->email) {
+                        Mail::send('admin.email.communication', ['content' => $request->text], function ($messages) use ($request, $value) {
+                            $messages->to($value->email);
+                            $messages->bcc('geminiservices@outlook.com');
+                            $subject = $request->subject ?? 'Gemini consultancy Service';
+                            $messages->subject($subject);
+                        });
+                    }
+                } catch (Exception $e) {
+                    // return redirect()->back()->with('error', 'Something went wrong!');
+                }
+            }
+        }
+
+        return redirect()->route('communications.index')->with('success', 'Mail Send successfully!');
     }
 
     /**
@@ -123,8 +153,6 @@ class CommunicationController extends Controller
      */
     public function edit($id)
     {
-        $expences = Expences::find($id);
-        return view('admin.communication.addEdit',compact('expences'));
     }
 
     /**
@@ -136,10 +164,9 @@ class CommunicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $expences= $request->except( '_token','_method');
+        $expences = $request->except('_token', '_method');
         Expences::find($id)->update($expences);
-        return redirect ()->back()->with ('success', 'Expences Updated successfully!');
- 
+        return redirect()->back()->with('success', 'Expences Updated successfully!');
     }
 
     /**
@@ -151,7 +178,6 @@ class CommunicationController extends Controller
     public function destroy($id)
     {
         Expences::find($id)->delete();
-        return redirect ()->back()->with ('success', 'Expences Delete successfully!');
- 
+        return redirect()->back()->with('success', 'Expences Delete successfully!');
     }
 }

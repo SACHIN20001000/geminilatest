@@ -186,6 +186,7 @@
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="{{ route('chat') }}">Chat</a></li>
                     <li><a class="slide-item" href="{{ route('whatsapp') }}">Whatsapp</a></li>
+                    <li><a class="slide-item" href="{{ route('group.index') }}">Group</a></li>
                     <li><a class="slide-item" href="{{ route('communications.index') }}">Communication</a></li>
                 </ul>
 

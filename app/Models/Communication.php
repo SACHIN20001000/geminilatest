@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Communication extends Model
 {
     use HasFactory;
-    protected $fillable = ['text','type','created_to','created_by'];
+    protected $fillable = ['text','type','created_to','created_by','sent_where','group_id'];
     protected $casts = [
         'created_at' => 'datetime:M d, Y h:i:s',
         'updated_at' => 'datetime:M d, Y h:i:s',
@@ -16,5 +16,10 @@ class Communication extends Model
     public function users()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(CommunicationGroup::class, 'group_id');
     }
 }

@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 
-@section('content') 
+@section('content')
 
 <div class="container-fluid">
-  <!-- breadcrumb -->
+    <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
@@ -13,7 +13,7 @@
         <a class="btn btn-main-primary ml_auto" href="{{ route('communications.create') }}">Add Communication</a>
     </div>
     <!-- breadcrumb -->
-   
+
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
@@ -27,12 +27,13 @@
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>
-								
-												<th class="wd-lg-20p"><span>Created By</span></th>
-												<th class="wd-lg-20p"><span>Send to</span></th>
-												<th class="wd-lg-20p"><span>Message</span></th>
-												<th class="wd-lg-20p"><span>Created</span></th>
-												
+
+                                    <th class="wd-lg-20p"><span>Created By</span></th>
+                                    <th class="wd-lg-20p"><span>Send to</span></th>
+                                    <th class="wd-lg-20p"><span>Group</span></th>
+                                    <th class="wd-lg-20p"><span>Message</span></th>
+                                    <th class="wd-lg-20p"><span>Created</span></th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,20 +58,45 @@
 
 @section('scripts')
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         var table = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                    url: "{{ route('communications.index') }}",
-                       
-                    },
+                url: "{{ route('communications.index') }}",
+
+            },
             columns: [
-           
-            {data: 'users.name', name: 'users.name'},
-            {data: 'type', name: 'type'},
-            {data: 'text', name: 'text'},
-            {data: 'created_at', name: 'created_at'},
+
+                {
+                    data: 'users.name',
+                    name: 'users.name',
+                    defaultContent: ''
+
+                },
+                {
+                    data: 'type',
+                    name: 'type',
+                    defaultContent: ''
+
+                },
+                {
+                    data:'group.name',
+                    name:'group.name',
+                    defaultContent:''
+                }
+                ,
+                {
+                    data: 'text',
+                    name: 'text',
+                    defaultContent: ''
+
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at',
+                    defaultContent: ''
+                },
             ]
         });
 
