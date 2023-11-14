@@ -81,7 +81,6 @@ class CommunicationController extends Controller
             }
         }
 
-  return redirect()->back()->with('success', 'Communication Send successfully!');
 
         $query = User::with('roles');
         if (isset($request->type)) {
