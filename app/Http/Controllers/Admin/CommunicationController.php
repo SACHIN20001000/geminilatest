@@ -76,12 +76,12 @@ class CommunicationController extends Controller
 
                 $communicate->attachments()->create([
                     'file_name' => $attachment_filename,
-                    'file_path' => `/communication/` . $attachment_filename,
+                    'file_path' => '/communication/' . $attachment_filename,
                 ]);
             }
         }
 
-  
+  return redirect()->back()->with('success', 'Communication Send successfully!');
 
         $query = User::with('roles');
         if (isset($request->type)) {
