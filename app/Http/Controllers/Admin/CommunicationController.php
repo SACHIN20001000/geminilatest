@@ -10,6 +10,7 @@ use App\Models\User;
 use DataTables;
 use Mail;
 use App\Traits\WhatsappApi;
+use Illuminate\Support\Facades\File;
 
 set_time_limit(600);
 
@@ -60,8 +61,28 @@ class CommunicationController extends Controller
 
 
         $communication = $request->except('_token');
+
         $communication['created_by'] = auth()->user()->id;
-        Communication::create($communication);
+        $communicate =  Communication::create($communication);
+        if ($request->hasfile('attachment')) {
+            $publicPdfDirectory = public_path('communication');
+
+            if (!File::exists($publicPdfDirectory)) {
+                File::makeDirectory($publicPdfDirectory, 0755, true);
+            }
+            foreach ($request->file('attachment') as $file) {
+                $attachment_filename = preg_replace('/\s+/', '', $file->getClientOriginalName());
+                $file->move(public_path('/communication'), $attachment_filename);
+
+                $communicate->attachments()->create([
+                    'file_name' => $attachment_filename,
+                    'file_path' => `/communication/` . $attachment_filename,
+                ]);
+            }
+        }
+
+  
+
         $query = User::with('roles');
         if (isset($request->type)) {
             if ($request->type == 'Admin Only') {
@@ -113,15 +134,37 @@ class CommunicationController extends Controller
 
                     if (($request->sentWhere == 'whatsapp'  || $request->sentWhere == 'both') && $value->phone) {
 
-                        $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $value->phone  . '&type=text&message=' . $request->text . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
+
+                        $data = rawurlencode(strip_tags($request->text));
+                        $media = '';
+                        $type = '&type=text';
+                        if (!empty($communicate->attachments)) {
+
+                            foreach ($communicate->attachments as $attach) {
+                                $media = '&media_url=' . url($attach->file_path) . '&filename=' . $attach->file_name;
+                                $type = '&type=media';
+                                $messagefile = rawurlencode(strip_tags($attach->file_name));
+                                $url = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $value->phone . $type . $media . '&message=' . $messagefile . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
+                                $this->sendFileMessage($url);
+                            }
+                        }
+
+                        $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $value->phone . '&type=text&message=' . $data . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
 
                         $this->sendMessage($texturl);
+
+                      
                     }
                     if (($request->sentWhere == 'email'  || $request->sentWhere == 'both')  && $value->email) {
-                        Mail::send('admin.email.communication', ['content' => $request->text], function ($messages) use ($request, $value) {
+                        Mail::send('admin.email.communication', ['content' => $request->text], function ($messages) use ($request, $value, $communicate) {
                             $messages->to($value->email);
-                            $messages->bcc('geminiservices@outlook.com');
+                            $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
                             $subject = $request->subject ?? 'Gemini consultancy Service';
+                            if (!empty($communicate->attachments)) {
+                                foreach ($communicate->attachments as $attach) {
+                                    $messages->attach(url($attach->file_path));
+                                }
+                            }
                             $messages->subject($subject);
                         });
                     }

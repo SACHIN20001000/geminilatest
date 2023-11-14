@@ -556,7 +556,8 @@ class LeadController extends Controller
                             try {
                                 Mail::send('admin.email.newPolicy', ['lead' => $lead], function ($messages) use ($lead) {
                                     $messages->to($lead->email);
-                                    $messages->bcc('geminiservices@outlook.com');
+                                    $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
+
                                     $subject = 'Policy Issued,' . ($lead->holder_name ?? '') . ' ' . ($lead->subProduct->name ?? '');
                                     $messages->subject($subject);
                                 });
@@ -604,7 +605,8 @@ class LeadController extends Controller
         try {
             Mail::send('admin.email.commonemail', ['policy' => $lead], function ($messages) use ($lead, $finalQuotes) {
                 $messages->to($lead->users->email);
-                $messages->bcc('geminiservices@outlook.com');
+                $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
+
                 $subject = 'Quote ' . $lead->holder_name . ' ' . $lead->subProduct->name;
                 if ($finalQuotes->count()) {
                     foreach ($finalQuotes as $key => $quotes) {

@@ -22,4 +22,8 @@ class Communication extends Model
     {
         return $this->belongsTo(CommunicationGroup::class, 'group_id');
     }
+    public function attachments()
+    {
+        return $this->hasMany(CommunicationAttachment::class, 'communication_id');
+    }
 }

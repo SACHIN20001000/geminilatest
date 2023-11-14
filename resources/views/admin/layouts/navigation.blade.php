@@ -6,7 +6,7 @@
 <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
 <aside class="app-sidebar sidebar-scroll">
     <div class="main-sidebar-header active">
-        <a class="desktop-logo logo-light active" href="{{ route('dashboard') }}"><img src="{{URL::asset('assets/img/brand/logo.png')}}" class="main-logo" alt="logo"></a>
+        <a class="desktop-logo logo-light active" href="{{ route('dashboard') }}"><img src="{{ !empty(globalSetting()['logo']) ? asset('setting/' . globalSetting()['logo']) : asset('assets/img/brand/logo.png') }}" class="main-logo" alt="logo"></a>
     </div>
     <div class="main-sidemenu">
         <div class="app-sidebar__user clearfix">
@@ -73,7 +73,7 @@
 <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
 <aside class="app-sidebar sidebar-scroll">
     <div class="main-sidebar-header active">
-        <a class="desktop-logo logo-light active" href="{{ route('dashboard') }}"><img src="{{URL::asset('assets/img/brand/logo.png')}}" class="main-logo" alt="logo"></a>
+        <a class="desktop-logo logo-light active" href="{{ route('dashboard') }}"><img src="{{ !empty(globalSetting()['logo']) ? asset('setting/' . globalSetting()['logo']) : asset('assets/img/brand/logo.png') }}" class="main-logo" alt="logo"></a>
     </div>
     <div class="main-sidemenu">
         <div class="app-sidebar__user clearfix">
@@ -290,6 +290,7 @@
 
             </li>
 
+    
 
             @endif
             @if( Auth::user()->hasRole('Broker') )

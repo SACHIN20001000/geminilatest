@@ -33,8 +33,7 @@ use App\Http\Controllers\Admin\NewPayoutController;
 use App\Http\Controllers\Admin\WebhookController;
 use App\Http\Controllers\Admin\WhatsappChatsController;
 use App\Http\Controllers\BacklinkController;
-
-
+use App\Http\Controllers\GlobalSettingController;
 
 /*
   |--------------------------------------------------------------------------
@@ -60,6 +59,10 @@ Route::get('home', function () {
 
 Route::resource('backlink', BacklinkController::class);
 Route::any('backlink-delete/{id}', [BacklinkController::class, 'deleted'])->name('deleted');
+
+Route::get('global_settings', [GlobalSettingController::class, 'index'])->name('global_settings.index');
+Route::post('global_settings', [GlobalSettingController::class, 'store'])->name('global_settings.store');
+Route::put('global_settings/{id}', [GlobalSettingController::class, 'update'])->name('global_settings.update');
 
 Route::get('dummyMail', [LeadController::class, 'dummyMail'])->name('dummyMail');
 Route::prefix('admin')->group(function () {

@@ -8,10 +8,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<!-- Title -->
-	<title> Gemini Consultancy Services </title>
+	<title>{{globalSetting()['title'] ?? 'Gemini Consultancy Services' }}</title>
 
 	<!-- Favicon -->
-	<link rel="icon" href="{{URL::asset('assets/img/brand/favicon.png')}}" type="image/x-icon" />
+	<link rel="icon" href="{{ !empty(globalSetting()['fav_icon']) ? asset('setting/' . globalSetting()['fav_icon']) : asset('assets/img/brand/favicon.png') }}" type="image/x-icon" />
 
 	<!-- Icons css -->
 	<link href="{{URL::asset('assets/css/icons.css')}}" rel="stylesheet">

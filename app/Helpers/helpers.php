@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\GlobalSetting;
 use App\Models\Lead;
 use App\Models\Policy;
 
@@ -95,5 +96,11 @@ if (!function_exists('renew_policy')) {
         }
         $lead = $query->count();
         return $lead;
+    }
+}
+if (!function_exists('globalSetting')) {
+    function globalSetting()
+    {
+      return GlobalSetting::orderBy('id', 'desc')->first();
     }
 }

@@ -70,17 +70,15 @@ class PolicyController extends Controller
                 }
             }
 
-            if($request->id == 1 && $request->date == 'today'){
+            if ($request->id == 1 && $request->date == 'today') {
                 $query->whereDate('created_at', today());
-            }elseif ($request->id == 1 && $request->date == 'month') {
+            } elseif ($request->id == 1 && $request->date == 'month') {
                 $query->whereMonth('created_at', date('m'));
-            }elseif ($request->id == 2 && $request->date == 'today') {
+            } elseif ($request->id == 2 && $request->date == 'today') {
                 $query->whereDate('expiry_date', today());
-               
-            }elseif ($request->id == 2 && $request->date == 'month') {
+            } elseif ($request->id == 2 && $request->date == 'month') {
                 $query->whereMonth('expiry_date', date('m'));
             }
-
         }
         if (Auth::user()->hasRole('Broker') ||  Auth::user()->hasRole('Client')) {
             $query->where('user_id', Auth::user()->id);
@@ -129,7 +127,7 @@ class PolicyController extends Controller
             $query->where('status', $request->status);
         }
         if ($request->id == 1) {
-            
+
             $query->orderby('id', 'desc');
         } else {
             $query->orderby('expiry_date', 'ASC');
@@ -245,7 +243,7 @@ class PolicyController extends Controller
             try {
                 Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
                     $messages->to($policy->users->email);
-                    $messages->bcc('geminiservices@outlook.com');
+                    $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
                     $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
                     $messages->subject($subject);
                     if (!empty($policy->policyAttachment)) {
@@ -392,7 +390,8 @@ class PolicyController extends Controller
             try {
                 Mail::send('admin.email.newPolicy', ['lead' => $policy], function ($messages) use ($policy) {
                     $messages->to($policy->users->email);
-                    $messages->bcc('geminiservices@outlook.com');
+                    $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
+
                     $subject = 'Policy Issued,' . ($policy->holder_name ?? '') . ' ' . ($policy->subProduct->name ?? '');
                     $messages->subject($subject);
                     if (!empty($policy->policyAttachment)) {
@@ -435,7 +434,8 @@ class PolicyController extends Controller
         try {
             Mail::send('admin.email.endrosment', ['policy' => $policy, 'content' => $request->content], function ($messages) use ($request, $policy) {
                 $messages->to($request->to);
-                $messages->bcc('geminiservices@outlook.com');
+                $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
+
                 if (!empty($request->cc)) {
                     $messages->cc($request->cc);
                 }
@@ -537,7 +537,8 @@ class PolicyController extends Controller
 
                 Mail::send('admin.email.bulkemail', ['user' => $value], function ($messages) use ($value) {
                     $messages->to($value->email);
-                    $messages->bcc('geminiservices@outlook.com');
+                    $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
+
                     $subject = 'Renewals Mis';
                     $messages->subject($subject);
                 });

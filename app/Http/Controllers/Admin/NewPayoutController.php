@@ -200,7 +200,8 @@ class NewPayoutController extends Controller
 
                 Mail::send('admin.email.invoicePolicy', ['invoice' => $invoice], function ($messages) use ($user, $subject, $pdfPath) {
                     $messages->to($user->email);
-                    $messages->bcc('geminiservices@outlook.com');
+                    $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
+
                     $messages->subject($subject);
                     $messages->attach($pdfPath, ['as' => 'invoice.pdf']);
                 });
@@ -304,7 +305,8 @@ class NewPayoutController extends Controller
 
             Mail::send('admin.email.invoicePolicy', ['invoice' => $invoice], function ($messages) use ($user, $subject, $pdfPath) {
                 $messages->to($user->email);
-                $messages->bcc('geminiservices@outlook.com');
+                $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
+
                 $messages->subject($subject);
                 $messages->attach($pdfPath, ['as' => 'invoice.pdf']);
             });
