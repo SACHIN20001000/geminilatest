@@ -81,15 +81,19 @@
 
                 },
                 {
-                    data:'group.name',
-                    name:'group.name',
-                    defaultContent:''
-                }
-                ,
+                    data: 'group.name',
+                    name: 'group.name',
+                    defaultContent: ''
+                },
                 {
                     data: 'text',
                     name: 'text',
-                    defaultContent: ''
+                    defaultContent: '',
+                    render: function(data, type, row) {
+                        var tempElement = $('<div/>').html(data);
+                        return tempElement.text();
+                    }
+
 
                 },
                 {
