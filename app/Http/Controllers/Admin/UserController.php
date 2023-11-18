@@ -21,62 +21,63 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-       
-       
-        if ($request->ajax())
-        {
-            $id=$request->id;
-            $advance=$request->advance;
+
+
+        if ($request->ajax()) {
+            $id = $request->id;
+            $advance = $request->advance;
             $query = User::with('roles');
-            if(isset($advance) && !empty($advance)){
+            if (isset($advance) && !empty($advance)) {
                 $query->whereNotNull('advance_payout');
-            }else{
-                if(isset($id) && $id ==1){
+            } else {
+                if (isset($id) && $id == 1) {
                     $query->whereHas(
-                        'roles', function ($q)
-                        {
+                        'roles',
+                        function ($q) {
                             $q->where('name', '=', 'Admin');
-                        });
+                        }
+                    );
                 }
-                if(isset($id) && $id ==2){
+                if (isset($id) && $id == 2) {
                     $query->whereHas(
-                        'roles', function ($q)
-                        {
+                        'roles',
+                        function ($q) {
                             $q->where('name', '=', 'Broker');
-                        });
+                        }
+                    );
                 }
-                if(isset($id) && $id ==3){
+                if (isset($id) && $id == 3) {
                     $query->whereHas(
-                        'roles', function ($q)
-                        {
+                        'roles',
+                        function ($q) {
                             $q->where('name', '=', 'Staff');
-                        });
+                        }
+                    );
                 }
-                if(isset($id) && $id ==4){
+                if (isset($id) && $id == 4) {
                     $query->whereHas(
-                        'roles', function ($q)
-                        {
+                        'roles',
+                        function ($q) {
                             $q->where('name', '=', 'Client');
-                        });
+                        }
+                    );
                 }
-              
             }
-         
-            if(isset($request->date) && !empty($request->date)){
+
+            if (isset($request->date) && !empty($request->date)) {
                 $query->whereDate('created_at', today());
             }
-               
-            $data=$query->orderby('id','DESC');
+
+            $data = $query->orderby('id', 'DESC');
 
             return Datatables::of($data)
-                            ->addIndexColumn()
-                            ->addColumn('action', function ($row)
-                            {
-                             
-                                $action = '<span class="action-buttons">
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+
+                    $action = '<span class="action-buttons">
                                 <a  href="' . route("users.show", $row) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-user"></i>
                                 </a>
-                                <a  href="' . route("leads.index", ['lead_id'=> $row]) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye" aria-hidden="true"></i>
+                                <a  href="' . route("leads.index", ['lead_id' => $row]) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>
                         <a  href="' . route("users.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i>
                         </a>
@@ -93,10 +94,10 @@ class UserController extends Controller
                                 <i class="las la-trash"></i>
                             </a>
                     ';
-                                return $action;
-                            })
-                            ->rawColumns(['action'])
-                            ->make(true);
+                    return $action;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
         return view('admin.users.index');
     }
@@ -122,7 +123,9 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-
+        echo "<PRE>";
+        print_r($request->all());
+        die();
         $inputs = $request->all();
         $inputs['password'] = bcrypt($request->password);
         $user = User::create($inputs);
@@ -141,8 +144,8 @@ class UserController extends Controller
     public function show(User $user)
     {
 
-        
-        return view('admin.profile.viewProfile',compact('user'));
+
+        return view('admin.profile.viewProfile', compact('user'));
     }
 
     /**
@@ -169,6 +172,34 @@ class UserController extends Controller
     {
 
         $inputs = $request->all();
+    
+        if ($request->hasFile('profile')) {
+            $image_name = $request->file('profile')->getClientOriginalName();
+            $request->profile->move(public_path('/profile'), $image_name);
+            $inputs['profile'] = $image_name;
+          }
+          if ($request->hasFile('photo')) {
+            $image_name = $request->file('photo')->getClientOriginalName();
+            $request->photo->move(public_path('/profile'), $image_name);
+            $inputs['photo'] = $image_name;
+        }
+          if ($request->hasFile('pan_card')) {
+            $image_name = $request->file('pan_card')->getClientOriginalName();
+            $request->pan_card->move(public_path('/profile'), $image_name);
+            $inputs['pan_card'] = $image_name;
+          }
+          if ($request->hasFile('aadhar_card')) {
+            $image_name = $request->file('aadhar_card')->getClientOriginalName();
+            $request->aadhar_card->move(public_path('/profile'), $image_name);
+            $inputs['aadhar_card'] = $image_name;
+          }
+          if ($request->hasFile('gst')) {
+            $image_name = $request->file('gst')->getClientOriginalName();
+            $request->gst->move(public_path('/profile'), $image_name);
+            $inputs['gst'] = $image_name;
+          }
+
+          
         $inputs['password'] = bcrypt($request->password);
         $user->update($inputs);
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
@@ -189,5 +220,4 @@ class UserController extends Controller
         $user->delete();
         return back()->with('success', 'User deleted successfully!');
     }
-
 }

@@ -55,7 +55,9 @@ Route::get('home', function () {
     Auth::logout();
     return redirect('/admin');
 });
-
+Route::get('/', function () {
+    return view('home');
+});
 
 Route::resource('backlink', BacklinkController::class);
 Route::any('backlink-delete/{id}', [BacklinkController::class, 'deleted'])->name('deleted');

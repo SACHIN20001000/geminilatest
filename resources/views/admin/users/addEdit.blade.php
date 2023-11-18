@@ -89,7 +89,7 @@
                                     <label class="form-label mg-b-0">Upi</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="upi" placeholder="Enter your Upi" type="number" value="{{isset($user) && !empty($user->upi) ? $user->upi : ''}}">
+                                    <input class="form-control" name="upi" placeholder="Enter your Upi" type="text" value="{{isset($user) && !empty($user->upi) ? $user->upi : ''}}">
 
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                     <label class="form-label mg-b-0">Birthday</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="birthday" placeholder="Enter your birthday" type="number" value="{{isset($user) && !empty($user->birthday) ? $user->birthday : ''}}">
+                                    <input class="form-control" name="birthday" placeholder="Enter your birthday" type="date" value="{{isset($user) && !empty($user->birthday) ? $user->birthday : ''}}">
                                 </div>
                             </div>
                             <div class="row row-xs align-items-center mg-b-20 anniversary">
@@ -107,7 +107,7 @@
                                     <label class="form-label mg-b-0">Anniversary</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="anniversary" placeholder="Enter your anniversary" type="number" value="{{isset($user) && !empty($user->anniversary) ? $user->anniversary : ''}}">
+                                    <input class="form-control" name="anniversary" placeholder="Enter your anniversary" type="date" value="{{isset($user) && !empty($user->anniversary) ? $user->anniversary : ''}}">
                                 </div>
                             </div>
                             <div class="row row-xs align-items-center mg-b-20 account_no">
@@ -115,7 +115,7 @@
                                     <label class="form-label mg-b-0">Account No</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="account_no" placeholder="Enter your Amount" type="number" value="{{isset($user) && !empty($user->account_no) ? $user->account_no : ''}}">
+                                    <input class="form-control" name="account_no" placeholder="Enter your Amount" type="text" value="{{isset($user) && !empty($user->account_no) ? $user->account_no : ''}}">
                                 </div>
                             </div>
                             <div class="row row-xs align-items-center mg-b-20 account_name">
@@ -123,7 +123,7 @@
                                     <label class="form-label mg-b-0">Bank Name</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="bank_name" placeholder="Enter your Bank" type="number" value="{{isset($user) && !empty($user->bank_name) ? $user->bank_name : ''}}">
+                                    <input class="form-control" name="bank_name" placeholder="Enter your Bank" type="text" value="{{isset($user) && !empty($user->bank_name) ? $user->bank_name : ''}}">
                                 </div>
                             </div>
                             <div class="row row-xs align-items-center mg-b-20 account_name">
@@ -131,7 +131,7 @@
                                     <label class="form-label mg-b-0">Account Name</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="account_name" placeholder="Enter your Account" type="number" value="{{isset($user) && !empty($user->account_name) ? $user->account_name : ''}}">
+                                    <input class="form-control" name="account_name" placeholder="Enter your Account" type="text" value="{{isset($user) && !empty($user->account_name) ? $user->account_name : ''}}">
                                 </div>
                             </div>
                             <div class="row row-xs align-items-center mg-b-20 ifsc">
@@ -139,7 +139,7 @@
                                     <label class="form-label mg-b-0">Ifsc</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" name="ifsc" placeholder="Enter your IFSC" type="number" value="{{isset($user) && !empty($user->ifsc) ? $user->ifsc : ''}}">
+                                    <input class="form-control" name="ifsc" placeholder="Enter your IFSC" type="text" value="{{isset($user) && !empty($user->ifsc) ? $user->ifsc : ''}}">
                                 </div>
                             </div>
                             <div class="row row-xs align-items-center mg-b-20 ">
