@@ -123,11 +123,35 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        echo "<PRE>";
-        print_r($request->all());
-        die();
+        
         $inputs = $request->all();
         $inputs['password'] = bcrypt($request->password);
+        if ($request->hasFile('profile')) {
+            $image_name = $request->file('profile')->getClientOriginalName();
+            $request->profile->move(public_path('/profile'), $image_name);
+            $inputs['profile'] = $image_name;
+          }
+          if ($request->hasFile('photo')) {
+            $image_name = $request->file('photo')->getClientOriginalName();
+            $request->photo->move(public_path('/profile'), $image_name);
+            $inputs['photo'] = $image_name;
+        }
+          if ($request->hasFile('pan_card')) {
+            $image_name = $request->file('pan_card')->getClientOriginalName();
+            $request->pan_card->move(public_path('/profile'), $image_name);
+            $inputs['pan_card'] = $image_name;
+          }
+          if ($request->hasFile('aadhar_card')) {
+            $image_name = $request->file('aadhar_card')->getClientOriginalName();
+            $request->aadhar_card->move(public_path('/profile'), $image_name);
+            $inputs['aadhar_card'] = $image_name;
+          }
+          if ($request->hasFile('gst')) {
+            $image_name = $request->file('gst')->getClientOriginalName();
+            $request->gst->move(public_path('/profile'), $image_name);
+            $inputs['gst'] = $image_name;
+          }
+
         $user = User::create($inputs);
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         $role = Role::updateOrCreate(['name' => $request->role]);
