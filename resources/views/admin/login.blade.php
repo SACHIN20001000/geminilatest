@@ -22,7 +22,7 @@
 							<div class="card-sigin">
 								<div class="mb-5 d-flex">
 									<a href="{{ URL::to('/') }}">
-										<img width="300px" src="{{ !empty(globalSetting()['logo']) ? asset('setting/' . globalSetting()['logo']) : asset('assets/img/brand/logo.png') }}" class="main-logo" alt="logo">
+										<img width="300px" src="{{ !empty(globalSetting()['logo']) ? asset('setting/' . globalSetting()['logo']) : asset('assets/img/brand/logo.png') }}" class="main-logo" alt="logo"></a>
 								</div>
 								<div class="card-sigin">
 									<div class="main-signup-header">
