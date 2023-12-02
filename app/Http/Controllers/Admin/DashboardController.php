@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Channel;
 use App\Models\Product;
 use App\Models\Litterhub\LitterhubProduct;
 use App\Models\Solutionhub\SolutionhubProduct;
@@ -20,6 +21,8 @@ use App\Models\Order;
 use App\Models\Policy;
 use App\Models\SubProduct;
 
+use function PHPUnit\Framework\isNull;
+
 class DashboardController extends Controller
 {
 
@@ -34,34 +37,60 @@ class DashboardController extends Controller
      */
     public function index()
     {
-           
-$todayNewPolicy= Policy::whereDate('created_at', today())->where(['is_policy' => 1])->count();
-$todayNewUser= User::whereDate('created_at', today())->count();
-$todayRenewal= Policy::whereDate('expiry_date', today())->where(['is_policy' => 1])->count();
-$todayInvoice= Invoice::whereDate('created_at', today())->where(['status'=>'verified','payment_status'=>'paid'])->count();
-$thisMonthNewPolicy= Policy::whereMonth('created_at', date('m'))->where(['is_policy' => 1])->count();
-$thisMonthRenewal= Policy::whereMonth('expiry_date', date('m'))->where(['is_policy' => 1])->count();
-
-$thisMonthPolicy= Policy::whereMonth('created_at', date('m'))->where(['is_policy' => 1])->sum('mis_commissionable_amount');
-$thisMonthRenewalPolicy= Policy::whereMonth('expiry_date', date('m'))->where(['is_policy' => 1])->sum('mis_commissionable_amount');
-$todayPolicy= Policy::whereDate('created_at', today())->where(['is_policy' => 1])->sum('mis_commissionable_amount');
-$todayRenewalPolicy= Policy::whereDate('expiry_date', today())->where(['is_policy' => 1])->sum('mis_commissionable_amount');
-$thisYearPolicy= Policy::whereYear('created_at', date('Y'))->where(['is_policy' => 1])->sum('mis_commissionable_amount');
-$thisYearRenewalPolicy= Policy::whereYear('expiry_date', date('Y'))->where(['is_policy' => 1])->sum('mis_commissionable_amount');
-$thisMonthInvoiceAmount= Invoice::whereMonth('created_at', date('m'))->where(['status'=>'verified','payment_status'=>'paid'])->sum('invoice_amount');
-$thisMonthInvoice= Invoice::whereMonth('created_at', date('m'))->where(['status'=>'verified','payment_status'=>'paid'])->count();
-$thisYearInvoiceAmount= Invoice::whereYear('created_at', date('Y'))->where(['status'=>'verified','payment_status'=>'paid'])->sum('invoice_amount');
-$thisYearInvoice= Invoice::whereYear('created_at', date('Y'))->where(['status'=>'verified','payment_status'=>'paid'])->count();
-$todayInvoiceAmount= Invoice::whereDate('created_at', today())->where(['status'=>'verified','payment_status'=>'paid'])->sum('invoice_amount');
-$todayInvoice= Invoice::whereDate('created_at', today())->where(['status'=>'verified','payment_status'=>'paid'])->count();
-$totalSubProduct= SubProduct::count();
-$totalSales= Policy::where(['is_policy' => 1])->sum('mis_commissionable_amount');
-$totalPolicy= Policy::where(['is_policy' => 1])->count();
-$totalUser= User::count();
-$totalInvoice= Invoice::where(['status'=>'verified','payment_status'=>'paid'])->count();
 
 
-        return view('admin.dashboard',compact('todayNewPolicy','todayNewUser','todayRenewal','todayInvoice','thisMonthNewPolicy','thisMonthRenewal','thisMonthPolicy','thisMonthRenewalPolicy','todayPolicy','todayRenewalPolicy','thisYearPolicy','thisYearRenewalPolicy','thisMonthInvoiceAmount','thisMonthInvoice','thisYearInvoiceAmount','thisYearInvoice','todayInvoiceAmount','todayInvoice','totalSubProduct','totalSales','totalPolicy','totalUser','totalInvoice'));
+
+        return view('admin.dashboard');
     }
 
+    /**
+     * dashboard view
+     * @return type
+     */
+    public function dashboardAjax(Request $request)
+    {
+        $start = $request->start;
+        $end = $request->end;
+        $chartType = $request->chartType;
+        $data = [];
+        $data['policyCount'] = Policy::where(['is_policy' => 1])->whereBetween('start_date', [$start, $end])->count();
+        $data['policyAmount'] = Policy::where(['is_policy' => 1])->whereBetween('start_date', [$start, $end])->sum('gross_premium');
+        $data['renewalCount'] = Policy::where(['is_policy' => 1])->whereBetween('expiry_date', [$start, $end])->count();
+        $data['renewalAmount'] = Policy::where(['is_policy' => 1])->whereBetween('expiry_date', [$start, $end])->sum('gross_premium');
+        $data['premiumShortCount'] = Policy::where(['is_policy' => 1])->whereBetween('start_date', [$start, $end])->where('mis_short_premium', '>', 0)->count();
+        $data['premiumShortAmount'] = Policy::where(['is_policy' => 1])->whereBetween('start_date', [$start, $end])->where('mis_short_premium', '>', 0)->sum('mis_short_premium');
+        $data['premiumDepositCount'] = Policy::where(['is_policy' => 1])
+            ->whereBetween('start_date', [$start, $end])
+            ->whereNull('mis_premium_deposit')
+            ->count();
+
+        $data['premiumDepositAmount'] = Policy::where(['is_policy' => 1])
+            ->whereBetween('start_date', [$start, $end])
+            ->whereNull('mis_premium_deposit')
+            ->sum('gross_premium');
+        $data['totalSubProduct'] = SubProduct::count();
+        $data['totalSales'] = Policy::where(['is_policy' => 1])->whereBetween('start_date', [$start, $end])->sum('gross_premium');
+        $data['totalPolicy'] = Policy::where(['is_policy' => 1])->whereBetween('start_date', [$start, $end])->count();
+        $data['totalUser'] = User::whereBetween('created_at', [$start, $end])->count();
+        $data['totalInvoice'] = Invoice::where(['status' => 'verified', 'payment_status' => 'paid'])->whereBetween('created_at', [$start, $end])->count();
+        $data['chartData'] = [];
+
+        if ($chartType == 'SubProduct') {
+            $data['categories'] = SubProduct::get()->pluck('name');
+            $subProducts = SubProduct::get()->pluck('id');
+            foreach ($subProducts as $key => $subProduct) {
+                $data['chartData']['count'][$key] = Policy::where(['is_policy' => 1, 'subproduct_id' => $subProduct])->whereBetween('start_date', [$start, $end])->count();
+                $data['chartData']['price'][$key] = Policy::where(['is_policy' => 1, 'subproduct_id' => $subProduct])->whereBetween('start_date', [$start, $end])->sum('gross_premium');
+            }
+        }else{
+            $data['categories'] = Channel::get()->pluck('name');
+            $channels = Channel::get()->pluck('id');
+            foreach ($channels as $key => $channel) {
+                $data['chartData']['count'][$key] = Policy::where(['is_policy' => 1, 'company_id' => $channel])->whereBetween('start_date', [$start, $end])->count();
+                $data['chartData']['price'][$key] = Policy::where(['is_policy' => 1, 'company_id' => $channel])->whereBetween('start_date', [$start, $end])->sum('gross_premium');
+            } 
+        }
+
+        return response()->json($data);
+    }
 }

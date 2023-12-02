@@ -82,6 +82,7 @@ Route::prefix('admin')->group(function () {
     Route::group(['middleware' => ['auth']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('dashboard-ajax', [DashboardController::class, 'dashboardAjax'])->name('dashboard.ajax');
 
         Route::resource('users', UserController::class);
         Route::resource('company', CompanyController::class);
