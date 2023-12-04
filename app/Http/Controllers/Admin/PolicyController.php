@@ -63,21 +63,26 @@ class PolicyController extends Controller
             $daysabove = date('Y-m-d', strtotime('+15 days', $date));
 
             if (isset($request->expiry_from) && !empty($request->expiry_from) && !empty($request->expiry_to) && isset($request->expiry_to)) {
-                $query->whereBetween('expiry_date', [$request->expiry_from, $request->expiry_to]);
+                if ($request->id == 1) {
+                    $query->whereBetween('start_date', [$request->expiry_from, $request->expiry_to]);
+                } else {
+
+                    $query->whereBetween('expiry_date', [$request->expiry_from, $request->expiry_to]);
+                }
             } else {
                 if ($request->id == 2) {
                     $query->whereBetween('expiry_date', [$today, $daysabove]);
+                } elseif ($request->id == 1) {
+                    $query->whereBetween('start_date', [$today, $daysabove]);
                 }
             }
+        }
 
-            if ($request->id == 1 && $request->date == 'today') {
-                $query->whereDate('start_date', today());
-            } elseif ($request->id == 1 && $request->date == 'month') {
-                $query->whereMonth('start_date', date('m'));
-            } elseif ($request->id == 2 && $request->date == 'today') {
-                $query->whereDate('expiry_date', today());
-            } elseif ($request->id == 2 && $request->date == 'month') {
-                $query->whereMonth('expiry_date', date('m'));
+        if (isset($request->type) && !empty($request->type)) {
+            if ($request->type == 'premium_short') {
+                $query->where('mis_short_premium', '>', 0);
+            } elseif ($request->type == 'premium_deposit') {
+                $query->whereNull('mis_premium_deposit');
             }
         }
         if (Auth::user()->hasRole('Broker') ||  Auth::user()->hasRole('Client')) {
@@ -107,7 +112,7 @@ class PolicyController extends Controller
                 $query->whereColumn('mis_amount_paid', '!=', 'gross_premium');
             }
         }
- 
+
 
         if (isset($request->users)   && !empty($request->users)) {
             $query->whereIn('user_id', $request->users);

@@ -376,7 +376,7 @@
                             </tbody>
 
                         </table>
-                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','renew_status_search'=>$_GET['renew_status_search']?? '','mis_transaction_type'=>$_GET['mis_transaction_type']?? '','sort' => $_GET['sort'] ??'10' , 'date' => $_GET['date'] ?? ''])->links("vendor.pagination.bootstrap-4")}}
+                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','renew_status_search'=>$_GET['renew_status_search']?? '','mis_transaction_type'=>$_GET['mis_transaction_type']?? '','sort' => $_GET['sort'] ??'10' , 'date' => $_GET['date'] ?? '' ,'type' => $_GET['type'] ?? ''])->links("vendor.pagination.bootstrap-4")}}
 
 
 

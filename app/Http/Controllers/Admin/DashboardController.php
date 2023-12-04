@@ -6,11 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Channel;
-use App\Models\Product;
-use App\Models\Litterhub\LitterhubProduct;
-use App\Models\Solutionhub\SolutionhubProduct;
-
-use App\Models\ChowhubProduct;
+use App\Models\Company;
+use App\Models\Insurance;
 use App\Models\Invoice;
 use App\Models\Rating;
 use App\Models\User;
@@ -73,6 +70,8 @@ class DashboardController extends Controller
         $data['totalPolicy'] = Policy::where(['is_policy' => 1])->whereBetween('start_date', [$start, $end])->count();
         $data['totalUser'] = User::whereBetween('created_at', [$start, $end])->count();
         $data['totalInvoice'] = Invoice::where(['status' => 'verified', 'payment_status' => 'paid'])->whereBetween('created_at', [$start, $end])->count();
+        $data['closedRenewal'] = Policy::where(['is_policy' => 1])->whereBetween('expiry_date', [$start, $end])->where('renew_status', 'like', '%' . 'closed' . '%' )->count();
+
         $data['chartData'] = [];
 
         if ($chartType == 'SubProduct') {
@@ -82,15 +81,21 @@ class DashboardController extends Controller
                 $data['chartData']['count'][$key] = Policy::where(['is_policy' => 1, 'subproduct_id' => $subProduct])->whereBetween('start_date', [$start, $end])->count();
                 $data['chartData']['price'][$key] = Policy::where(['is_policy' => 1, 'subproduct_id' => $subProduct])->whereBetween('start_date', [$start, $end])->sum('gross_premium');
             }
-        }else{
+        } else if ($chartType == 'ChannelName') {
             $data['categories'] = Channel::get()->pluck('name');
             $channels = Channel::get()->pluck('id');
             foreach ($channels as $key => $channel) {
                 $data['chartData']['count'][$key] = Policy::where(['is_policy' => 1, 'company_id' => $channel])->whereBetween('start_date', [$start, $end])->count();
                 $data['chartData']['price'][$key] = Policy::where(['is_policy' => 1, 'company_id' => $channel])->whereBetween('start_date', [$start, $end])->sum('gross_premium');
-            } 
+            }
+        } else if ($chartType == 'CompanyName') {
+            $data['categories'] = Company::get()->pluck('name');
+            $companies = Company::get()->pluck('id');
+            foreach ($companies as $key => $company) {
+                $data['chartData']['count'][$key] = Policy::where(['is_policy' => 1, 'company_id' => $company])->whereBetween('start_date', [$start, $end])->count();
+                $data['chartData']['price'][$key] = Policy::where(['is_policy' => 1, 'company_id' => $company])->whereBetween('start_date', [$start, $end])->sum('gross_premium');
+            }
         }
-
         return response()->json($data);
     }
 }

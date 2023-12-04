@@ -18,6 +18,7 @@
                 <select name="chart_type" id="chart_type" class="form-control chart_type">
                     <option value="SubProduct">Product</option>
                     <option value="ChannelName">Channel Wise</option>
+                    <option value="CompanyName">Company Wise</option>
                 </select>
             </div>
             <div class="card">
@@ -36,7 +37,7 @@
     <!-- row -->
     <div class="row row-sm">
 
-        <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12 policy-click">
             <div class="card overflow-hidden sales-card bg-primary-gradient">
                 <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
                     <div class="row">
@@ -54,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12 renewal-click">
             <div class="card overflow-hidden sales-card bg-success-gradient">
                 <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
                     <div class="row">
@@ -72,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12 short-click">
             <div class="card overflow-hidden sales-card bg-danger-gradient">
                 <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
                     <div class="row">
@@ -90,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12 premium-deposit-click">
             <div class="card overflow-hidden sales-card bg-warning-gradient">
                 <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
                     <div class="row">
@@ -135,8 +136,8 @@
                         <li class="mt-0 mrg-8"> <i class="ti-wallet bg-warning-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Total User</span>
                             <p class="mb-0 text-muted tx-12" id="totalUser"></p>
                         </li>
-                        <li class="mt-0 mrg-8"> <i class="si si-eye bg-purple-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Total Invoice</span>
-                            <p class="mb-0 text-muted tx-12" id="totalInvoice"></p>
+                        <li class="mt-0 mrg-8"> <i class="si si-eye bg-purple-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Closed Renewals</span>
+                            <p class="mb-0 text-muted tx-12" id="closedRenewal"></p>
                         </li>
 
                     </ul>
@@ -199,6 +200,38 @@
             ajaxCall(start, end, range, $(this).val());
         });
 
+        $('.policy-click').on('click', function() {
+            var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+            var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            var range = $('#dynamicDate').html();
+            var url = "{{ route('policy.index',['id'=> 1]) }}";
+            window.location.href = url + '&expiry_from=' + start + '&expiry_to=' + end;
+        });
+
+        $('.renewal-click').on('click', function() {
+            var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+            var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            var range = $('#dynamicDate').html();
+            var url = "{{ route('policy.index',['id'=> 2]) }}";
+            window.location.href = url + '&expiry_from=' + start + '&expiry_to=' + end;
+        });
+
+        $('.short-click').on('click', function() {
+            var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+            var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            var range = $('#dynamicDate').html();
+            var url = "{{ route('policy.index',['id'=> 1]) }}";
+            window.location.href = url + '&expiry_from=' + start + '&expiry_to=' + end + '&type=premium_short';
+        });
+
+        $('.premium-deposit-click').on('click', function() {
+            var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+            var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            var range = $('#dynamicDate').html();
+            var url = "{{ route('policy.index',['id'=> 1]) }}";
+            window.location.href = url + '&expiry_from=' + start + '&expiry_to=' + end + '&type=premium_deposit';
+        });
+
         function ajaxCall(start, end, range, chartType) {
             if (!start || !end || !range) {
                 start = moment().subtract(29, 'days').format('YYYY-MM-DD');
@@ -232,6 +265,7 @@
                     $('#premiumShortAmount').html('₹' + data.premiumShortAmount.toLocaleString());
                     $('#premiumDepositCount').html(data.premiumDepositCount);
                     $('#premiumDepositAmount').html('₹' + data.premiumDepositAmount.toLocaleString());
+                    $('#closedRenewal').html(data.closedRenewal);
 
                     highChart(data.categories, data.chartData)
                 }
@@ -240,7 +274,6 @@
         ajaxCall();
 
         function highChart(categories, data) {
-            console.log(data, ':sachinkumar')
             //Chart
             Highcharts.chart('chart-container', {
                 chart: {
@@ -255,7 +288,7 @@
                     categories: categories,
                     crosshair: true,
                     accessibility: {
-                        description: 'Countries'
+                        description: 'Product wise policy details'
                     }
                 },
                 yAxis: {
@@ -265,7 +298,7 @@
                     }
                 },
                 tooltip: {
-                    valueSuffix: ' (1000 MT)'
+                    valuePrefix: '₹ '
                 },
                 plotOptions: {
                     column: {
