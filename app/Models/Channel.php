@@ -13,4 +13,6 @@ class Channel extends Model
         'created_at' => 'datetime:M d, Y h:i:s',
         'updated_at' => 'datetime:M d, Y h:i:s',
     ];
+
+
 }

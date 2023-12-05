@@ -17,5 +17,9 @@ class Company extends Model
     {
         return $this->belongsTo(Insurance::class, 'type');
     }
+    public function policies()
+    {
+        return $this->hasMany(Policy::class, 'company_id');
+    }
 
 }

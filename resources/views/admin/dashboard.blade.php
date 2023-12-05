@@ -136,7 +136,7 @@
                         <li class="mt-0 mrg-8"> <i class="ti-wallet bg-warning-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Total User</span>
                             <p class="mb-0 text-muted tx-12" id="totalUser"></p>
                         </li>
-                        <li class="mt-0 mrg-8"> <i class="si si-eye bg-purple-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Closed Renewals</span>
+                        <li class="mt-0 mrg-8 closed-renewal-click"> <i class="si si-eye bg-purple-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Closed Renewals</span>
                             <p class="mb-0 text-muted tx-12" id="closedRenewal"></p>
                         </li>
 
@@ -167,6 +167,9 @@
     $(document).ready(function() {
         $('#daterange-btn').daterangepicker({
                 ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                     'This Month': [moment().startOf('month'), moment().endOf('month')],
                     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
                     'This Year': [moment().startOf('year'), moment().endOf('year')],
@@ -232,6 +235,14 @@
             window.location.href = url + '&expiry_from=' + start + '&expiry_to=' + end + '&type=premium_deposit';
         });
 
+        $('.closed-renewal-click').on('click', function() {
+            var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+            var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            var range = $('#dynamicDate').html();
+            var url = "{{ route('policy.index',['id'=> 2]) }}";
+            window.location.href = url + '&expiry_from=' + start + '&expiry_to=' + end + '&renew_status_search=CLOSED';
+        });
+
         function ajaxCall(start, end, range, chartType) {
             if (!start || !end || !range) {
                 start = moment().subtract(29, 'days').format('YYYY-MM-DD');
@@ -274,7 +285,12 @@
         ajaxCall();
 
         function highChart(categories, data) {
-            //Chart
+            // Abbreviate long channel names
+            const abbreviatedCategories = categories.map(category => {
+                return category.length > 10 ? category.substring(0, 10) + '...' : category;
+            });
+
+            // Chart configuration with improvements
             Highcharts.chart('chart-container', {
                 chart: {
                     type: 'column'
@@ -283,12 +299,17 @@
                     text: 'Policies details',
                     align: 'left'
                 },
-
                 xAxis: {
-                    categories: categories,
+                    categories: abbreviatedCategories,
                     crosshair: true,
                     accessibility: {
                         description: 'Product wise policy details'
+                    },
+                    labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '12px'
+                        }
                     }
                 },
                 yAxis: {
@@ -306,6 +327,14 @@
                         borderWidth: 0
                     }
                 },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                chart: {
+                    zoomType: 'xy'
+                },
                 series: [{
                         name: 'Price',
                         data: data.price
@@ -316,7 +345,11 @@
                     }
                 ]
             });
+
         }
+
+ 
+
 
     });
 </script>
