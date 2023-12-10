@@ -1,7 +1,14 @@
 @extends('admin.layouts.app')
 
 @section('content')
-
+<style>
+    #users-box {
+        min-width: 140px;
+        max-width: 220px;
+        overflow: auto;
+        max-height: 60px !important;
+    }
+</style>
 <!-- container -->
 <div class="container-fluid">
 
@@ -15,10 +22,29 @@
         </div>
         <div class="main-dashboard-header-right">
             <div>
+                <label class="tx-13">Total User</label>
+                <h5 id="totalUser">0</h5>
+            </div>
+            <div>
+                <label class="tx-13">Total Sales</label>
+                <h5 id="totalSales">0</h5>
+            </div>
+
+            <div>
                 <select name="chart_type" id="chart_type" class="form-control chart_type">
                     <option value="SubProduct">Product</option>
                     <option value="ChannelName">Channel Wise</option>
                     <option value="CompanyName">Company Wise</option>
+                    <option value="UserName">User Wise</option>
+                </select>
+            </div>
+            <div id="users-box">
+                <select name="users[]" id="users" multiple="multiple" class="form-control users">
+                    <option value="SubProduct">Select User</option>
+                    @foreach($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+
                 </select>
             </div>
             <div class="card">
@@ -118,29 +144,15 @@
     <div class="row row-sm">
         <div class="col-xl-4 col-md-12 col-lg-6">
             <div class="card">
-                <div class="card-header pb-1">
-                    <h3 class="card-title mb-2">Sales Activity</h3>
-                    <p class="tx-12 mb-0 text-muted">Sales activities are the tactics that salespeople use to achieve their goals and objective</p>
-                </div>
                 <div class="product-timeline card-body pt-2 mt-1">
                     <ul class="timeline-1 mb-0">
-                        <li class="mt-0 mrg-8"> <i class="ti-pie-chart bg-primary-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Total Products</span>
-                            <p class="mb-0 text-muted tx-12" id="totalSubProduct"></p>
-                        </li>
-                        <li class="mt-0 mrg-8"> <i class="mdi mdi-cart-outline bg-danger-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Total Sales</span>
-                            <p class="mb-0 text-muted tx-12" id="totalSales"></p>
-                        </li>
-                        <li class="mt-0 mrg-8"> <i class="ti-bar-chart-alt bg-success-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Total Policy</span>
-                            <p class="mb-0 text-muted tx-12" id="totalPolicy"></p>
-                        </li>
-                        <li class="mt-0 mrg-8"> <i class="ti-wallet bg-warning-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Total User</span>
-                            <p class="mb-0 text-muted tx-12" id="totalUser"></p>
-                        </li>
+
                         <li class="mt-0 mrg-8 closed-renewal-click"> <i class="si si-eye bg-purple-gradient text-white product-icon"></i> <span class="fw-semibold mb-4 tx-14 ">Closed Renewals</span>
                             <p class="mb-0 text-muted tx-12" id="closedRenewal"></p>
                         </li>
 
                     </ul>
+                    <div id="pie-container"></div>
                 </div>
             </div>
         </div>
@@ -165,6 +177,9 @@
 
 <script>
     $(document).ready(function() {
+        $('#users-box').hide();
+        $("#users").select2();
+
         $('#daterange-btn').daterangepicker({
                 ranges: {
                     'Today': [moment(), moment()],
@@ -193,14 +208,26 @@
             var end = picker.endDate.format('YYYY-MM-DD');
             var range = $('#dynamicDate').html();
 
-            ajaxCall(start, end, range, $('#chart_type').val());
+            ajaxCall(start, end, range, $('#chart_type').val(), $('#users').val());
         });
 
         $('.chart_type').on('change', function() {
             var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
             var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
             var range = $('#dynamicDate').html();
-            ajaxCall(start, end, range, $(this).val());
+            if ($(this).val() == 'UserName') {
+                $('#users-box').show();
+            } else {
+                $('#users-box').hide();
+            }
+            ajaxCall(start, end, range, $(this).val(), $('#users').val());
+        });
+
+        $('.users').on('change', function() {
+            var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+            var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            var range = $('#dynamicDate').html();
+            ajaxCall(start, end, range, $('#chart_type').val(), $(this).val());
         });
 
         $('.policy-click').on('click', function() {
@@ -243,7 +270,7 @@
             window.location.href = url + '&expiry_from=' + start + '&expiry_to=' + end + '&renew_status_search=CLOSED';
         });
 
-        function ajaxCall(start, end, range, chartType) {
+        function ajaxCall(start, end, range, chartType, users) {
             if (!start || !end || !range) {
                 start = moment().subtract(29, 'days').format('YYYY-MM-DD');
                 end = moment().format('YYYY-MM-DD');
@@ -251,6 +278,9 @@
             }
             if (!chartType) {
                 var chartType = $('#chart_type').val();
+            }
+            if (!users) {
+                var users = $('#users').val();
             }
 
             $.ajax({
@@ -260,7 +290,8 @@
                     start: start,
                     end: end,
                     range: range,
-                    chartType: chartType
+                    chartType: chartType,
+                    users: users
                 },
                 success: function(data) {
                     $('#totalSubProduct').html(data.totalSubProduct);
@@ -279,6 +310,8 @@
                     $('#closedRenewal').html(data.closedRenewal);
 
                     highChart(data.categories, data.chartData)
+
+                    pieChart(data.pieChart)
                 }
             });
         }
@@ -315,7 +348,7 @@
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'Price'
+                        text: 'Premium (₹)'
                     }
                 },
                 tooltip: {
@@ -336,11 +369,11 @@
                     zoomType: 'xy'
                 },
                 series: [{
-                        name: 'Price',
+                        name: 'Premium',
                         data: data.price
                     },
                     {
-                        name: 'Count',
+                        name: 'NOP',
                         data: data.count
                     }
                 ]
@@ -348,8 +381,47 @@
 
         }
 
- 
+        function pieChart(chartData) {
 
+            Highcharts.chart('pie-container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie',
+                    height: 310 // Set the desired height here
+
+                },
+                title: {
+                    text: ''
+                },
+
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.y}</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Policy Count',
+                    colorByPoint: true,
+                    data: chartData
+                }]
+            });
+
+        }
 
     });
 </script>
