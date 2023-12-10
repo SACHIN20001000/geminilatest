@@ -177,10 +177,10 @@
 
 <script>
     $(document).ready(function() {
-        // $('#users-box').hide();
+        $('#users-box').hide();
         $("#users").select2({
             closeOnSelect: false, // Keep the dropdown open when a selection is made
-            
+
         });
         $('#daterange-btn').daterangepicker({
                 ranges: {
