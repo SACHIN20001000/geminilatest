@@ -212,17 +212,17 @@
                             @endif
 
                             <p class="mg-b-10">Transaction</p>
-                            <select name="mis_transaction_type" class="form-control">
+                            <select name="mis_transaction_type[]" multiple=" multiple" class="form-control">
                                 <option value="">Select</option>
-                                <option value="Package" {{ (isset($_GET['mis_transaction_type']) && ("Package" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>Package</option>
-                                <option value="SOAD" {{ (isset($_GET['mis_transaction_type']) && ("SOAD" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>SOAD</option>
-                                <option value="TP" {{ (isset($_GET['mis_transaction_type']) && ("TP" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>TP</option>
-                                <option value="Endorsement" {{ (isset($_GET['mis_transaction_type']) && ("Endorsement" == $_GET['mis_transaction_type'])) ? 'selected' : '' }}>Endorsement</option>
+                                <option value="Package" {{ (isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('Package', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'Package')) ? 'selected' : '' }}>Package</option>
+                                <option value="SOAD" {{ (isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('SOAD', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'SOAD')) ? 'selected' : '' }}>SOAD</option>
+                                <option value="TP" {{ (isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('TP', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'TP')) ? 'selected' : '' }}>TP</option>
+                                <option value="Endorsement" {{ (isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('Endorsement', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'Endorsement')) ? 'selected' : '' }}>Endorsement</option>
                             </select>
 
                             @if(isset($_GET['id']) && $_GET['id'] == 1)
                             <p class="mg-b-10">Insurance Company</p>
-                            <select " multiple=" multiple" name="company_id[]" class="form-control ">
+                            <select  multiple=" multiple" name="company_id[]" class="form-control ">
                                 <option value="">Select Below</option>
                                 @if($companies->count())
                                 @foreach($companies as $company)

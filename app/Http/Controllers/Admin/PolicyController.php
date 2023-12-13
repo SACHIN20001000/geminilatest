@@ -66,15 +66,12 @@ class PolicyController extends Controller
                 if ($request->id == 1) {
                     $query->whereBetween('start_date', [$request->expiry_from, $request->expiry_to]);
                 } else {
-
                     $query->whereBetween('expiry_date', [$request->expiry_from, $request->expiry_to]);
                 }
             } else {
                 if ($request->id == 2) {
                     $query->whereBetween('expiry_date', [$today, $daysabove]);
-                } elseif ($request->id == 1) {
-                    $query->whereBetween('start_date', [$today, $daysabove]);
-                }
+                } 
             }
         }
 
@@ -97,8 +94,7 @@ class PolicyController extends Controller
             $query->where('renew_status', 'like', '%' . $request->renew_status_search . '%');
         }
         if (isset($request->mis_transaction_type)   && !empty($request->mis_transaction_type)) {
-
-            $query->where('mis_transaction_type', 'like', '%' . $request->mis_transaction_type . '%');
+            $query->whereIn('mis_transaction_type', $request->mis_transaction_type);
         }
         if (isset($request->follow_ups)   && !empty($request->follow_ups)) {
 

@@ -86,6 +86,7 @@
                                     <th>PREMIUM SHORT</th>
                                     <th>COMMISSION BASE</th>
                                     <th>BASE AMOUNT</th>
+                                    <th>PAYOUT SETTLED </th>
                                     <th>PAYOUT %GE</th>
                                     <th>PAYOUT</th>
                                 </tr>
@@ -106,6 +107,7 @@
                                     <td>{{$policy->mis_short_premium}}</td>
                                     <td>{{$policy->commission_base}}</td>
                                     <td>{{$policy->mis_commissionable_amount}}</td>
+                                    <td>{{$policy->payout_settled}}</td>
                                     <td>{{$policy->mis_percentage}}</td>
                                     <td>{{$policy->mis_commission}}</td>
                                 </tr>

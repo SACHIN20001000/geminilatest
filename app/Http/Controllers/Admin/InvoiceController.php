@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Policy;
+use App\Models\User;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Mail;
+use PDF;
+use Illuminate\Support\Facades\File;
 
 class InvoiceController extends Controller
 {
@@ -72,6 +75,8 @@ class InvoiceController extends Controller
         $totalAmount = $policy->sum('mis_commission') - $policy->sum('mis_short_premium') - $policy->sum('payout_recovery');
         $tdsPercentage = $invoice->users->tds_percentage ?? 0; // Default to 0 if tds_percentage is not set
         $invoiceAmount = $totalAmount * (1 - ($tdsPercentage / 100));
+        $removeAmount = $policy->sum('payout_settled');
+        $invoiceAmount = $invoiceAmount - $removeAmount;
 
         $invoice->update([
             'user_id' => $invoice->users->id,
@@ -79,6 +84,7 @@ class InvoiceController extends Controller
             'invoice_date' => now(),
             'transfer_date' => now(),
             'bank_detail' => $invoice->users->account_no ?? 'N/A',
+            'adjusted' => $removeAmount,
             'name' => $invoice->users->account_name ?? 'N/A',
             'invoice_amount' => $invoiceAmount,
             'tds' => $invoice->users->tds_percentage ?? 0,
@@ -115,7 +121,7 @@ class InvoiceController extends Controller
                 3 => 'canceled',
             ];
 
-            if(isset($request->date) && !empty($request->date)){
+            if (isset($request->date) && !empty($request->date)) {
                 $query->whereDate('created_at', today());
             }
             $data = $query->where('payment_status', $payment_status[$request->id] ?? 'pending')->get();
@@ -142,7 +148,33 @@ class InvoiceController extends Controller
         $invoice->update([
             'status' => 'verified',
         ]);
-        
+
+        $user = User::find($invoice->user_id);
+        $pdf = PDF::loadView('admin.pdf.invoicePolicy', ['invoice' => $invoice]);
+        $pdf->setPaper('A3', 'landscape'); // Larger page size with landscape orientation
+        $pdf->setOptions(['dpi' => 150, 'defaultFont' => 'Arial']); // Adjust DPI and font
+
+        $publicPdfDirectory = public_path('pdf');
+        $pdfPath = public_path('pdf/invoice_' . $invoice->invoice_id . '.pdf');
+
+        if (!File::exists($publicPdfDirectory)) {
+            File::makeDirectory($publicPdfDirectory, 0755, true);
+        }
+
+        $pdfData = $pdf->output();
+        file_put_contents($pdfPath, $pdfData);
+
+        $subject = "Payment Notification: Payouts for <> Month's Insurance Policies";
+
+
+        Mail::send('admin.email.invoicePolicy', ['invoice' => $invoice], function ($messages) use ($user, $subject, $pdfPath) {
+            $messages->to($user->email);
+            $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
+
+            $messages->subject($subject);
+            $messages->attach($pdfPath, ['as' => 'invoice.pdf']);
+        });
+
         return redirect()->route('invoice.verified', ['id' => 1])->with('success', 'Invoice Verified Successfully');
     }
 
@@ -161,7 +193,7 @@ class InvoiceController extends Controller
         Policy::where('invoice_id', $invoice->id)->update([
             'invoice_id' => null,
         ]);
-        
+
         $invoice->delete();
         return redirect()->route('invoice')->with('success', 'Invoice Deleted Successfully');
     }
