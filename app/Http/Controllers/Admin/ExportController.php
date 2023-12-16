@@ -69,7 +69,7 @@ class ExportController extends Controller
             try {
               DB::beginTransaction();
 
-              $user = User::where('name', 'like', '%' . $finalCsv['reference'] . '%')->where('phone', $finalCsv['reference_contact_no'])->first();
+              $user = User::where('phone', $finalCsv['reference_contact_no'])->first();
               $insurance_company = Company::where('name', 'like', '%' . $finalCsv['insurance_company'] . '%')->first();
               $product = Product::where('name', 'like', '%' . $finalCsv['product'] . '%')->first();
               $sub_product = SubProduct::where('name', 'like', '%' . $finalCsv['sub_product'] . '%')->first();
