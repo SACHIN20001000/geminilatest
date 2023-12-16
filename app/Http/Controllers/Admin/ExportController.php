@@ -15,6 +15,8 @@ use App\Models\Policy;
 use App\Models\Insurance;
 use App\Models\Company;
 use App\Models\Attachment;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ExportController extends Controller
 {
@@ -45,10 +47,17 @@ class ExportController extends Controller
         }
       }
       $csvdata = array_slice($file, 1);
+      $requiredHeaders = [
+        'created_date', 'channel_name', 'reference', 'reference_contact_no', 'email',
+        'insurance_company', 'customer_name', 'policy_no', 'policy_type', 'start_date',
+        'end_date', 'product', 'sub_product', 'make', 'model', 'veichel_cc', 'mfr_year',
+        'veh_no', 'idv', 'ncb', 'gwp', 'net_premiun', 'tp_premium', 'od_premium',
+        'premium_received', 'payment_mode', 'remarks', 'status', 'premium_amount_received',
+        'payment_date'
+      ];
       if (!empty($csvdata)) {
-        if (
-          in_array('created_date', $headerF) && in_array('channel_name', $headerF) && in_array('reference', $headerF) && in_array('reference_contact_no', $headerF) && in_array('email', $headerF) && in_array('insurance_company', $headerF) && in_array('customer_name', $headerF) && in_array('policy_no', $headerF) && in_array('policy_type', $headerF) && in_array('start_date', $headerF) && in_array('end_date', $headerF) && in_array('product', $headerF) && in_array('sub_product', $headerF) && in_array('make', $headerF) && in_array('model', $headerF) && in_array('veichel_cc', $headerF) && in_array('mfr_year', $headerF) && in_array('veh_no', $headerF)   && in_array('idv', $headerF) && in_array('ncb', $headerF) && in_array('gwp', $headerF) && in_array('net_premiun', $headerF) && in_array('tp_premium', $headerF) && in_array('od_premium', $headerF) && in_array('premium_received', $headerF)  && in_array('payment_mode', $headerF) && in_array('remarks', $headerF) && in_array('status', $headerF)  && in_array('premium_amount_received', $headerF)  && in_array('payment_date', $headerF)
-        ) {
+        if (count(array_intersect($requiredHeaders, $headerF)) == count($requiredHeaders)) {
+
           foreach ($csvdata as $key => $csv) {
             $csvArrF = explode(",", trim(strtolower($csv)));
 
@@ -58,7 +67,9 @@ class ExportController extends Controller
 
             $newDate = date("d-m-Y h:m:s", strtotime($finalCsv['created_date']));
             try {
-              $user = User::where('name', 'like', '%' . $finalCsv['reference'] . '%')->first();
+              DB::beginTransaction();
+
+              $user = User::where('name', 'like', '%' . $finalCsv['reference'] . '%')->where('phone', $finalCsv['reference_contact_no'])->first();
               $insurance_company = Company::where('name', 'like', '%' . $finalCsv['insurance_company'] . '%')->first();
               $product = Product::where('name', 'like', '%' . $finalCsv['product'] . '%')->first();
               $sub_product = SubProduct::where('name', 'like', '%' . $finalCsv['sub_product'] . '%')->first();
@@ -78,7 +89,6 @@ class ExportController extends Controller
                 'company_id' => $insurance_company->id ?? null,
                 'channel_name' => $channel_name->name ?? null,
                 'is_policy' => 1 ?? null,
-                'mis_payment_method' => $finalCsv['payment_mode'] ?? null,
                 'mis_payment_method' => $finalCsv['payment_mode'] ?? null,
                 'start_date' => date("Y-m-d", strtotime($finalCsv['start_date'])) ?? null,
                 'expiry_date' => date("Y-m-d", strtotime($finalCsv['end_date'])) ?? null,
@@ -103,12 +113,15 @@ class ExportController extends Controller
               ];
 
               Policy::create($finalArr);
+              DB::commit();
             } catch (\Exception $e) {
+              DB::rollback();
+              return back()->with('error', 'Error: ' . $e->getMessage());
             }
           }
           return back()->with('success', 'Policy Imported successfully!');
         }
-        return back()->with('error', 'Error, Please Check the file!');
+        return back()->with('error', 'Error, Missing or Invalid Headers in the file!');
       }
     }
 
