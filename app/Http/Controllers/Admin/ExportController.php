@@ -60,12 +60,17 @@ class ExportController extends Controller
 
           foreach ($csvdata as $key => $csv) {
             $csvArrF = explode(",", trim(strtolower($csv)));
+            if (count($csvArrF) === count($headerF)) {
 
-            $finalCsvData[] = array_combine($headerF, $csvArrF);
+
+              $finalCsvData[] = array_combine($headerF, $csvArrF);
+            }
           }
+
+
           foreach ($finalCsvData as $key => $finalCsv) {
 
-            $newDate = date("d-m-Y h:m:s", strtotime($finalCsv['created_date']));
+            $newDate = date("d-m-Y H:i:s", strtotime($finalCsv['created_date']));
             try {
               DB::beginTransaction();
 
@@ -76,10 +81,12 @@ class ExportController extends Controller
               $make = Make::where('name', 'like', '%' . $finalCsv['make'] . '%')->first();
               $model = ModelMake::where('name', 'like', '%' . $finalCsv['model'] . '%')->first();
               $channel_name = Channel::where('name', 'like', '%' . $finalCsv['channel_name'] . '%')->first();
+              $cleanPolicyNo = $finalCsv['policy_no'] ? preg_replace('/[^\p{L}\p{N}]/u', '', $finalCsv['policy_no']) : null;
+              $cleanHolderName = $finalCsv['customer_name'] ? preg_replace('/[^\p{L}\p{N}\s]/u', '', $finalCsv['customer_name']) : null;
 
               $finalArr = [
                 'user_id' => $user->id ?? null,
-                'holder_name' => $finalCsv['customer_name'] ?? null,
+                'holder_name' =>  $cleanPolicyNo ?? null,
                 'phone' => $finalCsv['reference_contact_no'] ?? null,
                 'email' => $finalCsv['email'] ?? null,
                 'user_type' => $user->roles[0]->id ?? null,
@@ -92,7 +99,7 @@ class ExportController extends Controller
                 'mis_payment_method' => $finalCsv['payment_mode'] ?? null,
                 'start_date' => date("Y-m-d", strtotime($finalCsv['start_date'])) ?? null,
                 'expiry_date' => date("Y-m-d", strtotime($finalCsv['end_date'])) ?? null,
-                'policy_no' => $finalCsv['policy_no'] ?? null,
+                'policy_no' => $cleanPolicyNo,
                 'mis_transaction_type' => $finalCsv['policy_type'] ?? null,
                 'make' => $make->id ?? null,
                 'model' => $model->id ?? null,
@@ -115,6 +122,7 @@ class ExportController extends Controller
               Policy::create($finalArr);
               DB::commit();
             } catch (\Exception $e) {
+             
               DB::rollback();
               return back()->with('error', 'Error: ' . $e->getMessage());
             }
