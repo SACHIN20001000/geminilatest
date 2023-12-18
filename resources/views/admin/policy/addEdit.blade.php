@@ -230,25 +230,25 @@
                                                                     <label class="form-label">TYPE OF BUSINESS</label>
                                                                     <select name="bussiness_type" class="form-control" id="bussiness_type">
                                                                         <option value="">Select</option>
-                                                                        @if((isset($policy)) && $policy->subProduct->name == 'TRAVEL')
+                                                                        @if((isset($policy->subProduct->name)) && $policy->subProduct->name == 'TRAVEL')
                                                                         <option value="New" {{ (isset($policy) && "New" == $policy->bussiness_type) ? 'selected' : '' }}>New</option>
                                                                         <option value="Extension" {{ (isset($policy) && "Extension" == $policy->bussiness_type) ? 'selected' : '' }}>Extension</option>
 
-                                                                        @elseif((isset($policy)) && $policy->subProduct->name == 'HEALTH')
+                                                                        @elseif((isset($policy->subProduct->name)) && $policy->subProduct->name == 'HEALTH')
                                                                         <option value="Fresh" {{ (isset($policy) && "Fresh" == $policy->bussiness_type) ? 'selected' : '' }}>Fresh</option>
                                                                         <option value="Port" {{ (isset($policy) && "Port" == $policy->bussiness_type) ? 'selected' : '' }}>Port</option>
                                                                         <option value="Renewal" {{ (isset($policy) && "Renewal" == $policy->bussiness_type) ? 'selected' : '' }}>Renewal</option>
-                                                                        @elseif((isset($policy)) && $policy->subProduct->name == 'FIRE')
+                                                                        @elseif((isset($policy->subProduct->name)) && $policy->subProduct->name == 'FIRE')
                                                                         <option value="New" {{ (isset($policy) && $policy->bussiness_type === 'New') ? 'selected' : '' }}>New</option>
                                                                         <option value="Rollover" {{ (isset($policy) && $policy->bussiness_type === 'Rollover') ? 'selected' : '' }}>Rollover</option>
                                                                         <option value="Renewal" {{ (isset($policy) && $policy->bussiness_type === 'Renewal') ? 'selected' : '' }}>Renewal</option>
 
-                                                                        @elseif((isset($policy)) && $policy->subProduct->name == 'WC')
+                                                                        @elseif((isset($policy->subProduct->name)) && $policy->subProduct->name == 'WC')
                                                                         <option value="New" {{ (isset($policy) && $policy->bussiness_type === 'New') ? 'selected' : '' }}>New</option>
                                                                         <option value="Rollover" {{ (isset($policy) && $policy->bussiness_type === 'Rollover') ? 'selected' : '' }}>Rollover</option>
                                                                         <option value="Renewal" {{ (isset($policy) && $policy->bussiness_type === 'Renewal') ? 'selected' : '' }}>Renewal</option>
                                                                         <option value="Enhancement" {{ (isset($policy) && $policy->bussiness_type === 'Enhancement') ? 'selected' : '' }}>Enhancement</option>
-                                                                        @elseif((isset($policy)) && $policy->subProduct->name == 'MARINE')
+                                                                        @elseif((isset($policy->subProduct->name)) && $policy->subProduct->name == 'MARINE')
                                                                         <option value="New" {{ (isset($policy) && $policy->bussiness_type === 'New') ? 'selected' : '' }}>New</option>
                                                                         <option value="Rollover" {{ (isset($policy) && $policy->bussiness_type === 'Rollover') ? 'selected' : '' }}>Rollover</option>
                                                                         <option value="Renewal" {{ (isset($policy) && $policy->bussiness_type === 'Renewal') ? 'selected' : '' }}>Renewal</option>
@@ -269,30 +269,30 @@
                                                                     <label class="form-label "> TRANSACTION TYPE</label>
                                                                     <select name="mis_transaction_type" class="form-control">
                                                                         <option value="">Select</option>
-                                                                        @if((isset($policy)) && $policy->subProduct->name == 'TRAVEL')
+                                                                        @if((isset($policy->subProduct->name)) && $policy->subProduct->name == 'TRAVEL')
                                                                         <option value="New" {{ (isset($policy) && "New" == $policy->bussiness_type) ? 'selected' : '' }}>New</option>
                                                                         <option value="Extension" {{ (isset($policy) && "Extension" == $policy->bussiness_type) ? 'selected' : '' }}>Extension</option>
 
-                                                                        @elseif((isset($policy)) && $policy->subProduct->name == 'HEALTH')
+                                                                        @elseif((isset($policy->subProduct->name)) && $policy->subProduct->name == 'HEALTH')
                                                                         <option value="Base" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Base') ? 'selected' : '' }}>Base</option>
                                                                         <option value="Topup" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Topup') ? 'selected' : '' }}>Topup</option>
                                                                         <option value="Critical" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Critical') ? 'selected' : '' }}>Critical</option>
                                                                         <option value="PA" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'PA') ? 'selected' : '' }}>PA</option>
                                                                         <option value="Others" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Others') ? 'selected' : '' }}>Others</option>
                                                                         <option value="Endorsement" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Endorsement') ? 'selected' : '' }}>Endorsement</option>
-                                                                        @elseif((isset($policy)) && $policy->subProduct->name == 'FIRE')
+                                                                        @elseif((isset($policy->subProduct->name)) && $policy->subProduct->name == 'FIRE')
                                                                         <option value="Laghu" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Laghu') ? 'selected' : '' }}>Laghu</option>
                                                                         <option value="Sooksham" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Sooksham') ? 'selected' : '' }}>Sooksham</option>
                                                                         <option value="Package" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Package') ? 'selected' : '' }}>Package</option>
                                                                         <option value="Others" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Others') ? 'selected' : '' }}>Others</option>
                                                                         <option value="Endorsement" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'Endorsement') ? 'selected' : '' }}>Endorsement</option>
 
-                                                                        @elseif((isset($policy)) && $policy->subProduct->name == 'WC')
+                                                                        @elseif((isset($policy->subProduct->name)) && $policy->subProduct->name == 'WC')
                                                                         <option value="Package" {{ (isset($policy->mis_transaction_type) && 'Package' == $policy->mis_transaction_type) ? 'selected' : '' }}>Package</option>
                                                                         <option value="SOAD" {{ (isset($policy->mis_transaction_type) && 'SOAD' == $policy->mis_transaction_type) ? 'selected' : '' }}>SOAD</option>
                                                                         <option value="TP" {{ (isset($policy->mis_transaction_type) && 'TP' == $policy->mis_transaction_type) ? 'selected' : '' }}>TP</option>
                                                                         <option value="Endorsement" {{ (isset($policy->mis_transaction_type) && 'Endorsement' == $policy->mis_transaction_type) ? 'selected' : '' }}>Endorsement</option>
-                                                                        @elseif((isset($policy)) && $policy->subProduct->name == 'MARINE')
+                                                                        @elseif((isset($policy->subProduct->name)) && $policy->subProduct->name == 'MARINE')
                                                                         <option value="RAIL" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'RAIL') ? 'selected' : '' }}>RAIL</option>
                                                                         <option value="ROAD" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'ROAD') ? 'selected' : '' }}>ROAD</option>
                                                                         <option value="AIR" {{ (isset($policy->mis_transaction_type) && $policy->mis_transaction_type === 'AIR') ? 'selected' : '' }}>AIR</option>
