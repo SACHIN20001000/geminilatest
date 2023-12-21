@@ -121,7 +121,7 @@ class PolicyController extends Controller
         }
         if ($request->id == 1) {
 
-            $query->orderby('id', 'desc');
+            $query->orderby('start_date', 'desc');
         } else {
             $query->orderby('expiry_date', 'ASC');
         }
@@ -136,7 +136,6 @@ class PolicyController extends Controller
             $leads =  $query->paginate(10);
         }
         $companies = Company::all();
-
         return view('admin.policy.index', compact('leads', 'products', 'users', 'count', 'companies'));
     }
 
