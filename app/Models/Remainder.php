@@ -9,8 +9,12 @@ class Remainder extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
-        'type',
-        'message',
+
+        'date',
+        'status'
+    ];
+    protected $casts = [
+        'created_at' => 'datetime:M d, Y h:i:s',
+        'updated_at' => 'datetime:M d, Y h:i:s',
     ];
 }

@@ -69,6 +69,7 @@ Route::put('global_settings/{id}', [GlobalSettingController::class, 'update'])->
 Route::get('dummyMail', [LeadController::class, 'dummyMail'])->name('dummyMail');
 Route::prefix('admin')->group(function () {
     Route::any('/webhook', [WebhookController::class, 'index'])->name('index')->middleware(['guest']);
+    Route::any('remainder-cron', [RemainderController::class, 'cronRemainder'])->name('cronRemainder');
 
     Route::get('/', function () {
         return view('admin.login');
@@ -102,6 +103,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('income', IncomeController::class);
         Route::resource('communications', CommunicationController::class);
         Route::resource('remainder', RemainderController::class);
+
         Route::resource('group', CommunicationGroupController::class);
         // whatsapp
         Route::any('whatsapp-message-data', [WhatsappChatsController::class, 'lastMessageWhatapp'])->name('lastMessagewhatsapp');
