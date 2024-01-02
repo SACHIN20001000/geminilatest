@@ -25,6 +25,7 @@ use Auth;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\Admin\Lead\StoreLeadRequest;
 use App\Traits\WhatsappApi;
+use Illuminate\Support\Facades\DB;
 
 class PolicyController extends Controller
 {
@@ -71,7 +72,7 @@ class PolicyController extends Controller
             } else {
                 if ($request->id == 2) {
                     $query->whereBetween('expiry_date', [$today, $daysabove]);
-                } 
+                }
             }
         }
 
@@ -119,22 +120,27 @@ class PolicyController extends Controller
         if (isset($request->status)   && !empty($request->status)) {
             $query->where('status', $request->status);
         }
-        if ($request->id == 1) {
+        if (isset($request->duplicate) && !empty($request->duplicate) && $request->duplicate == true) {
+            $duplicatePolicyNos = Policy::select('policy_no')
+                ->groupBy('policy_no')
+                ->havingRaw('COUNT(policy_no) > 1')
+                ->pluck('policy_no');
 
-            $query->orderby('start_date', 'desc');
+            $query->whereIn('policy_no', $duplicatePolicyNos);
+        }
+        if ($request->id == 1) {
+            if (isset($request->duplicate) && !empty($request->duplicate) && $request->duplicate == true) {
+                $query->orderby('policy_no', 'desc');
+            } else {
+                $query->orderby('start_date', 'desc');
+            }
         } else {
             $query->orderby('expiry_date', 'ASC');
         }
+
         $count =  $query->count();
-        if (isset($request->sort)   && !empty($request->sort)) {
-            if ($request->sort == 'all') {
-                $leads =  $query->paginate(100000000);
-            } else {
-                $leads =  $query->paginate($request->sort);
-            }
-        } else {
-            $leads =  $query->paginate(10);
-        }
+        $leads = ($request->sort == 'all') ? $query->paginate(100000000) : $query->paginate($request->sort ?? 10);
+
         $companies = Company::all();
         return view('admin.policy.index', compact('leads', 'products', 'users', 'count', 'companies'));
     }
@@ -542,6 +548,12 @@ class PolicyController extends Controller
             } catch (Exception $e) {
             }
         }
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        Policy::whereIn('id', $request->id)->delete();
+        return back()->with('success', 'Deleted successfully!');
     }
     public function renewFolloup(Request $request)
     {

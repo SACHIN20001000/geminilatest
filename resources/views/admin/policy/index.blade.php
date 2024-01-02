@@ -109,12 +109,18 @@
                     <button type="button" class="btn btn-info btn-icon me-2 btn-b"><i class="mdi mdi-filter-variant"></i></button>
                 </div>
                 <div class="pe-1 mb-xl-0">
-                    <button type="button" class="btn btn-danger btn-icon me-2"><i class="mdi mdi-star"></i></button>
+                    <button type="button" class="btn btn-danger duplicate-record">Duplicate</button>
                 </div>
                 @if(isset($_GET['id']) && $_GET['id'] == 2)
                 <div class="pe-1 mb-xl-0">
 
                     <a class="btn btn-main-primary renew-btn " style="color:#fff">Bulk email</a>
+
+                </div>
+                @else
+                <div class="pe-1 mb-xl-0">
+
+                    <a class="btn btn-main-primary bulk-delete " style="color:#fff">Bulk Delete</a>
 
                 </div>
                 @endif
@@ -222,7 +228,7 @@
 
                             @if(isset($_GET['id']) && $_GET['id'] == 1)
                             <p class="mg-b-10">Insurance Company</p>
-                            <select  multiple=" multiple" name="company_id[]" class="form-control ">
+                            <select multiple=" multiple" name="company_id[]" class="form-control ">
                                 <option value="">Select Below</option>
                                 @if($companies->count())
                                 @foreach($companies as $company)
@@ -265,9 +271,7 @@
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>
-                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
                                     <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
-                                    @endif
                                     @if(isset($_GET['id']) && $_GET['id'] == 1)
                                     <th><span>Created On</span></th>
 
@@ -284,6 +288,9 @@
                                     <th><span>Followup Date</span></th>
                                     <th><span>Attachment</span></th>
                                     @endif
+                                    @if(isset($_GET['duplicate']) && $_GET['duplicate'] == true)
+                                    <th>Policy No</th>
+                                    @endif
                                     <!-- <th><span>Premium Status</span></th> -->
                                     <th>Action</th>
                                 </tr>
@@ -292,9 +299,7 @@
                                 @if($leads->count())
                                 @foreach($leads as $lead)
                                 <tr style="@if($lead->mark_read == 0)  font-weight: bold; @endif">
-                                    @if(isset($_GET['id']) && $_GET['id'] == 2)
                                     <td><input type="checkbox" name="checked" class="checkSingle checkLead" data-id="{{$lead->id}}"></td>
-                                    @endif
                                     @if(isset($_GET['id']) && $_GET['id'] == 1)
 
                                     <td> <a href="{{route('policy.show',$lead->id)}}">{{!empty($lead->start_date) ? date('d-m-Y',strtotime($lead->start_date))  : ''}}</a></td>
@@ -357,7 +362,9 @@
                                     <!-- {{$lead->renew_status}} -->
                                     @endif
 
-
+                                    @if(isset($_GET['duplicate']) && $_GET['duplicate'] == true)
+                                    <th>{{$lead->policy_no ?? ''}}</th>
+                                    @endif
                                     <td class="btn-group">
                                         <!-- <a class="btn btn-sm btn-info btn-b endrosment-btn" data-id="{{$lead->id ?? ''}}" data-toggle="tooltip" title="Endrosment Sent">📜</a> -->
                                         <button class="btn btn-sm btn-info btn-b common-btn" type="button" data-id="{{$lead->id ?? ''}}" data-email="{{$lead->users->email ?? ''}}" data-expiry='{{ date("d-m-Y", strtotime($lead->expiry_date)) ?? ""}}' data-customer="{{ $lead->lead->holder_name ??$lead->holder_name }}" data-product="{{$lead->products->name ?? ''}}" data-subproduct="{{$lead->subProduct->name ?? ''}}" data-policy="{{$lead->reg_no ?? ''}}" data-name="{{$lead->users->name ?? ''}}" data-toggle="tooltip" title="Send Mail!">📩</button>
@@ -376,7 +383,7 @@
                             </tbody>
 
                         </table>
-                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','renew_status_search'=>$_GET['renew_status_search']?? '','mis_transaction_type'=>$_GET['mis_transaction_type']?? '','sort' => $_GET['sort'] ??'10' , 'date' => $_GET['date'] ?? '' ,'type' => $_GET['type'] ?? ''])->links("vendor.pagination.bootstrap-4")}}
+                        {{$leads->appends(['expiry_from' => $_GET['expiry_from']??'','expiry_to' => $_GET['expiry_to']??'','product' => $_GET['product']??'','users' => $_GET['users']??'','search_anything' => $_GET['search_anything']??'','status' => $_GET['status']??'','id'=>$_GET['id']?? '','renew_status_search'=>$_GET['renew_status_search']?? '','mis_transaction_type'=>$_GET['mis_transaction_type']?? '','sort' => $_GET['sort'] ??'10' , 'date' => $_GET['date'] ?? '' ,'type' => $_GET['type'] ?? '','duplicate' => $_GET['duplicate'] ?? false])->links("vendor.pagination.bootstrap-4")}}
 
 
 
@@ -540,6 +547,36 @@
                 alert('CheckBox and Lead Owner must not be empty');
             }
         });
+
+        $('.bulk-delete').click(function() {
+
+            const ids = [];
+            $(".checkLead:checked").each(function(i) {
+                ids.push($(this).data('id'));
+            });
+
+            if (ids != '') {
+                $.ajax({
+                    type: "Post",
+                    url: "{{route('bulkDelete')}}",
+                    data: {
+                        id: ids
+                    },
+                    success: function(result) {
+                        toastr.success(result.message, 'Deleted Successfully', {
+                            closeButton: true,
+                            progressBar: true,
+                        });
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500);
+                    }
+                });
+            } else {
+                alert('CheckBox and Lead Owner must not be empty');
+            }
+        });
+
     });
     $(document).on('change', '.follow_up', function() {
         var id = $(this).data('id');
@@ -617,5 +654,47 @@
         $("#person_name").summernote('code', meesage);
         $('#common-btn').modal('show');
     })
+    $(document).ready(function() {
+        // Assuming your "Duplicate Record" button has a class named 'duplicate-record-btn'
+        $('.duplicate-record').click(function() {
+            // Get the current URL
+            var currentUrl = window.location.href;
+
+            // Check if 'duplicate' query parameter is already present
+            var hasDuplicateParam = currentUrl.includes('duplicate=true');
+
+            // Update the URL based on the presence of 'duplicate' query parameter
+            var newUrl = hasDuplicateParam ? removeURLParameter(currentUrl, 'duplicate') : addURLParameter(currentUrl, 'duplicate', 'true');
+
+            // Redirect to the updated URL
+            window.location.href = newUrl;
+        });
+
+        // Function to add a query parameter to the URL
+        function addURLParameter(url, key, value) {
+            var separator = url.includes('?') ? '&' : '?';
+            return url + separator + key + '=' + value;
+        }
+
+        // Function to remove a query parameter from the URL
+        function removeURLParameter(url, key) {
+            var urlParts = url.split('?');
+            if (urlParts.length >= 2) {
+                var prefix = encodeURIComponent(key) + '=';
+                var queryParams = urlParts[1].split(/[&;]/g);
+
+                for (var i = queryParams.length; i-- > 0;) {
+                    if (queryParams[i].lastIndexOf(prefix, 0) !== -1) {
+                        queryParams.splice(i, 1);
+                    }
+                }
+
+                url = urlParts[0] + (queryParams.length > 0 ? '?' + queryParams.join('&') : '');
+                return url;
+            } else {
+                return url;
+            }
+        }
+    });
 </script>
 @endsection

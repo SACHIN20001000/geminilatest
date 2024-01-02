@@ -131,6 +131,7 @@ Route::prefix('admin')->group(function () {
         Route::any('sub-endrosment', [PolicyController::class, 'subEndrosment'])->name('subEndrosment');
         Route::any('commonEndrosment', [PolicyController::class, 'commonEndrosment'])->name('commonEndrosment');
         Route::any('bulkEmail', [PolicyController::class, 'bulkEmail'])->name('bulkEmail');
+        Route::any('bulkDelete', [PolicyController::class, 'bulkDelete'])->name('bulkDelete');
         Route::any('renewFolloup', [PolicyController::class, 'renewFolloup'])->name('renewFolloup');
         Route::any('renewAttachment', [PolicyController::class, 'renewAttachment'])->name('renewAttachment');
         Route::any('acceptPolicyLead', [PolicyController::class, 'acceptPolicyLead'])->name('acceptPolicyLead');
