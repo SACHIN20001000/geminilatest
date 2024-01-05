@@ -16,7 +16,8 @@ class AdminController extends Controller
    */
   public function viewProfile()
   {
-    return view('admin.profile.viewProfile');
+    $user = auth()->user();
+    return view('admin.profile.viewProfile', compact('user'));
   }
 
   /**
