@@ -174,7 +174,13 @@
                   <label class="form-label">Gst</label>
                 </div>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" name="gst" value="{{$user->gst}}">
+                @if(!empty($user->gst))
+                  <a href="{{URL::asset('profile')}}/{{$user->gst}}" target="_blank">
+                    <img src="{{URL::asset('profile')}}/{{$user->gst}}" alt="">
+                  </a>
+
+                  @endif
+
                 </div>
                 <div class="col-md-2">
                   <label class="form-label">Phone</label>

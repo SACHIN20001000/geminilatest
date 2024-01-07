@@ -117,8 +117,11 @@ Route::prefix('admin')->group(function () {
         //     whatsapp
         Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
         Route::any('download/{filename?}', [PayoutController::class, 'download'])->name('download');
+        Route::any('downloadsampleUser', [PayoutController::class, 'downloadsampleUser'])->name('downloadsampleUser');
         Route::any('downloadsampleVeichel/{filename?}', [PayoutController::class, 'downloadsampleVeichel'])->name('downloadsampleVeichel');
         Route::any('export-policy', [ExportController::class, 'policyView'])->name('policyView');
+        Route::any('import-user', [ExportController::class, 'importUserView'])->name('importUserView');
+        Route::any('importUsers', [ExportController::class, 'importUsers'])->name('importUsers');
         Route::any('store-policy', [ExportController::class, 'exportPolicy'])->name('exportPolicy');
         Route::any('export-vecial', [ExportController::class, 'vecialView'])->name('vecialView');
         Route::any('store-vecial', [ExportController::class, 'exportVecial'])->name('exportVecial');
