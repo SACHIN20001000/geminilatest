@@ -122,9 +122,7 @@
                 </div>
                 <div class="col-md-4">
                   @if(!empty($user->profile))
-                  <a href="{{URL::asset('profile')}}/{{$user->profile}}" target="_blank">
-                    <img src="{{URL::asset('profile')}}/{{$user->profile}}" alt="">
-                  </a>
+                  <a href="{{URL::asset('profile')}}/{{$user->profile}}" target="_blank">View File</a>
                   @endif
                 </div>
                 <div class="col-md-2">
@@ -133,7 +131,7 @@
                 <div class="col-md-4">
                   @if(!empty($user->photo))
                   <a href="{{URL::asset('profile')}}/{{$user->photo}}" target="_blank">
-                    <img src="{{URL::asset('profile')}}/{{$user->photo}}" alt="">
+                    View File
                   </a>
                   @endif
 
@@ -148,7 +146,7 @@
                 <div class="col-md-4">
                   @if(!empty($user->pan_card))
                   <a href="{{URL::asset('profile')}}/{{$user->pan_card}}" target="_blank">
-                    <img src="{{URL::asset('profile')}}/{{$user->pan_card}}" alt="">
+                    View File
                   </a>
                   @endif
 
@@ -160,7 +158,7 @@
 
                   @if(!empty($user->aadhar_card))
                   <a href="{{URL::asset('profile')}}/{{$user->aadhar_card}}" target="_blank">
-                    <img src="{{URL::asset('profile')}}/{{$user->aadhar_card}}" alt="">
+                    View File
                   </a>
 
                   @endif
@@ -174,11 +172,10 @@
                   <label class="form-label">Gst</label>
                 </div>
                 <div class="col-md-4">
-                @if(!empty($user->gst))
+                  @if(!empty($user->gst))
                   <a href="{{URL::asset('profile')}}/{{$user->gst}}" target="_blank">
-                    <img src="{{URL::asset('profile')}}/{{$user->gst}}" alt="">
+                    View File
                   </a>
-
                   @endif
 
                 </div>
