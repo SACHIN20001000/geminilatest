@@ -282,6 +282,7 @@
                                     <th><span>Trasaction Type</span></th>
                                     <th><span>Sub Product</span></th>
                                     <th><span>Payment Status</span></th>
+                                    <th><span>Reg No.</span></th>
                                     @if(isset($_GET['id']) && $_GET['id'] == 2)
 
                                     <th><span>Expiry Date</span></th>
@@ -315,6 +316,7 @@
                                     <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->mis_transaction_type ?? ''}}</a></td>
                                     <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->subProduct->name ?? ''}}</a></td>
                                     <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->mis_amount_paid !== $lead->gross_premium ?'Short' : 'Paid'}}</a></td>
+                                    <td> <a href="{{route('policy.show',$lead->id)}}">{{$lead->reg_no}}</a></td>
 
                                     @if(isset($_GET['id']) && $_GET['id'] == 2)
 
