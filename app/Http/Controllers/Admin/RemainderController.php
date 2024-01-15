@@ -172,23 +172,24 @@ class RemainderController extends Controller
                         $media = '';
                         $type = '&type=text';
                         if (!empty($policy->commonAttachment)) {
-
                             foreach ($policy->commonAttachment as $attach) {
                                 $fileurls = url('attachments', $attach->file_name);
                                 $media = '&media_url=' . $fileurls . '&filename=' . $fileurls;
                                 $type = '&type=media';
                                 $messagefile = rawurlencode(strip_tags($attach->file_name));
-                                $url = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $policy->users->phone . $type . $media . '&message=' . $messagefile . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
+                                $url = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . 918580831760 . $type . $media . '&message=' . $messagefile . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
                                 $this->sendFileMessage($url);
                             }
                         }
 
-                        $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . $policy->users->phone . '&type=text&message=' . $data . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
+                        $texturl = env("WHATSAPP_URL", "https://bulkchatbot.co.in/api/send.php") . '?number=' . 918580831760 . '&type=text&message=' . $data . '&instance_id=' . env("WHATSAPP_INSTANCE", "63B293D6D4019") . '&access_token=' . env("WHATSAPP_TOKEN", "d947472c111c73ec8b4187b3dad025a2");
 
                         $this->sendMessage($texturl);
                     }
                 } catch (Exception $e) {
                 }
+
+                die('fdgdfgfd');
             }
         }
     }

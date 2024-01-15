@@ -302,9 +302,7 @@
                                 <tr style="@if($lead->mark_read == 0)  font-weight: bold; @endif">
                                     <td><input type="checkbox" name="checked" class="checkSingle checkLead" data-id="{{$lead->id}}"></td>
                                     @if(isset($_GET['id']) && $_GET['id'] == 1)
-
                                     <td> <a href="{{route('policy.show',$lead->id)}}">{{!empty($lead->start_date) ? date('d-m-Y',strtotime($lead->start_date))  : ''}}</a></td>
-
                                     @endif
 
                                     <td>{{$lead->users->name ?? ''}}</td>

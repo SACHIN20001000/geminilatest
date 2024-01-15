@@ -8,6 +8,14 @@
         overflow: auto;
         max-height: 60px !important;
     }
+
+    .filter-chart-box {
+        display: flex;
+        position: absolute;
+        right: 24px;
+        top: 16px;
+        z-index: 1;
+    }
 </style>
 <!-- container -->
 <div class="container-fluid">
@@ -29,29 +37,11 @@
                 <label class="tx-13">Total Sales</label>
                 <h5 id="totalSales">0</h5>
             </div>
-
-            <div>
-                <select name="chart_type" id="chart_type" class="form-control chart_type">
-                    <option value="SubProduct">Product</option>
-                    <option value="ChannelName">Channel Wise</option>
-                    <option value="CompanyName">Company Wise</option>
-                    <option value="UserName">User Wise</option>
-                </select>
-            </div>
-            <div id="users-box">
-                <select name="users[]" id="users" multiple="multiple" class="form-control users">
-                    <option value="SubProduct">Select User</option>
-                    @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-
-                </select>
-            </div>
             <div class="card">
-                <div id="reportrange" style="display:none"><span></span></div>
+                <div id="reportrange"><span></span></div>
                 <button type="button" style="display: flex; gap: 8px;" class="btn btn-default float-right" id="daterange-btn">
                     <i class="far fa-calendar-alt"></i>
-                    <div class="staticDays">Last 30 days</div>
+                    <div class="staticDays">This Month</div>
                     <div id="dynamicDate"></div>
                     <i class="fas fa-caret-down"></i>
                 </button>
@@ -67,7 +57,7 @@
             <div class="card overflow-hidden sales-card bg-primary-gradient">
                 <div class="ps-3 pt-3 pe-3 pb-2 pt-0">
                     <div class="row">
-                        <h3 class="mb-3 tx-18 text-white">Policy Details</h3>
+                        <h3 class="mb-3 tx-18 text-white">Sales</h3>
                         <div class="col-lg-6">
                             <p class="mb-0 tx-12 text-white ">Count</p>
                             <h4 class="tx-20 fw-bold mb-1 text-white" id="policyCount">0</h4>
@@ -157,6 +147,25 @@
             </div>
         </div>
         <div class="col-xl-8 col-md-12 col-lg-6">
+            <div class="filter-chart-box">
+                <div>
+                    <select name="chart_type" id="chart_type" class="form-control chart_type">
+                        <option value="SubProduct">Product</option>
+                        <option value="ChannelName">Channel Wise</option>
+                        <option value="CompanyName">Company Wise</option>
+                        <option value="UserName">User Wise</option>
+                    </select>
+                </div>
+                <div id="users-box">
+                    <select name="users[]" id="users" multiple="multiple" class="form-control users">
+                        <option value="SubProduct">Select User</option>
+                        @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+            </div>
             <div id="chart-container"></div>
 
         </div>
@@ -189,14 +198,12 @@
                     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                     'This Month': [moment().startOf('month'), moment().endOf('month')],
                     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    'This Year': [moment().startOf('year'), moment().endOf('year')],
-                    'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
                     'Financial Year': [moment().month(3).date(1).startOf('month'), moment().month(2).date(31).endOf('month').add(1, 'year')],
                     'Last Financial Year': [moment().subtract(1, 'years').startOf('year').add(3, 'months'), moment().subtract(1, 'years').endOf('year').add(3, 'months').endOf('month')]
 
                 },
-                startDate: moment().subtract(29, 'days'),
-                endDate: moment()
+                startDate: moment().startOf('month'),
+                endDate: moment().endOf('month')
             },
             function(start, end, range) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
@@ -274,8 +281,8 @@
 
         function ajaxCall(start, end, range, chartType, users) {
             if (!start || !end || !range) {
-                start = moment().subtract(29, 'days').format('YYYY-MM-DD');
-                end = moment().format('YYYY-MM-DD');
+                start = moment().startOf('month').format('YYYY-MM-DD');
+                end = moment().endOf('month').format('YYYY-MM-DD');
                 range = 'Last 30 Days';
             }
             if (!chartType) {

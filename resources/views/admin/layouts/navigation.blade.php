@@ -286,7 +286,7 @@
                             </g>
                         </g>
                     </svg>
-                    <span class="side-menu__label">Income</span></a>
+                    <span class="side-menu__label">Reconciliation</span></a>
 
 
             </li>

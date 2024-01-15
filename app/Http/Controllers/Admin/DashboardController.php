@@ -68,7 +68,7 @@ class DashboardController extends Controller
         $data['totalSubProduct'] = SubProduct::count();
         $data['totalSales'] = Policy::where(['is_policy' => 1])->whereBetween('start_date', [$start, $end])->sum('gross_premium');
         $data['totalPolicy'] = Policy::where(['is_policy' => 1])->whereBetween('start_date', [$start, $end])->count();
-        $data['totalUser'] = User::whereBetween('created_at', [$start, $end])->count();
+        $data['totalUser'] = User::count();
         $data['totalInvoice'] = Invoice::where(['status' => 'verified', 'payment_status' => 'paid'])->whereBetween('created_at', [$start, $end])->count();
         $data['closedRenewal'] = Policy::where(['is_policy' => 1])->whereBetween('expiry_date', [$start, $end])->where('renew_status', 'like', '%' . 'closed' . '%')->count();
 
@@ -99,7 +99,7 @@ class DashboardController extends Controller
                 $data['chartData']['price'][$key] = Policy::where(['is_policy' => 1, 'subproduct_id' => $subProduct])->whereBetween('start_date', [$start, $end])->sum('gross_premium');
             }
         } else if ($chartType == 'ChannelName') {
-            $channels = Channel::limit(15)
+            $channels = Channel::limit(10)
                 ->get();
 
             $data['categories'] = $channels->pluck('name');
@@ -111,7 +111,7 @@ class DashboardController extends Controller
             $company = Company::has('policies')
                 ->withCount('policies')
                 ->orderByDesc('policies_count')
-                ->limit(15)
+                ->limit(10)
                 ->get();
 
             $data['categories'] = $company->pluck('name');
