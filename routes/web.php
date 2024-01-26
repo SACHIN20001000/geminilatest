@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CommunicationGroupController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\NewPayoutController;
+use App\Http\Controllers\Admin\NewPolicyController;
 use App\Http\Controllers\Admin\WebhookController;
 use App\Http\Controllers\Admin\WhatsappChatsController;
 use App\Http\Controllers\BacklinkController;
@@ -94,6 +95,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('model', MakeController::class);
         Route::resource('leads', LeadController::class);
         Route::resource('policy', PolicyController::class);
+        Route::resource('new-policy', NewPolicyController::class);
         Route::resource('report', ReportController::class);
         Route::resource('channel', ChannelController::class);
         Route::resource('payout', PayoutController::class);
