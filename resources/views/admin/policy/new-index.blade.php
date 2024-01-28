@@ -50,6 +50,25 @@
         cursor: pointer;
     }
 
+    .truncate-text {
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .truncate-text-small {
+        max-width: 50px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+
+    .renew_status {
+        min-width: 100px
+    }
+
     @media (max-width: 1650px) {
         td {
             font-size: 12px !important;
@@ -88,12 +107,12 @@
                 <h4 class="  content-title mb-0 my-auto pe-4">Policy </h4>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                        <a href="{{ route('policy.index',['id'=> 1]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto">MIS (<?php echo   new_policy() ?>)</a>
+                        <a href="{{ route('new-policy.index',['id'=> 1]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto">MIS (<?php echo   new_policy() ?>)</a>
                     </div>
                 </div>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                        <a href="{{ route('policy.index',['id'=> 2]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif  ml_auto">Renewals (<?php echo   renew_policy() ?>)</a>
+                        <a href="{{ route('new-policy.index',['id'=> 2]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif  ml_auto">Renewals (<?php echo   renew_policy() ?>)</a>
                     </div>
                 </div>
 
@@ -225,19 +244,26 @@
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
+                                        @if(isset($_GET['id']) && $_GET['id'] == 1)
                                         <th><span>Created On</span></th>
+                                        @endif
                                         <th><span>Reference Name</span></th>
-                                        <th><span>Policy Holder Name</span></th>
+                                        <th><span>Holder Name</span></th>
                                         <th><span>Company Name</span></th>
                                         <th><span>Trasaction Type</span></th>
                                         <th><span>Sub Product</span></th>
                                         <th><span>Payment Status</span></th>
                                         <th><span>Reg No.</span></th>
+                                        @if(isset($_GET['id']) && $_GET['id'] == 2)
 
                                         <th><span>Expiry Date</span></th>
                                         <th><span>Followup Date</span></th>
                                         <th><span>Attachment</span></th>
+                                        @endif
+                                        @if(isset($_GET['duplicate']) && $_GET['duplicate'] == true)
+
                                         <th>Policy No</th>
+                                        @endif
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -324,6 +350,15 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="ttps://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -337,105 +372,137 @@
         });
 
 
-        $("#checkedAll").change(function() {
-            if (this.checked) {
-                $(".checkSingle").each(function() {
-                    this.checked = true;
-                });
-            } else {
-                $(".checkSingle").each(function() {
-                    this.checked = false;
-                });
-            }
+
+        let duplicate = @json(request('duplicate', ''));
+        let id = @json(request('id', ''));
+        let product = $('select[name="product[]"]').val();
+        let users = $('select[name="users[]"]').val();
+        let follow_ups = $('input[name="follow_ups"]').val();
+        let is_paid = $('select[name="is_paid"]').val();
+        let mis_transaction_type = $('select[name="mis_transaction_type[]"]').val();
+        let company_id = $('select[name="company_id[]"]').val();
+        let renew_status_search = $('select[name="renew_status_search"]').val();
+        $('select[name="company_id[]"], select[name="mis_transaction_type[]"], select[name="is_paid"], input[name="follow_ups"], select[name="users[]"], select[name="product[]"], select[name="renew_status_search"]').on('change', function() {
+            updateDataTableFilters();
         });
 
-        var table = $('#datatable').DataTable({
+        function updateDataTableFilters() {
+            company_id = $('select[name="company_id[]"]').val();
+            mis_transaction_type = $('select[name="mis_transaction_type[]"]').val();
+            is_paid = $('select[name="is_paid"]').val();
+            follow_ups = $('input[name="follow_ups"]').val();
+            users = $('select[name="users[]"]').val();
+            product = $('select[name="product[]"]').val();
+            renew_status_search = $('select[name="renew_status_search"]').val();
+            table.draw();
+        }
+        var tableConfig = {
             processing: true,
             serverSide: true,
             ajax: {
                 url: "{{ route('new-policy.index') }}",
                 data: function(d) {
-
+                    d.duplicate = duplicate;
+                    d.id = id;
+                    d.product = product;
+                    d.users = users;
+                    d.follow_ups = follow_ups;
+                    d.is_paid = is_paid;
+                    d.mis_transaction_type = mis_transaction_type;
+                    d.company_id = company_id;
+                    d.renew_status_search = renew_status_search;
                 }
             },
             dom: 'Blfrtip',
-
             columns: [{
                     data: 'checkbox',
                     name: 'checkbox',
                     orderable: false,
                     searchable: false
                 },
-                {
-                    data: 'start_date',
-                    name: 'start_date',
-                  
+                @if(isset($_GET['id']) && $_GET['id'] == 1) {
+                    data: 'created_at',
+                    name: 'created_at',
+                    className: 'truncate-text'
                 },
-
-                {
+                @endif {
                     data: 'users.name',
                     name: 'users.name',
-                    defaultContent: ''
+                    defaultContent: '',
+                    className: 'truncate-text'
                 },
                 {
                     data: 'holder_name',
                     name: 'holder_name',
-                    defaultContent: ''
+                    defaultContent: '',
+                    className: 'truncate-text'
                 },
                 {
                     data: 'company.name',
                     name: 'company.name',
-                    defaultContent: ''
+                    defaultContent: '',
+                    className: 'truncate-text'
                 },
                 {
                     data: 'mis_transaction_type',
                     name: 'mis_transaction_type',
-                    defaultContent: ''
+                    defaultContent: '',
+                    className: 'truncate-text-small'
                 },
                 {
                     data: 'sub_product.name',
                     name: 'sub_product.name',
-                    defaultContent: ''
+                    defaultContent: '',
+                    className: 'truncate-text-small'
                 },
                 {
                     data: 'is_paid',
                     name: 'is_paid',
-                    defaultContent: ''
+                    defaultContent: '',
+                    className: 'truncate-text-small'
                 },
                 {
                     data: 'reg_no',
                     name: 'reg_no',
-                    defaultContent: ''
+                    defaultContent: '',
+                    className: 'truncate-text'
+                },
+                @if(isset($_GET['id']) && $_GET['id'] == 2) {
+                    data: 'expiry_date',
+                    name: 'expiry_date',
+                    defaultContent: '',
+                    className: 'truncate-text'
                 },
                 {
-                    data: 'end_date',
-                    name: 'end_date',
-                    defaultContent: ''
-                },
-                {
-                    data: 'follow_up',
-                    name: 'follow_up',
-                    defaultContent: ''
+                    data: 'followDate',
+                    name: 'followDate',
+                    defaultContent: '',
+                    className: 'truncate-text'
                 },
                 {
                     data: 'attachment',
                     name: 'attachment',
-                    defaultContent: ''
+                    defaultContent: '',
+                    className: 'truncate-text'
                 },
-                {
+                @endif
+                @if(isset($_GET['duplicate']) && $_GET['duplicate'] == true) {
                     data: 'policy_no',
                     name: 'policy_no',
-                    defaultContent: ''
+                    defaultContent: '',
+                    className: 'truncate-text'
                 },
-                {
+                @endif {
                     data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false
                 }
-
             ]
-        });
+        };
+
+        var table = $('#datatable').DataTable(tableConfig);
+
 
         $('.editor').summernote({
 
@@ -452,22 +519,6 @@
 
         })
 
-        $('.renew_status').change(function() {
-            var status = $(this).find(":selected").val();
-            var policy_id = $(this).attr('data-id');
-            $.ajax({
-                type: "Post",
-                url: "{{route('renew_status')}}",
-                data: {
-                    policy_id: policy_id,
-                    status: status
-                },
-                success: function(result) {
-
-                }
-            });
-
-        });
 
 
         $('.renew-btn').click(function() {
@@ -529,6 +580,39 @@
         });
 
     });
+    $(document).ready(function() {
+
+        $("#checkedAll").change(function() {
+            if (this.checked) {
+                $(".checkSingle").each(function() {
+                    this.checked = true;
+                });
+            } else {
+                $(".checkSingle").each(function() {
+                    this.checked = false;
+                });
+            }
+        });
+
+    });
+    $(document).on('change', '.renew_status', function() {
+        var status = $(this).find(":selected").val();
+        var policy_id = $(this).data('id');
+        $.ajax({
+            type: "Post",
+            url: "{{ route('renew_status') }}",
+            data: {
+                policy_id: policy_id,
+                status: status
+            },
+            success: function(result) {
+                // Handle the success result if needed
+            }
+        });
+    });
+
+
+
     $(document).on('change', '.follow_up', function() {
         var id = $(this).data('id');
         var date = $(this).val();

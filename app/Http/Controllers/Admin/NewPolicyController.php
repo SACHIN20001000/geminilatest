@@ -42,7 +42,7 @@ class NewPolicyController extends Controller
         // echo '<pre>'; print_r($request->all()); die;
         $products = SubProduct::all();
         $users = User::all();
-        $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns', 'company','attachments')->where(['is_policy' => 1]);
+        $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns', 'company', 'attachments')->where(['is_policy' => 1]);
         if (isset($request->search_anything)   && !empty($request->search_anything)) {
             // $query->orwhereHas('lead', function ($q) use ($request) {
 
@@ -146,41 +146,59 @@ class NewPolicyController extends Controller
             return Datatables::of($leads)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                 
-                    $action = '<span class="action-buttons">
-                    <a 
-                        type="button" 
-                        data-id="' . $row->id . ' "
-                        data-email="' . (optional($row->users)->email ?? '') . '"
-                        data-expiry="' . date("d-m-Y", strtotime($row->expiry_date)) . '"
-                        data-customer="' . ($row->holder_name ?? '') . '"
-                        data-product="' . ($row->products->name ?? '') . '"
-                        data-subproduct="' . (optional($row->products)->name ?? '') . '"
-                        data-policy="' . ($row->reg_no ?? '') . '"
-                        data-name="' . (optional($row->users)->name ?? '') . '"
-                        data-toggle="tooltip"
-                        title="Send Mail!"
-                        class="btn btn-sm btn-info btn-b common-btn">📩
-                    </a>
-                                                
-                    <a href="' . route("policy.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i></a>
-                
-                    <a href="' . route("policy.destroy", $row) . '"
-                        class="btn btn-sm btn-danger remove_us"
-                        title="Delete User"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        data-method="DELETE"
-                        data-confirm-title="Please Confirm"
-                        data-confirm-text="Are you sure that you want to delete this User?"
-                        data-confirm-delete="Yes, delete it!">
-                        <i class="las la-trash"></i>
-                    </a>
-                </span>';
-                
-                return $action;
-                
+                    $action = '<div class="d-flex align-items-center">';
+
+                    // Common "Send Mail" button
+                    $action .= '<a 
+                                    type="button" 
+                                    data-id="' . $row->id . ' "
+                                    data-email="' . (optional($row->users)->email ?? '') . '"
+                                    data-expiry="' . date("d-m-Y", strtotime($row->expiry_date)) . '"
+                                    data-customer="' . ($row->holder_name ?? '') . '"
+                                    data-product="' . ($row->products->name ?? '') . '"
+                                    data-subproduct="' . (optional($row->products)->name ?? '') . '"
+                                    data-policy="' . ($row->reg_no ?? '') . '"
+                                    data-name="' . (optional($row->users)->name ?? '') . '"
+                                    data-toggle="tooltip"
+                                    title="Send Mail!"
+                                    class="btn btn-sm btn-info btn-b common-btn">📩
+                                </a>';
+
+                    // Check if request id is 2, then show the select box
+                    if (request()->id == 2) {
+                        $action .= '<select name="renew_status" id="renew_status" data-id="' . $row->id . '" class="form-control renew_status">';
+                        $action .= '<option value="FOLLOW UP" ' . (isset($row->renew_status) && $row->renew_status == 'FOLLOW UP' ? 'selected' : '') . '>FOLLOW UP</option>';
+                        $action .= '<option value="VEHICLE SOLD" ' . (isset($row->renew_status) && $row->renew_status == 'VEHICLE SOLD' ? 'selected' : '') . '>VEHICLE SOLD</option>';
+                        $action .= '<option value="NOT INTERESTED" ' . (isset($row->renew_status) && $row->renew_status == 'NOT INTERESTED' ? 'selected' : '') . '>NOT INTERESTED</option>';
+                        $action .= '<option value="CLOSED" ' . (isset($row->renew_status) && $row->renew_status == 'CLOSED' ? 'selected' : '') . '>CLOSED</option>';
+                        $action .= '</select>';
+                    }
+
+                    // Check if request id is not 2, then show the action buttons
+                    if (request()->id != 2) {
+                        $action .= '<span class="action-buttons ml-3">';
+                        $action .= '<a href="' . route("policy.edit", $row) . '" class="btn btn-sm btn-info btn-b"><i class="las la-pen"></i></a>';
+
+                        $action .= '<a href="' . route("policy.destroy", $row) . '"
+                                        class="btn btn-sm btn-danger remove_us"
+                                        title="Delete User"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        data-method="DELETE"
+                                        data-confirm-title="Please Confirm"
+                                        data-confirm-text="Are you sure that you want to delete this User?"
+                                        data-confirm-delete="Yes, delete it!">
+                                        <i class="las la-trash"></i>
+                                    </a>
+                                </span>';
+                    }
+
+                    $action .= '</div>';
+
+                    return $action;
                 })
+
+
                 ->addColumn('checkbox', function ($row) {
                     $checkbox = '<input type="checkbox" name="checked" data-id="' . $row->id . '" class="checkSingle checkLead">';
                     return $checkbox;
@@ -211,11 +229,14 @@ class NewPolicyController extends Controller
                     }
                     return $attachmentdata;
                 })
-                ->addColumn('is_paid',function ($row){
-                 return   $row->mis_amount_paid !== $row->gross_premium ?'Short' : 'Paid';
+                ->addColumn('is_paid', function ($row) {
+                    return   $row->mis_amount_paid !== $row->gross_premium ? 'Short' : 'Paid';
                 })
-            
-                ->rawColumns(['action', 'checkbox','attachment'])
+                ->addColumn('followDate', function ($row) {
+                    $followUp = '<input type="date" name="follow_up" value="' . ($row->follow_up ?? $row->expiry_date) . '" data-id="' . $row->id . '" class="form-control follow_up">';
+                    return $followUp;
+                })
+                ->rawColumns(['action', 'checkbox', 'attachment', 'followDate'])
                 ->make(true);
         }
         return view('admin.policy.new-index', compact('leads', 'products', 'users', 'count', 'companies'));
