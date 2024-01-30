@@ -15,6 +15,13 @@
         <div class="d-flex my-xl-auto right-content">
             <div class="pe-1 mb-xl-0">
                 <div class="btn-group dropdown">
+                    <a href="{{ route('policy.edit', $policy->id)}}">
+                        <button class="btn btn-warning ml_auto ">Edit</button>
+                    </a>
+                </div>
+            </div>
+            <div class="pe-1 mb-xl-0">
+                <div class="btn-group dropdown">
                     <button class="modal-effect btn btn-main-primary ml_auto " data-bs-toggle="modal" href="#attachments" data-bs-effect="effect-super-scaled">Attachment</button>
                 </div>
             </div>

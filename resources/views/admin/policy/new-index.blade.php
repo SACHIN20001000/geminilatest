@@ -119,13 +119,17 @@
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">
-            <div class="pe-1 mb-xl-0">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
-            <div class="pe-1 mb-xl-0 filter-btn">
+            <div class="pe-1 mb-xl-0 card">
 
-                <button type="button" class="btn btn-info btn-icon me-2 btn-b"><i class="mdi mdi-filter-variant"></i></button>
+                <div id="reportrange"><span></span></div>
+                <button type="button" style="display: flex; gap: 8px;" class="btn btn-default float-right" id="daterange-btn">
+                    <i class="far fa-calendar-alt"></i>
+                    <div class="staticDays">This Month</div>
+                    <div id="dynamicDate"></div>
+                    <i class="fas fa-caret-down"></i>
+                </button>
             </div>
+
             <div class="pe-1 mb-xl-0">
                 <button type="button" class="btn btn-danger duplicate-record">Duplicate</button>
             </div>
@@ -171,6 +175,8 @@
                         <!-- filter start  -->
                         <div class="row row-sm">
                             <div class="col-lg">
+                                <p class="mg-b-10">Product</p>
+
                                 <select name="product[]" multiple="multiple" class="form-control">
                                     @if(isset($products) && $products->count())
                                     @foreach($products as $product)
@@ -180,6 +186,8 @@
                                 </select>
                             </div>
                             <div class="col-lg">
+                                <p class="mg-b-10">User</p>
+
                                 <select name="users[]" multiple="multiple" class="form-control">
                                     @if(isset($users) && $users->count())
                                     @foreach($users as $user)
@@ -190,8 +198,12 @@
                             </div>
                             <div class="col-lg">
                                 @if(isset($_GET['id']) && $_GET['id'] == 2)
+                                <p class="mg-b-10">Followup</p>
+
                                 <input type="date" name="follow_ups" id="" class="form-control" value="{{isset($_GET['follow_ups']) ? $_GET['follow_ups'] : ''}}">
                                 @else
+                                <p class="mg-b-10">Payment Status</p>
+
                                 <select name="is_paid" class="form-control">
                                     <option value="">Select</option>
                                     <option value="1" {{ (isset($_GET['is_paid']) && (1 == $_GET['is_paid'])) ? 'selected' : '' }}>Paid</option>
@@ -201,6 +213,7 @@
                                 @endif
                             </div>
                             <div class="col-lg">
+                                <p class="mg-b-10"> Transaction Type</p>
                                 <select name="mis_transaction_type[]" multiple=" multiple" class="form-control">
                                     <option value="">Select</option>
                                     <option value="Package" {{ (isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('Package', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'Package')) ? 'selected' : '' }}>Package</option>
@@ -212,6 +225,7 @@
                             @if(isset($_GET['id']) && $_GET['id'] == 2)
 
                             <div class="col-lg">
+                                <p class="mg-b-10">Renew Status</p>
                                 <select name="renew_status_search" class="form-control ">
                                     <option value="">Select</option>
                                     <option value="FOLLOW UP" {{ (isset($_GET['renew_status_search']) && ("FOLLOW UP" == $_GET['renew_status_search'])) ? 'selected' : '' }}>FOLLOW UP</option>
@@ -224,6 +238,7 @@
                             @if(isset($_GET['id']) && $_GET['id'] == 1)
 
                             <div class="col-lg">
+                                <p class="mg-b-10">Company</p>
                                 <select multiple=" multiple" name="company_id[]" class="form-control ">
                                     <option value="">Select Below</option>
                                     @if($companies->count())
@@ -364,7 +379,33 @@
 
 
         $("select").select2();
+        $('#daterange-btn').daterangepicker({
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'Financial Year': [moment().month(3).date(1).startOf('month'), moment().month(2).date(31).endOf('month').add(1, 'year')],
+                    'Last Financial Year': [moment().subtract(1, 'years').startOf('year').add(3, 'months'), moment().subtract(1, 'years').endOf('year').add(3, 'months').endOf('month')]
 
+                },
+                startDate: moment().startOf('month'),
+                endDate: moment().endOf('month')
+            },
+            function(start, end, range) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                $('#dynamicDate').html(range)
+                $('.staticDays').hide();
+            });
+
+
+        $('#daterange-btn').on('apply.daterangepicker', function(ev, picker) {
+            var start = picker.startDate.format('YYYY-MM-DD');
+            var end = picker.endDate.format('YYYY-MM-DD');
+            var range = $('#dynamicDate').html();
+            updateDataTableFilters()
+        });
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -382,6 +423,8 @@
         let mis_transaction_type = $('select[name="mis_transaction_type[]"]').val();
         let company_id = $('select[name="company_id[]"]').val();
         let renew_status_search = $('select[name="renew_status_search"]').val();
+        var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+        var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
         $('select[name="company_id[]"], select[name="mis_transaction_type[]"], select[name="is_paid"], input[name="follow_ups"], select[name="users[]"], select[name="product[]"], select[name="renew_status_search"]').on('change', function() {
             updateDataTableFilters();
         });
@@ -394,6 +437,8 @@
             users = $('select[name="users[]"]').val();
             product = $('select[name="product[]"]').val();
             renew_status_search = $('select[name="renew_status_search"]').val();
+            start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+            end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
             table.draw();
         }
         var tableConfig = {
@@ -411,6 +456,8 @@
                     d.mis_transaction_type = mis_transaction_type;
                     d.company_id = company_id;
                     d.renew_status_search = renew_status_search;
+                    d.expiry_from = start;
+                    d.expiry_to = end;
                 }
             },
             dom: 'Blfrtip',
@@ -418,7 +465,8 @@
                     data: 'checkbox',
                     name: 'checkbox',
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                    className: 'no-click'
                 },
                 @if(isset($_GET['id']) && $_GET['id'] == 1) {
                     data: 'created_at',
@@ -477,13 +525,13 @@
                     data: 'followDate',
                     name: 'followDate',
                     defaultContent: '',
-                    className: 'truncate-text'
+                    className: 'truncate-text no-click'
                 },
                 {
                     data: 'attachment',
                     name: 'attachment',
                     defaultContent: '',
-                    className: 'truncate-text'
+                    className: 'truncate-text-small no-click'
                 },
                 @endif
                 @if(isset($_GET['duplicate']) && $_GET['duplicate'] == true) {
@@ -496,9 +544,15 @@
                     data: 'action',
                     name: 'action',
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                    className: 'no-click'
                 }
-            ]
+            ],
+            rowCallback: function(row, data) {
+                $(row).find('td:not(.no-click)').on('click', function() {
+            window.location.href = "{{ route('policy.show', '') }}" + '/' + data.id;
+        });
+            }
         };
 
         var table = $('#datatable').DataTable(tableConfig);
@@ -594,7 +648,13 @@
             }
         });
 
+
     });
+    $(document).on('click', '.folder-icon', function() {
+        $(this).next('.renew-att').click();
+
+    })
+
     $(document).on('change', '.renew_status', function() {
         var status = $(this).find(":selected").val();
         var policy_id = $(this).data('id');
