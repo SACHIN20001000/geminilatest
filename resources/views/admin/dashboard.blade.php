@@ -198,8 +198,8 @@
                     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                     'This Month': [moment().startOf('month'), moment().endOf('month')],
                     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    'Financial Year': [moment().month(3).date(1).startOf('month'), moment().month(2).date(31).endOf('month').add(1, 'year')],
-                    'Last Financial Year': [moment().subtract(1, 'years').startOf('year').add(3, 'months'), moment().subtract(1, 'years').endOf('year').add(3, 'months').endOf('month')]
+                    'Financial Year': [moment().subtract(1, 'years').startOf('year').add(3, 'months'), moment().subtract(1, 'years').endOf('year').add(3, 'months').endOf('month')],
+                    'Last Financial Year': [moment().subtract(2, 'years').startOf('year').add(3, 'months'), moment().subtract(2, 'years').endOf('year').add(3, 'months').endOf('month')]
 
                 },
                 startDate: moment().startOf('month'),
