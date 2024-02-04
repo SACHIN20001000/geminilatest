@@ -255,7 +255,7 @@ class PolicyController extends Controller
                 //throw $th;
             }
         }
-        return redirect()->route('policy.index', ['id' => 1])->with('success', 'Policy Added successfully!');
+        return redirect()->route('new-policy.index', ['id' => 1])->with('success', 'Policy Added successfully!');
     }
 
     /**
@@ -405,7 +405,7 @@ class PolicyController extends Controller
         }
 
 
-        return redirect()->route('policy.index', ['id' => 1])->with('success', 'Policy Update successfully!');
+        return redirect()->route('new-policy.index', ['id' => 1])->with('success', 'Policy Update successfully!');
     }
 
     /**
@@ -532,7 +532,6 @@ class PolicyController extends Controller
             ->get();
         foreach ($user as $key => $value) {
             try {
-
                 Mail::send('admin.email.bulkemail', ['user' => $value], function ($messages) use ($value) {
                     $messages->to($value->email);
                     $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');

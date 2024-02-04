@@ -69,6 +69,40 @@
         min-width: 100px
     }
 
+    /* Add this CSS code for the spinner */
+    #loader-wrapper {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    #loader {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+
     @media (max-width: 1650px) {
         td {
             font-size: 12px !important;
@@ -98,7 +132,9 @@
         }
     }
 </style>
-
+<div id="loader-wrapper" style="display: none;">
+    <div id="loader"></div>
+</div>
 <div class="container-fluid">
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
@@ -142,7 +178,7 @@
             @else
             <div class="pe-1 mb-xl-0">
 
-                <a class="btn btn-main-primary bulk-delete " style="color:#fff">Bulk Delete</a>
+                <a class="btn btn-main-primary bulk-delete " style="color:#fff">Delete</a>
 
             </div>
             @endif
@@ -235,7 +271,6 @@
                                 </select>
                             </div>
                             @endif
-                            @if(isset($_GET['id']) && $_GET['id'] == 1)
 
                             <div class="col-lg">
                                 <p class="mg-b-10">Company</p>
@@ -248,7 +283,6 @@
                                     @endif
                                 </select>
                             </div>
-                            @endif
 
 
                         </div>
@@ -461,6 +495,10 @@
                 }
             },
             dom: 'Blfrtip',
+            lengthMenu: [
+        [10, 25, 50,100,200, -1],
+        ['10 rows', '25 rows', '50 rows','100 rows','200 rows', 'Show all']
+    ],
             columns: [{
                     data: 'checkbox',
                     name: 'checkbox',
@@ -550,13 +588,24 @@
             ],
             rowCallback: function(row, data) {
                 $(row).find('td:not(.no-click)').on('click', function() {
-            window.location.href = "{{ route('policy.show', '') }}" + '/' + data.id;
-        });
+                    window.location.href = "{{ route('policy.show', '') }}" + '/' + data.id;
+                });
             }
         };
 
         var table = $('#datatable').DataTable(tableConfig);
 
+        $(document).on('change', '#checkedAll', function() {
+            if (this.checked) {
+                $(".checkSingle").each(function() {
+                    this.checked = true;
+                });
+            } else {
+                $(".checkSingle").each(function() {
+                    this.checked = false;
+                });
+            }
+        });
 
         $('.editor').summernote({
 
@@ -583,9 +632,13 @@
             });
 
             if (ids != '') {
+
                 $('#renew-modal').modal('show');
 
                 $('.bulkEmail').click(function() {
+                    $('#loader-wrapper').show();
+                    $('#renew-modal').modal('hide');
+
                     $.ajax({
                         type: "Post",
                         url: "{{route('bulkEmail')}}",
@@ -593,14 +646,28 @@
                             id: ids
                         },
                         success: function(result) {
-                            $('#renew-modal').modal('hide');
-                            // location.reload();
+                            $('#loader-wrapper').hide();
+                            toastr.success('Email Sent Successfully', 'Success', {
+                                closeButton: true,
+                                progressBar: true,
+                            });
+                        },
+                        error: function() {
+                            $('#loader-wrapper').hide();
+                            toastr.error('Something went wrong', 'Error', {
+                                closeButton: true,
+                                progressBar: true,
+                            });
                         }
                     });
 
                 });
             } else {
-                alert('CheckBox and Lead Owner must not be empty');
+                toastr.error(
+                    'Please select policies to send email', '', {
+                        closeButton: true,
+                        progressBar: true,
+                    });
             }
         });
 
@@ -629,27 +696,16 @@
                     }
                 });
             } else {
-                alert('CheckBox and Lead Owner must not be empty');
+                toastr.error(
+                    'Please select policies to send email', '', {
+                        closeButton: true,
+                        progressBar: true,
+                    });
             }
         });
 
     });
-    $(document).ready(function() {
 
-        $("#checkedAll").change(function() {
-            if (this.checked) {
-                $(".checkSingle").each(function() {
-                    this.checked = true;
-                });
-            } else {
-                $(".checkSingle").each(function() {
-                    this.checked = false;
-                });
-            }
-        });
-
-
-    });
     $(document).on('click', '.folder-icon', function() {
         $(this).next('.renew-att').click();
 
@@ -666,7 +722,10 @@
                 status: status
             },
             success: function(result) {
-                // Handle the success result if needed
+                toastr.success(result.message, 'Status Updated Successfully', {
+                    closeButton: true,
+                    progressBar: true,
+                });
             }
         });
     });
@@ -684,7 +743,10 @@
                 date: date
             },
             success: function(result) {
-
+                toastr.success(result.message, 'Followup Date Updated Successfully', {
+                    closeButton: true,
+                    progressBar: true,
+                });
             }
         });
     });
@@ -750,28 +812,18 @@
         $('#common-btn').modal('show');
     })
     $(document).ready(function() {
-        // Assuming your "Duplicate Record" button has a class named 'duplicate-record-btn'
         $('.duplicate-record').click(function() {
-            // Get the current URL
             var currentUrl = window.location.href;
-
-            // Check if 'duplicate' query parameter is already present
             var hasDuplicateParam = currentUrl.includes('duplicate=true');
-
-            // Update the URL based on the presence of 'duplicate' query parameter
             var newUrl = hasDuplicateParam ? removeURLParameter(currentUrl, 'duplicate') : addURLParameter(currentUrl, 'duplicate', 'true');
-
-            // Redirect to the updated URL
             window.location.href = newUrl;
         });
 
-        // Function to add a query parameter to the URL
         function addURLParameter(url, key, value) {
             var separator = url.includes('?') ? '&' : '?';
             return url + separator + key + '=' + value;
         }
 
-        // Function to remove a query parameter from the URL
         function removeURLParameter(url, key) {
             var urlParts = url.split('?');
             if (urlParts.length >= 2) {

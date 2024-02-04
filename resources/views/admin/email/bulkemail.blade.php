@@ -33,7 +33,7 @@
                 <td style="border: 1px solid black;">{{isset($policies->expiry_date) && !empty($policies->expiry_date) ? date("d/m/Y", strtotime($policies->expiry_date)) :  ''}}</td>
                 <td style="border: 1px solid black;">{{$policies->holder_name ?? ''}}</td>
                 <td style="border: 1px solid black;">{{$policies->subProduct->name ?? ''}}</td>
-                <td style="border: 1px solid black;">{{$policies->models->name ?? ''}}</td>
+                <td style="border: 1px solid black;">{{$policies->products->name === 'MOTOR' ? $policies->models->name : ''}}</td>
                 <td style="border: 1px solid black;">{{$policies->reg_no ?? ''}}</td>
                 <td style="border: 1px solid black;">{{$policies->gross_premium ?? ''}}</td>
                 <td style="border: 1px solid black;">{{$policies->ncb_in_existing_policy ?? ''}}</td>

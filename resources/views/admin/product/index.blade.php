@@ -30,7 +30,7 @@
                                 <th class="wd-lg-20p"><span>Name</span></th>
                                 <th class="wd-lg-20p"><span>Insurance</span></th>
 												<th class="wd-lg-20p"><span>Created</span></th>
-												<th class="wd-lg-20p">Action</th>
+												<!-- <th class="wd-lg-20p">Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,7 +67,7 @@
               {data: 'name', name: 'name'},
               {data: 'insurances.name', name: 'insurances.name'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+            // {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
 

@@ -32,7 +32,7 @@
                                 <th class="wd-lg-20p"><span>Product</span></th>
                                 <th class="wd-lg-20p"><span>SubProduct</span></th>
                                 <th class="wd-lg-20p"><span>Created</span></th>
-                                <th class="wd-lg-20p">Action</th>
+                                <!-- <th class="wd-lg-20p">Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,7 +82,7 @@
               {data: 'products.name', name: 'products.name'},
               {data: 'name', name: 'name'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+            // {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
 
