@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\CommunicationGroupController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\NewPayoutController;
 use App\Http\Controllers\Admin\NewPolicyController;
+use App\Http\Controllers\Admin\ReconciliationController;
 use App\Http\Controllers\Admin\WebhookController;
 use App\Http\Controllers\Admin\WhatsappChatsController;
 use App\Http\Controllers\BacklinkController;
@@ -105,6 +106,8 @@ Route::prefix('admin')->group(function () {
         Route::resource('income', IncomeController::class);
         Route::resource('communications', CommunicationController::class);
         Route::resource('remainder', RemainderController::class);
+        Route::resource('reconciliation', ReconciliationController::class);
+        Route::any('reconciliation-upload', [ReconciliationController::class, 'upload'])->name('reconciliation.upload');
 
         Route::resource('group', CommunicationGroupController::class);
         // whatsapp
@@ -120,6 +123,7 @@ Route::prefix('admin')->group(function () {
         Route::any('broker-payout', [PayoutController::class, 'brokerPayout'])->name('brokerPayout');
         Route::any('download/{filename?}', [PayoutController::class, 'download'])->name('download');
         Route::any('downloadsampleUser', [PayoutController::class, 'downloadsampleUser'])->name('downloadsampleUser');
+        Route::any('downloadSampleReconciliation', [PayoutController::class, 'downloadSampleReconciliation'])->name('downloadSampleReconciliation');
         Route::any('downloadsampleVeichel/{filename?}', [PayoutController::class, 'downloadsampleVeichel'])->name('downloadsampleVeichel');
         Route::any('export-policy', [ExportController::class, 'policyView'])->name('policyView');
         Route::any('import-user', [ExportController::class, 'importUserView'])->name('importUserView');

@@ -292,6 +292,21 @@
 
             </li>
             <li class="slide">
+                <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('reconciliation.index') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                        <g transform="translate(48 0) scale(-1 1)">
+                            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+                                <path d="m35 38l-5-5l5-5m8 10l-5-5l5-5" />
+                                <path d="M43 22V9a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v30a2 2 0 0 0 2 2h21.47" />
+                                <path d="m13 15l5 6l5-6M12 27h12m-12-6h12m-6 0v12" />
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="side-menu__label">New Reconciliation</span></a>
+
+
+            </li>
+            <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('remainder.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 2048 2048">
                         <g transform="translate(2048 0) scale(-1 1)">

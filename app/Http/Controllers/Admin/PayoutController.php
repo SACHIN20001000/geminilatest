@@ -256,4 +256,15 @@ class PayoutController extends Controller
 
         return \Response::download($file, 'sampleUser.csv', $headers);
     }
+
+    public function downloadSampleReconciliation()
+    {
+        $file = public_path() . "/csv/sampleReconciliation.csv";
+
+        $headers = array(
+            'Content-Type: application/csv',
+        );
+
+        return \Response::download($file, 'sampleReconciliation.csv', $headers);
+    }
 }

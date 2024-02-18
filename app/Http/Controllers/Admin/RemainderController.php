@@ -189,7 +189,6 @@ class RemainderController extends Controller
                 } catch (Exception $e) {
                 }
 
-                die('fdgdfgfd');
             }
         }
     }

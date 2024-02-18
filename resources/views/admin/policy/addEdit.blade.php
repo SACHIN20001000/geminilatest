@@ -1801,7 +1801,58 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="container payout-details">
+                                <div class="card">
+                                    <div class="card-body">
 
+                                        <div class="row align-items-center ">
+                                            <div class="col-sm-2">
+                                                <div>INTERNAL PAYOUT DETAILS</div>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <div class="row main-row">
+
+                                                    <div class="row row-xs formgroup-wrapper">
+                                                        <div class="col-lg-3  text-center">
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">Payout expected
+                                                                </label>
+                                                                <input type="number" name="internal_payout_expected" value="{{isset($policy) ? $policy->internal_payout_expected : ''}}"  class="form-control" id="internal_payout_expected">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">Payout received</label>
+                                                                <input type="number" name="internal_payout_received" value="{{isset($policy) ? $policy->internal_payout_received : ''}}" onkeyup="internalCommission()" class="form-control" id="internal_payout_received">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">Commission</label>
+                                                                <select name="internal_commission" class="form-control" id="internal_commission">
+                                                                    <option value="">Select Below</option>
+                                                                    <option value="Yes" {{ (isset($policy->internal_commission) && 'Yes' == $policy->internal_commission) ? 'selected' : '' }}>Yes</option>
+                                                                    <option value="No" {{ (isset($policy->internal_commission) && 'No' == $policy->internal_commission) ? 'selected' : '' }}>No</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 ">
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">Payout Saved
+                                                                </label>
+                                                                <input type="text" name="internal_payout_saved" value="{{isset($policy) ? $policy->internal_payout_saved : ''}}" class="form-control" id="internal_payout_saved">
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="container">
 
                                 <div class="card">
@@ -2499,6 +2550,13 @@
         var commission_perc = parseFloat($("#mis_percentage").val());
         var commission_calc = commission_amount * commission_perc / 100;
         $("#mis_commission").val(commission_calc);
+    }
+
+    function internalCommission() {
+        var payout_given = parseFloat($("#mis_commission").val());
+        var payout_received = parseFloat($("#internal_payout_received").val());
+        var commission_calc =   payout_received -payout_given;
+        $("#internal_payout_saved").val(commission_calc);
     }
 
     function netPremium() {
