@@ -1,3 +1,2 @@
-Name,Phone,Email,"Role",Upi,Birthday,Account No,Bank Name,Account Name,Ifsc
-Sachin,8580831750,Sachindts98@gmail.com,Staff,,,,,,
-
+policy_no,payout_expected,payout_recd,commission_status
+6201898976,1000,500,Yes
