@@ -1817,7 +1817,7 @@
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Payout expected
                                                                 </label>
-                                                                <input type="number" name="internal_payout_expected" value="{{isset($policy) ? $policy->internal_payout_expected : ''}}"  class="form-control" id="internal_payout_expected">
+                                                                <input type="number" name="internal_payout_expected" value="{{isset($policy) ? $policy->internal_payout_expected : ''}}" class="form-control" id="internal_payout_expected">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -1846,7 +1846,7 @@
 
 
                                                     </div>
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1910,8 +1910,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+@if(!isset($policy))
 {!! JsValidator::formRequest('App\Http\Requests\Admin\Policy\PolicyRequest','#user-add-edit') !!}
-
+@endif
 <script>
     $(document).ready(function() {
         $('.delete-attachment').on('click', function() {
@@ -2555,7 +2556,7 @@
     function internalCommission() {
         var payout_given = parseFloat($("#mis_commission").val());
         var payout_received = parseFloat($("#internal_payout_received").val());
-        var commission_calc =   payout_received -payout_given;
+        var commission_calc = payout_received - payout_given;
         $("#internal_payout_saved").val(commission_calc);
     }
 
