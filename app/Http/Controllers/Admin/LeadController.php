@@ -654,7 +654,7 @@ class LeadController extends Controller
             $message->to('sachindts98@gmail.com', 'W3SCHOOLS');
             // $message->bcc('geminiservices@outlook.com');
             $message->subject('Basic');
-            $message->from('info@geminiservice.in', 'info@geminiservice.in');
+            $message->from('no-reply@geminiservice.co.in', 'Gemini Service');
         });
         echo  "Successfully sent the email";
         print_r($mail);
