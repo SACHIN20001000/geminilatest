@@ -92,7 +92,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@geminiservice.in'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@geminiservice.co.in'),
         'name' => env('MAIL_FROM_NAME', 'Gemini Service'),
     ],
 

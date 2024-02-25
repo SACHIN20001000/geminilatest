@@ -409,6 +409,8 @@
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
 <script type="text/javascript">
+    var table;
+
     $(document).ready(function() {
 
 
@@ -480,6 +482,7 @@
             serverSide: true,
             ajax: {
                 url: "{{ route('new-policy.index') }}",
+                cache: false,
                 data: function(d) {
                     d.duplicate = duplicate;
                     d.id = id;
@@ -496,9 +499,9 @@
             },
             dom: 'Blfrtip',
             lengthMenu: [
-        [10, 25, 50,100,200, -1],
-        ['10 rows', '25 rows', '50 rows','100 rows','200 rows', 'Show all']
-    ],
+                [10, 25, 50, 100, 200, -1],
+                ['10 rows', '25 rows', '50 rows', '100 rows', '200 rows', 'Show all']
+            ],
             columns: [{
                     data: 'checkbox',
                     name: 'checkbox',
@@ -590,10 +593,10 @@
                 $(row).find('td:not(.no-click)').on('click', function() {
                     window.location.href = "{{ route('policy.show', '') }}" + '/' + data.id;
                 });
+
             }
         };
-
-        var table = $('#datatable').DataTable(tableConfig);
+         table = $('#datatable').DataTable(tableConfig);
 
         $(document).on('change', '#checkedAll', function() {
             if (this.checked) {
@@ -772,8 +775,9 @@
                     progressBar: true,
                 });
                 setTimeout(function() {
-                    location.reload();
+                    table.ajax.reload();
                 }, 500);
+             
             }
         });
     });
@@ -842,6 +846,10 @@
                 return url;
             }
         }
+
+    });
+    $(document).on('click', '.open-attachment', function(e) {
+        $(this).siblings('.renew-att').trigger('click');
     });
 </script>
 @endsection
