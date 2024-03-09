@@ -88,6 +88,7 @@ class ExportController extends Controller
               $channel_name = Channel::where('name', 'like', '%' . $finalCsv['channel_name'] . '%')->first();
               $cleanPolicyNo = $finalCsv['policy_no'] ? preg_replace('/[^\p{L}\p{N}]/u', '/', $finalCsv['policy_no']) : null;
               $cleanHolderName = $finalCsv['customer_name'] ? preg_replace('/[^\p{L}\p{N}\s]/u', '', $finalCsv['customer_name']) : null;
+              $cleanRegNo = $finalCsv['veh_no'] ? preg_replace('/[^\p{L}\p{N}]/u', '', $finalCsv['veh_no']) : null;
 
               $finalArr = [
                 'user_id' => $user->id ?? null,
@@ -110,7 +111,7 @@ class ExportController extends Controller
                 'model' => $model->id ?? null,
                 'cc' => $finalCsv['veichel_cc'] ?? null,
                 'mfr_year' => $finalCsv['mfr_year'] ?? null,
-                'reg_no' => $finalCsv['veh_no'] ?? null,
+                'reg_no' => $cleanRegNo ?? null,
                 'ncb_in_existing_policy' => $finalCsv['ncb'] ?? null,
                 'gwp' => $finalCsv['gwp'] ?? null,
                 'gross_premium' => $finalCsv['gwp'] ?? null,
@@ -127,14 +128,17 @@ class ExportController extends Controller
               Policy::create($finalArr);
               DB::commit();
             } catch (\Exception $e) {
-
-              echo $e->getMessage();
-              die;
+              echo "Error processing record: " . $e->getMessage() . "<br>";
               DB::rollback();
               return back()->with('error', 'Error: ' . $e->getMessage());
             }
           }
-          return back()->with('success', 'Policy Imported successfully!');
+          $errors = ob_get_clean();
+          if (empty($errors)) {
+            return back()->with('success', 'Policy Imported successfully!');
+          } else {
+            return back()->with('error', 'Error: ' . $errors);
+          }
         }
         return back()->with('error', 'Error, Missing or Invalid Headers in the file!');
       }
@@ -246,86 +250,86 @@ class ExportController extends Controller
 
   public  function importUsers(Request $request)
   {
- 
-      /*data to add the*/
-      if ($request->file('users')) {
-        $path = $request->file('users')->getRealPath();  /// DEFINE FILE PATH HERE///
-  
-        //turn into array
-        $file = file($path);
-  
-        $header = array_slice($file, 0, 1);
-  
-        if (!empty($header)) {
-          foreach ($header as $head) {
-            $headerQuotes = str_replace('"', '', trim(strtolower($head)));
-  
-            $headerF = explode(',', str_replace(' ', '_', trim(strtolower($headerQuotes))));
-          }
+
+    /*data to add the*/
+    if ($request->file('users')) {
+      $path = $request->file('users')->getRealPath();  /// DEFINE FILE PATH HERE///
+
+      //turn into array
+      $file = file($path);
+
+      $header = array_slice($file, 0, 1);
+
+      if (!empty($header)) {
+        foreach ($header as $head) {
+          $headerQuotes = str_replace('"', '', trim(strtolower($head)));
+
+          $headerF = explode(',', str_replace(' ', '_', trim(strtolower($headerQuotes))));
         }
-        $csvdata = array_slice($file, 1);
-      
-        if (!empty($csvdata)) {
-  
-          if (
-            in_array('name', $headerF) && in_array('phone', $headerF) && in_array('email', $headerF) && in_array('role', $headerF) && in_array('upi', $headerF) && in_array('birthday', $headerF) && in_array('account_no', $headerF) && in_array('bank_name', $headerF) && in_array('account_name', $headerF) && in_array('ifsc',$headerF
-            )
-          ) {
-            $errorMessages = [];
-            foreach ($csvdata as $key => $csv) {
-              $csvArrF = explode(",", trim($csv));
-  
-              if (count($csvArrF) == count($headerF)) { 
+      }
+      $csvdata = array_slice($file, 1);
 
-                $finalCsvData[] = array_combine($headerF, $csvArrF);
+      if (!empty($csvdata)) {
+
+        if (
+          in_array('name', $headerF) && in_array('phone', $headerF) && in_array('email', $headerF) && in_array('role', $headerF) && in_array('upi', $headerF) && in_array('birthday', $headerF) && in_array('account_no', $headerF) && in_array('bank_name', $headerF) && in_array('account_name', $headerF) && in_array(
+            'ifsc',
+            $headerF
+          )
+        ) {
+          $errorMessages = [];
+          foreach ($csvdata as $key => $csv) {
+            $csvArrF = explode(",", trim($csv));
+
+            if (count($csvArrF) == count($headerF)) {
+
+              $finalCsvData[] = array_combine($headerF, $csvArrF);
             }
-                      }
+          }
 
-           
-            foreach ($finalCsvData as $key => $finalCsv) {
-              if (!in_array($finalCsv['role'], ['Staff', 'Broker','Client'])) {
-                $errorMessages[] = "Error in row $key: Invalid role specified in the CSV file! Name = " . $finalCsv['name'] . ", Role = " . $finalCsv['role'] . "  
+
+          foreach ($finalCsvData as $key => $finalCsv) {
+            if (!in_array($finalCsv['role'], ['Staff', 'Broker', 'Client'])) {
+              $errorMessages[] = "Error in row $key: Invalid role specified in the CSV file! Name = " . $finalCsv['name'] . ", Role = " . $finalCsv['role'] . "  
                 Role should be Staff, Broker,Client.";
             }
 
-              try {
-                DB::beginTransaction();
-  
-
-                $user = User::updateOrCreate([
-                  'email' => $finalCsv['email'],
-                ], [
-                  'name' => $finalCsv['name'],
-                  'upi' => $finalCsv['upi'],
-                  'birthday' => $finalCsv['birthday'],
-                  'account_no' => $finalCsv['account_no'],
-                  'bank_name' => $finalCsv['bank_name'],
-                  'account_name' => $finalCsv['account_name'],
-                  'ifsc' => $finalCsv['ifsc'],
-                  'password' => bcrypt('12345678'),
-                ]);
-                $user->syncRoles([$finalCsv['role']]);
-                DB::commit();
-
-              } catch (\Exception $e) {
+            try {
+              DB::beginTransaction();
 
 
-                DB::rollback();
-                        $errorMessages[] = "Error in row $key: " . $e->getMessage();
+              $user = User::updateOrCreate([
+                'email' => $finalCsv['email'],
+              ], [
+                'name' => $finalCsv['name'],
+                'upi' => $finalCsv['upi'],
+                'birthday' => $finalCsv['birthday'],
+                'account_no' => $finalCsv['account_no'],
+                'bank_name' => $finalCsv['bank_name'],
+                'account_name' => $finalCsv['account_name'],
+                'ifsc' => $finalCsv['ifsc'],
+                'password' => bcrypt('12345678'),
+              ]);
+              $user->syncRoles([$finalCsv['role']]);
+              DB::commit();
+            } catch (\Exception $e) {
 
-                      }
+
+              DB::rollback();
+              $errorMessages[] = "Error in row $key: " . $e->getMessage();
             }
+          }
 
-            if (!empty($errorMessages)) {
-              // Display error messages
-              return back()->with('error', implode('<br>', $errorMessages));
+          if (!empty($errorMessages)) {
+            // Display error messages
+            return back()->with('error', implode('<br>', $errorMessages));
           }
-            return back()->with('success', 'File Imported successfully!');
-          }
-          return back()->with('error', 'Error, Please Check the file!');
+          return back()->with('success', 'File Imported successfully!');
         }
+        return back()->with('error', 'Error, Please Check the file!');
       }
-  
-      return back()->with('error', 'Error, Please upload the file!');
+    }
+
+    return back()->with('error', 'Error, Please upload the file!');
   }
 }

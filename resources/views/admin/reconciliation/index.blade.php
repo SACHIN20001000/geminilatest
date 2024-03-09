@@ -141,10 +141,19 @@
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="  content-title mb-0 my-auto pe-4">Reconciliation </h4>
-                
+
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">
+
+            <div class="pe-1 mb-xl-0">
+
+                <select name="internal_commission" class="form-control internal_commission">
+                    <option value="">Select Commission</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
             <div class="pe-1 mb-xl-0 card">
 
                 <div id="reportrange"><span></span></div>
@@ -161,10 +170,10 @@
                     <a class="btn btn-main-primary" href="{{ route('reconciliation.upload') }}">Upload</a>
                 </div>
             </div>
-            
+
         </div>
     </div>
-  
+
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
 
@@ -173,14 +182,14 @@
             <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                     
-                       
+
+
 
                         <div class="table-responsive border-top userlist-table">
                             <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                                 <thead>
                                     <tr>
-                                    
+
                                         <th><span>Channel name</span></th>
                                         <th><span>Insurance company</span></th>
                                         <th><span>Policy holder name</span></th>
@@ -194,8 +203,8 @@
                                         <th><span>Commission status</span></th>
                                         <th><span>Outgoing payout</span></th>
                                         <th><span>Payout saved</span></th>
-                                        
-                                       
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -267,20 +276,25 @@
         });
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+        $('.internal_commission').on('change', function() {
+            var internal_commission = $(this).val();
+            updateDataTableFilters();
         });
 
 
 
-    
         var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
         var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
-     
+        var internal_commission = $('.internal_commission').val();
+
         function updateDataTableFilters() {
-          
+
             start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
             end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            internal_commission = $('.internal_commission').val();
             table.draw();
         }
         var tableConfig = {
@@ -291,15 +305,15 @@
                 data: function(d) {
                     d.expiry_from = start;
                     d.expiry_to = end;
+                    d.internal_commission = internal_commission;
                 }
             },
             dom: 'Blfrtip',
             lengthMenu: [
-        [10, 25, 50,100,200, -1],
-        ['10 rows', '25 rows', '50 rows','100 rows','200 rows', 'Show all']
-    ],
-            columns: [
-                {
+                [10, 25, 50, 100, 200, -1],
+                ['10 rows', '25 rows', '50 rows', '100 rows', '200 rows', 'Show all']
+            ],
+            columns: [{
                     data: 'channel_name',
                     name: 'channel_name',
                     defaultContent: '',
@@ -318,62 +332,59 @@
                     data: 'mis_transaction_type',
                     name: 'mis_transaction_type',
                     defaultContent: '',
-                },{
+                }, {
                     data: 'sub_product.name',
                     name: 'sub_product.name',
                     defaultContent: '',
-                },{
+                }, {
                     data: 'gross_premium',
                     name: 'gross_premium',
                     defaultContent: '',
-                },{
+                }, {
                     data: 'policy_no',
                     name: 'policy_no',
                     defaultContent: '',
-                },{
+                }, {
                     data: 'reg_no',
                     name: 'reg_no',
                     defaultContent: '',
-                },{
+                }, {
                     data: 'internal_payout_expected',
                     name: 'internal_payout_expected',
                     defaultContent: '',
-                },{
+                }, {
                     data: 'internal_payout_received',
                     name: 'internal_payout_received',
                     defaultContent: '',
-                },{
+                }, {
                     data: 'internal_commission',
                     name: 'internal_commission',
                     defaultContent: '',
-                },{
+                }, {
                     data: 'mis_commission',
                     name: 'mis_commission',
                     defaultContent: '',
-                },{
+                }, {
                     data: 'internal_payout_saved',
                     name: 'internal_payout_saved',
                     defaultContent: '',
                 },
-               
-        
-           
+
+
+
             ],
-    
+
         };
 
         var table = $('#datatable').DataTable(tableConfig);
 
-       
 
 
-       
 
-      
+
+
+
 
     });
-
-
-   
 </script>
 @endsection

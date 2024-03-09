@@ -1811,21 +1811,54 @@
                                             </div>
                                             <div class="col-sm-10">
                                                 <div class="row main-row">
-
                                                     <div class="row row-xs formgroup-wrapper">
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
-                                                                <label class="form-label">Payout expected
+                                                                <label class="form-label">COMMISSION BASE
                                                                 </label>
-                                                                <input type="number" name="internal_payout_expected" value="{{isset($policy) ? $policy->internal_payout_expected : ''}}" class="form-control" id="internal_payout_expected">
+                                                                <select name="internal_commission_base" class="form-control" id="internal_commission_base">
+                                                                    <option value="">Select Below</option>
+                                                                    <option value="od" {{ (isset($policy->commission_base) && 'od' == $policy->commission_base) ? 'selected' : '' }}>OD</option>
+                                                                    <option value="net" {{ (isset($policy->commission_base) && 'net' == $policy->commission_base) ? 'selected' : '' }}>Net</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
-                                                                <label class="form-label">Payout received</label>
-                                                                <input type="number" name="internal_payout_received" value="{{isset($policy) ? $policy->internal_payout_received : ''}}" onkeyup="internalCommission()" class="form-control" id="internal_payout_received">
+                                                                <label class="form-label">Base amount</label>
+                                                                <input type="number" name="int_mis_commissionable_amount" value="{{isset($policy) ? $policy->mis_commissionable_amount : ''}}" class="form-control" id="int_mis_commissionable_amount">
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">PERCENTAGE</label>
+                                                                <input type="number" name="internal_percentage" value="{{isset($policy) ? $policy->internal_percentage : ''}}" onkeyup="internalPercentage()" class="form-control" id="internal_percentage">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 ">
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">Payout expected
+                                                                </label>
+                                                                <input type="text" name="internal_payout_expected" value="{{isset($policy) ? $policy->internal_payout_expected : ''}}" class="form-control" id="internal_payout_expected">
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="row row-xs formgroup-wrapper">
+                                                        <div class="col-lg-3">
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">Payout received</label>
+                                                                <input type="text" name="internal_payout_received" value="{{isset($policy) ? $policy->internal_payout_received : ''}}" onkeyup="internalCommission()" class="form-control" id="internal_payout_received">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="main-form-group background">
+                                                                <label class="form-label">PERCENTAGE</label>
+                                                                <input type="text" name="internal_payout_percentage" value="{{isset($policy) ? $policy->internal_payout_percentage : ''}}" class="form-control" id="internal_payout_percentage">
+                                                            </div>
+                                                        </div>
+
                                                         <div class="col-lg-3">
                                                             <div class="main-form-group background">
                                                                 <label class="form-label">Commission</label>
@@ -2066,8 +2099,11 @@
                     var odPremium = parseFloat($('#od_premium').val() || 0);
                     var addOnPremium = parseFloat($('#add_on_premium').val() || 0);
                     $('#mis_commissionable_amount').val(odPremium + addOnPremium);
+                    $('#int_mis_commissionable_amount').val(odPremium + addOnPremium);
                 }
                 $('#mis_percentage').trigger('keyup');
+                $('#internal_commission_base').val(val);
+                $('#internal_commission_base').trigger('change');
             }
         });
 
@@ -2553,11 +2589,23 @@
         $("#mis_commission").val(commission_calc);
     }
 
+    function internalPercentage() {
+        var commission_amount = parseFloat($("#int_mis_commissionable_amount").val());
+        var commission_perc = parseFloat($("#internal_percentage").val());
+        var commission_calc = commission_amount * commission_perc / 100;
+        console.log(commission_calc);
+        $("#internal_payout_expected").val(commission_calc);
+    }
+
     function internalCommission() {
-        var payout_given = parseFloat($("#mis_commission").val());
+        var payout_given = parseFloat($("#internal_payout_expected").val());
         var payout_received = parseFloat($("#internal_payout_received").val());
         var commission_calc = payout_received - payout_given;
         $("#internal_payout_saved").val(commission_calc);
+        var percentage = (payout_received / payout_given) * 100;
+       
+        $("#internal_payout_percentage").val(percentage.toFixed(2));
+
     }
 
     function netPremium() {

@@ -16,6 +16,9 @@ class AddInternalColumnToPoliciesTable extends Migration
         Schema::table('policies', function (Blueprint $table) {
             $table->string('internal_payout_expected')->nullable();
             $table->string('internal_payout_received')->nullable();
+            $table->string('internal_payout_percentage')->nullable();
+            $table->string('internal_percentage')->nullable();
+
             $table->string('internal_commission')->nullable();
             $table->string('internal_payout_saved')->nullable();
         });
@@ -33,6 +36,8 @@ class AddInternalColumnToPoliciesTable extends Migration
             $table->dropColumn('internal_payout_received');
             $table->dropColumn('internal_commission');
             $table->dropColumn('internal_payout_saved');
+            $table->dropColumn('internal_payout_percentage');
+            $table->dropColumn('internal_percentage');
         });
     }
 }

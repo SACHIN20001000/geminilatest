@@ -199,7 +199,10 @@
                 },
 
             },
-
+            lengthMenu: [
+                [10, 25, 50, 100, 200, -1],
+                ['10 rows', '25 rows', '50 rows', '100 rows', '200 rows', 'Show all']
+            ],
             dom: 'Blfrtip',
             columns: [{
                     data: 'checkbox',

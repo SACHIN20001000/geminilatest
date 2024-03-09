@@ -25,25 +25,15 @@ class ReconciliationController extends Controller
 
         // echo '<pre>'; print_r($request->all()); die;
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns', 'company', 'attachments')->where(['is_policy' => 1]);
-        if (isset($request->search_anything)   && !empty($request->search_anything)) {
-            // $query->orwhereHas('lead', function ($q) use ($request) {
 
-
-            // });
-            $searchParam = ['holder_name', 'phone', 'email', 'reg_no', 'policy_no'];
-            foreach ($searchParam as $key => $value) {
-
-                if ($key == 0) {
-                    $query->where($value, 'like', '%' . $request->search_anything . '%');
-                } else {
-                    $query->orwhere($value, 'like', '%' . $request->search_anything . '%');
-                }
-            }
-        }
 
         $date = strtotime(date('Y-m-d'));
         $today = date('Y-m-d', strtotime('-1 days', $date));
         $daysabove = date('Y-m-d', strtotime('-30 days', $date));
+
+        if (isset($request->internal_commission) && !empty($request->internal_commission)) {
+            $query->where('internal_commission', 'LIKE', '%' . $request->internal_commission . '%');
+        }
 
         if (isset($request->expiry_from) && !empty($request->expiry_from) && !empty($request->expiry_to) && isset($request->expiry_to)) {
             $query->whereBetween('start_date', [$request->expiry_from, $request->expiry_to]);
@@ -51,70 +41,18 @@ class ReconciliationController extends Controller
             $query->whereBetween('start_date', [$today, $daysabove]);
         }
 
-
-        if (isset($request->type) && !empty($request->type)) {
-            if ($request->type == 'premium_short') {
-                $query->where('mis_short_premium', '>', 0);
-            } elseif ($request->type == 'premium_deposit') {
-                $query->whereNull('mis_premium_deposit');
-            }
-        }
         if (Auth::user()->hasRole('Broker') ||  Auth::user()->hasRole('Client')) {
             $query->where('user_id', Auth::user()->id);
         }
 
-        if (isset($request->product)   && !empty($request->product)) {
-
-            $query->whereIn('subproduct_id', $request->product);
-        }
-        if (isset($request->renew_status_search)   && !empty($request->renew_status_search)) {
-            $query->where('renew_status', 'like', '%' . $request->renew_status_search . '%');
-        }
-        if (isset($request->mis_transaction_type)   && !empty($request->mis_transaction_type)) {
-            $query->whereIn('mis_transaction_type', $request->mis_transaction_type);
-        }
-        if (isset($request->follow_ups)   && !empty($request->follow_ups)) {
-
-            $query->where('follow_up', $request->follow_ups);
-        }
-        if (isset($request->is_paid)   && !empty($request->is_paid)) {
-
-            if ($request->is_paid == 1) {
-                $query->whereColumn('mis_amount_paid', '=', 'gross_premium');
-            } else {
-                $query->whereColumn('mis_amount_paid', '!=', 'gross_premium');
-            }
-        }
 
 
-        if (isset($request->users)   && !empty($request->users)) {
-            $query->whereIn('user_id', $request->users);
-        }
-        if (isset($request->company_id)   && !empty($request->company_id)) {
-            $query->whereIn('company_id', $request->company_id);
-        }
-        if (isset($request->status)   && !empty($request->status)) {
-            $query->where('status', $request->status);
-        }
-        if (isset($request->duplicate) && !empty($request->duplicate) && $request->duplicate == true) {
-            $duplicatePolicyNos = Policy::select('policy_no')
-                ->groupBy('policy_no')
-                ->havingRaw('COUNT(policy_no) > 1')
-                ->pluck('policy_no');
 
-            $query->whereIn('policy_no', $duplicatePolicyNos);
-        }
-        if ($request->id == 1) {
-            if (isset($request->duplicate) && !empty($request->duplicate) && $request->duplicate == true) {
-                $query->orderby('policy_no', 'desc');
-            } else {
-                $query->orderby('start_date', 'desc');
-            }
-        } else {
-            $query->orderby('expiry_date', 'ASC');
-        }
 
-        $count =  $query->count();
+
+        $query->orderby('start_date', 'ASC');
+
+
         $leads = $query->get();
 
         if ($request->ajax()) {
@@ -167,7 +105,7 @@ class ReconciliationController extends Controller
             }
             $csvdata = array_slice($file, 1);
             $requiredHeaders = [
-                'policy_no', 'payout_expected', 'payout_recd', 'commission_status'
+                'policy_no', 'payout_recd',
             ];
             if (!empty($csvdata)) {
                 if (count(array_intersect($requiredHeaders, $headerF)) == count($requiredHeaders)) {
@@ -190,12 +128,19 @@ class ReconciliationController extends Controller
                             $policy = Policy::where('policy_no', $finalCsv['policy_no'])->first();
 
                             if ($policy) {
-                                $payout_saved = $finalCsv['payout_recd'] - $policy->mis_commission;
+                                $payout_saved = $finalCsv['payout_recd'] - $policy->internal_payout_expected;
+                                if ($finalCsv['payout_recd'] == $policy->internal_payout_expected) {
+                                    $finalCsv['commission_status'] = 'Yes';
+                                } else {
+                                    $finalCsv['commission_status'] = 'No';
+                                }
+                                $payoutPrecentage = ($finalCsv['payout_recd'] / $policy->internal_payout_expected) * 100;
+
                                 $policy->update([
-                                    'internal_payout_expected' => $finalCsv['payout_expected'],
                                     'internal_payout_received' => $finalCsv['payout_recd'],
                                     'internal_commission' => $finalCsv['commission_status'],
-                                    'internal_payout_saved' => $payout_saved
+                                    'internal_payout_saved' => $payout_saved,
+                                    'internal_payout_percentage' => $payoutPrecentage,
                                 ]);
                             }
 
