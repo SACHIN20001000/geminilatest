@@ -414,11 +414,15 @@ class PolicyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Policy $policy)
+    public function destroy(Request $request, Policy $policy)
     {
 
         $policy->delete();
-        return back()->with('success', 'Policy Deleted successfully!');
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Policy Deleted successfully', 'data' => $request->all]);
+        } else {
+            return back()->with('success', 'Policy Deleted successfully!');
+        }
     }
     public function renew_status(Request $request)
     {
@@ -468,8 +472,15 @@ class PolicyController extends Controller
                 $this->sendMessage($texturl);
             }
         } catch (Exception $e) {
+            if ($request->ajax()) {
+                return response()->json(['message' => $e->getMessage(), 'data' => $request->all()]);
+            }
         }
-        return back()->with('success', 'Mail Sent successfully!');
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Mail sent successfully', 'data' => $request->all()]);
+        } else {
+            return back()->with('success', 'Mail Sent successfully!');
+        }
     }
     public function commonEndrosment(Request $request)
     {

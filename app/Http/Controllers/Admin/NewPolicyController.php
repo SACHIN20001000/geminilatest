@@ -181,12 +181,7 @@ class NewPolicyController extends Controller
 
                         $action .= '<a href="' . route("policy.destroy", $row) . '"
                                         class="btn btn-sm btn-danger remove_us"
-                                        title="Delete User"
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        data-method="DELETE"
-                                        data-confirm-title="Please Confirm"
-                                        data-confirm-text="Are you sure that you want to delete this User?"
+                                        
                                         data-confirm-delete="Yes, delete it!">
                                         <i class="las la-trash"></i>
                                     </a>
