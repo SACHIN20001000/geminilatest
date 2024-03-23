@@ -357,8 +357,8 @@
                     name: 'internal_payout_received',
                     defaultContent: '',
                 }, {
-                    data: 'internal_commission',
-                    name: 'internal_commission',
+                    data: 'internalCommission',
+                    name: 'internalCommission',
                     defaultContent: '',
                 }, {
                     data: 'mis_commission',
@@ -369,10 +369,20 @@
                     name: 'internal_payout_saved',
                     defaultContent: '',
                 },
+                {
+                    data: 'phone',
+                    name: 'phone'
+                }
 
 
 
             ],
+            columnDefs: [
+        {
+            targets: [13], // index of the 'phone' column (zero-based index)
+            visible: false
+        }
+    ]
 
         };
 
@@ -382,8 +392,25 @@
 
 
 
+        $(document).on('change', '.commission_change', function() {
 
-
+            var id = $(this).data('id');
+            var value = $(this).val();
+            $.ajax({
+                url: "{{ route('reconciliation-update') }}",
+                type: 'POST',
+                data: {
+                    id: id,
+                    value: value
+                },
+                success: function(response) {
+                    toastr.success('Updated successfully');
+                },
+                error: function(response) {
+                    toastr.error('Error: ' + response);
+                }
+            });
+        });
 
     });
 </script>

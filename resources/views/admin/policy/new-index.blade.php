@@ -653,7 +653,9 @@
                 }
             });
 
-            $('.editor').summernote({
+            }
+        };
+        table = $('#datatable').DataTable(tableConfig);
 
                 height: 400,
 
@@ -827,6 +829,33 @@
         $(document).on('change', '.sort-table', function() {
             $('.submit-sort').click()
 
+        var form = new FormData();
+
+        // Adding the image to the form
+        form.append("image", file);
+        form.append("policy_id", id);
+        console.log(form, 'test', id);
+        $.ajax({
+            url: "{{route('renewAttachment')}}",
+            type: "POST",
+            data: form,
+            contentType: false,
+            processData: false,
+            success: function(result) {
+                toastr.success(result.message, 'Attachment Uploaded Successfully', {
+                    closeButton: true,
+                    progressBar: true,
+                });
+                var currentPage = table.page();
+
+                setTimeout(function() {
+                    // table.ajax.reload();
+                    console.log('currentPage', currentPage)
+                    table.ajax.reload();
+
+                }, 500);
+
+            }
         });
         $(document).on('click', '.common-btn', function() {
             var policy_id = $(this).attr('data-id');

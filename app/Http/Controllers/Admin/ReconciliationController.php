@@ -62,6 +62,15 @@ class ReconciliationController extends Controller
                     $actionBtn = '<a href="' . route('policy.show', $row->id) . '" class="edit btn btn-success btn-sm">View</a>';
                     return $actionBtn;
                 })
+                ->addColumn('internalCommission', function ($row) {
+                    $action = '<select class="form-control commission_change" data-id="' . $row->id . '" >';
+                    $action .= '<option value="Yes" ' . ($row->internal_commission == 'Yes' ? 'selected' : '') . '>Yes</option>';
+                    $action .= '<option value="No" ' . ($row->internal_commission == 'No' ? 'selected' : '') . '>No</option>';
+                    $action .= '</select>';
+
+                    return $action;
+                })
+                ->rawColumns(['action', 'internalCommission'])
                 ->make(true);
         }
         return view('admin.reconciliation.index');
@@ -214,5 +223,11 @@ class ReconciliationController extends Controller
 
         Remainder::find($id)->delete();
         return redirect()->route('remainder.index')->with('success', 'Remainder Deleted Successfully');
+    }
+    public function reconciliationUpdate(Request $request)
+    {
+        $policy = Policy::find($request->id);
+        $policy->update(['internal_commission' => $request->value]);
+        return response()->json(['success' => 'Updated Successfully']);
     }
 }

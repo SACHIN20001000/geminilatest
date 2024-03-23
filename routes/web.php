@@ -107,6 +107,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('communications', CommunicationController::class);
         Route::resource('remainder', RemainderController::class);
         Route::resource('reconciliation', ReconciliationController::class);
+        Route::any('reconciliation-update', [ReconciliationController::class, 'reconciliationUpdate'])->name('reconciliation-update');
         Route::any('reconciliation-upload', [ReconciliationController::class, 'upload'])->name('reconciliation.upload');
 
         Route::resource('group', CommunicationGroupController::class);

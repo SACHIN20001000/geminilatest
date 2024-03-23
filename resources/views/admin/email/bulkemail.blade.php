@@ -5,13 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 
 <body>
     <h2>Dear Sir/Madam,</h2>
-    <p>
-        This is for your information following insurance policies are expiring in coming days</p>
+    <p>This is for your information following insurance policies are expiring in coming days</p>
     <p>Please find details below: </p>
     <table style="border: 2px solid black;">
         <thead>
@@ -32,8 +30,8 @@
                 <td style="border: 1px solid black;">{{++$key}}</td>
                 <td style="border: 1px solid black;">{{isset($policies->expiry_date) && !empty($policies->expiry_date) ? date("d/m/Y", strtotime($policies->expiry_date)) :  ''}}</td>
                 <td style="border: 1px solid black;">{{$policies->holder_name ?? ''}}</td>
-                <td style="border: 1px solid black;">{{$policies->subProduct->name ?? ''}}</td>
-                <td style="border: 1px solid black;">{{$policies->products->name === 'MOTOR' ? $policies->models->name : ''}}</td>
+                <td style="border: 1px solid black;">{{$policies->subProduct ? $policies->subProduct->name : ''}}</td>
+                <td style="border: 1px solid black;">{{$policies->products && $policies->products->name === 'MOTOR' ? ($policies->models ? $policies->models->name : '') : ''}}</td>
                 <td style="border: 1px solid black;">{{$policies->reg_no ?? ''}}</td>
                 <td style="border: 1px solid black;">{{$policies->gross_premium ?? ''}}</td>
                 <td style="border: 1px solid black;">{{$policies->ncb_in_existing_policy ?? ''}}</td>
@@ -44,12 +42,9 @@
         </tbody>
     </table>
 
-    <h4>This is an automated email. Please do not reply
-    </h4>
+    <h4>This is an automated email. Please do not reply</h4>
     <h4>Regards</h4>
     <h4>GCS Services</h4>
-
-
 </body>
 
 </html>

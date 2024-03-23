@@ -2599,10 +2599,12 @@
 
     function internalCommission() {
         var payout_given = parseFloat($("#internal_payout_expected").val());
+        var mis_commission = parseFloat($("#mis_commission").val());
+
         var payout_received = parseFloat($("#internal_payout_received").val());
-        var commission_calc = payout_received - payout_given;
+        var commission_calc = payout_received - mis_commission;
         $("#internal_payout_saved").val(commission_calc);
-        var percentage = (payout_received / payout_given) * 100;
+        var percentage = (payout_received / mis_commission) * 100;
        
         $("#internal_payout_percentage").val(percentage.toFixed(2));
 
