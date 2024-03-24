@@ -583,8 +583,11 @@ class PolicyController extends Controller
             ]);
         }
 
-
-        return back()->with('success', 'Renewal Created successfully!');
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Renewal Created successfully!', 'data' => $request->all()]);
+        } else {
+            return back()->with('success', 'Renewal Created successfully!');
+        }
     }
     public function acceptPolicyLead(Request $request)
     {
@@ -631,9 +634,13 @@ class PolicyController extends Controller
 
         return redirect()->route('leads.index', ['id' => 4])->with('success', ' Rejected successfully!');
     }
-    public function delAttachment($id)
+    public function delAttachment(Request $request, $id)
     {
         Attachment::find($id)->delete();
-        return back()->with('success', 'Deleted successfully!');
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Deleted successfully!', 'data' => $request->all()]);
+        } else {
+            return back()->with('success', 'Deleted successfully!');
+        }
     }
 }
