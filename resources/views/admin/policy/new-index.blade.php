@@ -637,7 +637,6 @@
 
 
 
-        table = $('#datatable').DataTable(tableConfig);
 
 
         $('.filter-btn').click(function() {
