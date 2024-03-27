@@ -79,7 +79,7 @@ class ExportController extends Controller
             try {
               DB::beginTransaction();
 
-              $user = User::where('phone', trim($finalCsv['reference_contact_no']))->first();
+              $user = User::where('phone', 'like', '%' . trim($finalCsv['reference_contact_no']) . '%')->first();
               $insurance_company = Company::where('name', 'like', '%' . $finalCsv['insurance_company'] . '%')->first();
               $product = Product::where('name', 'like', '%' . $finalCsv['product'] . '%')->first();
               $sub_product = SubProduct::where('name', 'like', '%' . $finalCsv['sub_product'] . '%')->first();
@@ -125,7 +125,10 @@ class ExportController extends Controller
 
               ];
 
-              Policy::create($finalArr);
+              Policy::updateOrCreate(
+                ['policy_no' => $cleanPolicyNo],
+                $finalArr
+              );
               DB::commit();
             } catch (\Exception $e) {
               echo "Error processing record: " . $e->getMessage() . "<br>";
