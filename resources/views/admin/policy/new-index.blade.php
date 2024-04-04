@@ -462,10 +462,10 @@
                             <label for="newValue">New Value:</label>
                             <input type="text" class="form-control" id="newValue" name="new_value"><br>
                             <label for="newValue">Remark:</label>
-                            <textarea name="remark" class="form-control" id="remark" cols="30" rows="10"></textarea>
+                            <textarea name="remark" class="form-control" id="remark" ></textarea>
                             <input type="hidden" name="policy_id" id="policy_ticket_id">
-                            <label >Attachment</label>
-                            <input type="file" class="form-control" name="file[]"  multiple>
+                            <label>Attachment</label>
+                            <input type="file" class="form-control" name="file[]" multiple>
                         </div>
 
                     </div>
@@ -520,8 +520,8 @@
                     ]
 
                 },
-                startDate: moment().subtract(1, 'years').startOf('year').add(3, 'months'),
-                endDate: moment().subtract(1, 'years').endOf('year').add(3, 'months').endOf('month')
+                startDate: moment().startOf('month'),
+                endDate: moment().endOf('month')
             },
             function(start, end, range) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format(
