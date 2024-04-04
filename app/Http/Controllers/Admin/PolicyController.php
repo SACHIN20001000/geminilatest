@@ -44,10 +44,7 @@ class PolicyController extends Controller
         $users = User::all();
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns')->where(['is_policy' => 1]);
         if (isset($request->search_anything)   && !empty($request->search_anything)) {
-            // $query->orwhereHas('lead', function ($q) use ($request) {
-
-
-            // });
+      
             $searchParam = ['holder_name', 'phone', 'email', 'reg_no', 'policy_no'];
             foreach ($searchParam as $key => $value) {
 

@@ -32,6 +32,7 @@ use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\NewPayoutController;
 use App\Http\Controllers\Admin\NewPolicyController;
 use App\Http\Controllers\Admin\ReconciliationController;
+use App\Http\Controllers\Admin\TicketSystemController;
 use App\Http\Controllers\Admin\WebhookController;
 use App\Http\Controllers\Admin\WhatsappChatsController;
 use App\Http\Controllers\BacklinkController;
@@ -107,6 +108,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('communications', CommunicationController::class);
         Route::resource('remainder', RemainderController::class);
         Route::resource('reconciliation', ReconciliationController::class);
+        Route::resource('ticket', TicketSystemController::class);
         Route::any('reconciliation-update', [ReconciliationController::class, 'reconciliationUpdate'])->name('reconciliation-update');
         Route::any('reconciliation-upload', [ReconciliationController::class, 'upload'])->name('reconciliation.upload');
 

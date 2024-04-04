@@ -189,6 +189,20 @@
 
             </li>
             <li class="slide">
+                <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('ticket.index') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                        <g transform="translate(48 0) scale(-1 1)">
+                            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4">
+                                <path stroke-linejoin="round" d="M9 16L34 6l4 10M4 16h40v6c-3 0-6 2-6 5.5s3 6.5 6 6.5v6H4v-6c3 0 6-2 6-6s-3-6-6-6v-6Z" />
+                                <path d="M17 25.385h6m-6 6h14" />
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="side-menu__label">Ticket System</span></a>
+
+
+            </li>
+            <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g transform="translate(24 0) scale(-1 1)">
@@ -246,6 +260,7 @@
 
 
             </li>
+          
             <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('notepad.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">

@@ -163,6 +163,14 @@ class NewPolicyController extends Controller
                                     title="Send Mail!"
                                     class="btn btn-sm btn-info btn-b common-btn">📩
                                 </a>';
+                    // Common "Send Mail" button
+                    $action .= '<a 
+                                    type="button" 
+                                    data-id="' . $row->id . ' "
+                                    data-toggle="tooltip"
+                                    title="Endrosment"
+                                    class="btn btn-sm btn-info btn-b endrosment-btn">🎫
+                                </a>';
 
                     // Check if request id is 2, then show the select box
                     if (request()->id == 2) {
