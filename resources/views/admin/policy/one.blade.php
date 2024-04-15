@@ -79,72 +79,7 @@
     <div class="row row-sm">
 
         <div class="col-lg-12">
-            <!-- <div class="row row-sm">
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-primary-transparent">
-												<i class="icon-layers text-primary"></i>
-											</div>
-											<div class="ms-auto">
-												<h5 class="tx-13">Orders</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">1,587</h2>
-												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success me-1"></i>increase</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-danger-transparent">
-												<i class="icon-paypal text-danger"></i>
-											</div>
-											<div class="ms-auto">
-												<h5 class="tx-13">Revenue</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">46,782</h2>
-												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success me-1"></i>increase</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-success-transparent">
-												<i class="icon-rocket text-success"></i>
-											</div>
-											<div class="ms-auto">
-												<h5 class="tx-13">Product sold</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">1,890</h2>
-												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success me-1"></i>increase</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-xl-3 col-lg-12 col-md-12">
-								<div class="card ">
-									<div class="card-body">
-										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-success-transparent">
-												<i class="icon-rocket text-success"></i>
-											</div>
-											<div class="ms-auto">
-												<h5 class="tx-13">Product sold</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">1,890</h2>
-												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success me-1"></i>increase</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> -->
+
             <div class="card">
                 <div class="card-body">
                     <div class="tabs-menu ">
@@ -1935,6 +1870,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         @if(!empty($policy->attachments))
                                         @foreach($policy->attachments as $attachment)
                                         @if($attachment->type != 'Policy')
@@ -1945,6 +1881,18 @@
                                             <td>{{$attachment->type}}</td>
                                         </tr>
                                         @endif
+                                        @endforeach
+                                        @endif
+                                        @if(isset($ticket) && !empty($ticket->attachments))
+                                        @foreach($ticket->attachments as $attachment)
+                                       
+                                        <tr>
+                                            <td>{{$attachment->user->name ?? ''}}</td>
+                                            <td>{{$attachment->created_at}}</td>
+                                            <td><a href="{{asset('attachments/'.$attachment->file)}}" target="_blank">{{$attachment->file}}</a></td>
+                                            <td>Endrosment</td>
+                                        </tr>
+                                     
                                         @endforeach
                                         @endif
                                     </tbody>

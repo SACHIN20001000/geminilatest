@@ -24,6 +24,7 @@ use Mail;
 use Auth;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\Admin\Lead\StoreLeadRequest;
+use App\Models\TicketSystem;
 use App\Traits\WhatsappApi;
 use Illuminate\Support\Facades\DB;
 
@@ -279,7 +280,8 @@ class PolicyController extends Controller
                 $q->where('id', '=', $policy->user_type);
             }
         )->get();
-        return view('admin.policy.one', compact('roles', 'model', 'users', 'channels', 'insurances', 'companies', 'policy', 'make', 'products', 'subProducts', 'varients'));
+        $ticket = TicketSystem::where('policy_id', $policy->id)->with('attachments')->first();
+        return view('admin.policy.one', compact('roles', 'model', 'users', 'channels', 'insurances', 'companies', 'policy', 'make', 'products', 'subProducts', 'varients','ticket'));
     }
 
     /**

@@ -15,14 +15,17 @@ use App\Models\Policy;
 use App\Models\Insurance;
 use App\Models\Company;
 use App\Models\Attachment;
+use App\Models\ErrorFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
 
 class ExportController extends Controller
 {
   public function policyView()
   {
-    return view('admin.export.policy');
+    $errorFile = ErrorFile::all();
+    return view('admin.export.policy', compact('errorFile'));
   }
   public function vecialView()
   {
@@ -60,6 +63,7 @@ class ExportController extends Controller
         'premium_received', 'payment_mode', 'remarks', 'status', 'premium_amount_received',
         'payment_date'
       ];
+      $errorData = [];
       if (!empty($csvdata)) {
         if (count(array_intersect($requiredHeaders, $headerF)) == count($requiredHeaders)) {
 
@@ -69,7 +73,30 @@ class ExportController extends Controller
 
 
               $finalCsvData[] = array_combine($headerF, $csvArrF);
+            } else {
+              $errorData[] = $csvArrF;
             }
+          }
+
+          if (!empty($errorData)) {
+
+            $csvData = '';
+            foreach ($errorData as $row) {
+              $csvData .= implode(',', $row) . "\n";
+            }
+
+            $publicPdfDirectory = public_path('error');
+            $pdfPath = public_path('error/file' . rand(1000, 9999) . '.csv');
+
+            if (!File::exists($publicPdfDirectory)) {
+              File::makeDirectory($publicPdfDirectory, 0755, true);
+            }
+            file_put_contents($pdfPath, $csvData);
+            $filename = basename($pdfPath); // Extracting just the filename from the path
+
+            ErrorFile::create([
+              'file_name' => $filename
+            ]);
           }
 
 

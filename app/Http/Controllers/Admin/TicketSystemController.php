@@ -9,6 +9,7 @@ use App\Models\TicketRemark;
 use App\Models\TicketSystem;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Mail;
 
 class TicketSystemController extends Controller
 {
@@ -21,7 +22,7 @@ class TicketSystemController extends Controller
     {
         if ($request->ajax()) {
             $query = TicketSystem::with('user', 'policy');
-            
+
 
             $data = $query->orderby('id', 'DESC')->get();
 
@@ -72,7 +73,10 @@ class TicketSystemController extends Controller
      */
     public function store(Request $request)
     {
-
+        $policyTicket = TicketSystem::where('policy_id', $request->policy_id)->first();
+        if ($policyTicket) {
+            return redirect()->back()->with('error', 'Ticket already created for this policy');
+        }
         $inputs = $request->all();
         $inputs['user_id'] = auth()->user()->id;
         $ticket =  TicketSystem::create($inputs);
@@ -97,6 +101,18 @@ class TicketSystemController extends Controller
             }
         }
 
+        try {
+            Mail::send('admin.email.ticket',[], function ($messages) {
+                $messages->to(auth()->user()->email);
+                $messages->bcc(globalSetting()['bcc_email'] ?? 'geminiservices@outlook.com');
+
+                $subject = 'Policy Endorsement Request Received';
+                $messages->subject($subject);
+            });
+        } catch (\Exception $th) {
+            // throw $th;
+        }
+
         return redirect()->back()->with('success', 'Ticket created successfully');
     }
 
@@ -110,7 +126,7 @@ class TicketSystemController extends Controller
     {
         return view('admin.ticket.show', compact('ticket'));
     }
-   
+
 
     /**
      * Show the form for editing the specified resource.
@@ -132,15 +148,33 @@ class TicketSystemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        TicketSystem::find($id)->update([
-            'status' => $request->status
-        ]);
-        TicketRemark::create([
-            'ticket_id' => $id,
-            'user_id' => auth()->user()->id,
-            'remark' => $request->remark
-        ]);
+
+        if (isset($request->status) && !empty($request->status)) {
+            TicketSystem::find($id)->update([
+                'status' => $request->status
+            ]);
+        }
+        if (isset($request->attachment) && !empty($request->attachment)) {
+            foreach ($request->attachment as $value) {
+                $attachment_filename = preg_replace('/\s+/', '', $value->getClientOriginalName());
+                $value->move(public_path('/attachments'), $attachment_filename);
+                TicketAttachment::create([
+                    'ticket_id' => $id,
+                    'user_id' => auth()->user()->id,
+                    'file' => $attachment_filename
+                ]);
+            }
+        }
+
+        if (isset($request->remark) && !empty($request->remark)) {
+            TicketRemark::create([
+                'ticket_id' => $id,
+                'user_id' => auth()->user()->id,
+                'remark' => $request->remark
+            ]);
+        }
+
+
         return redirect()->back()->with('success', 'Ticket updated successfully');
     }
 

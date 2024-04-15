@@ -52,6 +52,7 @@
                                     <tr>
                                         <th class="wd-20p">Remarks</th>
                                         <th class="wd-40p">Created By</th>
+                                        <th class="wd-40p">Created At</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,6 +61,7 @@
                                     <tr>
                                         <td>{{$remark->remark}}</td>
                                         <td>{{$remark->user->name ?? ''}}</td>
+                                        <td>{{$remark->created_at}}</td>
 
                                     </tr>
                                     @endforeach
@@ -114,11 +116,11 @@
 
                         <div class="col-lg-12">
                             <h6>Remark</h6>
-                            <textarea name="remark" id="remark" class="form-control" required></textarea>
+                            <textarea name="remark" id="remark" class="form-control" ></textarea>
                         </div>
                         <div class="col-lg-12">
                             <h6>Status</h6>
-                            <select name="status" id="status" class="form-control" required>
+                            <select name="status" id="status" class="form-control" >
                                 <option value="">Select Status</option>
                                 <option value="assigned" @if($ticket->status == 'assigned') selected @endif
                                     >assigned</option>
@@ -129,6 +131,10 @@
                                 <option value="done" @if($ticket->status == 'done') selected @endif
                                     >done</option>
                             </select>
+                        </div>
+                        <div class="col-lg-12">
+                            <h6>Attachment</h6>
+                            <input type="file" name="attachment[]" class="form-control" multiple>
                         </div>
 
                     </div>

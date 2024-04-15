@@ -695,8 +695,8 @@
                 return url;
             }
         }
-       
-        
+
+
     });
 </script>
 @endsection

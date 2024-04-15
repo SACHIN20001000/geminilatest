@@ -42,6 +42,22 @@
                 </form>
                 <!-- form end  -->
             </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Error File</th>
+                        <th>Date</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($errorFile as $error)
+                    <tr>
+                        <td> <a href="{{asset('error/'.$error->file_name)}}" target="_blank">Download</a></td>
+                        <td> {{$error->created_at}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
         </div>
     </div>
     <!-- /row -->

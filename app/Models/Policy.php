@@ -73,4 +73,6 @@ class Policy extends Model
     {
         return $this->hasOne(Invoice::class, 'id', 'invoice_id');
     }
+
+  
 }

@@ -33,11 +33,11 @@ class TicketSystem extends Model
 
     public function attachments()
     {
-        return $this->hasMany(TicketAttachment::class, 'ticket_id');
+        return $this->hasMany(TicketAttachment::class, 'ticket_id')->orderBy('created_at', 'desc');
     }
 
     public function remarkDetails()
     {
-        return $this->hasMany(TicketRemark::class, 'ticket_id');
+        return $this->hasMany(TicketRemark::class, 'ticket_id')->orderBy('created_at', 'desc');
     }
 }
