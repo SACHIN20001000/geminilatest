@@ -109,6 +109,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('remainder', RemainderController::class);
         Route::resource('reconciliation', ReconciliationController::class);
         Route::resource('ticket', TicketSystemController::class);
+        Route::any('exportPolicies', [NewPolicyController::class, 'exportPolicies'])->name('exportPolicies');
         Route::any('reconciliation-update', [ReconciliationController::class, 'reconciliationUpdate'])->name('reconciliation-update');
         Route::any('reconciliation-upload', [ReconciliationController::class, 'upload'])->name('reconciliation.upload');
 

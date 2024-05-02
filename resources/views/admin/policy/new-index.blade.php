@@ -171,6 +171,9 @@
             <div class="pe-1 mb-xl-0">
                 <button type="button" class="btn btn-danger duplicate-record">Duplicate</button>
             </div>
+            <div class="pe-1 mb-xl-0">
+                <button type="button" class="btn btn-success export-record">Export</button>
+            </div>
             @if (isset($_GET['id']) && $_GET['id'] == 2)
             <div class="pe-1 mb-xl-0">
 
@@ -317,6 +320,7 @@
                                         <th><span>Holder Name</span></th>
                                         <th><span>Company Name</span></th>
                                         <th><span>Trasaction Type</span></th>
+                                        <th>Policy number</th>
                                         <th><span>Sub Product</span></th>
                                         <th><span>Payment Status</span></th>
                                         <th><span>Reg No.</span></th>
@@ -462,7 +466,7 @@
                             <label for="newValue">New Value:</label>
                             <input type="text" class="form-control" id="newValue" name="new_value"><br>
                             <label for="newValue">Remark:</label>
-                            <textarea name="remark" class="form-control" id="remark" ></textarea>
+                            <textarea name="remark" class="form-control" id="remark"></textarea>
                             <input type="hidden" name="policy_id" id="policy_ticket_id">
                             <label>Attachment</label>
                             <input type="file" class="form-control" name="file[]" multiple>
@@ -635,6 +639,11 @@
                     className: 'truncate-text-small'
                 },
                 {
+                    data: 'policy_no',
+                    name: 'policy_no',
+                    visible: false
+                },
+                {
                     data: 'sub_product.name',
                     name: 'sub_product.name',
                     defaultContent: '',
@@ -681,6 +690,7 @@
                     orderable: false,
                     searchable: false,
                     className: 'no-click'
+
                 }
             ],
             rowCallback: function(row, data) {
@@ -721,7 +731,37 @@
             window.location.replace(url);
 
         })
+        $('.export-record').click(function() {
+            $.ajax({
+                type: "Post",
+                url: "{{ route('exportPolicies') }}",
+                data: {
+                    end: end,
+                    start: start,
+                    renew_status_search: renew_status_search,
+                    product: product,
+                    users: users,
+                    follow_ups: follow_ups,
+                    is_paid: is_paid,
+                    mis_transaction_type: mis_transaction_type,
+                    company_id: company_id
 
+                },
+                success: function(result) {
+                    toastr.success('Data Exported Successfully', 'Success', {
+                        closeButton: true,
+                        progressBar: true,
+                    });
+                },
+                error: function() {
+                    $('#loader-wrapper').hide();
+                    toastr.error('Something went wrong', 'Error', {
+                        closeButton: true,
+                        progressBar: true,
+                    });
+                }
+            });
+        })
 
 
         $('.renew-btn').click(function() {
