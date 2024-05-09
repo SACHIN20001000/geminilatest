@@ -547,36 +547,96 @@
             }
         });
 
+    let urlParams = new URLSearchParams(window.location.search);
+    
+    // Get the value of 'id' parameter and set it in the variable
+    let id = @json(request('id', ''));
+    
+    // Get the values of other parameters and set them in the respective fields
+    let product = urlParams.get('product');
+    
+    if(product && product != 'undefined') {
+        let productValues = product.split(',');
+        // Set the values in the Select2 picker
+        $('select[name="product[]"]').val(productValues);
+        // Trigger the change event to update the Select2 picker
+        $('select[name="product[]"]').trigger('change');
+    }
 
+    let users = urlParams.get('users');
+    if(users && users != 'undefined') {
+        let usersValues = users.split(',');
+        // Set the values in the Select2 picker
+        $('select[name="users[]"]').val(users);
+        // Trigger the change event to update the Select2 picker
+        $('select[name="users[]"]').trigger('change');
+    }
+
+    let follow_ups = urlParams.get('follow_ups');
+    
+    if(follow_ups && follow_ups != 'undefined') {
+        $('input[name="follow_ups"]').val(follow_ups);
+    }
+
+    let is_paid = urlParams.get('is_paid');
+     if(is_paid && is_paid != 'undefined') {
+        $('select[name="is_paid"]').val(is_paid);
+    }
+
+    let mis_transaction_type = urlParams.get('mis_transaction_type');
+     if(mis_transaction_type && mis_transaction_type != 'undefined') {
+        let misValues = mis_transaction_type.split(',');
+        // Set the values in the Select2 picker
+        $('select[name="mis_transaction_type[]"]').val(misValues);
+        // Trigger the change event to update the Select2 picker
+        $('select[name="mis_transaction_type[]"]').trigger('change');
+    }
+
+    let company_id = urlParams.get('company_id');
+     if(company_id && company_id != 'undefined') {
+        $('select[name="company_id[]"]').val(company_id);
+    }
+    
+    let requestPage = urlParams.get('page');
+
+    let renew_status_search = urlParams.get('renew_status_search');
+    if(renew_status_search && renew_status_search != 'undefined') {
+        let renew_statusValues = renew_status_search.split(',');
+        // Set the values in the Select2 picker
+        $('select[name="renew_status_search[]"]').val(renew_statusValues);
+        // Trigger the change event to update the Select2 picker
+        $('select[name="renew_status_search[]"]').trigger('change');
+    }
+
+    // // Get the start and end date parameters
+    let expiry_from = urlParams.get('expiry_from');
+    let expiry_to = urlParams.get('expiry_to');
+
+    if(expiry_from && expiry_to ) {
+        // Set the start and end dates in the date range picker
+        $('#daterange-btn').data('daterangepicker').setStartDate(expiry_from);
+        $('#daterange-btn').data('daterangepicker').setEndDate(expiry_to);
+    }
+
+     let  tableLength = urlParams.get('length') ?? 10;
 
         let duplicate = @json(request('duplicate', ''));
-        let id = @json(request('id', ''));
-        let product = $('select[name="product[]"]').val();
-        let users = $('select[name="users[]"]').val();
-        let follow_ups = $('input[name="follow_ups"]').val();
-        let is_paid = $('select[name="is_paid"]').val();
-        let mis_transaction_type = $('select[name="mis_transaction_type[]"]').val();
-        let company_id = $('select[name="company_id[]"]').val();
-        let renew_status_search = $('select[name="renew_status_search"]').val();
-        var start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
-        var end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
+        
+        product = $('select[name="product[]"]').val();
+        users = $('select[name="users[]"]').val();
+        follow_ups = $('input[name="follow_ups"]').val();
+        is_paid = $('select[name="is_paid"]').val();
+        mis_transaction_type = $('select[name="mis_transaction_type[]"]').val();
+        company_id = $('select[name="company_id[]"]').val();
+        renew_status_search = $('select[name="renew_status_search"]').val();
+        start = expiry_from ?? $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+        end = expiry_to ?? $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
         $('select[name="company_id[]"], select[name="mis_transaction_type[]"], select[name="is_paid"], input[name="follow_ups"], select[name="users[]"], select[name="product[]"], select[name="renew_status_search"]')
             .on('change', function() {
                 updateDataTableFilters();
             });
 
-        function updateDataTableFilters() {
-            company_id = $('select[name="company_id[]"]').val();
-            mis_transaction_type = $('select[name="mis_transaction_type[]"]').val();
-            is_paid = $('select[name="is_paid"]').val();
-            follow_ups = $('input[name="follow_ups"]').val();
-            users = $('select[name="users[]"]').val();
-            product = $('select[name="product[]"]').val();
-            renew_status_search = $('select[name="renew_status_search"]').val();
-            start = $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
-            end = $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
-            table.draw();
-        }
+       
         var tableConfig = {
             processing: true,
             serverSide: true,
@@ -594,9 +654,23 @@
                     d.company_id = company_id;
                     d.renew_status_search = renew_status_search;
                     d.expiry_from = start;
-                    d.expiry_to = end;
+                    d.expiry_to = end;   
+                    // d.length = tableLength ?? 10;   
                 }
             },
+            drawCallback: function(settings) {
+                var api = this.api();
+                var pageInfo = api.page.info();
+                var recordsDisplayed = pageInfo.end - pageInfo.start;
+                var totalPages = pageInfo.pages;
+                var currentPage = pageInfo.page + 1; // Add 1 to make it 1-based index
+                if (pageInfo.end - pageInfo.start < tableLength && (currentPage != totalPages && pageInfo.recordsDisplay == pageInfo.end )) {
+                    requestPage = 0
+                    updateDataTableFilters(false);
+                }
+            },
+            pageLength: tableLength ?? 10,
+            displayStart: typeof requestPage != 'undefined' && requestPage ?( requestPage*tableLength-tableLength) : 0,
             dom: 'Blfrtip',
             lengthMenu: [
                 [10, 25, 50, 100, 200, -1],
@@ -703,6 +777,89 @@
 
 
         table = $('#datatable').DataTable(tableConfig);
+
+        table.on('length.dt', function(e, settings, len) {
+            tableLength = len
+            requestPage = table.page.info().page;
+           updateDataTableFilters(false);
+        });
+
+         function updateDataTableFilters(drawTable = true) {
+            company_id = $('select[name="company_id[]"]').val();
+            mis_transaction_type = $('select[name="mis_transaction_type[]"]').val();
+            is_paid = $('select[name="is_paid"]').val();
+            follow_ups = $('input[name="follow_ups"]').val();
+            users = $('select[name="users[]"]').val();
+            product = $('select[name="product[]"]').val();
+            renew_status_search = $('select[name="renew_status_search"]').val();
+            start = expiry_from ?? $('#daterange-btn').data('daterangepicker').startDate.format('YYYY-MM-DD');
+            end = expiry_to ?? $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
+
+            // Construct the query string with the parameters
+            const queryParams = new URLSearchParams();
+            if(company_id && company_id.length) {
+                queryParams.set('company_id', company_id);
+            }
+            if(mis_transaction_type && mis_transaction_type.length) {
+                queryParams.set('mis_transaction_type', mis_transaction_type);
+            }
+
+            if(is_paid) {
+                queryParams.set('is_paid', is_paid);
+            }
+            
+            if(follow_ups && follow_ups != 'undefined') {
+                queryParams.set('follow_ups', follow_ups);
+            }
+            if(users && users.length) {
+                queryParams.set('users', users);
+            }
+            if(product && product.length) {
+                queryParams.set('product', product);
+            }
+           
+            if(renew_status_search && renew_status_search != 'renew_status_search') {
+                queryParams.set('renew_status_search', renew_status_search);
+            }
+            
+            if(start != 'Invalid date' && end != 'Invalid date') {
+                queryParams.set('expiry_from', start);
+                queryParams.set('expiry_to', end);
+            }
+
+            // var currentPage = table.page();
+            var searchValue = table.search();
+
+            if(requestPage && requestPage != 'undefined') {
+                queryParams.set("page", requestPage);
+            }
+            
+            if(tableLength && tableLength != 'undefined') {
+                queryParams.set("length", tableLength);
+            }
+
+                // Get the current URL and append the new query string
+            const originalUrl = 'http://localhost:8001/admin/new-policy?id=1';
+            const originalParams = new URLSearchParams(originalUrl.split('?')[1]); // Extract original query parameters
+            
+            originalParams.forEach((value, key) => {
+                queryParams.append(key, value); // Append original parameters to the new query parameters
+            });
+
+            // Construct the updated URL with combined parameters
+            const updatedUrl = `${originalUrl.split('?')[0]}?${queryParams.toString()}`;
+
+            // Update the browser's address bar
+            window.history.pushState({ path: updatedUrl }, '', updatedUrl);
+            if(drawTable) {
+                table.draw();
+            }
+        }
+
+        $('#datatable').on('page.dt', function () {
+           requestPage = table.page.info().page + 1
+           updateDataTableFilters(false);
+        });
 
         $(document).on('change', '#checkedAll', function() {
             if (this.checked) {

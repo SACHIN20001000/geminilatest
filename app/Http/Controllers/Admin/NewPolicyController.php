@@ -39,7 +39,6 @@ class NewPolicyController extends Controller
     {
 
 
-        // echo '<pre>'; print_r($request->all()); die;
         $products = SubProduct::all();
         $users = User::all();
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns', 'company', 'attachments')->where(['is_policy' => 1]);
@@ -76,6 +75,8 @@ class NewPolicyController extends Controller
             }
         }
 
+
+
         if (isset($request->type) && !empty($request->type)) {
             if ($request->type == 'premium_short') {
                 $query->where('mis_short_premium', '>', 0);
@@ -83,24 +84,31 @@ class NewPolicyController extends Controller
                 $query->whereNull('mis_premium_deposit');
             }
         }
+
         if (Auth::user()->hasRole('Broker') ||  Auth::user()->hasRole('Client')) {
             $query->where('user_id', Auth::user()->id);
         }
 
-        if (isset($request->product)   && !empty($request->product)) {
+        if ($request->ajax()) {
+            if (isset($request->product)   && !empty($request->product)) {
 
-            $query->whereIn('subproduct_id', $request->product);
+                $query->whereIn('subproduct_id', $request->product);
+            }
         }
+
         if (isset($request->renew_status_search)   && !empty($request->renew_status_search)) {
             $query->where('renew_status', 'like', '%' . $request->renew_status_search . '%');
         }
-        if (isset($request->mis_transaction_type)   && !empty($request->mis_transaction_type)) {
-            $query->whereIn('mis_transaction_type', $request->mis_transaction_type);
+        if ($request->ajax()) {
+            if (isset($request->mis_transaction_type)   && !empty($request->mis_transaction_type)) {
+                $query->whereIn('mis_transaction_type', $request->mis_transaction_type);
+            }
         }
         if (isset($request->follow_ups)   && !empty($request->follow_ups)) {
 
             $query->where('follow_up', $request->follow_ups);
         }
+
         if (isset($request->is_paid)   && !empty($request->is_paid)) {
 
             if ($request->is_paid == 1) {
@@ -111,8 +119,10 @@ class NewPolicyController extends Controller
         }
 
 
-        if (isset($request->users)   && !empty($request->users)) {
-            $query->whereIn('user_id', $request->users);
+        if ($request->ajax()) {
+            if (isset($request->users)   && !empty($request->users)) {
+                $query->whereIn('user_id', $request->users);
+            }
         }
         if (isset($request->company_id)   && !empty($request->company_id)) {
             $query->whereIn('company_id', $request->company_id);
