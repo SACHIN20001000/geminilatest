@@ -633,6 +633,7 @@
         end = expiry_to ?? $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
         $('select[name="company_id[]"], select[name="mis_transaction_type[]"], select[name="is_paid"], input[name="follow_ups"], select[name="users[]"], select[name="product[]"], select[name="renew_status_search"]')
             .on('change', function() {
+                requestPage=1;
                 updateDataTableFilters();
             });
 
