@@ -195,7 +195,7 @@ class NewPolicyController extends Controller
                     // Check if request id is not 2, then show the action buttons
                     if (request()->id != 2) {
                         $action .= '<span class="action-buttons ml-3">';
-                        $action .= '<a href="' . route("policy.edit", $row) . '" class="btn btn-sm btn-info btn-b" data-toggle="tooltip" data-placement="top" title="Edit Policy"><i class="las la-pen"></i></a>';
+                        $action .= '<a href="' . route("policy.edit", $row) . '" class="btn btn-sm btn-info btn-b" data-toggle="tooltip" data-placement="top" title="Edit Policy" target="_blank"><i class="las la-pen"></i></a>';
 
                         $action .= '<a href="' . route("policy.destroy", $row) . '"
                                         class="btn btn-sm btn-danger remove_us"
