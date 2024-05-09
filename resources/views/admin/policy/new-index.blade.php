@@ -840,7 +840,7 @@
             }
 
                 // Get the current URL and append the new query string
-            const originalUrl = 'http://localhost:8001/admin/new-policy?id=1';
+            const originalUrl = window.location.href;
             const originalParams = new URLSearchParams(originalUrl.split('?')[1]); // Extract original query parameters
             
             originalParams.forEach((value, key) => {
