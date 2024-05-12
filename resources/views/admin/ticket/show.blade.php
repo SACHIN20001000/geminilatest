@@ -36,9 +36,20 @@
 
                         <div class="row mg-t-20">
 
-                            <div class="col-md">
+                            <div class="col-lg-6">
+
                                 <label class="tx-gray-600">Ticket Information</label>
                                 <p class="invoice-info-row"><span>Policy Number</span> <span>{{$ticket->policy->policy_no ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span>Reference name</span> <span>{{$ticket->policy->users->name ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span>Company</span> <span>{{$ticket->policy->company->name ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span>Holder name</span> <span>{{$ticket->policy->holder_name ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span>Email</span> <span>{{$ticket->policy->email ?? ''}}</span></p>
+                                
+                            </div>
+                            <div class="col-lg-6">
+
+                            <label class="tx-gray-600"></label>
+
                                 <p class="invoice-info-row"><span>Status</span> <span style="font-size: large;">{{$ticket->status ?? ''}}</span></p>
                                 <p class="invoice-info-row"><span>Current Value</span> <span>{{$ticket->current_value ?? ''}}</span></p>
                                 <p class="invoice-info-row"><span>New Value:</span> <span>{{$ticket->new_value ??''}}</span></p>

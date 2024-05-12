@@ -24,8 +24,7 @@ class TicketSystemController extends Controller
             $query = TicketSystem::with('user', 'policy');
 
 
-            $data = $query->orderby('id', 'DESC')->get();
-
+            $data = $query->orderby('id', 'desc')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -124,6 +123,7 @@ class TicketSystemController extends Controller
      */
     public function show(TicketSystem $ticket)
     {
+      
         return view('admin.ticket.show', compact('ticket'));
     }
 

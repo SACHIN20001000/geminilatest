@@ -86,7 +86,7 @@
               
             },
             dom: 'Blfrtip',
-
+            order: [[5, 'desc']],
             columns: [
                 {
                     data: 'policy.policy_no',

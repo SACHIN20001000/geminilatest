@@ -171,9 +171,7 @@
             <div class="pe-1 mb-xl-0">
                 <button type="button" class="btn btn-danger duplicate-record">Duplicate</button>
             </div>
-            <div class="pe-1 mb-xl-0">
-                <button type="button" class="btn btn-success export-record">Export</button>
-            </div>
+
             @if (isset($_GET['id']) && $_GET['id'] == 2)
             <div class="pe-1 mb-xl-0">
 
@@ -333,6 +331,60 @@
                                         <th>Policy No</th>
                                         @endif
                                         <th>Action</th>
+                                        <th>Channel</th>
+                                        <th>Start Date</th>
+                                        <th>Expiry Date</th>
+                                        <th>Reg No</th>
+                                        <th>Sum Insured</th>
+                                        <th>OD Premium</th>
+                                        <th>Add On Premium</th>
+                                        <th>TP Premium</th>
+                                        <th>Others</th>
+                                        <th>Net Premium</th>
+                                        <th>GST</th>
+                                        <th>Gross Premium</th>
+                                        <th> PREMIUM RECEIVED </th>
+                                        <th> PREMIUM IN A/C
+                                        </th>
+                                        <th> PAYMENT METHOD
+                                        </th>
+                                        <th> PREMIUM SHORT
+                                        </th>
+                                        <th> PREMIUM DEPOSITED
+                                        </th>
+                                        <th> TO A/C
+                                        </th>
+                                        <th> PAYMENT METHOD
+                                        </th>
+                                        <th> PAYMENT SOURCE
+                                        </th>
+                                        <th> PAYOUT COMMISSION BASE
+                                        </th>
+                                        <th> PAYOUT Base amount
+                                        </th>
+                                        <th> PAYOUT PERCENTAGE </th>
+                                        <th> PAYOUT AMOUNT
+                                        </th>
+                                        <th> PAYOUT PAYOUT SETTLED
+                                        </th>
+                                        <th> PAYOUT INVOICE </th>
+                                        <th> PAYOUT MONTH SETTLED
+                                        </th>
+                                        <th> PAYOUT RECOVERY </th>
+                                       
+                                 
+                                        <th> INTERNAL PAYOUT PERCENTAGE</th>
+                                        <th> INTERNAL PAYOUT Payout expected
+                                        </th>
+                                        <th> INTERNAL PAYOUT Payout received
+                                        </th>
+                                        <th> INTERNAL PAYOUT PERCENTAGE</th>
+                                        <th> INTERNAL PAYOUT Commission</th>
+                                        <th> INTERNAL PAYOUT Payout Saved
+                                        </th>
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -516,11 +568,11 @@
                     'This Month': [moment().startOf('month'), moment().endOf('month')],
                     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
                         'month').endOf('month')],
-                    'Financial Year': [moment().subtract(1, 'years').startOf('year').add(3, 'months'),
-                        moment().subtract(1, 'years').endOf('year').add(3, 'months').endOf('month')
+                    'Financial Year': [moment().subtract(0, 'years').startOf('year').add(3, 'months'),
+                        moment().subtract(0, 'years').endOf('year').add(3, 'months').endOf('month')
                     ],
-                    'Last Financial Year': [moment().subtract(2, 'years').startOf('year').add(3, 'months'),
-                        moment().subtract(2, 'years').endOf('year').add(3, 'months').endOf('month')
+                    'Last Financial Year': [moment().subtract(1, 'years').startOf('year').add(3, 'months'),
+                        moment().subtract(1, 'years').endOf('year').add(3, 'months').endOf('month')
                     ]
 
                 },
@@ -547,81 +599,81 @@
             }
         });
 
-    let urlParams = new URLSearchParams(window.location.search);
-    
-    // Get the value of 'id' parameter and set it in the variable
-    let id = @json(request('id', ''));
-    
-    // Get the values of other parameters and set them in the respective fields
-    let product = urlParams.get('product');
-    
-    if(product && product != 'undefined') {
-        let productValues = product.split(',');
-        // Set the values in the Select2 picker
-        $('select[name="product[]"]').val(productValues);
-        // Trigger the change event to update the Select2 picker
-        $('select[name="product[]"]').trigger('change');
-    }
+        let urlParams = new URLSearchParams(window.location.search);
 
-    let users = urlParams.get('users');
-    if(users && users != 'undefined') {
-        let usersValues = users.split(',');
-        // Set the values in the Select2 picker
-        $('select[name="users[]"]').val(users);
-        // Trigger the change event to update the Select2 picker
-        $('select[name="users[]"]').trigger('change');
-    }
+        // Get the value of 'id' parameter and set it in the variable
+        let id = @json(request('id', ''));
 
-    let follow_ups = urlParams.get('follow_ups');
-    
-    if(follow_ups && follow_ups != 'undefined') {
-        $('input[name="follow_ups"]').val(follow_ups);
-    }
+        // Get the values of other parameters and set them in the respective fields
+        let product = urlParams.get('product');
 
-    let is_paid = urlParams.get('is_paid');
-     if(is_paid && is_paid != 'undefined') {
-        $('select[name="is_paid"]').val(is_paid);
-    }
+        if (product && product != 'undefined') {
+            let productValues = product.split(',');
+            // Set the values in the Select2 picker
+            $('select[name="product[]"]').val(productValues);
+            // Trigger the change event to update the Select2 picker
+            $('select[name="product[]"]').trigger('change');
+        }
 
-    let mis_transaction_type = urlParams.get('mis_transaction_type');
-     if(mis_transaction_type && mis_transaction_type != 'undefined') {
-        let misValues = mis_transaction_type.split(',');
-        // Set the values in the Select2 picker
-        $('select[name="mis_transaction_type[]"]').val(misValues);
-        // Trigger the change event to update the Select2 picker
-        $('select[name="mis_transaction_type[]"]').trigger('change');
-    }
+        let users = urlParams.get('users');
+        if (users && users != 'undefined') {
+            let usersValues = users.split(',');
+            // Set the values in the Select2 picker
+            $('select[name="users[]"]').val(users);
+            // Trigger the change event to update the Select2 picker
+            $('select[name="users[]"]').trigger('change');
+        }
 
-    let company_id = urlParams.get('company_id');
-     if(company_id && company_id != 'undefined') {
-        $('select[name="company_id[]"]').val(company_id);
-    }
-    
-    let requestPage = urlParams.get('page');
+        let follow_ups = urlParams.get('follow_ups');
 
-    let renew_status_search = urlParams.get('renew_status_search');
-    if(renew_status_search && renew_status_search != 'undefined') {
-        let renew_statusValues = renew_status_search.split(',');
-        // Set the values in the Select2 picker
-        $('select[name="renew_status_search[]"]').val(renew_statusValues);
-        // Trigger the change event to update the Select2 picker
-        $('select[name="renew_status_search[]"]').trigger('change');
-    }
+        if (follow_ups && follow_ups != 'undefined') {
+            $('input[name="follow_ups"]').val(follow_ups);
+        }
 
-    // // Get the start and end date parameters
-    let expiry_from = urlParams.get('expiry_from');
-    let expiry_to = urlParams.get('expiry_to');
+        let is_paid = urlParams.get('is_paid');
+        if (is_paid && is_paid != 'undefined') {
+            $('select[name="is_paid"]').val(is_paid);
+        }
 
-    if(expiry_from && expiry_to ) {
-        // Set the start and end dates in the date range picker
-        $('#daterange-btn').data('daterangepicker').setStartDate(expiry_from);
-        $('#daterange-btn').data('daterangepicker').setEndDate(expiry_to);
-    }
+        let mis_transaction_type = urlParams.get('mis_transaction_type');
+        if (mis_transaction_type && mis_transaction_type != 'undefined') {
+            let misValues = mis_transaction_type.split(',');
+            // Set the values in the Select2 picker
+            $('select[name="mis_transaction_type[]"]').val(misValues);
+            // Trigger the change event to update the Select2 picker
+            $('select[name="mis_transaction_type[]"]').trigger('change');
+        }
 
-     let  tableLength = urlParams.get('length') ?? 10;
+        let company_id = urlParams.get('company_id');
+        if (company_id && company_id != 'undefined') {
+            $('select[name="company_id[]"]').val(company_id);
+        }
+
+        let requestPage = urlParams.get('page');
+
+        let renew_status_search = urlParams.get('renew_status_search');
+        if (renew_status_search && renew_status_search != 'undefined') {
+            let renew_statusValues = renew_status_search.split(',');
+            // Set the values in the Select2 picker
+            $('select[name="renew_status_search[]"]').val(renew_statusValues);
+            // Trigger the change event to update the Select2 picker
+            $('select[name="renew_status_search[]"]').trigger('change');
+        }
+
+        // // Get the start and end date parameters
+        let expiry_from = urlParams.get('expiry_from');
+        let expiry_to = urlParams.get('expiry_to');
+
+        if (expiry_from && expiry_to) {
+            // Set the start and end dates in the date range picker
+            $('#daterange-btn').data('daterangepicker').setStartDate(expiry_from);
+            $('#daterange-btn').data('daterangepicker').setEndDate(expiry_to);
+        }
+
+        let tableLength = urlParams.get('length') ?? 10;
 
         let duplicate = @json(request('duplicate', ''));
-        
+
         product = $('select[name="product[]"]').val();
         users = $('select[name="users[]"]').val();
         follow_ups = $('input[name="follow_ups"]').val();
@@ -633,11 +685,11 @@
         end = expiry_to ?? $('#daterange-btn').data('daterangepicker').endDate.format('YYYY-MM-DD');
         $('select[name="company_id[]"], select[name="mis_transaction_type[]"], select[name="is_paid"], input[name="follow_ups"], select[name="users[]"], select[name="product[]"], select[name="renew_status_search"]')
             .on('change', function() {
-                requestPage=1;
+                requestPage = 1;
                 updateDataTableFilters();
             });
 
-       
+
         var tableConfig = {
             processing: true,
             serverSide: true,
@@ -655,7 +707,7 @@
                     d.company_id = company_id;
                     d.renew_status_search = renew_status_search;
                     d.expiry_from = start;
-                    d.expiry_to = end;   
+                    d.expiry_to = end;
                     // d.length = tableLength ?? 10;   
                 }
             },
@@ -665,14 +717,33 @@
                 var recordsDisplayed = pageInfo.end - pageInfo.start;
                 var totalPages = pageInfo.pages;
                 var currentPage = pageInfo.page + 1; // Add 1 to make it 1-based index
-                if (pageInfo.end - pageInfo.start < tableLength && (currentPage != totalPages && pageInfo.recordsDisplay == pageInfo.end )) {
+                if (pageInfo.end - pageInfo.start < tableLength && (currentPage != totalPages && pageInfo.recordsDisplay == pageInfo.end)) {
                     requestPage = 0
                     updateDataTableFilters(false);
                 }
             },
             pageLength: tableLength ?? 10,
-            displayStart: typeof requestPage != 'undefined' && requestPage ?( requestPage*tableLength-tableLength) : 0,
+            displayStart: typeof requestPage != 'undefined' && requestPage ? (requestPage * tableLength - tableLength) : 0,
             dom: 'Blfrtip',
+            buttons: [{
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: ':not(.no-export)'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':not(.no-export)'
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':not(.no-export)'
+                    }
+                }
+            ],
             lengthMenu: [
                 [10, 25, 50, 100, 200, -1],
                 ['10 rows', '25 rows', '50 rows', '100 rows', '200 rows', 'Show all']
@@ -764,15 +835,176 @@
                     name: 'action',
                     orderable: false,
                     searchable: false,
-                    className: 'no-click'
+                    className: 'no-click no-export'
 
+                }, {
+                    data: 'channel_name',
+                    name: 'channel_name',
+                    visible: false
+                }, {
+                    data: 'start_date',
+                    name: 'start_date',
+                    visible: false
+                }, {
+                    data: 'expiry_date',
+                    name: 'expiry_date',
+                    visible: false
+                }, {
+                    data: 'reg_no',
+                    name: 'reg_no',
+                    visible: false
+                }, {
+                    data: 'sum_insured',
+                    name: 'sum_insured',
+                    visible: false
+                }, {
+                    data: 'od_premium',
+                    name: 'od_premium',
+                    visible: false
+                }, {
+                    data: 'add_on_premium',
+                    name: 'add_on_premium',
+                    visible: false
+                }, {
+                    data: 'tp_premium',
+                    name: 'tp_premium',
+                    visible: false
+                }, {
+                    data: 'others',
+                    name: 'others',
+                    visible: false
+                },
+                {
+                    data: 'net_premium',
+                    name: 'net_premium',
+                    visible: false
+                },
+                {
+                    data: 'gst',
+                    name: 'gst',
+                    visible: false
+                },
+                {
+                    data: 'gross_premium',
+                    name: 'gross_premium',
+                    visible: false
+                },
+                {
+                    data: 'mis_amount_paid',
+                    name: 'mis_amount_paid',
+                    visible: false
+                },
+                {
+                    data: 'mis_received_bank_detail',
+                    name: 'mis_received_bank_detail',
+                    visible: false
+                },
+                {
+                    data: 'mis_payment_method',
+                    name: 'mis_payment_method',
+                    visible: false
+                },
+                {
+                    data: 'mis_short_premium',
+                    name: 'mis_short_premium',
+                    visible: false
+                },
+                {
+                    data: 'mis_premium_deposit',
+                    name: 'mis_premium_deposit',
+                    visible: false
+                },
+                {
+                    data: 'mis_deposit_bank_detail',
+                    name: 'mis_deposit_bank_detail',
+                    visible: false
+                },
+                {
+                    data: 'mis_deposit_payment_method',
+                    name: 'mis_deposit_payment_method',
+                    visible: false
+                },
+                {
+                    data: 'premium_payment_source',
+                    name: 'premium_payment_source',
+                    visible: false
+                },
+                {
+                    data: 'commission_base',
+                    name: 'commission_base',
+                    visible: false
+                },
+                {
+                    data: 'mis_commissionable_amount',
+                    name: 'mis_commissionable_amount',
+                    visible: false
+                },
+                {
+                    data: 'mis_percentage',
+                    name: 'mis_percentage',
+                    visible: false
+                },
+                {
+                    data: 'mis_commission',
+                    name: 'mis_commission',
+                    visible: false
+                },
+                {
+                    data: 'payout_settled',
+                    name: 'payout_settled',
+                    visible: false
+                },
+                {
+                    data: 'mis_invoice',
+                    name: 'mis_invoice',
+                    visible: false
+                },
+                {
+                    data: 'month_settled',
+                    name: 'month_settled',
+                    visible: false
+                },
+                {
+                    data: 'payout_recovery',
+                    name: 'payout_recovery',
+                    visible: false
+                },
+               
+              
+                {
+                    data: 'internal_percentage',
+                    name: 'internal_percentage',
+                    visible: false
+                },
+                {
+                    data: 'internal_payout_expected',
+                    name: 'internal_payout_expected',
+                    visible: false
+                },
+                {
+                    data: 'internal_payout_received',
+                    name: 'internal_payout_received',
+                    visible: false
+                },
+                {
+                    data: 'internal_payout_percentage',
+                    name: 'internal_payout_percentage',
+                    visible: false
+                }, {
+                    data: 'internal_commission',
+                    name: 'internal_commission',
+                    visible: false
+                }, {
+                    data: 'internal_payout_saved',
+                    name: 'internal_payout_saved',
+                    visible: false
                 }
             ],
             rowCallback: function(row, data) {
-                $(row).find('td:not(.no-click)').on('click', function() {
-                    window.location.href = "{{ route('policy.show', '') }}" + '/' + data.id;
+                $(row).find('td:not(.no-click)').each(function() {
+                    var policyLink = "{{ route('policy.show', '') }}/" + data.id;
+                    $(this).html('<a href="' + policyLink + '" target="_blank">' + $(this).html() + '</a>');
                 });
-
             }
         };
 
@@ -782,10 +1014,10 @@
         table.on('length.dt', function(e, settings, len) {
             tableLength = len
             requestPage = table.page.info().page;
-           updateDataTableFilters(false);
+            updateDataTableFilters(false);
         });
 
-         function updateDataTableFilters(drawTable = true) {
+        function updateDataTableFilters(drawTable = true) {
             company_id = $('select[name="company_id[]"]').val();
             mis_transaction_type = $('select[name="mis_transaction_type[]"]').val();
             is_paid = $('select[name="is_paid"]').val();
@@ -798,32 +1030,32 @@
 
             // Construct the query string with the parameters
             const queryParams = new URLSearchParams();
-            if(company_id && company_id.length) {
+            if (company_id && company_id.length) {
                 queryParams.set('company_id', company_id);
             }
-            if(mis_transaction_type && mis_transaction_type.length) {
+            if (mis_transaction_type && mis_transaction_type.length) {
                 queryParams.set('mis_transaction_type', mis_transaction_type);
             }
 
-            if(is_paid) {
+            if (is_paid) {
                 queryParams.set('is_paid', is_paid);
             }
-            
-            if(follow_ups && follow_ups != 'undefined') {
+
+            if (follow_ups && follow_ups != 'undefined') {
                 queryParams.set('follow_ups', follow_ups);
             }
-            if(users && users.length) {
+            if (users && users.length) {
                 queryParams.set('users', users);
             }
-            if(product && product.length) {
+            if (product && product.length) {
                 queryParams.set('product', product);
             }
-           
-            if(renew_status_search && renew_status_search != 'renew_status_search') {
+
+            if (renew_status_search && renew_status_search != 'renew_status_search') {
                 queryParams.set('renew_status_search', renew_status_search);
             }
-            
-            if(start != 'Invalid date' && end != 'Invalid date') {
+
+            if (start != 'Invalid date' && end != 'Invalid date') {
                 queryParams.set('expiry_from', start);
                 queryParams.set('expiry_to', end);
             }
@@ -831,18 +1063,18 @@
             // var currentPage = table.page();
             var searchValue = table.search();
 
-            if(requestPage && requestPage != 'undefined') {
+            if (requestPage && requestPage != 'undefined') {
                 queryParams.set("page", requestPage);
             }
-            
-            if(tableLength && tableLength != 'undefined') {
+
+            if (tableLength && tableLength != 'undefined') {
                 queryParams.set("length", tableLength);
             }
 
-                // Get the current URL and append the new query string
+            // Get the current URL and append the new query string
             const originalUrl = window.location.href;
             const originalParams = new URLSearchParams(originalUrl.split('?')[1]); // Extract original query parameters
-            
+
             originalParams.forEach((value, key) => {
                 queryParams.append(key, value); // Append original parameters to the new query parameters
             });
@@ -851,15 +1083,17 @@
             const updatedUrl = `${originalUrl.split('?')[0]}?${queryParams.toString()}`;
 
             // Update the browser's address bar
-            window.history.pushState({ path: updatedUrl }, '', updatedUrl);
-            if(drawTable) {
+            window.history.pushState({
+                path: updatedUrl
+            }, '', updatedUrl);
+            if (drawTable) {
                 table.draw();
             }
         }
 
-        $('#datatable').on('page.dt', function () {
-           requestPage = table.page.info().page + 1
-           updateDataTableFilters(false);
+        $('#datatable').on('page.dt', function() {
+            requestPage = table.page.info().page + 1
+            updateDataTableFilters(false);
         });
 
         $(document).on('change', '#checkedAll', function() {
