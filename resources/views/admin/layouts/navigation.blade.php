@@ -182,8 +182,8 @@
                     <span class="side-menu__label">Policy (<?php echo new_policy() ?>)</span> <i class="angle fe fe-chevron-down"></i></a>
 
                 <ul class="slide-menu">
-                    <!-- <li><a class="slide-item" href="{{ route('policy.index',['id'=> 1]) }}">Policy</a></li> -->
-                    <li><a class="slide-item" href="{{ route('new-policy.index',['id'=> 1]) }}">Policy</a></li>
+                    <li><a class="slide-item" href="{{ route('policy.index',['id'=> 1]) }}">Policy</a></li>
+                    <li><a class="slide-item" href="{{ route('new-policy.index',['id'=> 1]) }}">New Policy</a></li>
                     <li><a class="slide-item" href="{{ route('policyView') }}">Import</a></li>
                 </ul>
 

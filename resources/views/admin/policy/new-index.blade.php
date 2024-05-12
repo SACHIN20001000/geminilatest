@@ -695,7 +695,6 @@
             serverSide: true,
             ajax: {
                 url: "{{ route('new-policy.index') }}",
-                cache: false,
                 data: function(d) {
                     d.duplicate = duplicate;
                     d.id = id;
