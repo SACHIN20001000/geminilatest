@@ -97,7 +97,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('model', MakeController::class);
         Route::resource('leads', LeadController::class);
         Route::resource('policy', PolicyController::class);
-        Route::resource('new-policy', NewPolicyController::class);
+        // Route::resource('new-policy', NewPolicyController::class);
         Route::resource('report', ReportController::class);
         Route::resource('channel', ChannelController::class);
         Route::resource('payout', PayoutController::class);
@@ -109,6 +109,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('remainder', RemainderController::class);
         Route::resource('reconciliation', ReconciliationController::class);
         Route::resource('ticket', TicketSystemController::class);
+        Route::any('new-policy', [NewPolicyController::class, 'index'])->name('new-policy.index');
         Route::any('exportPolicies', [NewPolicyController::class, 'exportPolicies'])->name('exportPolicies');
         Route::any('reconciliation-update', [ReconciliationController::class, 'reconciliationUpdate'])->name('reconciliation-update');
         Route::any('reconciliation-upload', [ReconciliationController::class, 'upload'])->name('reconciliation.upload');
