@@ -26,6 +26,13 @@ class PolicyRequest extends FormRequest
         return [
             'policy_no' => 'policy_no|unique:policies',
             'policy_no_normal' => 'policy_no|unique:policies',
+            'holder_name' => 'required',
+            'channel_name' => 'required',
+            'mis_amount_paid' => 'required',
+            'mis_premium_deposit' => 'required',
+            'commission_base' => 'required',
+            'mis_percentage' => 'required',
+            'internal_percentage' => 'required',
         ];
     }
 }

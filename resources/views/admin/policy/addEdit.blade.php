@@ -1943,9 +1943,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-@if(!isset($policy))
 {!! JsValidator::formRequest('App\Http\Requests\Admin\Policy\PolicyRequest','#user-add-edit') !!}
-@endif
+
 <script>
     $(document).ready(function() {
         $('.delete-attachment').on('click', function() {
