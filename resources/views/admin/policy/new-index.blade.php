@@ -101,8 +101,66 @@
             transform: rotate(360deg);
         }
     }
+    /* New CSS */
+    span.select2-selection.select2-selection--multiple, .select2-container--default .select2-selection--single {
+    height: 32px;
+    min-height: 32px;
+}
+    div.dt-buttons {
+        float: right !important;
+    }
+    .main-content-label.mg-b-5 {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 28px;
+        margin-bottom: 16px;
+    }
+    .text-sm {
+        font-size: 12px; /* 12px */
+        line-height: 16px; /* 16px */
+    }
+    .dataTables_filter label {
+        border: 1px solid #f1f1f1;
+        background: #f9f9f9;
+        border-radius: 8px;
+        padding: 0px 0px 0 10px;
+    }
 
+    .dataTables_filter label input[type="search"] {
+        border: 0;
+    }
+    .dataTables_filter label input[type="search"]:focus {
+        outline: unset;
+    }
+    .dataTables_wrapper .dataTables_filter {
+        float: left !important;
+    }
+    div#datatable_length {
+    bottom: 0;
+    position: absolute;
+    }
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #fff;
+    }  
+    div#datatable_info {
+        float: right;
+    }
 
+    div#datatable_paginate {
+        display: flex;
+        float: unset;
+        justify-content: center;
+        transform: translateY(-8px);
+    }
+    table#datatable {
+    display: block;
+    width: 100% !important;
+    overflow: scroll !important;
+}
+.table-responsive.userlist-table {
+    overflow: hidden !important;
+    width: 100%;
+}
     @media (max-width: 1650px) {
         td {
             font-size: 12px !important;
@@ -110,7 +168,12 @@
         }
 
         .userlist-table .table th {
-            padding: 0 9px !important;
+            padding: 10px 16px !important;
+            white-space: nowrap;
+        }
+        .userlist-table .table td {
+            padding: 12px 16px !important;
+            white-space: nowrap;
         }
 
         .userlist-table .table {
@@ -140,7 +203,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="  content-title mb-0 my-auto pe-4">Policy </h4>
+                <h4 class="content-title mb-0 my-auto pe-4">Policy </h4>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
                         <a href="{{ route('new-policy.index', ['id' => 1]) }}" class=" @if (isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto">MIS
@@ -156,30 +219,29 @@
 
             </div>
         </div>
-        <div class="d-flex my-xl-auto right-content">
-            <div class="pe-1 mb-xl-0 card">
-
-                <div id="reportrange"><span></span></div>
-                <button type="button" style="display: flex; gap: 8px;" class="btn btn-default float-right" id="daterange-btn">
+        <div class="d-flex gap-2 my-xl-auto right-content">
+            <div class="mb-xl-0 card p-2">
+                <button type="button" class="bg-white btn btn-default float-right d-flex align-items-center gap-2 p-0" id="daterange-btn">
                     <i class="far fa-calendar-alt"></i>
                     <div class="staticDays">This Month</div>
                     <div id="dynamicDate"></div>
                     <i class="fas fa-caret-down"></i>
                 </button>
+                <div id="reportrange"><span></span></div>
             </div>
 
-            <div class="pe-1 mb-xl-0">
+            <div class="mb-xl-0">
                 <button type="button" class="btn btn-danger duplicate-record">Duplicate</button>
             </div>
 
             @if (isset($_GET['id']) && $_GET['id'] == 2)
-            <div class="pe-1 mb-xl-0">
+            <div class="mb-xl-0">
 
                 <a class="btn btn-main-primary renew-btn " style="color:#fff">Bulk email</a>
 
             </div>
             @else
-            <div class="pe-1 mb-xl-0">
+            <div class="mb-xl-0">
 
                 <a class="btn btn-main-primary bulk-delete " style="color:#fff">Delete</a>
 
@@ -200,21 +262,17 @@
 
                                                                                 </div>
                                                                              -->
-    <div class="row row-sm">
+    <div class="row row-sm gx-0">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
-
-
-
-            <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="main-content-label mg-b-5">
                             Listing of All Policy...
                         </div>
                         <!-- filter start  -->
-                        <div class="row row-sm">
+                        <div class="row row-sm mb-4">
                             <div class="col-lg">
-                                <p class="mg-b-10">Product</p>
+                                <p class="mb-2 text-sm fw-bold">Product</p>
 
                                 <select name="product[]" multiple="multiple" class="form-control select-2">
                                     @if (isset($products) && $products->count())
@@ -227,7 +285,7 @@
                                 </select>
                             </div>
                             <div class="col-lg">
-                                <p class="mg-b-10">User</p>
+                                <p class="mb-2 text-sm fw-bold">User</p>
 
                                 <select name="users[]" multiple="multiple" class="form-control select-2">
                                     @if (isset($users) && $users->count())
@@ -241,11 +299,11 @@
                             </div>
                             <div class="col-lg">
                                 @if (isset($_GET['id']) && $_GET['id'] == 2)
-                                <p class="mg-b-10">Followup</p>
+                                <p class="mb-2 text-sm fw-bold">Followup</p>
 
                                 <input type="date" name="follow_ups" id="" class="form-control" value="{{ isset($_GET['follow_ups']) ? $_GET['follow_ups'] : '' }}">
                                 @else
-                                <p class="mg-b-10">Payment Status</p>
+                                <p class="mb-2 text-sm fw-bold">Payment Status</p>
 
                                 <select name="is_paid" class="form-control select-2">
                                     <option value="">Select</option>
@@ -258,7 +316,7 @@
                                 @endif
                             </div>
                             <div class="col-lg">
-                                <p class="mg-b-10"> Transaction Type</p>
+                                <p class="mb-2 text-sm fw-bold"> Transaction Type</p>
                                 <select name="mis_transaction_type[]" multiple=" multiple" class="form-control select-2">
                                     <option value="">Select</option>
                                     <option value="Package" {{ isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('Package', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'Package') ? 'selected' : '' }}>
@@ -273,7 +331,7 @@
                             </div>
                             @if (isset($_GET['id']) && $_GET['id'] == 2)
                             <div class="col-lg">
-                                <p class="mg-b-10">Renew Status</p>
+                                <p class="mb-2 text-sm fw-bold">Renew Status</p>
                                 <select name="renew_status_search" class="form-control select-2">
                                     <option value="">Select</option>
                                     <option value="FOLLOW UP" {{ isset($_GET['renew_status_search']) && 'FOLLOW UP' == $_GET['renew_status_search'] ? 'selected' : '' }}>
@@ -289,7 +347,7 @@
                             @endif
 
                             <div class="col-lg">
-                                <p class="mg-b-10">Company</p>
+                                <p class="mb-2 text-sm fw-bold">Company</p>
                                 <select multiple=" multiple" name="company_id[]" class="form-control select-2">
                                     <option value="">Select Below</option>
                                     @if ($companies->count())
@@ -306,8 +364,8 @@
                         </div>
                         <!-- filter end  -->
 
-                        <div class="table-responsive border-top userlist-table">
-                            <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
+                        <div class="table-responsive border-top userlist-table pt-4">
+                            <table class="table card-table table-striped table-vcenter text-nowrap mb-0 pt-3" id="datatable">
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
@@ -382,9 +440,6 @@
                                         <th> INTERNAL PAYOUT Commission</th>
                                         <th> INTERNAL PAYOUT Payout Saved
                                         </th>
-
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -394,7 +449,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
         <!-- COL END -->
     </div>
@@ -758,31 +812,31 @@
                 @if(isset($_GET['id']) && $_GET['id'] == 1) {
                     data: 'created_at',
                     name: 'created_at',
-                    className: 'truncate-text'
+                    className: ''
                 },
                 @endif {
                     data: 'users.name',
                     name: 'users.name',
                     defaultContent: '',
-                    className: 'truncate-text'
+                    className: ''
                 },
                 {
                     data: 'holder_name',
                     name: 'holder_name',
                     defaultContent: '',
-                    className: 'truncate-text'
+                    className: ''
                 },
                 {
                     data: 'company.name',
                     name: 'company.name',
                     defaultContent: '',
-                    className: 'truncate-text'
+                    className: ''
                 },
                 {
                     data: 'mis_transaction_type',
                     name: 'mis_transaction_type',
                     defaultContent: '',
-                    className: 'truncate-text-small'
+                    className: '-small'
                 },
                 {
                     data: 'policy_no',
@@ -793,42 +847,42 @@
                     data: 'sub_product.name',
                     name: 'sub_product.name',
                     defaultContent: '',
-                    className: 'truncate-text-small'
+                    className: '-small'
                 },
                 {
                     data: 'is_paid',
                     name: 'is_paid',
                     defaultContent: '',
-                    className: 'truncate-text-small'
+                    className: '-small'
                 },
                 {
                     data: 'reg_no',
                     name: 'reg_no',
                     defaultContent: '',
-                    className: 'truncate-text'
+                    className: ''
                 },
                 @if(isset($_GET['id']) && $_GET['id'] == 2) {
                     data: 'expiry_date',
                     name: 'expiry_date',
                     defaultContent: '',
-                    className: 'truncate-text'
+                    className: ''
                 }, {
                     data: 'followDate',
                     name: 'followDate',
                     defaultContent: '',
-                    className: 'truncate-text no-click'
+                    className: ' no-click'
                 }, {
                     data: 'attachment',
                     name: 'attachment',
                     defaultContent: '',
-                    className: 'truncate-text-small no-click'
+                    className: '-small no-click'
                 },
                 @endif
                 @if(isset($_GET['duplicate']) && $_GET['duplicate'] == true) {
                     data: 'policy_no',
                     name: 'policy_no',
                     defaultContent: '',
-                    className: 'truncate-text'
+                    className: ''
                 },
                 @endif {
                     data: 'action',

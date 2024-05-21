@@ -11,9 +11,9 @@
 #datatable_wrapper thead .sorting_asc, #datatable_wrapper thead .sorting_desc {
     background-color: #fff;
 }
-#datatable {
+/* #datatable {
     width: auto !important;
-}
+} */
 .hidden{
     display: none;
 }
