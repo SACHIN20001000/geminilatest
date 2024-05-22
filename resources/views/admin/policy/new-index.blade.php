@@ -161,6 +161,58 @@
     overflow: hidden !important;
     width: 100%;
 }
+span.active-date {
+    background: #fff;
+    padding: 10px;
+    position: absolute;
+    /* bottom: 0; */
+    margin-top:14px;
+    z-index: 10;
+    border-radius: 6px;
+    box-shadow: -8px 12px 18px 0 #dadee8;
+}
+span.active-date:before {
+    content: "";
+    position: absolute;
+    bottom: 100%; /* Position the arrow at the top */
+    left: 10px; /* Center the arrow horizontally */
+    margin-left: -5px; /* Center the arrow based on its width */
+    border-width: 8px; /* Adjust the size of the arrow */
+    border-style: solid;
+    border-color: transparent transparent #fff transparent; /* Change #000 to your border color */
+}
+.dt-button.buttons-html5 {
+    background: #2a52be;
+    color: #fff;
+    border-color: #3451b7;
+    min-width: 60px;
+    border-radius: 6px;
+}
+.dt-button.buttons-html5:hover {
+    background: #1d3c92 !important;
+    color: #fff;
+    border-color: #1d3c92 !important;    
+}
+table.dataTable thead th, table.dataTable thead td {
+    font-size: 14px;
+    color: #242f48;
+}
+.userlist-table .table td a {
+    font-size: 14px;
+}
+button.btn, .btn-main-primary {
+    background: #2a52be;
+}
+
+div#datatable_paginate .paginate_button {
+    padding: 5px 10px;
+    border: 1px solid #f1f1f1;
+}.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #3653b8 !important;
+    color: #fff !important;
+}
+
+
     @media (max-width: 1650px) {
         td {
             font-size: 12px !important;
@@ -220,13 +272,15 @@
             </div>
         </div>
         <div class="d-flex gap-2 my-xl-auto right-content">
-            <div class="mb-xl-0 card p-2">
-                <button type="button" class="bg-white btn btn-default float-right d-flex align-items-center gap-2 p-0" id="daterange-btn">
-                    <i class="far fa-calendar-alt"></i>
-                    <div class="staticDays">This Month</div>
-                    <div id="dynamicDate"></div>
-                    <i class="fas fa-caret-down"></i>
-                </button>
+            <div class="">
+                <div class="mb-xl-0 card p-2">
+                    <button type="button" class="bg-white btn btn-default float-right d-flex align-items-center gap-2 p-0" id="daterange-btn">
+                        <i class="far fa-calendar-alt"></i>
+                        <div class="staticDays">This Month</div>
+                        <div id="dynamicDate"></div>
+                        <i class="fas fa-caret-down"></i>
+                    </button>
+                </div>
                 <div id="reportrange"><span></span></div>
             </div>
 
@@ -634,12 +688,13 @@
                 endDate: moment().endOf('month')
             },
             function(start, end, range) {
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format(
-                    'MMMM D, YYYY'))
-                $('#dynamicDate').html(range)
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            $('#reportrange span').addClass('active-date'); 
+            $('#dynamicDate').html(range);
                 $('.staticDays').hide();
             });
 
+            
 
         $('#daterange-btn').on('apply.daterangepicker', function(ev, picker) {
             var start = picker.startDate.format('YYYY-MM-DD');
