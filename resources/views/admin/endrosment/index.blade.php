@@ -7,7 +7,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">All Endrosment</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ list</span>
+                <h4 class="content-title mb-0 my-auto">All Endorsement</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ list</span>
             </div>
         </div>
     </div>
@@ -17,7 +17,7 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
                 <div class="card-header pb-0">
-                    <p class="tx-12 tx-gray-500 mb-2">Listing of All Endrosment...</p>
+                    <p class="tx-12 tx-gray-500 mb-2">Listing of All Endorsement...</p>
                 </div>
                 <div class="card-body">
 
@@ -29,7 +29,7 @@
                                                    
                                     <th class="wd-lg-20p">Policy Holder Name</th>               
                                     <th class="wd-lg-20p">Policy Number</th>               
-                                    <th class="wd-lg-20p">Endrosment Type</th>      
+                                    <th class="wd-lg-20p">Endorsement Type</th>      
                                     <th class="wd-lg-20p">Created By</th>            
                                     <th class="wd-lg-20p"><span>Created</span></th>
                                     <th class="wd-lg-20p">Action</th>

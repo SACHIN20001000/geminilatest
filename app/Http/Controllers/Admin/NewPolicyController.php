@@ -41,7 +41,7 @@ class NewPolicyController extends Controller
 
         $products = SubProduct::all();
         $users = User::all();
-        $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns', 'company', 'attachments')->where(['is_policy' => 1]);
+        $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns', 'company', 'attachments','makes','models','varriants')->where(['is_policy' => 1]);
         if (isset($request->search_anything)   && !empty($request->search_anything)) {
             // $query->orwhereHas('lead', function ($q) use ($request) {
 

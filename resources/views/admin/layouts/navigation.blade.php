@@ -184,8 +184,21 @@
                 <ul class="slide-menu">
                     <!-- <li><a class="slide-item" href="{{ route('policy.index',['id'=> 1]) }}">Policy</a></li> -->
                     <li><a class="slide-item" href="{{ route('new-policy.index',['id'=> 1]) }}">Policy</a></li>
+                    
+
                     <li><a class="slide-item" href="{{ route('policyView') }}">Import</a></li>
                 </ul>
+
+            </li>
+            <li class="slide">
+                <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('new-policy.index',['id'=> 2]) }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g transform="translate(24 0) scale(-1 1)">
+                            <path fill="currentColor" d="M12 21.9q-.175 0-.325-.025t-.3-.075Q8 20.675 6 17.638T4 11.1V6.375q0-.625.363-1.125t.937-.725l6-2.25q.35-.125.7-.125t.7.125l6 2.25q.575.225.938.725T20 6.375V11.1q0 1.575-.413 3.063T18.4 17l-2.95-2.95q.275-.475.413-.988T16 12q0-1.65-1.175-2.825T12 8q-1.65 0-2.825 1.175T8 12q0 1.65 1.175 2.825T12 16q.525 0 1.038-.138T14 15.45l3.225 3.2q-.95 1.125-2.087 1.913T12.625 21.8q-.15.05-.3.075T12 21.9Zm0-7.9q-.825 0-1.413-.587T10 12q0-.825.588-1.413T12 10q.825 0 1.413.588T14 12q0 .825-.588 1.413T12 14Z" />
+                        </g>
+                    </svg>
+                    <span class="side-menu__label">Renewals</span></a>
+
 
             </li>
             <li class="slide">
@@ -198,7 +211,7 @@
                             </g>
                         </g>
                     </svg>
-                    <span class="side-menu__label">Endrosment</span></a>
+                    <span class="side-menu__label">Endorsement</span></a>
 
 
             </li>
@@ -277,7 +290,7 @@
 
 
             </li>
-
+<!-- 
             <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('income.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
@@ -292,7 +305,7 @@
                     <span class="side-menu__label">Reconciliation</span></a>
 
 
-            </li>
+            </li> -->
             <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('reconciliation.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
@@ -304,7 +317,7 @@
                             </g>
                         </g>
                     </svg>
-                    <span class="side-menu__label">New Reconciliation</span></a>
+                    <span class="side-menu__label">Reconciliation</span></a>
 
 
             </li>

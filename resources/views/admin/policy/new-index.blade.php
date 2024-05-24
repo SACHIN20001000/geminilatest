@@ -101,24 +101,32 @@
             transform: rotate(360deg);
         }
     }
+
     /* New CSS */
-    span.select2-selection.select2-selection--multiple, .select2-container--default .select2-selection--single {
-    height: 32px;
-    min-height: 32px;
-}
+    span.select2-selection.select2-selection--multiple,
+    .select2-container--default .select2-selection--single {
+        height: 32px;
+        min-height: 32px;
+    }
+
     div.dt-buttons {
         float: right !important;
     }
+
     .main-content-label.mg-b-5 {
         font-size: 20px;
         font-weight: 700;
         line-height: 28px;
         margin-bottom: 16px;
     }
+
     .text-sm {
-        font-size: 12px; /* 12px */
-        line-height: 16px; /* 16px */
+        font-size: 12px;
+        /* 12px */
+        line-height: 16px;
+        /* 16px */
     }
+
     .dataTables_filter label {
         border: 1px solid #f1f1f1;
         background: #f9f9f9;
@@ -129,19 +137,24 @@
     .dataTables_filter label input[type="search"] {
         border: 0;
     }
+
     .dataTables_filter label input[type="search"]:focus {
         outline: unset;
     }
+
     .dataTables_wrapper .dataTables_filter {
         float: left !important;
     }
+
     div#datatable_length {
-    bottom: 0;
-    position: absolute;
+        bottom: 0;
+        position: absolute;
     }
+
     .table-striped tbody tr:nth-of-type(odd) {
         background-color: #fff;
-    }  
+    }
+
     div#datatable_info {
         float: right;
     }
@@ -152,65 +165,83 @@
         justify-content: center;
         transform: translateY(-8px);
     }
-    table#datatable {
-    display: block;
-    width: 100% !important;
-    overflow: scroll !important;
-}
-.table-responsive.userlist-table {
-    overflow: hidden !important;
-    width: 100%;
-}
-span.active-date {
-    background: #fff;
-    padding: 10px;
-    position: absolute;
-    /* bottom: 0; */
-    margin-top:14px;
-    z-index: 10;
-    border-radius: 6px;
-    box-shadow: -8px 12px 18px 0 #dadee8;
-}
-span.active-date:before {
-    content: "";
-    position: absolute;
-    bottom: 100%; /* Position the arrow at the top */
-    left: 10px; /* Center the arrow horizontally */
-    margin-left: -5px; /* Center the arrow based on its width */
-    border-width: 8px; /* Adjust the size of the arrow */
-    border-style: solid;
-    border-color: transparent transparent #fff transparent; /* Change #000 to your border color */
-}
-.dt-button.buttons-html5 {
-    background: #2a52be;
-    color: #fff;
-    border-color: #3451b7;
-    min-width: 60px;
-    border-radius: 6px;
-}
-.dt-button.buttons-html5:hover {
-    background: #1d3c92 !important;
-    color: #fff;
-    border-color: #1d3c92 !important;    
-}
-table.dataTable thead th, table.dataTable thead td {
-    font-size: 14px;
-    color: #242f48;
-}
-.userlist-table .table td a {
-    font-size: 14px;
-}
-button.btn, .btn-main-primary {
-    background: #2a52be;
-}
 
-div#datatable_paginate .paginate_button {
-    padding: 5px 10px;
-    border: 1px solid #f1f1f1;
-}.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background: #3653b8 !important;
-    color: #fff !important;
-}
+    table#datatable {
+        display: block;
+        width: 100% !important;
+        overflow: scroll !important;
+    }
+
+    .table-responsive.userlist-table {
+        overflow: hidden !important;
+        width: 100%;
+    }
+
+    span.active-date {
+        background: #fff;
+        padding: 10px;
+        position: absolute;
+        /* bottom: 0; */
+        margin-top: 14px;
+        z-index: 10;
+        border-radius: 6px;
+        box-shadow: -8px 12px 18px 0 #dadee8;
+    }
+
+    span.active-date:before {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        /* Position the arrow at the top */
+        left: 10px;
+        /* Center the arrow horizontally */
+        margin-left: -5px;
+        /* Center the arrow based on its width */
+        border-width: 8px;
+        /* Adjust the size of the arrow */
+        border-style: solid;
+        border-color: transparent transparent #fff transparent;
+        /* Change #000 to your border color */
+    }
+
+    .dt-button.buttons-html5 {
+        background: #2a52be;
+        color: #fff;
+        border-color: #3451b7;
+        min-width: 60px;
+        border-radius: 6px;
+    }
+
+    .dt-button.buttons-html5:hover {
+        background: #1d3c92 !important;
+        color: #fff;
+        border-color: #1d3c92 !important;
+    }
+
+    table.dataTable thead th,
+    table.dataTable thead td {
+        font-size: 14px;
+        color: #242f48;
+    }
+
+    .userlist-table .table td a {
+        font-size: 14px;
+    }
+
+    button.btn,
+    .btn-main-primary {
+        background: #2a52be;
+    }
+
+    div#datatable_paginate .paginate_button {
+        padding: 5px 10px;
+        border: 1px solid #f1f1f1;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background: #3653b8 !important;
+        color: #fff !important;
+    }
 
 
     @media (max-width: 1650px) {
@@ -223,6 +254,7 @@ div#datatable_paginate .paginate_button {
             padding: 10px 16px !important;
             white-space: nowrap;
         }
+
         .userlist-table .table td {
             padding: 12px 16px !important;
             white-space: nowrap;
@@ -276,7 +308,7 @@ div#datatable_paginate .paginate_button {
                 <div class="mb-xl-0 card p-2">
                     <button type="button" class="bg-white btn btn-default float-right d-flex align-items-center gap-2 p-0" id="daterange-btn">
                         <i class="far fa-calendar-alt"></i>
-                        <div class="staticDays">This Month</div>
+                        <div class="staticDays">Financial Year</div>
                         <div id="dynamicDate"></div>
                         <i class="fas fa-caret-down"></i>
                     </button>
@@ -318,191 +350,196 @@ div#datatable_paginate .paginate_button {
                                                                              -->
     <div class="row row-sm gx-0">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="main-content-label mg-b-5">
-                            Listing of All Policy...
-                        </div>
-                        <!-- filter start  -->
-                        <div class="row row-sm mb-4">
-                            <div class="col-lg">
-                                <p class="mb-2 text-sm fw-bold">Product</p>
+            <div class="card">
+                <div class="card-body">
+                    <div class="main-content-label mg-b-5">
+                        Listing of All Policy...
+                    </div>
+                    <!-- filter start  -->
+                    <div class="row row-sm mb-4">
+                        <div class="col-lg">
+                            <p class="mb-2 text-sm fw-bold">Product</p>
 
-                                <select name="product[]" multiple="multiple" class="form-control select-2">
-                                    @if (isset($products) && $products->count())
-                                    @foreach ($products as $product)
-                                    <option value="{{ $product->id }}" {{ isset($_GET['product']) && is_array($_GET['product']) && in_array($product->id, $_GET['product']) ? 'selected' : '' }}>
-                                        {{ $product->name }}
-                                    </option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-lg">
-                                <p class="mb-2 text-sm fw-bold">User</p>
-
-                                <select name="users[]" multiple="multiple" class="form-control select-2">
-                                    @if (isset($users) && $users->count())
-                                    @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" {{ isset($_GET['users']) && (is_array($_GET['users']) ? in_array($user->id, $_GET['users']) : $_GET['users'] == $user->id) ? 'selected' : '' }}>
-                                        {{ $user->name }}
-                                    </option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-lg">
-                                @if (isset($_GET['id']) && $_GET['id'] == 2)
-                                <p class="mb-2 text-sm fw-bold">Followup</p>
-
-                                <input type="date" name="follow_ups" id="" class="form-control" value="{{ isset($_GET['follow_ups']) ? $_GET['follow_ups'] : '' }}">
-                                @else
-                                <p class="mb-2 text-sm fw-bold">Payment Status</p>
-
-                                <select name="is_paid" class="form-control select-2">
-                                    <option value="">Select</option>
-                                    <option value="1" {{ isset($_GET['is_paid']) && 1 == $_GET['is_paid'] ? 'selected' : '' }}>
-                                        Paid</option>
-                                    <option value="2" {{ isset($_GET['is_paid']) && 2 == $_GET['is_paid'] ? 'selected' : '' }}>
-                                        Pending</option>
-
-                                </select>
+                            <select name="product[]" multiple="multiple" class="form-control select-2">
+                                @if (isset($products) && $products->count())
+                                @foreach ($products as $product)
+                                <option value="{{ $product->id }}" {{ isset($_GET['product']) && is_array($_GET['product']) && in_array($product->id, $_GET['product']) ? 'selected' : '' }}>
+                                    {{ $product->name }}
+                                </option>
+                                @endforeach
                                 @endif
-                            </div>
-                            <div class="col-lg">
-                                <p class="mb-2 text-sm fw-bold"> Transaction Type</p>
-                                <select name="mis_transaction_type[]" multiple=" multiple" class="form-control select-2">
-                                    <option value="">Select</option>
-                                    <option value="Package" {{ isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('Package', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'Package') ? 'selected' : '' }}>
-                                        Package</option>
-                                    <option value="SOAD" {{ isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('SOAD', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'SOAD') ? 'selected' : '' }}>
-                                        SOAD</option>
-                                    <option value="TP" {{ isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('TP', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'TP') ? 'selected' : '' }}>
-                                        TP</option>
-                                    <option value="Endorsement" {{ isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('Endorsement', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'Endorsement') ? 'selected' : '' }}>
-                                        Endorsement</option>
-                                </select>
-                            </div>
+                            </select>
+                        </div>
+                        <div class="col-lg">
+                            <p class="mb-2 text-sm fw-bold">User</p>
+
+                            <select name="users[]" multiple="multiple" class="form-control select-2">
+                                @if (isset($users) && $users->count())
+                                @foreach ($users as $user)
+                                <option value="{{ $user->id }}" {{ isset($_GET['users']) && (is_array($_GET['users']) ? in_array($user->id, $_GET['users']) : $_GET['users'] == $user->id) ? 'selected' : '' }}>
+                                    {{ $user->name }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-lg">
                             @if (isset($_GET['id']) && $_GET['id'] == 2)
-                            <div class="col-lg">
-                                <p class="mb-2 text-sm fw-bold">Renew Status</p>
-                                <select name="renew_status_search" class="form-control select-2">
-                                    <option value="">Select</option>
-                                    <option value="FOLLOW UP" {{ isset($_GET['renew_status_search']) && 'FOLLOW UP' == $_GET['renew_status_search'] ? 'selected' : '' }}>
-                                        FOLLOW UP</option>
-                                    <option value="VEHICLE SOLD" {{ isset($_GET['renew_status_search']) && 'VEHICLE SOLD' == $_GET['renew_status_search'] ? 'selected' : '' }}>
-                                        VEHICLE SOLD</option>
-                                    <option value="NOT INTERESTED" {{ isset($_GET['renew_status_search']) && 'NOT INTERESTED' == $_GET['renew_status_search'] ? 'selected' : '' }}>
-                                        NOT INTERESTED</option>
-                                    <option value="CLOSED" {{ isset($_GET['renew_status_search']) && 'CLOSED' == $_GET['renew_status_search'] ? 'selected' : '' }}>
-                                        CLOSED</option>
-                                </select>
-                            </div>
+                            <p class="mb-2 text-sm fw-bold">Followup</p>
+
+                            <input type="date" name="follow_ups" id="" class="form-control" value="{{ isset($_GET['follow_ups']) ? $_GET['follow_ups'] : '' }}">
+                            @else
+                            <p class="mb-2 text-sm fw-bold">Payment Status</p>
+
+                            <select name="is_paid" class="form-control select-2">
+                                <option value="">Select</option>
+                                <option value="1" {{ isset($_GET['is_paid']) && 1 == $_GET['is_paid'] ? 'selected' : '' }}>
+                                    Paid</option>
+                                <option value="2" {{ isset($_GET['is_paid']) && 2 == $_GET['is_paid'] ? 'selected' : '' }}>
+                                    Pending</option>
+
+                            </select>
                             @endif
+                        </div>
+                        <div class="col-lg">
+                            <p class="mb-2 text-sm fw-bold"> Transaction Type</p>
+                            <select name="mis_transaction_type[]" multiple=" multiple" class="form-control select-2">
+                                <option value="">Select</option>
+                                <option value="Package" {{ isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('Package', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'Package') ? 'selected' : '' }}>
+                                    Package</option>
+                                <option value="SOAD" {{ isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('SOAD', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'SOAD') ? 'selected' : '' }}>
+                                    SOAD</option>
+                                <option value="TP" {{ isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('TP', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'TP') ? 'selected' : '' }}>
+                                    TP</option>
+                                <option value="Endorsement" {{ isset($_GET['mis_transaction_type']) && (is_array($_GET['mis_transaction_type']) ? in_array('Endorsement', $_GET['mis_transaction_type']) : $_GET['mis_transaction_type'] == 'Endorsement') ? 'selected' : '' }}>
+                                    Endorsement</option>
+                            </select>
+                        </div>
+                        @if (isset($_GET['id']) && $_GET['id'] == 2)
+                        <div class="col-lg">
+                            <p class="mb-2 text-sm fw-bold">Renew Status</p>
+                            <select name="renew_status_search" class="form-control select-2">
+                                <option value="">Select</option>
+                                <option value="FOLLOW UP" {{ isset($_GET['renew_status_search']) && 'FOLLOW UP' == $_GET['renew_status_search'] ? 'selected' : '' }}>
+                                    FOLLOW UP</option>
+                                <option value="VEHICLE SOLD" {{ isset($_GET['renew_status_search']) && 'VEHICLE SOLD' == $_GET['renew_status_search'] ? 'selected' : '' }}>
+                                    VEHICLE SOLD</option>
+                                <option value="NOT INTERESTED" {{ isset($_GET['renew_status_search']) && 'NOT INTERESTED' == $_GET['renew_status_search'] ? 'selected' : '' }}>
+                                    NOT INTERESTED</option>
+                                <option value="CLOSED" {{ isset($_GET['renew_status_search']) && 'CLOSED' == $_GET['renew_status_search'] ? 'selected' : '' }}>
+                                    CLOSED</option>
+                            </select>
+                        </div>
+                        @endif
 
-                            <div class="col-lg">
-                                <p class="mb-2 text-sm fw-bold">Company</p>
-                                <select multiple=" multiple" name="company_id[]" class="form-control select-2">
-                                    <option value="">Select Below</option>
-                                    @if ($companies->count())
-                                    @foreach ($companies as $company)
-                                    <option value="{{ $company->id }}" {{ isset($_GET['company_id']) && (is_array($_GET['company_id']) ? in_array($company->id, $_GET['company_id']) : $_GET['company_id'] == $company->id) ? 'selected' : '' }}>
-                                        {{ $company->name }}
-                                    </option>
-                                    @endforeach
+                        <div class="col-lg">
+                            <p class="mb-2 text-sm fw-bold">Company</p>
+                            <select multiple=" multiple" name="company_id[]" class="form-control select-2">
+                                <option value="">Select Below</option>
+                                @if ($companies->count())
+                                @foreach ($companies as $company)
+                                <option value="{{ $company->id }}" {{ isset($_GET['company_id']) && (is_array($_GET['company_id']) ? in_array($company->id, $_GET['company_id']) : $_GET['company_id'] == $company->id) ? 'selected' : '' }}>
+                                    {{ $company->name }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+
+                    </div>
+                    <!-- filter end  -->
+
+                    <div class="table-responsive border-top userlist-table pt-4">
+                        <table class="table card-table table-striped table-vcenter text-nowrap mb-0 pt-3" id="datatable">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
+                                    @if (isset($_GET['id']) && $_GET['id'] == 1)
+                                    <th><span>Created On</span></th>
                                     @endif
-                                </select>
-                            </div>
+                                    <th><span>Reference Name</span></th>
+                                    <th><span>Holder Name</span></th>
+                                    <th><span>Company Name</span></th>
+                                    <th><span>Trasaction Type</span></th>
+                                    <th>Policy number</th>
+                                    <th><span>Sub Product</span></th>
+                                    <th><span>Payment Status</span></th>
+                                    <th><span>Reg No.</span></th>
+                                    @if (isset($_GET['id']) && $_GET['id'] == 2)
+                                    <th><span>Expiry Date</span></th>
+                                    <th><span>Followup Date</span></th>
+                                    <th><span>Attachment</span></th>
+                                    @endif
+                                    @if (isset($_GET['duplicate']) && $_GET['duplicate'] == true)
+                                    <th>Policy No</th>
+                                    @endif
+                                    <th>Action</th>
+                                    <th>Product</th>
+                                    <th>Business type</th>
+                                    <th>Channel</th>
+                                    <th>Start Date</th>
+                                    <th>Expiry Date</th>
+                                    <th>Make</th>
+                                    <th>Modal</th>
+                                    <th>Variant</th>
+                                    <th>Reg No</th>
+                                    <th>Sum Insured</th>
+                                    <th>OD Premium</th>
+                                    <th>Add On Premium</th>
+                                    <th>TP Premium</th>
+                                    <th>Others</th>
+                                    <th>Net Premium</th>
+                                    <th>GST</th>
+                                    <th>Gross Premium</th>
+                                    <th> PREMIUM RECEIVED </th>
+                                    <th> PREMIUM IN A/C
+                                    </th>
+                                    <th> PAYMENT METHOD
+                                    </th>
+                                    <th> PREMIUM SHORT
+                                    </th>
+                                    <th> PREMIUM DEPOSITED
+                                    </th>
+                                    <th> TO A/C
+                                    </th>
+                                    <th> PAYMENT METHOD
+                                    </th>
+                                    <th> PAYMENT SOURCE
+                                    </th>
+                                    <th> PAYOUT COMMISSION BASE
+                                    </th>
+                                    <th> PAYOUT Base amount
+                                    </th>
+                                    <th> PAYOUT PERCENTAGE </th>
+                                    <th> PAYOUT AMOUNT
+                                    </th>
+                                    <th> PAYOUT PAYOUT SETTLED
+                                    </th>
+                                    <th> PAYOUT INVOICE </th>
+                                    <th> PAYOUT MONTH SETTLED
+                                    </th>
+                                    <th> PAYOUT RECOVERY </th>
 
 
-                        </div>
-                        <!-- filter end  -->
+                                    <th> INTERNAL PAYOUT PERCENTAGE</th>
+                                    <th> INTERNAL PAYOUT Payout expected
+                                    </th>
+                                    <th> INTERNAL PAYOUT Payout received
+                                    </th>
+                                    <th> INTERNAL PAYOUT PERCENTAGE</th>
+                                    <th> INTERNAL PAYOUT Commission</th>
+                                    <th> INTERNAL PAYOUT Payout Saved
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                        <div class="table-responsive border-top userlist-table pt-4">
-                            <table class="table card-table table-striped table-vcenter text-nowrap mb-0 pt-3" id="datatable">
-                                <thead>
-                                    <tr>
-                                        <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
-                                        @if (isset($_GET['id']) && $_GET['id'] == 1)
-                                        <th><span>Created On</span></th>
-                                        @endif
-                                        <th><span>Reference Name</span></th>
-                                        <th><span>Holder Name</span></th>
-                                        <th><span>Company Name</span></th>
-                                        <th><span>Trasaction Type</span></th>
-                                        <th>Policy number</th>
-                                        <th><span>Sub Product</span></th>
-                                        <th><span>Payment Status</span></th>
-                                        <th><span>Reg No.</span></th>
-                                        @if (isset($_GET['id']) && $_GET['id'] == 2)
-                                        <th><span>Expiry Date</span></th>
-                                        <th><span>Followup Date</span></th>
-                                        <th><span>Attachment</span></th>
-                                        @endif
-                                        @if (isset($_GET['duplicate']) && $_GET['duplicate'] == true)
-                                        <th>Policy No</th>
-                                        @endif
-                                        <th>Action</th>
-                                        <th>Channel</th>
-                                        <th>Start Date</th>
-                                        <th>Expiry Date</th>
-                                        <th>Reg No</th>
-                                        <th>Sum Insured</th>
-                                        <th>OD Premium</th>
-                                        <th>Add On Premium</th>
-                                        <th>TP Premium</th>
-                                        <th>Others</th>
-                                        <th>Net Premium</th>
-                                        <th>GST</th>
-                                        <th>Gross Premium</th>
-                                        <th> PREMIUM RECEIVED </th>
-                                        <th> PREMIUM IN A/C
-                                        </th>
-                                        <th> PAYMENT METHOD
-                                        </th>
-                                        <th> PREMIUM SHORT
-                                        </th>
-                                        <th> PREMIUM DEPOSITED
-                                        </th>
-                                        <th> TO A/C
-                                        </th>
-                                        <th> PAYMENT METHOD
-                                        </th>
-                                        <th> PAYMENT SOURCE
-                                        </th>
-                                        <th> PAYOUT COMMISSION BASE
-                                        </th>
-                                        <th> PAYOUT Base amount
-                                        </th>
-                                        <th> PAYOUT PERCENTAGE </th>
-                                        <th> PAYOUT AMOUNT
-                                        </th>
-                                        <th> PAYOUT PAYOUT SETTLED
-                                        </th>
-                                        <th> PAYOUT INVOICE </th>
-                                        <th> PAYOUT MONTH SETTLED
-                                        </th>
-                                        <th> PAYOUT RECOVERY </th>
-                                       
-                                 
-                                        <th> INTERNAL PAYOUT PERCENTAGE</th>
-                                        <th> INTERNAL PAYOUT Payout expected
-                                        </th>
-                                        <th> INTERNAL PAYOUT Payout received
-                                        </th>
-                                        <th> INTERNAL PAYOUT PERCENTAGE</th>
-                                        <th> INTERNAL PAYOUT Commission</th>
-                                        <th> INTERNAL PAYOUT Payout Saved
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
         </div>
         <!-- COL END -->
     </div>
@@ -684,17 +721,17 @@ div#datatable_paginate .paginate_button {
                     ]
 
                 },
-                startDate: moment().startOf('month'),
-                endDate: moment().endOf('month')
+                startDate: moment().subtract(0, 'years').startOf('year').add(3, 'months'),
+                endDate: moment().subtract(0, 'years').endOf('year').add(3, 'months').endOf('month')
             },
             function(start, end, range) {
-            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            $('#reportrange span').addClass('active-date'); 
-            $('#dynamicDate').html(range);
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                $('#reportrange span').addClass('active-date');
+                $('#dynamicDate').html(range);
                 $('.staticDays').hide();
             });
 
-            
+
 
         $('#daterange-btn').on('apply.daterangepicker', function(ev, picker) {
             var start = picker.startDate.format('YYYY-MM-DD');
@@ -947,6 +984,15 @@ div#datatable_paginate .paginate_button {
                     className: 'no-click no-export'
 
                 }, {
+                    data: 'products.name',
+                    name: 'products.name',
+                    defaultContent: '',
+                    visible: false
+                }, {
+                    data: 'bussiness_type',
+                    name: 'bussiness_type',
+                    visible: false
+                }, {
                     data: 'channel_name',
                     name: 'channel_name',
                     visible: false
@@ -957,6 +1003,21 @@ div#datatable_paginate .paginate_button {
                 }, {
                     data: 'expiry_date',
                     name: 'expiry_date',
+                    visible: false
+                }, {
+                    data: 'makes.name',
+                    name: 'makes.name',
+                    defaultContent: '',
+                    visible: false
+                }, {
+                    data: 'models.name',
+                    name: 'models.name',
+                    defaultContent: '',
+                    visible: false
+                }, {
+                    data: 'varriants.name',
+                    name: 'varriants.name',
+                    defaultContent: '',
                     visible: false
                 }, {
                     data: 'reg_no',
@@ -1078,8 +1139,8 @@ div#datatable_paginate .paginate_button {
                     name: 'payout_recovery',
                     visible: false
                 },
-               
-              
+
+
                 {
                     data: 'internal_percentage',
                     name: 'internal_percentage',
