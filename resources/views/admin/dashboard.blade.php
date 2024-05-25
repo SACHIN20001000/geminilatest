@@ -41,7 +41,7 @@
                 <div id="reportrange"><span></span></div>
                 <button type="button" style="display: flex; gap: 8px;" class="btn btn-default float-right" id="daterange-btn">
                     <i class="far fa-calendar-alt"></i>
-                    <div class="staticDays">This Month</div>
+                    <div class="staticDays">Financial Year</div>
                     <div id="dynamicDate"></div>
                     <i class="fas fa-caret-down"></i>
                 </button>
@@ -202,8 +202,8 @@
                     'Last Financial Year': [moment().subtract(2, 'years').startOf('year').add(3, 'months'), moment().subtract(2, 'years').endOf('year').add(3, 'months').endOf('month')]
 
                 },
-                startDate: moment().startOf('month'),
-                endDate: moment().endOf('month')
+                startDate: moment().subtract(0, 'years').startOf('year').add(3, 'months'),
+                endDate: moment().subtract(0, 'years').endOf('year').add(3, 'months').endOf('month')
             },
             function(start, end, range) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))

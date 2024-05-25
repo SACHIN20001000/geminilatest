@@ -31,6 +31,14 @@
         display: none;
     }
 
+    .dtfc-fixed-left {
+        z-index: 999 !important;
+        background-color: white !important;
+    }
+    .dtfc-fixed-right {
+        z-index: 999 !important;
+        background-color: white !important;
+    }
     a.remove_us svg {
         width: 12px;
         height: 12px;
@@ -474,7 +482,6 @@
                                     @if (isset($_GET['duplicate']) && $_GET['duplicate'] == true)
                                     <th>Policy No</th>
                                     @endif
-                                    <th>Action</th>
                                     <th>Product</th>
                                     <th>Business type</th>
                                     <th>Channel</th>
@@ -531,6 +538,8 @@
                                     <th> INTERNAL PAYOUT Commission</th>
                                     <th> INTERNAL PAYOUT Payout Saved
                                     </th>
+                                    <th>Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -685,10 +694,15 @@
 @endsection
 
 @section('scripts')
+<!-- Summernote CSS and JS -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
+<!-- Toastr CSS and JS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<!-- DataTables CSS and JS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
@@ -698,6 +712,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+
+<!-- DataTables FixedColumns CSS and JS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.0.1/css/fixedColumns.dataTables.min.css">
+<script src="https://cdn.datatables.net/fixedcolumns/4.0.1/js/dataTables.fixedColumns.min.js"></script>
+
 <script type="text/javascript">
     var table;
 
@@ -839,6 +858,7 @@
         var tableConfig = {
             processing: true,
             serverSide: true,
+           
             ajax: {
                 url: "{{ route('new-policy.index') }}",
                 type: 'POST',
@@ -871,6 +891,10 @@
             pageLength: tableLength ?? 10,
             displayStart: typeof requestPage != 'undefined' && requestPage ? (requestPage * tableLength - tableLength) : 0,
             dom: 'Blfrtip',
+            fixedColumns: {
+                leftColumns: 2,
+                rightColumns: 1            },
+           
             buttons: [{
                     extend: 'csv',
                     exportOptions: {
@@ -977,13 +1001,6 @@
                     className: ''
                 },
                 @endif {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    className: 'no-click no-export'
-
-                }, {
                     data: 'products.name',
                     name: 'products.name',
                     defaultContent: '',
@@ -1168,6 +1185,13 @@
                     data: 'internal_payout_saved',
                     name: 'internal_payout_saved',
                     visible: false
+                },{
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    className: 'no-click no-export'
+
                 }
             ],
             rowCallback: function(row, data) {
