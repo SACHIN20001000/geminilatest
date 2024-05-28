@@ -178,7 +178,15 @@
         display: block;
         width: 100% !important;
         overflow: scroll !important;
+        height: 100%;
+        min-height: 280px;
+        max-height: 290px;
     }
+    #datatable::-webkit-scrollbar {
+    height: 16px; /* Height of the horizontal scrollbar */
+}
+   
+
 
     .table-responsive.userlist-table {
         overflow: hidden !important;
@@ -250,7 +258,7 @@
         background: #3653b8 !important;
         color: #fff !important;
     }
-
+   
 
     @media (max-width: 1650px) {
         td {
@@ -259,14 +267,22 @@
         }
 
         .userlist-table .table th {
-            padding: 10px 16px !important;
-            white-space: nowrap;
+            padding: 6px 12px !important;
+            /* white-space: nowrap; */
+            line-height: 1;
         }
 
         .userlist-table .table td {
-            padding: 12px 16px !important;
-            white-space: nowrap;
+            padding: 6px 6px !important;
+            /* white-space: nowrap; */
+            line-height: 1;
         }
+        .userlist-table .table tbody {
+    min-height: 90px !important;
+    max-width: 100px !important;
+    height: 100px !important;
+    overflow: auto;
+}
 
         .userlist-table .table {
             white-space: unset !important;
@@ -292,7 +308,7 @@
 </div>
 <div class="container-fluid">
     <!-- breadcrumb -->
-    <div class="breadcrumb-header justify-content-between">
+    <div class="breadcrumb-header my-3 justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="content-title mb-0 my-auto pe-4">Policy </h4>
@@ -360,11 +376,11 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <div class="main-content-label mg-b-5">
+                    <!-- <div class="main-content-label mg-b-5">
                         Listing of All Policy...
-                    </div>
+                    </div> -->
                     <!-- filter start  -->
-                    <div class="row row-sm mb-4">
+                    <div class="row row-sm mb-3">
                         <div class="col-lg">
                             <p class="mb-2 text-sm fw-bold">Product</p>
 
@@ -458,7 +474,7 @@
                     </div>
                     <!-- filter end  -->
 
-                    <div class="table-responsive border-top userlist-table pt-4">
+                    <div class="table-responsive border-top userlist-table pt-3">
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0 pt-3" id="datatable">
                             <thead>
                                 <tr>
