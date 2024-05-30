@@ -59,7 +59,7 @@
     }
 
     .truncate-text {
-        max-width: 100px;
+        max-width: 110px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -74,7 +74,14 @@
     }
 
     .renew_status {
-        min-width: 100px
+        min-width: 90px;
+    height: 30px !important;
+    /* line-height: 10px; */
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 8px;
+    text-align: center
+
     }
 
     /* Add this CSS code for the spinner */
@@ -178,7 +185,17 @@
         display: block;
         width: 100% !important;
         overflow: scroll !important;
+        height: 100%;
+        min-height: 265px;
+        max-height: 265px;
     }
+    #datatable::-webkit-scrollbar {
+    height: 10px; 
+}
+aside.app-sidebar.sidebar-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
 
     .table-responsive.userlist-table {
         overflow: hidden !important;
@@ -200,16 +217,11 @@
         content: "";
         position: absolute;
         bottom: 100%;
-        /* Position the arrow at the top */
         left: 10px;
-        /* Center the arrow horizontally */
         margin-left: -5px;
-        /* Center the arrow based on its width */
         border-width: 8px;
-        /* Adjust the size of the arrow */
         border-style: solid;
         border-color: transparent transparent #fff transparent;
-        /* Change #000 to your border color */
     }
 
     .dt-button.buttons-html5 {
@@ -226,15 +238,23 @@
         border-color: #1d3c92 !important;
     }
 
-    table.dataTable thead th,
-    table.dataTable thead td {
-        font-size: 14px;
+    table.dataTable thead th {
+        font-size: 13px;
         color: #242f48;
+        font-weight: 600 !important;
+        text-transform: capitalize;
+    }
+ 
+    table.dataTable thead td a {
+        font-size: 13px;
+        color: #242f48 !important;
+        font-weight: 400;
+        text-transform: capitalize;
     }
 
-    .userlist-table .table td a {
+    /* .userlist-table .table td a {
         font-size: 14px;
-    }
+    } */
 
     button.btn,
     .btn-main-primary {
@@ -250,8 +270,39 @@
         background: #3653b8 !important;
         color: #fff !important;
     }
+    table .btn-sm, .userlist-table .btn-group-sm>.btn {
+    padding: .25rem .7rem !important;
+    margin: 0 4px !important;
+}
+.dataTables_wrapper .dataTables_filter label {
+    margin-bottom: 0 !important;
+}
+.iconBtn svg {
+    width: 16px;
+    height: 16px;
+    fill: #02b9ff;
+}
+svg.open-attachment {
+    width: 16px;
+    height: 16px;
+    fill: #53b6f9
+}
 
+.dataTables_wrapper .dataTables_paginate a.paginate_button.current {
+    color: #fff !important;
+}
 
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #3c52b2;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 6px;
+}
+input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"] {
+    height: 32px;
+    min-height: 32px;
+}
     @media (max-width: 1650px) {
         td {
             font-size: 12px !important;
@@ -261,6 +312,9 @@
         .userlist-table .table th {
             padding: 10px 16px !important;
             white-space: nowrap;
+        }
+        .userlist-table .table th:first-child {
+            padding: 6px !important;
         }
 
         .userlist-table .table td {
@@ -928,31 +982,32 @@
                 @if(isset($_GET['id']) && $_GET['id'] == 1) {
                     data: 'created_at',
                     name: 'created_at',
-                    className: ''
+                    className: 'truncate-text'
+                    
                 },
                 @endif {
                     data: 'users.name',
                     name: 'users.name',
                     defaultContent: '',
-                    className: ''
+                    className: 'truncate-text'
                 },
                 {
                     data: 'holder_name',
                     name: 'holder_name',
                     defaultContent: '',
-                    className: ''
+                    className: 'truncate-text'
                 },
                 {
                     data: 'company.name',
                     name: 'company.name',
                     defaultContent: '',
-                    className: ''
+                    className: 'truncate-text'
                 },
                 {
                     data: 'mis_transaction_type',
                     name: 'mis_transaction_type',
                     defaultContent: '',
-                    className: '-small'
+                    className: '-small truncate-text'
                 },
                 {
                     data: 'policy_no',
@@ -963,42 +1018,42 @@
                     data: 'sub_product.name',
                     name: 'sub_product.name',
                     defaultContent: '',
-                    className: '-small'
+                    className: '-small truncate-text'
                 },
                 {
                     data: 'is_paid',
                     name: 'is_paid',
                     defaultContent: '',
-                    className: '-small'
+                    className: '-small truncate-text'
                 },
                 {
                     data: 'reg_no',
                     name: 'reg_no',
                     defaultContent: '',
-                    className: ''
+                    className: 'truncate-text'
                 },
                 @if(isset($_GET['id']) && $_GET['id'] == 2) {
                     data: 'expiry_date',
                     name: 'expiry_date',
                     defaultContent: '',
-                    className: ''
+                    className: 'truncate-text'
                 }, {
                     data: 'followDate',
                     name: 'followDate',
                     defaultContent: '',
-                    className: ' no-click'
+                    className: ' no-click truncate-text'
                 }, {
                     data: 'attachment',
                     name: 'attachment',
                     defaultContent: '',
-                    className: '-small no-click'
+                    className: '-small no-click truncate-text'
                 },
                 @endif
                 @if(isset($_GET['duplicate']) && $_GET['duplicate'] == true) {
                     data: 'policy_no',
                     name: 'policy_no',
                     defaultContent: '',
-                    className: ''
+                    className: 'truncate-text'
                 },
                 @endif {
                     data: 'products.name',
