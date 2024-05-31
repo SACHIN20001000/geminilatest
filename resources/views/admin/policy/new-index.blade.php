@@ -35,10 +35,12 @@
         z-index: 999 !important;
         background-color: white !important;
     }
+
     .dtfc-fixed-right {
         z-index: 999 !important;
         background-color: white !important;
     }
+
     a.remove_us svg {
         width: 12px;
         height: 12px;
@@ -75,13 +77,12 @@
 
     .renew_status {
         min-width: 90px;
-    height: 30px !important;
-    /* line-height: 10px; */
-    font-size: 12px;
-    font-weight: 600;
-    padding: 5px 8px;
-    text-align: center
-
+        height: 30px !important;
+        /* line-height: 10px; */
+        font-size: 12px;
+        font-weight: 600;
+        padding: 5px 8px;
+        text-align: center
     }
 
     /* Add this CSS code for the spinner */
@@ -189,12 +190,14 @@
         min-height: 265px;
         max-height: 265px;
     }
+
     #datatable::-webkit-scrollbar {
-    height: 10px; 
-}
-aside.app-sidebar.sidebar-scroll::-webkit-scrollbar {
-    width: 10px;
-}
+        height: 10px;
+    }
+
+    aside.app-sidebar.sidebar-scroll::-webkit-scrollbar {
+        width: 10px;
+    }
 
 
     .table-responsive.userlist-table {
@@ -244,7 +247,7 @@ aside.app-sidebar.sidebar-scroll::-webkit-scrollbar {
         font-weight: 600 !important;
         text-transform: capitalize;
     }
- 
+
     table.dataTable thead td a {
         font-size: 13px;
         color: #242f48 !important;
@@ -270,39 +273,49 @@ aside.app-sidebar.sidebar-scroll::-webkit-scrollbar {
         background: #3653b8 !important;
         color: #fff !important;
     }
-    table .btn-sm, .userlist-table .btn-group-sm>.btn {
-    padding: .25rem .7rem !important;
-    margin: 0 4px !important;
-}
-.dataTables_wrapper .dataTables_filter label {
-    margin-bottom: 0 !important;
-}
-.iconBtn svg {
-    width: 16px;
-    height: 16px;
-    fill: #02b9ff;
-}
-svg.open-attachment {
-    width: 16px;
-    height: 16px;
-    fill: #53b6f9
-}
 
-.dataTables_wrapper .dataTables_paginate a.paginate_button.current {
-    color: #fff !important;
-}
+    table .btn-sm,
+    .userlist-table .btn-group-sm>.btn {
+        padding: .25rem .7rem !important;
+        margin: 0 4px !important;
+    }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: #3c52b2;
-}
+    .dataTables_wrapper .dataTables_filter label {
+        margin-bottom: 0 !important;
+    }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    border-radius: 6px;
-}
-input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"] {
-    height: 32px;
-    min-height: 32px;
-}
+    .iconBtn svg {
+        width: 16px;
+        height: 16px;
+        fill: #02b9ff;
+    }
+
+    svg.open-attachment {
+        width: 16px;
+        height: 16px;
+        fill: #53b6f9
+    }
+
+    .dataTables_wrapper .dataTables_paginate a.paginate_button.current {
+        color: #fff !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: #3c52b2;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        border-radius: 6px;
+    }
+
+    input[type="date"],
+    input[type="time"],
+    input[type="datetime-local"],
+    input[type="month"] {
+        height: 32px;
+        min-height: 32px;
+    }
+
     @media (max-width: 1650px) {
         td {
             font-size: 12px !important;
@@ -310,16 +323,26 @@ input[type="date"], input[type="time"], input[type="datetime-local"], input[type
         }
 
         .userlist-table .table th {
-            padding: 10px 16px !important;
-            white-space: nowrap;
+            padding: 6px 12px !important;
+            /* white-space: nowrap; */
+            line-height: 1;
         }
+
         .userlist-table .table th:first-child {
             padding: 6px !important;
         }
 
         .userlist-table .table td {
-            padding: 12px 16px !important;
-            white-space: nowrap;
+            padding: 6px 6px !important;
+            /* white-space: nowrap; */
+            line-height: 1;
+        }
+
+        .userlist-table .table tbody {
+            min-height: 90px !important;
+            max-width: 100px !important;
+            height: 100px !important;
+            overflow: auto;
         }
 
         .userlist-table .table {
@@ -346,7 +369,7 @@ input[type="date"], input[type="time"], input[type="datetime-local"], input[type
 </div>
 <div class="container-fluid">
     <!-- breadcrumb -->
-    <div class="breadcrumb-header justify-content-between">
+    <div class="breadcrumb-header my-3 justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="content-title mb-0 my-auto pe-4">Policy </h4>
@@ -414,11 +437,11 @@ input[type="date"], input[type="time"], input[type="datetime-local"], input[type
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <div class="main-content-label mg-b-5">
+                    <!-- <div class="main-content-label mg-b-5">
                         Listing of All Policy...
-                    </div>
+                    </div> -->
                     <!-- filter start  -->
-                    <div class="row row-sm mb-4">
+                    <div class="row row-sm mb-3">
                         <div class="col-lg">
                             <p class="mb-2 text-sm fw-bold">Product</p>
 
@@ -512,7 +535,7 @@ input[type="date"], input[type="time"], input[type="datetime-local"], input[type
                     </div>
                     <!-- filter end  -->
 
-                    <div class="table-responsive border-top userlist-table pt-4">
+                    <div class="table-responsive border-top userlist-table pt-3">
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0 pt-3" id="datatable">
                             <thead>
                                 <tr>
@@ -912,7 +935,7 @@ input[type="date"], input[type="time"], input[type="datetime-local"], input[type
         var tableConfig = {
             processing: true,
             serverSide: true,
-           
+
             ajax: {
                 url: "{{ route('new-policy.index') }}",
                 type: 'POST',
@@ -947,8 +970,9 @@ input[type="date"], input[type="time"], input[type="datetime-local"], input[type
             dom: 'Blfrtip',
             fixedColumns: {
                 leftColumns: 2,
-                rightColumns: 1            },
-           
+                rightColumns: 1
+            },
+
             buttons: [{
                     extend: 'csv',
                     exportOptions: {
@@ -983,7 +1007,7 @@ input[type="date"], input[type="time"], input[type="datetime-local"], input[type
                     data: 'created_at',
                     name: 'created_at',
                     className: 'truncate-text'
-                    
+
                 },
                 @endif {
                     data: 'users.name',
@@ -1240,7 +1264,7 @@ input[type="date"], input[type="time"], input[type="datetime-local"], input[type
                     data: 'internal_payout_saved',
                     name: 'internal_payout_saved',
                     visible: false
-                },{
+                }, {
                     data: 'action',
                     name: 'action',
                     orderable: false,
