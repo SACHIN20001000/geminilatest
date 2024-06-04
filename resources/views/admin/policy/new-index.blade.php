@@ -45,7 +45,7 @@
         width: 12px;
         height: 12px;
         fill: #dd0909;
-        transform: translateY(-4px) translateX(-3px);
+        transform: translateY(-6px) translateX(-5px);
         cursor: pointer;
     }
 
@@ -315,6 +315,12 @@
         height: 32px;
         min-height: 32px;
     }
+    td.-small.no-click.truncate-text {max-width: 140px;}
+    .form-control.follow_up {
+    min-height: auto;
+    padding: 0 5px !important;
+    height: auto !important;
+}
 
     @media (max-width: 1650px) {
         td {
@@ -323,7 +329,7 @@
         }
 
         .userlist-table .table th {
-            padding: 6px 12px !important;
+            padding: 6px 6px !important;
             /* white-space: nowrap; */
             line-height: 1;
         }
@@ -363,6 +369,56 @@
             padding: 0 5px !important;
         }
     }
+    @media all and (max-width: 767px) {
+        .header-btn {
+            flex-wrap: wrap;
+        }
+        .date_picker {
+    display: block;
+    width: 100%;
+}
+
+.date_picker .card {
+    box-shadow: unset;
+}
+
+button#daterange-btn {
+    width: 100%;
+}
+.dt-button.buttons-html5 {
+    min-width: 31%;
+}
+.dataTables_wrapper .dataTables_filter label {
+    display: flex;
+    align-items: center;
+}
+.dataTables_wrapper .dataTables_filter {
+        width: 100%;
+    }
+    div.dataTables_wrapper div.dataTables_filter input {
+        margin-left: 0px;
+    }
+    div#datatable_info {
+    float: unset;
+    margin-bottom: 20px;
+}
+div#datatable_length {
+    position: unset;
+    margin-top: 20px;
+}
+.userlist-table .table th {
+        padding: 6px 12px !important;
+    }
+    .dtfc-fixed-left, .dtfc-fixed-right {
+        position: unset !important;
+    }
+    div#datatable_paginate {
+        flex-wrap: wrap;
+    }
+    .truncate-text {
+        max-width: 126px;
+    }
+    }
 </style>
 <div id="loader-wrapper" style="display: none;">
     <div id="loader"></div>
@@ -372,14 +428,14 @@
     <div class="breadcrumb-header my-3 justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto pe-4">Policy </h4>
-                <div class="pe-4 mb-xl-0">
+                <h4 class="content-title mb-0 my-auto pe-lg-4 pe-2">Policy </h4>
+                <div class="pe-lg-4 pe-2 mb-xl-0">
                     <div class="btn-group dropdown">
                         <a href="{{ route('new-policy.index', ['id' => 1]) }}" class=" @if (isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto">MIS
                             (<?php echo new_policy(); ?>)</a>
                     </div>
                 </div>
-                <div class="pe-4 mb-xl-0">
+                <div class="pe-gl-4 pe-2 mb-xl-0">
                     <div class="btn-group dropdown">
                         <a href="{{ route('new-policy.index', ['id' => 2]) }}" class=" @if (isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif  ml_auto">Renewals
                             (<?php echo renew_policy(); ?>)</a>
@@ -388,9 +444,9 @@
 
             </div>
         </div>
-        <div class="d-flex gap-2 my-xl-auto right-content">
-            <div class="">
-                <div class="mb-xl-0 card p-2">
+        <div class="d-flex gap-2 my-xl-auto right-content header-btn">
+            <div class="date_picker">
+                <div class="mb-xl-0 card p-2 mb-lg-2 mb-0">
                     <button type="button" class="bg-white btn btn-default float-right d-flex align-items-center gap-2 p-0" id="daterange-btn">
                         <i class="far fa-calendar-alt"></i>
                         <div class="staticDays">Financial Year</div>
@@ -442,7 +498,7 @@
                     </div> -->
                     <!-- filter start  -->
                     <div class="row row-sm mb-3">
-                        <div class="col-lg">
+                        <div class="col-lg mb-lg-0 mb-2">
                             <p class="mb-2 text-sm fw-bold">Product</p>
 
                             <select name="product[]" multiple="multiple" class="form-control select-2">
@@ -455,7 +511,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="col-lg">
+                        <div class="col-lg mb-lg-0 mb-2">
                             <p class="mb-2 text-sm fw-bold">User</p>
 
                             <select name="users[]" multiple="multiple" class="form-control select-2">
@@ -468,7 +524,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="col-lg">
+                        <div class="col-lg mb-lg-0 mb-2">
                             @if (isset($_GET['id']) && $_GET['id'] == 2)
                             <p class="mb-2 text-sm fw-bold">Followup</p>
 
@@ -486,7 +542,7 @@
                             </select>
                             @endif
                         </div>
-                        <div class="col-lg">
+                        <div class="col-lg mb-lg-0 mb-2">
                             <p class="mb-2 text-sm fw-bold"> Transaction Type</p>
                             <select name="mis_transaction_type[]" multiple=" multiple" class="form-control select-2">
                                 <option value="">Select</option>
@@ -501,7 +557,7 @@
                             </select>
                         </div>
                         @if (isset($_GET['id']) && $_GET['id'] == 2)
-                        <div class="col-lg">
+                        <div class="col-lg mb-lg-0 mb-2">
                             <p class="mb-2 text-sm fw-bold">Renew Status</p>
                             <select name="renew_status_search" class="form-control select-2">
                                 <option value="">Select</option>
@@ -517,7 +573,7 @@
                         </div>
                         @endif
 
-                        <div class="col-lg">
+                        <div class="col-lg mb-lg-0 mb-2">
                             <p class="mb-2 text-sm fw-bold">Company</p>
                             <select multiple=" multiple" name="company_id[]" class="form-control select-2">
                                 <option value="">Select Below</option>
@@ -541,19 +597,19 @@
                                 <tr>
                                     <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
                                     @if (isset($_GET['id']) && $_GET['id'] == 1)
-                                    <th><span>Created On</span></th>
+                                    <th><span>Created<br class="d-lg-block d-none"/> On</span></th>
                                     @endif
-                                    <th><span>Reference Name</span></th>
-                                    <th><span>Holder Name</span></th>
-                                    <th><span>Company Name</span></th>
-                                    <th><span>Trasaction Type</span></th>
-                                    <th>Policy number</th>
-                                    <th><span>Sub Product</span></th>
-                                    <th><span>Payment Status</span></th>
-                                    <th><span>Reg No.</span></th>
+                                    <th><span>Reference<br class="d-lg-block d-none"/> Name</span></th>
+                                    <th><span>Holder<br class="d-lg-block d-none"/> Name</span></th>
+                                    <th><span>Company<br class="d-lg-block d-none"/> Name</span></th>
+                                    <th><span>Trasaction<br class="d-lg-block d-none"/> Type</span></th>
+                                    <th>Policy<br class="d-lg-block d-none"/> number</th>
+                                    <th><span>Sub<br class="d-lg-block d-none"/> Product</span></th>
+                                    <th><span>Payment<br class="d-lg-block d-none"/> Status</span></th>
+                                    <th><span>Reg<br class="d-lg-block d-none"/> No.</span></th>
                                     @if (isset($_GET['id']) && $_GET['id'] == 2)
-                                    <th><span>Expiry Date</span></th>
-                                    <th><span>Followup Date</span></th>
+                                    <th><span>Expiry<br class="d-lg-block d-none"/> Date</span></th>
+                                    <th><span>Followup<br class="d-lg-block d-none"/> Date</span></th>
                                     <th><span>Attachment</span></th>
                                     @endif
                                     @if (isset($_GET['duplicate']) && $_GET['duplicate'] == true)
@@ -1070,7 +1126,7 @@
                     data: 'attachment',
                     name: 'attachment',
                     defaultContent: '',
-                    className: '-small no-click truncate-text'
+                    className: '-small no-click truncate-text d-flex align-items-center gap-1'
                 },
                 @endif
                 @if(isset($_GET['duplicate']) && $_GET['duplicate'] == true) {
