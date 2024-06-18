@@ -1,35 +1,145 @@
 @extends('admin.layouts.app')
 
 @section('content')
+<style>
+    .dataTables_wrapper .dataTables_filter {
+    float: left !important;
+}
+.dataTables_filter label {
+    border: 1px solid #f1f1f1;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 0px 0px 0 10px;
+}
+div.dt-buttons {
+    float: right !important;
+}
+.dataTables_filter label input[type="search"] {
+    border: 0;
+}
+.dt-button.buttons-html5, .dt-button.buttons-print {
+    background: #2a52be;
+    color: #fff;
+    border-color: #3451b7;
+    min-width: 60px;
+    border-radius: 6px;
+    padding: 3px 16px;
+}
+button.dt-button,div.dt-button,a.dt-button,input.dt-button {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-left: .167em;
+    margin-right: .167em;
+    margin-bottom: .333em;
+    padding: .5em 1em;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: .88em;
+    line-height: 1.6em;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr="rgba(230, 230, 230, 0.1)", EndColorStr="rgba(0, 0, 0, 0.1)");
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    outline: none;
+    text-overflow: ellipsis
+}
+div#datatable_length {
+    bottom: 0;
+    position: absolute;
+    z-index: 10;
+}
+div#datatable_info {
+    float: right;
+}
+div#datatable_paginate {
+    display: flex;
+    float: unset;
+    justify-content: center;
+    transform: translateY(-8px);
+}
+div#datatable_paginate .paginate_button {
+    padding: 5px 10px;
+    border: 1px solid #f1f1f1;
+}
+.dataTables_wrapper .dataTables_paginate a.paginate_button.current {
+    color: #fff !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #3653b8 !important;
+    color: #fff !important;
+}
+.table-responsive.userlist-table {
+    overflow: hidden !important;
+    width: 100%;
+}
+#datatable_wrapper .table td {
+        padding: 6px 6px !important;
+        line-height: 1;
+    }
+    table.dataTable thead th {
+    font-size: 13px;
+    color: #242f48;
+    font-weight: 600 !important;
+    text-transform: capitalize;
+}
+table.dataTable thead th {
+    font-size: 12px !important;
+}
+    .iconBtn svg {
+        width: 16px;
+        height: 16px;
+        fill: #02b9ff;
+    }
+    a.remove_us svg {
+    width: 12px;
+    height: 12px;
+    fill: #dd0909;
+    /* transform: translateY(-6px) translateX(-5px); */
+    cursor: pointer;
+}
+.action-buttons {
+    gap: 12px;
+}
+
+</style>
 
 <div class="container-fluid">
     <!-- breadcrumb -->
-    <div class="breadcrumb-header justify-content-between">
+    <div class="breadcrumb-header my-3 justify-content-between">
         <div class="my-auto">
-            <div class="d-flex">
+            <div class="d-flex gap-3">
                 <h4 class="content-title mb-0 my-auto pe-4">All Users</h4>
                 @if(!($_GET['advance'] ?? ''))
-                <div class="pe-4 mb-xl-0">
+                <div class="mb-xl-0">
                     <div class="btn-group dropdown">
                         <a class="@if(isset($_GET['id']) && $_GET['id'] == 0) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 0]) }}">All</a>
                     </div>
                 </div>
-                <div class="pe-4 mb-xl-0">
+                <div class="mb-xl-0">
                     <div class="btn-group dropdown">
                         <a class="@if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 1]) }}">Admin</a>
                     </div>
                 </div>
-                <div class="pe-4 mb-xl-0">
+                <div class="mb-xl-0">
                     <div class="btn-group dropdown">
                         <a class="@if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 2]) }}">Broker</a>
                     </div>
                 </div>
-                <div class="pe-4 mb-xl-0">
+                <div class="mb-xl-0">
                     <div class="btn-group dropdown">
                         <a class="@if(isset($_GET['id']) && $_GET['id'] == 3) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 3]) }}">Staff</a>
                     </div>
                 </div>
-                <div class="pe-4 mb-xl-0">
+                <div class="mb-xl-0">
                     <div class="btn-group dropdown">
                         <a class="@if(isset($_GET['id']) && $_GET['id'] == 4) btn btn-warning @else btn btn-info @endif ml_auto" href="{{ route('users.index',['id'=> 4]) }}">Client</a>
                     </div>
@@ -51,13 +161,13 @@
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
-                <div class="card-header pb-0">
+                <!-- <div class="card-header pb-0">
                     <p class="tx-12 tx-gray-500 mb-2">Listing of All Users...</p>
-                </div>
+                </div> -->
                 <div class="card-body">
 
                     <!-- Listing all data in user tables -->
-                    <div class="table-responsive border-top userlist-table">
+                    <div class="table-responsive userlist-table">
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>
