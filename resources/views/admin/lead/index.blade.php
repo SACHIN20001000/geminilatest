@@ -55,7 +55,7 @@
         </div>
     </div>
     <!-- breadcrumb -->
-    <div class="card-body tableBody">
+    <div class="card-body tableBody p-0">
         <div class="orderSearchHistory">
             @include('admin.lead.search')
         </div>

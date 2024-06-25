@@ -24,7 +24,7 @@ class EndrosmentController extends Controller
                             ->addIndexColumn()
                             ->addColumn('action', function ($row)
                             {
-                                $action = '<span class="action-buttons"><a  href="' . route("endrosment.show", $row) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i></a>';
+                                $action = '<span class="action-buttons"><a  href="' . route("endrosment.show", $row) . '" class="iconBtn"><i class="fa fa-eye"></i></a>';
                                 return $action;
                             })
                          

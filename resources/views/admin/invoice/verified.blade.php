@@ -5,7 +5,7 @@
 
 
     <!-- filter  -->
-    <div class="breadcrumb-header justify-content-between">
+    <div class="breadcrumb-header justify-content-between my-3">
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="  content-title mb-0 my-auto pe-4">Verified Invoice </h4>
@@ -40,7 +40,7 @@
                 <div class="card-body">
 
                     <!-- Listing all data in user tables -->
-                    <div class="table-responsive border-top userlist-table">
+                    <div class="table-responsive userlist-table">
                         <table class=" card-table table-striped table-vcenter  mb-0" id="datatable">
                             <thead>
                                 <tr>

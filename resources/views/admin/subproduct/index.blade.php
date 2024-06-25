@@ -4,26 +4,26 @@
 
 <div class="container-fluid">
   <!-- breadcrumb -->
-    <div class="breadcrumb-header justify-content-between">
+    <div class="breadcrumb-header justify-content-between my-3">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">All SubProduct</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ list</span>
+                <h4 class="content-title mb-0 my-auto">All Sub Product</h4><span class="text-muted mt-1 tx-13 ms-2 mb-0">/ list</span>
             </div>
         </div>
-        <a class="btn btn-main-primary ml_auto" href="{{ route('subproduct.create') }}">Add SubProduct</a>
+        <a class="btn btn-main-primary ml_auto" href="{{ route('subproduct.create') }}">Add Sub Product</a>
     </div>
     <!-- breadcrumb -->
    
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
-                <div class="card-header pb-0">
+                <!-- <div class="card-header pb-0">
                     <p class="tx-12 tx-gray-500 mb-2">Listing of All SubProduct...</p>
-                </div>
+                </div> -->
                 <div class="card-body">
 
                     <!-- Listing all data in user tables -->
-                    <div class="table-responsive border-top userlist-table">
+                    <div class="table-responsive userlist-table">
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>

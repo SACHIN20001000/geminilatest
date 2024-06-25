@@ -76,9 +76,10 @@
     }
 
     .renew_status {
-        min-width: 90px;
-        height: 30px !important;
-        /* line-height: 10px; */
+        max-width: 70px;
+        min-width: 70px;
+        height: 24px !important;
+        line-height: 10px;
         font-size: 12px;
         font-weight: 600;
         padding: 5px 8px;

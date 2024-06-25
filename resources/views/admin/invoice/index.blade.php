@@ -23,7 +23,7 @@
                 <div class="card-body">
 
                     <!-- Listing all data in user tables -->
-                    <div class="table-responsive border-top userlist-table">
+                    <div class="table-responsive userlist-table">
                         <table class=" card-table table-striped table-vcenter  mb-0" id="datatable">
                             <thead>
                                 <tr>

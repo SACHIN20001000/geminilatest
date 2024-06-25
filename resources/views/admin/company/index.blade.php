@@ -17,20 +17,20 @@
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
-                <div class="card-header pb-0">
+                <!-- <div class="card-header pb-0">
                     <p class="tx-12 tx-gray-500 mb-2">Listing of All Companies...</p>
-                </div>
+                </div> -->
                 <div class="card-body">
 
                     <!-- Listing all data in user tables -->
-                    <div class="table-responsive border-top userlist-table">
+                    <div class="table-responsive userlist-table">
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>
                                 <th class="wd-lg-20p"><span>Name</span></th>
                                 <th class="wd-lg-20p"><span>Type</span></th>
-												<th class="wd-lg-20p"><span>Created</span></th>
-												<th class="wd-lg-20p">Action</th>
+                                <th class="wd-lg-20p"><span>Created</span></th>
+                                <th class="wd-lg-20p">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

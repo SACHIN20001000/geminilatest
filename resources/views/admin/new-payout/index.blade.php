@@ -39,13 +39,13 @@
 <div id="loadingIndicator" style="display: none;">
     <div class="loader"></div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid mt-3">
     <div class="row row-sm">
         <div class="col-xl-4 col-lg-6 col-md-6 col-xm-12">
             <div class="card overflow-hidden sales-card bg-primary-gradient">
                 <div class="px-3 pt-3  pb-2 pt-0">
                     <div class="">
-                        <h5 class="mb-3  text-white">Payable</h5>
+                        <h5 class="mb-2 text-white">Payable</h5>
                     </div>
                     <div class="pb-0 mt-0">
                         <div class="d-flex">
@@ -62,7 +62,7 @@
             <div class="card overflow-hidden sales-card bg-danger-gradient">
                 <div class="px-3 pt-3  pb-2 pt-0">
                     <div class="">
-                        <h5 class="mb-3  text-white ">Receivable</h5>
+                        <h5 class="mb-2 text-white ">Receivable</h5>
                     </div>
                     <div class="pb-0 mt-0">
                         <div class="d-flex">
@@ -79,7 +79,7 @@
             <div class="card overflow-hidden sales-card bg-success-gradient">
                 <div class="px-3 pt-3  pb-2 pt-0">
                     <div class="">
-                        <h5 class="mb-3  text-white">Recovery</h5>
+                        <h5 class="mb-2 text-white">Recovery</h5>
                     </div>
                     <div class="pb-0 mt-0">
                         <div class="d-flex">
@@ -96,11 +96,11 @@
 
     <!-- filter  -->
 
-    <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+    <div class="">
         <div class="card">
             <div class="card-body">
 
-                <div class="row row-sm">
+                <div class="row row-sm align-items-end">
                     <div class="col-lg-2">
                         <div id="reportrange" style="display:none"><span></span></div>
                         <button type="button" style="display: flex; gap: 8px;" class="btn btn-default float-right" id="daterange-btn">
@@ -113,7 +113,7 @@
 
                     <div class="col-lg-3 mg-t-20 mg-lg-t-0">
                         <div class="input-group">
-                            <div class="input-group-text">
+                            <div class="">
                                 Reference:
                             </div>
                             <select name="reference_name" id="reference_name" class="form-control">
@@ -128,7 +128,7 @@
                     </div>
                     <div class="col-lg-3 mg-t-20 mg-lg-t-0">
                         <div class="input-group">
-                            <div class="input-group-text">
+                            <div class="">
                                 Status:
                             </div>
                             <select name="status" id="status" class="form-control">
@@ -164,7 +164,7 @@
                 <div class="card-body">
 
                     <!-- Listing all data in user tables -->
-                    <div class="table-responsive border-top userlist-table">
+                    <div class="table-responsive userlist-table">
                         <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                             <thead>
                                 <tr>

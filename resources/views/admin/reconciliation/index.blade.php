@@ -137,7 +137,7 @@
 </div>
 <div class="container-fluid">
     <!-- breadcrumb -->
-    <div class="breadcrumb-header justify-content-between">
+    <div class="breadcrumb-header justify-content-between my-3">
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="  content-title mb-0 my-auto pe-4">Reconciliation </h4>
@@ -176,16 +176,10 @@
 
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
-
-
-
             <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-
-
-
-                        <div class="table-responsive border-top userlist-table">
+                        <div class="table-responsive userlist-table">
                             <table class="table card-table table-striped table-vcenter text-nowrap mb-0" id="datatable">
                                 <thead>
                                     <tr>
