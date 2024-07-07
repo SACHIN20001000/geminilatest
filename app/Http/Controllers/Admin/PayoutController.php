@@ -91,7 +91,7 @@ class PayoutController extends Controller
 
                     $action = '<span class="action-buttons">
                                 
-                        <a  href="' . route("payout.index", $array) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
+                        <a  href="' . route("payout.index", $array) . '" class="iconBtn sasa"><i class="fa fa-eye"></i>
                         </a>
                     ';
                     return $action;

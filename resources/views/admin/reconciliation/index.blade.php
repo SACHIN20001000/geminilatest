@@ -154,15 +154,18 @@
                     <option value="no">No</option>
                 </select>
             </div>
-            <div class="pe-1 mb-xl-0 card">
-
+            <div class="pe-1 mb-xl-0">              
+                <div class="date_picker">
+                <div class="mb-xl-0 card p-2 mb-lg-2 mb-0">
+                    <button type="button" class="bg-white btn btn-default float-right d-flex align-items-center gap-2 p-0" id="daterange-btn">
+                        <i class="far fa-calendar-alt"></i>
+                        <div class="staticDays">Financial Year</div>
+                        <div id="dynamicDate"></div>
+                        <i class="fas fa-caret-down"></i>
+                    </button>
+                </div>
                 <div id="reportrange"><span></span></div>
-                <button type="button" style="display: flex; gap: 8px;" class="btn btn-default float-right" id="daterange-btn">
-                    <i class="far fa-calendar-alt"></i>
-                    <div class="staticDays">Financial Year</div>
-                    <div id="dynamicDate"></div>
-                    <i class="fas fa-caret-down"></i>
-                </button>
+            </div>
             </div>
 
             <div class="pe-1 mb-xl-0">

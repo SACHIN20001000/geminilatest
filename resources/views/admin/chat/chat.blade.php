@@ -5,7 +5,10 @@
  .chat-wrapper .chat-content .chat-body {overflow: auto;min-height: calc(100vh - 340px);}
 .load-more-messeges {background: #4660d9;top: 0;border: 1px solid #1e3bbf;color: #fff;font-weight: 4;padding: 4px 20px;border-radius: 50px;left: 15px;box-shadow: 1px 2px 3px rgba(0,0,0,.3);margin: 0px 0 20px 0;}
 .load-more-messages img {max-width: 29px;display: block;margin: 0 auto;}
-.active_chat{background: #f2f2f2;}
+.active_chat,.chat-item:hover {
+    background: #e1ffdd;
+    border-radius: 8px;
+} 
 ul#recent_contact>li {  padding: 0 15px !important;}
 .unread {font-weight: bold;color: #000 !important;}
 #recent_contact .recent_short_m {display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;  overflow: hidden;}
@@ -127,7 +130,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
   left: -10px;
   top: 0;
   border-top: 5px solid rgba(82, 113, 255, 0.1);
-  border-bottom: 5px solid transparent;
+  : 5px solid transparent;
   border-left: 5px solid transparent;
   border-right: 5px solid rgba(82, 113, 255, 0.1);
 }
@@ -147,7 +150,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
   margin-left: auto;
 }
 .chat-wrapper .chat-content .chat-body .messages .message-item.me .content .bubble {
-  background: rgba(102, 209, 209, 0.1);
+  background: #fff;
   border-radius: 5px 0 5px 5px;
   margin-left: auto;
 }
@@ -158,9 +161,9 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
   position: absolute;
   right: -10px;
   top: 0;
-  border-top: 5px solid rgba(102, 209, 209, 0.1);
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid rgba(102, 209, 209, 0.1);
+  border-top: 5px solid #fff;
+  : 5px solid transparent;
+  border-left: 5px solid #fff;
   border-right: 5px solid transparent;
 }
 .chat-wrapper .chat-content .chat-body .messages .message-item.me .content span {
@@ -186,18 +189,19 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
 .chat-wrapper figure .status.offline {
   background: #7987a1;
 }
+
   </style>
 <div class="row chat-wrapper">
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
         <div class="row position-relative">
-          <div class="col-lg-4 chat-aside border-end-lg">
+          <div class="col-lg-3 chat-aside border-end-lg">
             <div class="aside-content">
               <div class="aside-header">
                 <div class="d-flex justify-content-between align-items-center pb-2 mb-2">
                   <div class="d-flex align-items-center">
-                    <figure class="me-2 mb-0">
+                    <figure class="me-3 mb-0">
                       <img src="{{(isset(Auth()->user()->profile_photo_path) && !empty(Auth()->user()->profile_photo_path))? Auth()->user()->profile_photo_path : url('https://via.placeholder.com/37x37') }}" class="img-sm rounded-circle" alt="profile">
                       <div class="status online"></div>
                     </figure>
@@ -215,9 +219,11 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                     </div>
                   </div>
                 </div>
-                  <div class="input-group">
+                  <div class="input-group chat-search">
                     <div class="input-group-text">
                       <i data-feather="search" class="icon-md cursor-pointer"></i>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 14px; height: 14px;">
+                        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
                     </div>
                     <input type="text" name="search" class="form-control" id="searchForm" onkeyup="chatsEvent.getChatContact(this.value);" placeholder="Search here..." autocomplete="off">
                     <div class="cross-icon-delete" style="display: none;" onclick="chatsEvent.clearSearchBar();" id="cross_icon_delete">
@@ -243,7 +249,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status online"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1">
                             <div>
                               <p class="text-body">Jensen Combs</p>
                               <div class="d-flex align-items-center">
@@ -263,7 +269,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Leonardo Payne</p>
                               <div class="d-flex align-items-center">
@@ -283,7 +289,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Carl Henson</p>
                               <div class="d-flex align-items-center">
@@ -303,7 +309,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status online"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Jensen Combs</p>
                               <div class="d-flex align-items-center">
@@ -323,7 +329,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status online"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">John Doe</p>
                               <div class="d-flex align-items-center">
@@ -343,7 +349,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">John Doe</p>
                               <div class="d-flex align-items-center">
@@ -368,7 +374,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Amiah Burton</p>
                               <div class="d-flex align-items-center">
@@ -389,7 +395,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status online"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">John Doe</p>
                               <div class="d-flex align-items-center">
@@ -410,7 +416,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Yaretzi Mayo</p>
                               <div class="d-flex align-items-center">
@@ -431,7 +437,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">John Doe</p>
                               <div class="d-flex align-items-center">
@@ -452,7 +458,7 @@ input#chat-files+label {position: absolute;top: 0;content: "";background: #fff u
               </div>
             </div>
           </div>
-          <div class="col-lg-8 chat-content" id="chat_view" style="background: azure;">
+          <div class="col-lg-9 chat-content p-4" id="chat_view" style="background: #e1ffdd;border-radius: 12px;">
             
           </div>
         </div>
@@ -695,7 +701,7 @@ var  urlUser="{{$_GET['user'] ?? ''}}";
      },
      appendRecent(name = '', contact_id = '', message = '', date = '',extra_class = '',profile='') {
          $("#recent_contact_" + contact_id).remove();
-         $("#recent_contact").prepend('<li class="chat-item pe-1 '+extra_class+'" id="recent_contact_' + contact_id + '"> <a href="javascript:;" class="d-flex align-items-center chatlistdetails"> <figure class="mb-0 me-2"> <img src="'+profile+'" class="img-xs rounded-circle" alt="user"> <div class="status online"></div> </figure> <div class="d-flex justify-content-between flex-grow-1 border-bottom" onclick="chatsEvent.clickChatContact(' + contact_id + ');"> <div> <p class="text-body fw-bolder user_detail">' + name + '</p> <p class="text-muted tx-13" id="recent_contact_m_' + contact_id + '">' + message + '</p>  </div> <div class="d-flex flex-column align-items-end"> <p class="text-muted tx-13 mb-1">' + date + '</p> </div> </div> </a> </li>');
+         $("#recent_contact").prepend('<li class="chat-item pe-1 '+extra_class+'" id="recent_contact_' + contact_id + '"> <a href="javascript:;" class="d-flex align-items-center chatlistdetails"> <figure class="mb-0 me-2"> <img src="'+profile+'" class="img-xs rounded-circle" alt="user"> <div class="status online"></div> </figure> <div class="d-flex justify-content-between flex-grow-1 " onclick="chatsEvent.clickChatContact(' + contact_id + ');"> <div> <p class="text-body fw-bolder user_detail">' + name + '</p> <p class="text-muted tx-13" id="recent_contact_m_' + contact_id + '">' + message + '</p>  </div> <div class="d-flex flex-column align-items-end"> <p class="text-muted tx-13 mb-1">' + date + '</p> </div> </div> </a> </li>');
      },
      displayPusherMessage(messageData)
      {

@@ -17,9 +17,9 @@
     <div class="row row-sm">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
             <div class="card">
-                <div class="card-header pb-0">
+                <!-- <div class="card-header pb-0">
                     <p class="tx-12 tx-gray-500 mb-2">Listing of All Communication...</p>
-                </div>
+                </div> -->
                 <div class="card-body">
 
                     <!-- Listing all data in user tables -->

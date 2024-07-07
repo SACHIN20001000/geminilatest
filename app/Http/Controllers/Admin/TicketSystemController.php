@@ -30,13 +30,13 @@ class TicketSystemController extends Controller
                 ->addColumn('action', function ($row) {
 
                     $action = '<span class="action-buttons">
-                                <a  href="' . route("ticket.show", $row) . '" class="btn btn-sm btn-info btn-b"><i class="fa fa-eye"></i>
+                                <a  href="' . route("ticket.show", $row) . '" class="iconBtn sasa"><i class="fa fa-eye"></i>
                                 </a>
                                
                       
 
                         <a href="' . route("ticket.destroy", $row) . '"
-                                class="btn btn-sm btn-danger remove_us"
+                                class="iconBtn remove_us"
                                 title="Delete User"
                                 data-toggle="tooltip"
                                 data-placement="top"
@@ -44,7 +44,7 @@ class TicketSystemController extends Controller
                                 data-confirm-title="Please Confirm"
                                 data-confirm-text="Are you sure that you want to delete this ticket?"
                                 data-confirm-delete="Yes, delete it!">
-                                <i class="las la-trash"></i>
+                                <i class="las la-trash" style="color: #ff0000";></i>
                             </a>
                     ';
                     return $action;

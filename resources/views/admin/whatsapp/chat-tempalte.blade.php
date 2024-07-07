@@ -51,7 +51,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status online"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body fw-bolder">John Doe</p>
                                 <p class="text-muted tx-13">Hi, How are you?</p>
@@ -69,7 +69,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status offline"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body fw-bolder">Carl Henson</p>
                                 <div class="d-flex align-items-center">
@@ -90,7 +90,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status offline"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body">John Doe</p>
                                 <p class="text-muted tx-13">Hi, How are you?</p>
@@ -107,7 +107,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status online"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body">Jensen Combs</p>
                                 <div class="d-flex align-items-center">
@@ -127,7 +127,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status offline"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body">Yaretzi Mayo</p>
                                 <p class="text-muted tx-13">Hi, How are you?</p>
@@ -144,7 +144,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status offline"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body fw-bolder">John Doe</p>
                                 <p class="text-muted tx-13">Hi, How are you?</p>
@@ -162,7 +162,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status online"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body fw-bolder">Leonardo Payne</p>
                                 <div class="d-flex align-items-center">
@@ -183,7 +183,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status online"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body">John Doe</p>
                                 <p class="text-muted tx-13">Hi, How are you?</p>
@@ -200,7 +200,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status online"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body">Leonardo Payne</p>
                                 <div class="d-flex align-items-center">
@@ -220,7 +220,7 @@
                               <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                               <div class="status online"></div>
                             </figure>
-                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                            <div class="d-flex justify-content-between flex-grow-1 ">
                               <div>
                                 <p class="text-body">John Doe</p>
                                 <p class="text-muted tx-13">Hi, How are you?</p>
@@ -243,7 +243,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status online"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Jensen Combs</p>
                               <div class="d-flex align-items-center">
@@ -263,7 +263,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Leonardo Payne</p>
                               <div class="d-flex align-items-center">
@@ -283,7 +283,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Carl Henson</p>
                               <div class="d-flex align-items-center">
@@ -303,7 +303,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status online"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Jensen Combs</p>
                               <div class="d-flex align-items-center">
@@ -323,7 +323,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status online"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">John Doe</p>
                               <div class="d-flex align-items-center">
@@ -343,7 +343,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">John Doe</p>
                               <div class="d-flex align-items-center">
@@ -368,7 +368,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Amiah Burton</p>
                               <div class="d-flex align-items-center">
@@ -389,7 +389,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status online"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">John Doe</p>
                               <div class="d-flex align-items-center">
@@ -410,7 +410,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">Yaretzi Mayo</p>
                               <div class="d-flex align-items-center">
@@ -431,7 +431,7 @@
                             <img src="{{ url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
                             <div class="status offline"></div>
                           </figure>
-                          <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                          <div class="d-flex align-items-center justify-content-between flex-grow-1 ">
                             <div>
                               <p class="text-body">John Doe</p>
                               <div class="d-flex align-items-center">
@@ -453,7 +453,7 @@
             </div>
           </div>
           <div class="col-lg-8 chat-content">
-            <div class="chat-header border-bottom pb-2">
+            <div class="chat-header  pb-2">
               <div class="d-flex justify-content-between">
                 <div class="d-flex align-items-center">
                   <i data-feather="corner-up-left" id="backToChatList" class="icon-lg me-2 ms-n2 text-muted d-lg-none"></i>

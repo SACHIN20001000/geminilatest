@@ -11,7 +11,7 @@
       <img src="{{(isset($user->profile_photo_path) && !empty($user->profile_photo_path))? $user->profile_photo_path : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
       <div class="status online"></div>
     </figure>
-    <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+    <div class="d-flex justify-content-between flex-grow-1">
       <div>
         <p class="text-body fw-bolder user_detail" id="{{$user->id}}">{{$user->name}}</p>
         <p class="text-muted tx-13"></p>
@@ -45,7 +45,7 @@
       <img src="{{(isset($contact->user->profile_photo_path) && !empty($contact->user->profile_photo_path))? $contact->user->profile_photo_path : url('https://via.placeholder.com/37x37') }}" class="img-xs rounded-circle" alt="user">
       <div class="status online"></div>
     </figure>
-    <div class="d-flex justify-content-between flex-grow-1 border-bottom" onclick="chatsEvent.clickChatContact({{$contact->contact_id}});">
+    <div class="d-flex justify-content-between flex-grow-1" onclick="chatsEvent.clickChatContact({{$contact->contact_id}});">
       <div>
         <p class="text-body fw-bolder user_detail">{{$contact->user->name}}</p>
         @php

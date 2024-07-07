@@ -37,27 +37,29 @@
                         <div class="row mg-t-20">
 
                             <div class="col-lg-6">
-
-                                <label class="tx-gray-600">Ticket Information</label>
-                                <p class="invoice-info-row"><span>Policy Number</span> <span>{{$ticket->policy->policy_no ?? ''}}</span></p>
-                                <p class="invoice-info-row"><span>Reference name</span> <span>{{$ticket->policy->users->name ?? ''}}</span></p>
-                                <p class="invoice-info-row"><span>Company</span> <span>{{$ticket->policy->company->name ?? ''}}</span></p>
-                                <p class="invoice-info-row"><span>Holder name</span> <span>{{$ticket->policy->holder_name ?? ''}}</span></p>
-                                <p class="invoice-info-row"><span>Email</span> <span>{{$ticket->policy->email ?? ''}}</span></p>
+                                <div class="border p-4 rounded">
+                                <label class="tx-gray-600 fw-bold fs-6">Ticket Information</label>
+                                <p class="invoice-info-row"><span class="fw-bolder">Policy Number</span> <span>{{$ticket->policy->policy_no ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span class="fw-bolder">Reference name</span> <span>{{$ticket->policy->users->name ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span class="fw-bolder">Company</span> <span>{{$ticket->policy->company->name ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span class="fw-bolder">Holder name</span> <span>{{$ticket->policy->holder_name ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span class="fw-bolder">Email</span> <span>{{$ticket->policy->email ?? ''}}</span></p>
                                 
                             </div>
+                            </div>
                             <div class="col-lg-6">
-
+                            <div class="border p-4 rounded h-100">
                             <label class="tx-gray-600"></label>
 
-                                <p class="invoice-info-row"><span>Status</span> <span style="font-size: large;">{{$ticket->status ?? ''}}</span></p>
-                                <p class="invoice-info-row"><span>Current Value</span> <span>{{$ticket->current_value ?? ''}}</span></p>
-                                <p class="invoice-info-row"><span>New Value:</span> <span>{{$ticket->new_value ??''}}</span></p>
-                                <p class="invoice-info-row"><span>Created by</span> <span>{{$ticket->user->name ??''}} ({{$ticket->user->email ?? ''}})</span></p>
+                                <p class="invoice-info-row"><span class="fw-bolder">Status</span> <span class="badge bg-success">{{$ticket->status ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span class="fw-bolder">Current Value</span> <span>{{$ticket->current_value ?? ''}}</span></p>
+                                <p class="invoice-info-row"><span class="fw-bolder">New Value:</span> <span>{{$ticket->new_value ??''}}</span></p>
+                                <p class="invoice-info-row"><span class="fw-bolder">Created by</span> <span>{{$ticket->user->name ??''}} ({{$ticket->user->email ?? ''}})</span></p>
+                            </div>
                             </div>
                         </div>
-                        <div class="table-responsive mg-t-40">
-                            <h5>Remarks details</h5>
+                        <div class="table-responsive mt-4">
+                            <h5 class="fs-6 fw-bolder">Remarks details</h5>
                             <table class="table table-invoice border text-md-nowrap mb-0">
                                 <thead>
                                     <tr>
@@ -80,8 +82,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="table-responsive mg-t-40">
-                            <h5>Attachment details</h5>
+                        <div class="table-responsive mt-4">
+                            <h5 class="fs-6 fw-bolder">Attachment details</h5>
                             <table class="table table-invoice border text-md-nowrap mb-0">
                                 <thead>
                                     <tr>

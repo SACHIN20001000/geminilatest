@@ -30,7 +30,7 @@
                 @endif
                 @endforeach
         @else
-        <div class="chat-header border-bottom pb-2">
+        <div class="chat-header pb-2">
               <div class="d-flex justify-content-between">
                 <div class="d-flex align-items-center">
                   <i data-feather="corner-up-left" id="backToChatList" class="icon-lg me-2 ms-n2 text-muted d-lg-none"></i>

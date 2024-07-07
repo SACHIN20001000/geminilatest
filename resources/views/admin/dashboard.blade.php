@@ -23,6 +23,7 @@
         z-index: 10;
         border-radius: 6px;
         box-shadow: -8px 12px 18px 0 #dadee8;
+        right: 20px;
     }
 
     span.active-date:before {

@@ -362,6 +362,8 @@
                 <div class="input-group">
                   <div class="input-group-text">
                     <i data-feather="search" class="icon-md cursor-pointer"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 14px; height: 14px;">
+                        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
                   </div>
                   <input type="text" name="search" class="form-control" id="searchForm" onkeyup="chatsEvent.getChatContact(this.value);" placeholder="Search here..." autocomplete="off">
                   <div class="cross-icon-delete" style="display: none;" onclick="chatsEvent.clearSearchBar();" id="cross_icon_delete">
@@ -596,7 +598,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-8 chat-content" id="chat_view" style="background: azure;">
+          <div class="col-lg-8 chat-content p-4" id="chat_view" style="background: #e1ffdd;border-radius: 12px;">
 
           </div>
         </div>

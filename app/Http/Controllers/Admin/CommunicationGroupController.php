@@ -33,7 +33,7 @@ class CommunicationGroupController extends Controller
                         </a>
 
                         <a href="' . route("group.destroy", $row) . '"
-                                class="iconBtn remove_us"
+                                class="iconBtn remove_us asasa"
                                 title="Delete User"
                                 data-toggle="tooltip"
                                 data-placement="top"
