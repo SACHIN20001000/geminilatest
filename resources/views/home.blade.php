@@ -312,7 +312,7 @@
                     </div>
                     <div class="row justify-content-center align-items-center mx-0">
                         <div class="col-xxl-4 col-xl-5 col-lg-5 text-center text-lg-start">
-                            <img src="https://laravelui.spruko.com/valex/build/assets/images/media/pngs/9.png" alt="" class="img-fluid">
+                            <img src="{{asset('frontend/9.png')}}" alt="" class="img-fluid">
                         </div>
                         <div class="col-xxl-8 col-xl-7 col-lg-7 pt-5 pb-0 px-lg-2 px-5 text-start">
                             <h4 class="text-lg-start fw-medium mb-4">Why Choose Us?</h4>
