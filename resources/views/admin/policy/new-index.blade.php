@@ -297,12 +297,16 @@
         height: 32px;
         min-height: 32px;
     }
-    td.-small.no-click.truncate-text {max-width: 140px;}
+
+    td.-small.no-click.truncate-text {
+        max-width: 140px;
+    }
+
     .form-control.follow_up {
-    min-height: auto;
-    padding: 0 5px !important;
-    height: auto !important;
-}
+        min-height: auto;
+        padding: 0 5px !important;
+        height: auto !important;
+    }
 
     @media (max-width: 1650px) {
         td {
@@ -351,55 +355,68 @@
             padding: 0 5px !important;
         }
     }
+
     @media all and (max-width: 767px) {
         .header-btn {
             flex-wrap: wrap;
         }
+
         .date_picker {
-    display: block;
-    width: 100%;
-}
+            display: block;
+            width: 100%;
+        }
 
-.date_picker .card {
-    box-shadow: unset;
-}
+        .date_picker .card {
+            box-shadow: unset;
+        }
 
-button#daterange-btn {
-    width: 100%;
-}
-.dt-button.buttons-html5 {
-    min-width: 31%;
-}
-.dataTables_wrapper .dataTables_filter label {
-    display: flex;
-    align-items: center;
-}
-.dataTables_wrapper .dataTables_filter {
-        width: 100%;
-    }
-    div.dataTables_wrapper div.dataTables_filter input {
-        margin-left: 0px;
-    }
-    div#datatable_info {
-    float: unset;
-    margin-bottom: 20px;
-}
-div#datatable_length {
-    position: unset;
-    margin-top: 20px;
-}
-.userlist-table .table th {
-        padding: 6px 12px !important;
-    }
-    .dtfc-fixed-left, .dtfc-fixed-right {
-        position: unset !important;
-    }
-    div#datatable_paginate {
-        flex-wrap: wrap;
-    }
-    .truncate-text {
-        max-width: 126px;
-    }
+        button#daterange-btn {
+            width: 100%;
+        }
+
+        .dt-button.buttons-html5 {
+            min-width: 31%;
+        }
+
+        .dataTables_wrapper .dataTables_filter label {
+            display: flex;
+            align-items: center;
+        }
+
+        .dataTables_wrapper .dataTables_filter {
+            width: 100%;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter input {
+            margin-left: 0px;
+        }
+
+        div#datatable_info {
+            float: unset;
+            margin-bottom: 20px;
+        }
+
+        div#datatable_length {
+            position: unset;
+            margin-top: 20px;
+        }
+
+        .userlist-table .table th {
+            padding: 6px 12px !important;
+        }
+
+        .dtfc-fixed-left,
+        .dtfc-fixed-right {
+            position: unset !important;
+        }
+
+        div#datatable_paginate {
+            flex-wrap: wrap;
+        }
+
+        .truncate-text {
+            max-width: 126px;
+        }
     }
 </style>
 <div id="loader-wrapper" style="display: none;">
@@ -579,19 +596,19 @@ div#datatable_length {
                                 <tr>
                                     <th><input type="checkbox" name="all_checked" id="checkedAll" value="0"></th>
                                     @if (isset($_GET['id']) && $_GET['id'] == 1)
-                                    <th><span>Created<br class="d-lg-block d-none"/> On</span></th>
+                                    <th><span>Created<br class="d-lg-block d-none" /> On</span></th>
                                     @endif
-                                    <th><span>Reference<br class="d-lg-block d-none"/> Name</span></th>
-                                    <th><span>Holder<br class="d-lg-block d-none"/> Name</span></th>
-                                    <th><span>Company<br class="d-lg-block d-none"/> Name</span></th>
-                                    <th><span>Trasaction<br class="d-lg-block d-none"/> Type</span></th>
-                                    <th>Policy<br class="d-lg-block d-none"/> number</th>
-                                    <th><span>Sub<br class="d-lg-block d-none"/> Product</span></th>
-                                    <th><span>Payment<br class="d-lg-block d-none"/> Status</span></th>
-                                    <th><span>Reg<br class="d-lg-block d-none"/> No.</span></th>
+                                    <th><span>Reference<br class="d-lg-block d-none" /> Name</span></th>
+                                    <th><span>Holder<br class="d-lg-block d-none" /> Name</span></th>
+                                    <th><span>Company<br class="d-lg-block d-none" /> Name</span></th>
+                                    <th><span>Trasaction<br class="d-lg-block d-none" /> Type</span></th>
+                                    <th>Policy<br class="d-lg-block d-none" /> number</th>
+                                    <th><span>Sub<br class="d-lg-block d-none" /> Product</span></th>
+                                    <th><span>Payment<br class="d-lg-block d-none" /> Status</span></th>
+                                    <th><span>Reg<br class="d-lg-block d-none" /> No.</span></th>
                                     @if (isset($_GET['id']) && $_GET['id'] == 2)
-                                    <th><span>Expiry<br class="d-lg-block d-none"/> Date</span></th>
-                                    <th><span>Followup<br class="d-lg-block d-none"/> Date</span></th>
+                                    <th><span>Expiry<br class="d-lg-block d-none" /> Date</span></th>
+                                    <th><span>Followup<br class="d-lg-block d-none" /> Date</span></th>
                                     <th><span>Attachment</span></th>
                                     @endif
                                     @if (isset($_GET['duplicate']) && $_GET['duplicate'] == true)
@@ -606,6 +623,10 @@ div#datatable_length {
                                     <th>Modal</th>
                                     <th>Variant</th>
                                     <th>Reg No</th>
+                                    <th>Cc</th>
+                                    <th>Fuel</th>
+                                    <th>Seating Capacity</th>
+                                    <th>Mfr year</th>
                                     <th>Sum Insured</th>
                                     <th>OD Premium</th>
                                     <th>Add On Premium</th>
@@ -847,6 +868,8 @@ div#datatable_length {
                     'This Month': [moment().startOf('month'), moment().endOf('month')],
                     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
                         'month').endOf('month')],
+                    'Next Month': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')],
+
                     'Financial Year': [moment().subtract(0, 'years').startOf('year').add(3, 'months'),
                         moment().subtract(0, 'years').endOf('year').add(3, 'months').endOf('month')
                     ],
@@ -1156,6 +1179,22 @@ div#datatable_length {
                 }, {
                     data: 'reg_no',
                     name: 'reg_no',
+                    visible: false
+                }, {
+                    data: 'cc',
+                    name: 'cc',
+                    visible: false
+                }, {
+                    data: 'fuel',
+                    name: 'fuel',
+                    visible: false
+                }, {
+                    data: 'seating_capacity',
+                    name: 'seating_capacity',
+                    visible: false
+                }, {
+                    data: 'mfr_year',
+                    name: 'mfr_year',
                     visible: false
                 }, {
                     data: 'sum_insured',
@@ -1568,6 +1607,7 @@ div#datatable_length {
                         closeButton: true,
                         progressBar: true,
                     });
+                    table.draw();
                 }
             });
         });

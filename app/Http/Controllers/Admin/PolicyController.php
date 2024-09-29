@@ -45,7 +45,7 @@ class PolicyController extends Controller
         $users = User::all();
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns')->where(['is_policy' => 1]);
         if (isset($request->search_anything)   && !empty($request->search_anything)) {
-      
+
             $searchParam = ['holder_name', 'phone', 'email', 'reg_no', 'policy_no'];
             foreach ($searchParam as $key => $value) {
 
@@ -281,7 +281,7 @@ class PolicyController extends Controller
             }
         )->get();
         $ticket = TicketSystem::where('policy_id', $policy->id)->with('attachments')->first();
-        return view('admin.policy.one', compact('roles', 'model', 'users', 'channels', 'insurances', 'companies', 'policy', 'make', 'products', 'subProducts', 'varients','ticket'));
+        return view('admin.policy.one', compact('roles', 'model', 'users', 'channels', 'insurances', 'companies', 'policy', 'make', 'products', 'subProducts', 'varients', 'ticket'));
     }
 
     /**
@@ -426,6 +426,33 @@ class PolicyController extends Controller
     public function renew_status(Request $request)
     {
         Policy::find($request->policy_id)->update(['renew_status' => $request->status]);
+        if ($request->status == 'VEHICLE SOLD' || $request->status == 'NOT INTERESTED') {
+            $policy = Policy::find($request->policy_id);
+            
+            if ($policy->lead_id == 0) {
+             
+                $lead =  Lead::create([
+                    'user_id' => $policy->user_id ?? auth()->user()->id,
+                    'holder_name' => $policy->holder_name ?? '',
+                    'phone' => $policy->phone ?? '',
+                    'email' => $policy->email ?? '',
+                    'insurance_id' => $policy->insurance_id ?? null,
+                    'product_id' => $policy->product_id ?? null,
+                    'subproduct_id' => $policy->subproduct_id ?? null,
+                    'status' => 'REJECTED' ?? null,
+                ]);
+                
+                $policy->update(['lead_id' => $lead->id]);
+            } else {
+                Lead::find($policy->lead_id)->update(['status' => 'REJECTED', 'mark_read' => 0]);
+            }
+        }
+
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Status Updated successfully', 'data' => $request->all]);
+        } else {
+            return back()->with('success', 'Status Updated successfully!');
+        }
     }
 
     public function endrosment(Request $request)

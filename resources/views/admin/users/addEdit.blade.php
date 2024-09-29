@@ -154,7 +154,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="row row-xs align-items-center mg-b-20 ">
+                            <!-- <div class="row row-xs align-items-center mg-b-20 ">
                                 <div class="col-md-4">
                                     <label class="form-label mg-b-0">Photo</label>
                                 </div>
@@ -201,8 +201,59 @@
                                     <input type="file" class="dropify" name="gst">
                                     @endif
                                 </div>
+                            </div> -->
+                            <div class="col-lg-12 col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row row-xs  mg-b-20 " style="display: grid; grid-template-columns: 1fr 1fr;">
+                                            <h4>Attachments</h4>
+                                            <div class="btn btn-primary" id="add-attachment" style="width: 180px;"> Add Attachment</div>
+                                        </div>
+                                        <div class="row row-xs align-items-center mg-b-20">
+                                            <div class="col-md-8 mg-t-5 mg-md-t-0 attachmentCard">
+
+                                                @if(isset($user) && !empty($user->userAttachment))
+                                                @foreach($user->userAttachment as $attachment)
+
+
+                                                <div class="row mg-t-5">
+                                                    <div class="col-lg-6">
+                                                        <h6>Upload</h6>
+                                                        <input type="file" name="attachment[]" required="" id="attachment" class="form-control"
+                                                         value="{{$attachment->file}}"
+                                                        >
+                                                        <a href="{{URL::asset('profile')}}/{{$attachment->file}}" target="_blank">View</a>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <h6>Type</h6>
+
+                                                        <input type="text" name="attachment_type[]" required="" id="attachment_type" class="form-control""
+                                                        value="{{$attachment->type}}"
+                                                        >
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                                @else
+                                                <div class="row mg-t-5">
+                                                    <div class="col-lg-6">
+                                                        <h6>Upload</h6>
+                                                        <input type="file" name="attachment[]" required="" id="attachment" class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <h6>Type</h6>
+
+                                                        <input type="text" name="attachment_type[]" required="" id="attachment_type" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                         <button class="btn btn-main-primary pd-x-30 mg-r-5 mg-t-5" type="submit">{{isset($user) ? 'Update' : 'Save' }}</button>
                 </div>
             </div>
@@ -224,5 +275,25 @@
 @else
 {!! JsValidator::formRequest('App\Http\Requests\Admin\User\StoreUserRequest','#user-add-edit') !!}
 @endif
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add-attachment').click(function() {
+
+            $('.attachmentCard').append(`
+            <div class="row mg-t-5">
+                                                    <div class="col-lg-6">
+                                                        <h6>Upload</h6>
+                                                        <input type="file" name="attachment[]" required="" id="attachment" class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <h6>Type</h6>
+
+                                                        <input type="text" name="attachment_type[]" required="" id="attachment_type" class="form-control">
+                                                    </div>
+                                                </div>
+            `)
+        })
+    });
+</script>
 
 @endsection

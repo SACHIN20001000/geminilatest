@@ -41,22 +41,8 @@ class NewPolicyController extends Controller
 
         $products = SubProduct::all();
         $users = User::all();
-        $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns', 'company', 'attachments','makes','models','varriants')->where(['is_policy' => 1]);
-        if (isset($request->search_anything)   && !empty($request->search_anything)) {
-            // $query->orwhereHas('lead', function ($q) use ($request) {
+        $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns', 'company', 'attachments', 'makes', 'models', 'varriants')->where(['is_policy' => 1]);
 
-
-            // });
-            $searchParam = ['holder_name', 'phone', 'email', 'reg_no', 'policy_no'];
-            foreach ($searchParam as $key => $value) {
-
-                if ($key == 0) {
-                    $query->where($value, 'like', '%' . $request->search_anything . '%');
-                } else {
-                    $query->orwhere($value, 'like', '%' . $request->search_anything . '%');
-                }
-            }
-        }
         if (isset($request->id) && !empty($request->id)) {
             $date = strtotime(date('Y-m-d'));
             $today = date('Y-m-d', strtotime('-1 days', $date));
@@ -64,19 +50,18 @@ class NewPolicyController extends Controller
 
             if (isset($request->expiry_from) && !empty($request->expiry_from) && !empty($request->expiry_to) && isset($request->expiry_to)) {
                 if ($request->id == 1) {
-                    $query->whereBetween('start_date', [$request->expiry_from, $request->expiry_to]);
+                    $query->whereBetween('start_date', [$request->expiry_from, $request->expiry_to])->where('renew_status', 'FOLLOW UP')->orwhere('renew_status', 'POLICY ISSUED')->orwhere('renew_status', 'CLOSED');
                 } else {
                     $query->whereBetween('expiry_date', [$request->expiry_from, $request->expiry_to]);
+                    $query->where('renew_status', 'FOLLOW UP')->orwhere('renew_status', 'POLICY ISSUED');
                 }
             } else {
                 if ($request->id == 2) {
+                    $query->where('renew_status', 'FOLLOW UP')->orwhere('renew_status', 'POLICY ISSUED');
                     $query->whereBetween('expiry_date', [$today, $daysabove]);
                 }
             }
         }
-
-
-
         if (isset($request->type) && !empty($request->type)) {
             if ($request->type == 'premium_short') {
                 $query->where('mis_short_premium', '>', 0);
@@ -87,6 +72,18 @@ class NewPolicyController extends Controller
 
         if (Auth::user()->hasRole('Broker') ||  Auth::user()->hasRole('Client')) {
             $query->where('user_id', Auth::user()->id);
+        }
+
+        if (isset($request->search_anything)   && !empty($request->search_anything)) {
+            $searchParam = ['holder_name', 'phone', 'email', 'reg_no', 'policy_no'];
+            foreach ($searchParam as $key => $value) {
+
+                if ($key == 0) {
+                    $query->where($value, 'like', '%' . $request->search_anything . '%');
+                } else {
+                    $query->orwhere($value, 'like', '%' . $request->search_anything . '%');
+                }
+            }
         }
 
         if ($request->ajax()) {
@@ -190,7 +187,7 @@ class NewPolicyController extends Controller
                                     class="endrosment-btn iconBtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM625 177L497 305c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L591 143c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
                                 </a>';
 
-                    
+
 
                     // Check if request id is not 2, then show the action buttons
                     if (request()->id != 2) {

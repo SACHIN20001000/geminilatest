@@ -123,39 +123,53 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        
+
         $inputs = $request->all();
         $inputs['password'] = bcrypt($request->password);
         if ($request->hasFile('profile')) {
             $image_name = $request->file('profile')->getClientOriginalName();
             $request->profile->move(public_path('/profile'), $image_name);
             $inputs['profile'] = $image_name;
-          }
-          if ($request->hasFile('photo')) {
+        }
+        if ($request->hasFile('photo')) {
             $image_name = $request->file('photo')->getClientOriginalName();
             $request->photo->move(public_path('/profile'), $image_name);
             $inputs['photo'] = $image_name;
         }
-          if ($request->hasFile('pan_card')) {
+        if ($request->hasFile('pan_card')) {
             $image_name = $request->file('pan_card')->getClientOriginalName();
             $request->pan_card->move(public_path('/profile'), $image_name);
             $inputs['pan_card'] = $image_name;
-          }
-          if ($request->hasFile('aadhar_card')) {
+        }
+        if ($request->hasFile('aadhar_card')) {
             $image_name = $request->file('aadhar_card')->getClientOriginalName();
             $request->aadhar_card->move(public_path('/profile'), $image_name);
             $inputs['aadhar_card'] = $image_name;
-          }
-          if ($request->hasFile('gst')) {
+        }
+        if ($request->hasFile('gst')) {
             $image_name = $request->file('gst')->getClientOriginalName();
             $request->gst->move(public_path('/profile'), $image_name);
             $inputs['gst'] = $image_name;
-          }
+        }
 
         $user = User::create($inputs);
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         $role = Role::updateOrCreate(['name' => $request->role]);
         $user->assignRole($role);
+
+
+        if ($request->has('attachment') && !empty($request->attachment)) {
+            foreach ($request->attachment as $key => $value) {
+                $image_name = $value->getClientOriginalName();
+                $value->move(public_path('/profile'), $image_name);
+
+                $user->userAttachment()->create([
+                    'type' => $request->attachment_type[$key],
+                    'file' => $image_name
+                ]);
+            }
+        }
+
         return back()->with('success', 'User addded successfully!');
     }
 
@@ -182,6 +196,7 @@ class UserController extends Controller
     {
         $users = User::where('id', '!=', $user->id)->get();
         $role = Role::where('name', '!=', 'IotAdmin')->get();
+     
         return view('admin.users.addEdit', compact('user', 'users', 'role'));
     }
 
@@ -196,40 +211,36 @@ class UserController extends Controller
     {
 
         $inputs = $request->all();
-    
+      
         if ($request->hasFile('profile')) {
             $image_name = $request->file('profile')->getClientOriginalName();
             $request->profile->move(public_path('/profile'), $image_name);
             $inputs['profile'] = $image_name;
-          }
-          if ($request->hasFile('photo')) {
-            $image_name = $request->file('photo')->getClientOriginalName();
-            $request->photo->move(public_path('/profile'), $image_name);
-            $inputs['photo'] = $image_name;
         }
-          if ($request->hasFile('pan_card')) {
-            $image_name = $request->file('pan_card')->getClientOriginalName();
-            $request->pan_card->move(public_path('/profile'), $image_name);
-            $inputs['pan_card'] = $image_name;
-          }
-          if ($request->hasFile('aadhar_card')) {
-            $image_name = $request->file('aadhar_card')->getClientOriginalName();
-            $request->aadhar_card->move(public_path('/profile'), $image_name);
-            $inputs['aadhar_card'] = $image_name;
-          }
-          if ($request->hasFile('gst')) {
-            $image_name = $request->file('gst')->getClientOriginalName();
-            $request->gst->move(public_path('/profile'), $image_name);
-            $inputs['gst'] = $image_name;
-          }
+    
 
-          
+
+
+
         $inputs['password'] = bcrypt($request->password);
         $user->update($inputs);
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         $role = Role::updateOrCreate(['name' => $request->role]);
         $user->syncRoles([$role]);
 
+
+        if ($request->has('attachment') && !empty($request->attachment)) {
+            $user->userAttachment()->delete();
+            foreach ($request->attachment as $key => $value) {
+                $image_name = $value->getClientOriginalName();
+                $value->move(public_path('/profile'), $image_name);
+
+                $user->userAttachment()->create([
+                    'type' => $request->attachment_type[$key],
+                    'file' => $image_name
+                ]);
+            }
+        }
         return back()->with('success', 'User updated successfully!');
     }
 

@@ -22,7 +22,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = ['name', 'email', 'profile', 'password', 'phone', 'birthday', 'anniversary', 'account_no', 'bank_name', 'account_name', 'ifsc', 'upi', 'photo', 'pan_card', 'aadhar_card', 'gst', 'advance_payout','tds_percentage'];
+    protected $fillable = ['name', 'email', 'profile', 'password', 'phone', 'birthday', 'anniversary', 'account_no', 'bank_name', 'account_name', 'ifsc', 'upi', 'photo', 'pan_card', 'aadhar_card', 'gst', 'advance_payout', 'tds_percentage'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -45,10 +45,7 @@ class User extends Authenticatable
         'updated_at' => 'datetime:M d, Y h:i:s',
     ];
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
+
 
     public function getCreatedAtAttribute($value)
     {
@@ -107,5 +104,10 @@ class User extends Authenticatable
     public function shortPremium()
     {
         return $this->policies->sum('mis_short_premium');
+    }
+
+    public function userAttachment()
+    {
+        return $this->hasMany(UserAttachment::class, 'user_id', 'id');
     }
 }
