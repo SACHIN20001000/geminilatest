@@ -24,8 +24,8 @@ class PolicyRequest extends FormRequest
     public function rules()
     {
         return [
-            'policy_no' => 'policy_no|unique:policies',
-            'policy_no_normal' => 'policy_no|unique:policies',
+            'policy_no' => 'required',
+            'policy_no_normal' => 'required',
             'holder_name' => 'required',
             'channel_name' => 'required',
             'mis_amount_paid' => 'required',
