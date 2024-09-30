@@ -1764,6 +1764,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Broker'))
                                 <div class="container payout-details">
                                     <div class="card">
                                         <div class="card-body">
@@ -1843,7 +1844,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                @endif
 
 
 
@@ -1885,14 +1886,14 @@
                                         @endif
                                         @if(isset($ticket) && !empty($ticket->attachments))
                                         @foreach($ticket->attachments as $attachment)
-                                       
+
                                         <tr>
                                             <td>{{$attachment->user->name ?? ''}}</td>
                                             <td>{{$attachment->created_at}}</td>
                                             <td><a href="{{asset('attachments/'.$attachment->file)}}" target="_blank">{{$attachment->file}}</a></td>
                                             <td>Endrosment</td>
                                         </tr>
-                                     
+
                                         @endforeach
                                         @endif
                                     </tbody>

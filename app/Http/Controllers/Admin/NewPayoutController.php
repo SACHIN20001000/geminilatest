@@ -8,8 +8,8 @@ use App\Models\Policy;
 use App\Models\User;
 use Illuminate\Http\Request;
 use DataTables;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use Illuminate\Support\Facades\File;
@@ -31,6 +31,11 @@ class NewPayoutController extends Controller
                     $q->whereBetween('created_at', [$startDate, $endDate]);
                 });
             }
+            if (Auth::user()->hasRole('Broker')  ||  Auth::user()->hasRole('Client')) {
+                $query->where('id', Auth::id());
+            }
+
+
             $query->whereHas('policies', function ($q) {
                 $q->whereNull('invoice_id')->where('is_mis', 1);
             });
@@ -111,6 +116,9 @@ class NewPayoutController extends Controller
         }
         if ($request->reference_name) {
             $query->where('user_id', $request->reference_name);
+        }
+        if (Auth::user()->hasRole('Broker')  ||  Auth::user()->hasRole('Client')) {
+            $query->where('user_id', Auth::user()->id);
         }
         $query->whereNull('invoice_id')->where('is_mis', 1);
         $payable = $query->sum('mis_commission');

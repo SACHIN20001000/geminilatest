@@ -135,6 +135,7 @@
                                             </div>
                                             <div class="col-sm-10">
                                                 <div class="row main-row">
+                                                    @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
                                                     <div class="row row-xs formgroup-wrapper">
                                                         <div class="col-lg-6  text-center">
                                                             <div class="main-form-group background">
@@ -164,6 +165,7 @@
                                                         </div>
 
                                                     </div>
+                                                    @endif
                                                     <div class="row row-xs formgroup-wrapper">
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">
@@ -1723,6 +1725,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Broker'))
                             <div class="container payout-details">
                                 <div class="card">
                                     <div class="card-body">
@@ -1801,6 +1804,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
                             <div class="container payout-details">
                                 <div class="card">
                                     <div class="card-body">
@@ -1886,6 +1890,8 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
+                            @endif
                             <div class="container">
 
                                 <div class="card">
@@ -2604,7 +2610,7 @@
         var commission_calc = payout_received - mis_commission;
         $("#internal_payout_saved").val(commission_calc);
         var percentage = (payout_received / mis_commission) * 100;
-       
+
         $("#internal_payout_percentage").val(percentage.toFixed(2));
 
     }

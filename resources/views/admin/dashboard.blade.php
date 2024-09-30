@@ -51,6 +51,7 @@
             </div>
         </div>
         <div class="main-dashboard-header-right">
+            @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
             <div>
                 <label class="tx-13">Total User</label>
                 <h5 id="totalUser">0</h5>
@@ -59,22 +60,14 @@
                 <label class="tx-13">Total Sales</label>
                 <h5 id="totalSales">0</h5>
             </div>
-            <!-- <div class="card">
-                <div id="reportrange"><span></span></div>
-                <button type="button" style="display: flex; gap: 8px;" class="btn btn-default float-right" id="daterange-btn">
-                    <i class="far fa-calendar-alt"></i>
-                    <div class="staticDays">Financial Year</div>
-                    <div id="dynamicDate"></div>
-                    <i class="fas fa-caret-down"></i>
-                </button>
-            </div> -->
+            @endif
+         
             <div class="date_picker">
                 <div class="mb-xl-0 card p-2 mb-lg-2 mb-0">
                     <button
                         type="button"
                         class="bg-white btn btn-default float-right d-flex align-items-center gap-2 p-0"
-                        id="daterange-btn"
-                    >
+                        id="daterange-btn">
                         <i class="far fa-calendar-alt"></i>
                         <div class="staticDays">Financial Year</div>
                         <div id="dynamicDate"></div>
@@ -98,8 +91,7 @@
                             <p class="mb-0 tx-12 text-white">Count</p>
                             <h4
                                 class="tx-20 fw-bold mb-1 text-white"
-                                id="policyCount"
-                            >
+                                id="policyCount">
                                 0
                             </h4>
                         </div>
@@ -107,8 +99,7 @@
                             <p class="mb-0 tx-12 text-white">Amount</p>
                             <h4
                                 class="tx-20 fw-bold mb-1 text-white"
-                                id="policyAmount"
-                            >
+                                id="policyAmount">
                                 0
                             </h4>
                         </div>
@@ -125,8 +116,7 @@
                             <p class="mb-0 tx-12 text-white">Count</p>
                             <h4
                                 class="tx-20 fw-bold mb-1 text-white"
-                                id="renewalCount"
-                            >
+                                id="renewalCount">
                                 0
                             </h4>
                         </div>
@@ -134,8 +124,7 @@
                             <p class="mb-0 tx-12 text-white">Amount</p>
                             <h4
                                 class="tx-20 fw-bold mb-1 text-white"
-                                id="renewalAmount"
-                            >
+                                id="renewalAmount">
                                 0
                             </h4>
                         </div>
@@ -152,8 +141,7 @@
                             <p class="mb-0 tx-12 text-white">Count</p>
                             <h4
                                 class="tx-20 fw-bold mb-1 text-white"
-                                id="premiumShortCount"
-                            >
+                                id="premiumShortCount">
                                 0
                             </h4>
                         </div>
@@ -161,8 +149,7 @@
                             <p class="mb-0 tx-12 text-white">Amount</p>
                             <h4
                                 class="tx-20 fw-bold mb-1 text-white"
-                                id="premiumShortAmount"
-                            >
+                                id="premiumShortAmount">
                                 0
                             </h4>
                         </div>
@@ -179,8 +166,7 @@
                             <p class="mb-0 tx-12 text-white">Count</p>
                             <h4
                                 class="tx-20 fw-bold mb-1 text-white"
-                                id="premiumDepositCount"
-                            >
+                                id="premiumDepositCount">
                                 0
                             </h4>
                         </div>
@@ -188,8 +174,7 @@
                             <p class="mb-0 tx-12 text-white">Amount</p>
                             <h4
                                 class="tx-20 fw-bold mb-1 text-white"
-                                id="premiumDepositAmount"
-                            >
+                                id="premiumDepositAmount">
                                 0
                             </h4>
                         </div>
@@ -207,15 +192,11 @@
                     <ul class="timeline-1 mb-0">
                         <li class="mt-0 mrg-8 closed-renewal-click">
                             <i
-                                class="si si-eye bg-purple-gradient text-white product-icon"
-                            ></i>
-                            <span class="fw-semibold mb-4 tx-14"
-                                >Closed Renewals</span
-                            >
+                                class="si si-eye bg-purple-gradient text-white product-icon"></i>
+                            <span class="fw-semibold mb-4 tx-14">Closed Renewals</span>
                             <p
                                 class="mb-0 text-muted tx-12"
-                                id="closedRenewal"
-                            ></p>
+                                id="closedRenewal"></p>
                         </li>
                     </ul>
                     <div id="pie-container"></div>
@@ -228,8 +209,7 @@
                     <select
                         name="chart_type"
                         id="chart_type"
-                        class="form-control chart_type"
-                    >
+                        class="form-control chart_type">
                         <option value="SubProduct">Product</option>
                         <option value="ChannelName">Channel Wise</option>
                         <option value="CompanyName">Company Wise</option>
@@ -241,8 +221,7 @@
                         name="users[]"
                         id="users"
                         multiple="multiple"
-                        class="form-control users"
-                    >
+                        class="form-control users">
                         <option value="SubProduct">Select User</option>
                         @foreach($users as $user)
                         <option value="{{ $user->id }}">
@@ -262,13 +241,12 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#users-box").hide();
         $("#users").select2({
             closeOnSelect: false, // Keep the dropdown open when a selection is made
         });
-        $("#daterange-btn").daterangepicker(
-            {
+        $("#daterange-btn").daterangepicker({
                 ranges: {
                     Today: [moment(), moment()],
                     Yesterday: [
@@ -286,25 +264,25 @@
                     ],
                     "Financial Year": [
                         moment()
-                            .subtract(1, "years")
-                            .startOf("year")
-                            .add(3, "months"),
+                        .subtract(1, "years")
+                        .startOf("year")
+                        .add(3, "months"),
                         moment()
-                            .subtract(1, "years")
-                            .endOf("year")
-                            .add(3, "months")
-                            .endOf("month"),
+                        .subtract(1, "years")
+                        .endOf("year")
+                        .add(3, "months")
+                        .endOf("month"),
                     ],
                     "Last Financial Year": [
                         moment()
-                            .subtract(2, "years")
-                            .startOf("year")
-                            .add(3, "months"),
+                        .subtract(2, "years")
+                        .startOf("year")
+                        .add(3, "months"),
                         moment()
-                            .subtract(2, "years")
-                            .endOf("year")
-                            .add(3, "months")
-                            .endOf("month"),
+                        .subtract(2, "years")
+                        .endOf("year")
+                        .add(3, "months")
+                        .endOf("month"),
                     ],
                 },
                 startDate: moment()
@@ -317,11 +295,11 @@
                     .add(3, "months")
                     .endOf("month"),
             },
-            function (start, end, range) {
+            function(start, end, range) {
                 $("#reportrange span").html(
                     start.format("MMMM D, YYYY") +
-                        " - " +
-                        end.format("MMMM D, YYYY")
+                    " - " +
+                    end.format("MMMM D, YYYY")
                 );
                 $("#reportrange span").addClass("active-date");
                 $("#dynamicDate").html(range);
@@ -329,7 +307,7 @@
             }
         );
 
-        $("#daterange-btn").on("apply.daterangepicker", function (ev, picker) {
+        $("#daterange-btn").on("apply.daterangepicker", function(ev, picker) {
             var start = picker.startDate.format("YYYY-MM-DD");
             var end = picker.endDate.format("YYYY-MM-DD");
             var range = $("#dynamicDate").html();
@@ -343,7 +321,7 @@
             );
         });
 
-        $(".chart_type").on("change", function () {
+        $(".chart_type").on("change", function() {
             var start = $("#daterange-btn")
                 .data("daterangepicker")
                 .startDate.format("YYYY-MM-DD");
@@ -359,7 +337,7 @@
             ajaxCall(start, end, range, $(this).val(), $("#users").val());
         });
 
-        $(".users").on("change", function () {
+        $(".users").on("change", function() {
             var start = $("#daterange-btn")
                 .data("daterangepicker")
                 .startDate.format("YYYY-MM-DD");
@@ -370,7 +348,7 @@
             ajaxCall(start, end, range, $("#chart_type").val(), $(this).val());
         });
 
-        $(".policy-click").on("click", function () {
+        $(".policy-click").on("click", function() {
             var start = $("#daterange-btn")
                 .data("daterangepicker")
                 .startDate.format("YYYY-MM-DD");
@@ -383,7 +361,7 @@
                 url + "&expiry_from=" + start + "&expiry_to=" + end;
         });
 
-        $(".renewal-click").on("click", function () {
+        $(".renewal-click").on("click", function() {
             var start = $("#daterange-btn")
                 .data("daterangepicker")
                 .startDate.format("YYYY-MM-DD");
@@ -396,7 +374,7 @@
                 url + "&expiry_from=" + start + "&expiry_to=" + end;
         });
 
-        $(".short-click").on("click", function () {
+        $(".short-click").on("click", function() {
             var start = $("#daterange-btn")
                 .data("daterangepicker")
                 .startDate.format("YYYY-MM-DD");
@@ -414,7 +392,7 @@
                 "&type=premium_short";
         });
 
-        $(".premium-deposit-click").on("click", function () {
+        $(".premium-deposit-click").on("click", function() {
             var start = $("#daterange-btn")
                 .data("daterangepicker")
                 .startDate.format("YYYY-MM-DD");
@@ -432,7 +410,7 @@
                 "&type=premium_deposit";
         });
 
-        $(".closed-renewal-click").on("click", function () {
+        $(".closed-renewal-click").on("click", function() {
             var start = $("#daterange-btn")
                 .data("daterangepicker")
                 .startDate.format("YYYY-MM-DD");
@@ -473,7 +451,7 @@
                     chartType: chartType,
                     users: users,
                 },
-                success: function (data) {
+                success: function(data) {
                     $("#totalSubProduct").html(data.totalSubProduct);
                     $("#totalPolicy").html(data.totalPolicy);
                     $("#totalUser").html(data.totalUser);
@@ -510,9 +488,9 @@
         function highChart(categories, data) {
             // Abbreviate long channel names
             const abbreviatedCategories = categories.map((category) => {
-                return category.length > 10
-                    ? category.substring(0, 10) + "..."
-                    : category;
+                return category.length > 10 ?
+                    category.substring(0, 10) + "..." :
+                    category;
             });
 
             // Chart configuration with improvements
@@ -560,8 +538,7 @@
                 chart: {
                     zoomType: "xy",
                 },
-                series: [
-                    {
+                series: [{
                         name: "Premium",
                         data: data.price,
                     },
@@ -604,13 +581,11 @@
                         showInLegend: true,
                     },
                 },
-                series: [
-                    {
-                        name: "Policy Count",
-                        colorByPoint: true,
-                        data: chartData,
-                    },
-                ],
+                series: [{
+                    name: "Policy Count",
+                    colorByPoint: true,
+                    data: chartData,
+                }, ],
             });
         }
     });

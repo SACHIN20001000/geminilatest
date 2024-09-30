@@ -110,7 +110,7 @@
                             <i class="fas fa-caret-down"></i>
                         </button>
                     </div>
-
+                    @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
                     <div class="col-lg-3 mg-t-20 mg-lg-t-0">
                         <div class="input-group">
                             <div class="">
@@ -126,6 +126,8 @@
                             </select>
                         </div><!-- input-group -->
                     </div>
+
+                    @endif
                     <div class="col-lg-3 mg-t-20 mg-lg-t-0">
                         <div class="input-group">
                             <div class="">
@@ -143,11 +145,13 @@
                             <button class="btn btn-primary" id="filter">Filter</button>
                         </div>
                     </div>
+                    @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
                     <div class="col-lg-2 mg-t-20 mg-lg-t-0">
                         <div class="input-group">
                             <button class="btn btn-success" id="generate-invoice">Generate Invoice</button>
                         </div>
                     </div>
+                    @endif
 
                 </div>
             </div>
@@ -308,7 +312,7 @@
 
 
         $('#daterange-btn').daterangepicker({
-            ranges: {
+                ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                     'Last 7 Days': [moment().subtract(6, 'days'), moment()],

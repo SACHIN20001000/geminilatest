@@ -33,11 +33,13 @@
                         <path fill-rule="evenodd" d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z" />
                     </svg><span class="side-menu__label">Dashboard</span><span class="badge bg-success text-light" id="bg-side-text"></span></a>
             </li>
-           
+
             <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide" href="#" >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>  
-                <span class="side-menu__label">Users </span><i class="angle fe fe-chevron-down"></i></a>
+                <a class="side-menu__item" data-bs-toggle="slide" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+                    </svg>
+                    <span class="side-menu__label">Users </span><i class="angle fe fe-chevron-down"></i></a>
 
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="{{route('users.index')}}">Users</a></li>
@@ -113,8 +115,10 @@
             @if( Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Staff'))
             <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20" fill="#0162e8"><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>    
-                <span class="side-menu__label">Users </span><i class="angle fe fe-chevron-down"></i></a>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20" fill="#0162e8">
+                        <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
+                    </svg>
+                    <span class="side-menu__label">Users </span><i class="angle fe fe-chevron-down"></i></a>
 
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="{{route('users.index')}}">Users</a></li>
@@ -180,7 +184,7 @@
                 <ul class="slide-menu">
                     <!-- <li><a class="slide-item" href="{{ route('policy.index',['id'=> 1]) }}">Policy</a></li> -->
                     <li><a class="slide-item" href="{{ route('new-policy.index',['id'=> 1]) }}">Policy</a></li>
-                    
+
 
                     <li><a class="slide-item" href="{{ route('policyView') }}">Import</a></li>
                 </ul>
@@ -188,7 +192,7 @@
             </li>
             <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('new-policy.index',['id'=> 2]) }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g transform="translate(24 0) scale(-1 1)">
                             <path fill="#0162e8" d="M12 21.9q-.175 0-.325-.025t-.3-.075Q8 20.675 6 17.638T4 11.1V6.375q0-.625.363-1.125t.937-.725l6-2.25q.35-.125.7-.125t.7.125l6 2.25q.575.225.938.725T20 6.375V11.1q0 1.575-.413 3.063T18.4 17l-2.95-2.95q.275-.475.413-.988T16 12q0-1.65-1.175-2.825T12 8q-1.65 0-2.825 1.175T8 12q0 1.65 1.175 2.825T12 16q.525 0 1.038-.138T14 15.45l3.225 3.2q-.95 1.125-2.087 1.913T12.625 21.8q-.15.05-.3.075T12 21.9Zm0-7.9q-.825 0-1.413-.587T10 12q0-.825.588-1.413T12 10q.825 0 1.413.588T14 12q0 .825-.588 1.413T12 14Z" />
                         </g>
@@ -286,22 +290,7 @@
 
 
             </li>
-<!-- 
-            <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('income.index') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
-                        <g transform="translate(48 0) scale(-1 1)">
-                            <g fill="none" stroke="#0162e8" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
-                                <path d="m35 38l-5-5l5-5m8 10l-5-5l5-5" />
-                                <path d="M43 22V9a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v30a2 2 0 0 0 2 2h21.47" />
-                                <path d="m13 15l5 6l5-6M12 27h12m-12-6h12m-6 0v12" />
-                            </g>
-                        </g>
-                    </svg>
-                    <span class="side-menu__label">Reconciliation</span></a>
 
-
-            </li> -->
             <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('reconciliation.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
@@ -332,9 +321,9 @@
 
 
             @endif
-            @if( Auth::user()->hasRole('Broker') )
+            @if( Auth::user()->hasRole('Broker') || Auth::user()->hasRole('Client') )
 
-          
+
             <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('leads.index',['id'=> 1]) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -342,39 +331,38 @@
                             <path fill="#0162e8" d="M10 4c2.2 0 4 1.8 4 4s-1.8 4-4 4s-4-1.8-4-4s1.8-4 4-4m7 17l1.8 1.77c.5.5 1.2.1 1.2-.49V18l2.8-3.4A1 1 0 0 0 22 13h-7c-.8 0-1.3 1-.8 1.6L17 18v3m-2-2.3l-2.3-2.8c-.4-.5-.6-1.1-.6-1.7c-.7-.2-1.4-.2-2.1-.2c-4.4 0-8 1.8-8 4v2h13v-1.3Z" />
                         </g>
                     </svg>
-                    <span class="side-menu__label">Lead (<?php echo count_lead() ?>) </span></a>
+                    <span class="side-menu__label">Lead </span></a>
 
 
             </li>
             <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide">
+                <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('new-policy.index',['id'=> 1]) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g transform="translate(24 0) scale(-1 1)">
                             <path fill="#0162e8" d="M12 21.9q-.175 0-.325-.025t-.3-.075Q8 20.675 6 17.638T4 11.1V6.375q0-.625.363-1.125t.937-.725l6-2.25q.35-.125.7-.125t.7.125l6 2.25q.575.225.938.725T20 6.375V11.1q0 1.575-.413 3.063T18.4 17l-2.95-2.95q.275-.475.413-.988T16 12q0-1.65-1.175-2.825T12 8q-1.65 0-2.825 1.175T8 12q0 1.65 1.175 2.825T12 16q.525 0 1.038-.138T14 15.45l3.225 3.2q-.95 1.125-2.087 1.913T12.625 21.8q-.15.05-.3.075T12 21.9Zm0-7.9q-.825 0-1.413-.587T10 12q0-.825.588-1.413T12 10q.825 0 1.413.588T14 12q0 .825-.588 1.413T12 14Z" />
                         </g>
                     </svg>
-                    <span class="side-menu__label">Policy (<?php echo new_policy() ?>)</span> <i class="angle fe fe-chevron-down"></i></a>
-
-                <ul class="slide-menu">
-                    <li><a class="slide-item" href="{{ route('new-policy.index',['id'=> 1]) }}">New Policy</a></li>
-                </ul>
-
+                    <span class="side-menu__label">Policy</span></a>
+            </li>
+            <li class="slide">
+                <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('new-policy.index',['id'=> 2]) }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g transform="translate(24 0) scale(-1 1)">
+                            <path fill="#0162e8" d="M12 21.9q-.175 0-.325-.025t-.3-.075Q8 20.675 6 17.638T4 11.1V6.375q0-.625.363-1.125t.937-.725l6-2.25q.35-.125.7-.125t.7.125l6 2.25q.575.225.938.725T20 6.375V11.1q0 1.575-.413 3.063T18.4 17l-2.95-2.95q.275-.475.413-.988T16 12q0-1.65-1.175-2.825T12 8q-1.65 0-2.825 1.175T8 12q0 1.65 1.175 2.825T12 16q.525 0 1.038-.138T14 15.45l3.225 3.2q-.95 1.125-2.087 1.913T12.625 21.8q-.15.05-.3.075T12 21.9Zm0-7.9q-.825 0-1.413-.587T10 12q0-.825.588-1.413T12 10q.825 0 1.413.588T14 12q0 .825-.588 1.413T12 14Z" />
+                        </g>
+                    </svg>
+                    <span class="side-menu__label">Renewals</span></a>
             </li>
 
             <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide">
+                <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('new-payout.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 384 512">
                         <g transform="translate(384 0) scale(-1 1)">
                             <path fill="#0162e8" d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM64 80c0-8.8 7.2-16 16-16h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16zm128 72c8.8 0 16 7.2 16 16v17.3c8.5 1.2 16.7 3.1 24.1 5.1c8.5 2.3 13.6 11 11.3 19.6s-11 13.6-19.6 11.3c-11.1-3-22-5.2-32.1-5.3c-8.4-.1-17.4 1.8-23.6 5.5c-5.7 3.4-8.1 7.3-8.1 12.8c0 3.7 1.3 6.5 7.3 10.1c6.9 4.1 16.6 7.1 29.2 10.9l.5.1c11.3 3.4 25.3 7.6 36.3 14.6c12.1 7.6 22.4 19.7 22.7 38.2c.3 19.3-9.6 33.3-22.9 41.6c-7.7 4.8-16.4 7.6-25.1 9.1V440c0 8.8-7.2 16-16 16s-16-7.2-16-16v-17.8c-11.2-2.1-21.7-5.7-30.9-8.9c-2.1-.7-4.2-1.4-6.2-2.1c-8.4-2.8-12.9-11.9-10.1-20.2s11.9-12.9 20.2-10.1c2.5.8 4.8 1.6 7.1 2.4c13.6 4.6 24.6 8.4 36.3 8.7c9.1.3 17.9-1.7 23.7-5.3c5.1-3.2 7.9-7.3 7.8-14c-.1-4.6-1.8-7.8-7.7-11.6c-6.8-4.3-16.5-7.4-29-11.2l-1.6-.5c-11-3.3-24.3-7.3-34.8-13.7c-12-7.2-22.6-18.9-22.7-37.3c-.1-19.4 10.8-32.8 23.8-40.5c7.5-4.4 15.8-7.2 24.1-8.7V232c0-8.8 7.2-16 16-16z" />
                         </g>
                     </svg>
-                    <span class="side-menu__label">Payouts</span><i class="angle fe fe-chevron-down"></i></a>
-                <ul class="slide-menu">
-                    <li><a class="slide-item" href="{{ route('new-payout.index') }}">Payout</a></li>
-                    <li><a class="slide-item" href="{{ route('invoice') }}">Pending Invoice</a></li>
-                    <li><a class="slide-item" href="{{ route('invoice.verified',['id'=> 1])  }}">Verified Invoice</a></li>
-                    <li><a class="slide-item" href="{{ route('users.index',['id'=> 2,'advance'=>1]) }}">Advance Payment</a></li>
-                </ul>
+                    <span class="side-menu__label">Payouts</span></a>
+
 
             </li>
             <li class="slide">
@@ -391,55 +379,6 @@
 
 
             </li>
-
-
-
-            @endif
-            @if( Auth::user()->hasRole('Client') )
-
-            <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('leads.index',['id'=> 1]) }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <g transform="translate(24 0) scale(-1 1)">
-                            <path fill="#0162e8" d="M10 4c2.2 0 4 1.8 4 4s-1.8 4-4 4s-4-1.8-4-4s1.8-4 4-4m7 17l1.8 1.77c.5.5 1.2.1 1.2-.49V18l2.8-3.4A1 1 0 0 0 22 13h-7c-.8 0-1.3 1-.8 1.6L17 18v3m-2-2.3l-2.3-2.8c-.4-.5-.6-1.1-.6-1.7c-.7-.2-1.4-.2-2.1-.2c-4.4 0-8 1.8-8 4v2h13v-1.3Z" />
-                        </g>
-                    </svg>
-                    <span class="side-menu__label">Lead (<?php echo count_lead() ?>) </span></a>
-
-
-            </li>
-            <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <g transform="translate(24 0) scale(-1 1)">
-                            <path fill="#0162e8" d="M12 21.9q-.175 0-.325-.025t-.3-.075Q8 20.675 6 17.638T4 11.1V6.375q0-.625.363-1.125t.937-.725l6-2.25q.35-.125.7-.125t.7.125l6 2.25q.575.225.938.725T20 6.375V11.1q0 1.575-.413 3.063T18.4 17l-2.95-2.95q.275-.475.413-.988T16 12q0-1.65-1.175-2.825T12 8q-1.65 0-2.825 1.175T8 12q0 1.65 1.175 2.825T12 16q.525 0 1.038-.138T14 15.45l3.225 3.2q-.95 1.125-2.087 1.913T12.625 21.8q-.15.05-.3.075T12 21.9Zm0-7.9q-.825 0-1.413-.587T10 12q0-.825.588-1.413T12 10q.825 0 1.413.588T14 12q0 .825-.588 1.413T12 14Z" />
-                        </g>
-                    </svg>
-                    <span class="side-menu__label">Policy (<?php echo new_policy() ?>)</span> <i class="angle fe fe-chevron-down"></i></a>
-
-                <ul class="slide-menu">
-                    <li><a class="slide-item" href="{{ route('new-policy.index',['id'=> 1]) }}">New Policy</a></li>
-                </ul>
-
-            </li>
-
-            <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 384 512">
-                        <g transform="translate(384 0) scale(-1 1)">
-                            <path fill="#0162e8" d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM64 80c0-8.8 7.2-16 16-16h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16zm128 72c8.8 0 16 7.2 16 16v17.3c8.5 1.2 16.7 3.1 24.1 5.1c8.5 2.3 13.6 11 11.3 19.6s-11 13.6-19.6 11.3c-11.1-3-22-5.2-32.1-5.3c-8.4-.1-17.4 1.8-23.6 5.5c-5.7 3.4-8.1 7.3-8.1 12.8c0 3.7 1.3 6.5 7.3 10.1c6.9 4.1 16.6 7.1 29.2 10.9l.5.1c11.3 3.4 25.3 7.6 36.3 14.6c12.1 7.6 22.4 19.7 22.7 38.2c.3 19.3-9.6 33.3-22.9 41.6c-7.7 4.8-16.4 7.6-25.1 9.1V440c0 8.8-7.2 16-16 16s-16-7.2-16-16v-17.8c-11.2-2.1-21.7-5.7-30.9-8.9c-2.1-.7-4.2-1.4-6.2-2.1c-8.4-2.8-12.9-11.9-10.1-20.2s11.9-12.9 20.2-10.1c2.5.8 4.8 1.6 7.1 2.4c13.6 4.6 24.6 8.4 36.3 8.7c9.1.3 17.9-1.7 23.7-5.3c5.1-3.2 7.9-7.3 7.8-14c-.1-4.6-1.8-7.8-7.7-11.6c-6.8-4.3-16.5-7.4-29-11.2l-1.6-.5c-11-3.3-24.3-7.3-34.8-13.7c-12-7.2-22.6-18.9-22.7-37.3c-.1-19.4 10.8-32.8 23.8-40.5c7.5-4.4 15.8-7.2 24.1-8.7V232c0-8.8 7.2-16 16-16z" />
-                        </g>
-                    </svg>
-                    <span class="side-menu__label">Payouts</span><i class="angle fe fe-chevron-down"></i></a>
-                <ul class="slide-menu">
-                    <li><a class="slide-item" href="{{ route('new-payout.index') }}">Payout</a></li>
-                    <li><a class="slide-item" href="{{ route('invoice') }}">Pending Invoice</a></li>
-                    <li><a class="slide-item" href="{{ route('invoice.verified',['id'=> 1])  }}">Verified Invoice</a></li>
-                    <li><a class="slide-item" href="{{ route('users.index',['id'=> 2,'advance'=>1]) }}">Advance Payment</a></li>
-                </ul>
-
-            </li>
-
 
 
 

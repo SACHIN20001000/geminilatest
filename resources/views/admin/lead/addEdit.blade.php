@@ -97,6 +97,8 @@
                                             </div>
                                             <div class="col-sm-10">
                                                 <div class="row main-row">
+                                                    @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
+
                                                     <div class="row row-xs formgroup-wrapper">
                                                         <div class="col-lg-6  text-center">
                                                             <div class="main-form-group background">
@@ -126,6 +128,7 @@
                                                         </div>
 
                                                     </div>
+                                                    @endif
                                                     <div class="row row-xs formgroup-wrapper">
                                                         <div class="col-lg-3  text-center">
                                                             <div class="main-form-group background">

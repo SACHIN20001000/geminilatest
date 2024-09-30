@@ -455,7 +455,7 @@
                 </div>
                 <div id="reportrange"><span></span></div>
             </div>
-
+            @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
             <div class="mb-xl-0">
                 <button type="button" class="btn btn-danger duplicate-record">Duplicate</button>
             </div>
@@ -472,6 +472,7 @@
                 <a class="btn btn-main-primary bulk-delete " style="color:#fff">Delete</a>
 
             </div>
+            @endif
             @endif
             <div class="mb-xl-0">
                 <div class="btn-group dropdown">

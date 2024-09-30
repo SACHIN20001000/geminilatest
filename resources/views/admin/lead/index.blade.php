@@ -42,11 +42,13 @@
             <div class="pe-1 mb-xl-0">
                 <button type="button" class="btn btn-warning  btn-icon me-2"><i class="mdi mdi-refresh"></i></button>
             </div>
+            @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
             <div class="pe-1 mb-xl-0">
                 <div class="btn-group dropdown assigned-btn">
                     <a class="modal-effect btn btn-main-primary ml_auto " data-bs-effect="effect-super-scaled" style="color:#fff">Assign</a>
                 </div>
             </div>
+            @endif
             <div class="mb-xl-0">
                 <div class="btn-group dropdown">
                     <a class="btn btn-main-primary ml_auto" href="{{ route('leads.create') }}">Create Lead</a>
@@ -92,6 +94,8 @@
                                     @endforeach
                                     @endif
                                 </select>
+                                @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
+
                                 <p class="mg-b-10">Broker/Staff</p>
                                 <select name="users" class="form-control">
                                     <option value="">Select</option>
@@ -101,6 +105,7 @@
                                     @endforeach
                                     @endif
                                 </select>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -9,6 +9,7 @@ use App\Models\TicketRemark;
 use App\Models\TicketSystem;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class TicketSystemController extends Controller
@@ -23,19 +24,26 @@ class TicketSystemController extends Controller
         if ($request->ajax()) {
             $query = TicketSystem::with('user', 'policy');
 
-
+            if (Auth::user()->hasRole('Broker') || Auth::user()->hasRole('Client')) {
+                // Filter tickets where the related policy has user_id equal to the current user's ID
+                $query->whereHas('policy', function ($q) {
+                    $q->where('user_id', Auth::user()->id);
+                });
+            }
             $data = $query->orderby('id', 'desc')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 
+                    // View button
                     $action = '<span class="action-buttons">
-                                <a  href="' . route("ticket.show", $row) . '" class="iconBtn sasa"><i class="fa fa-eye"></i>
-                                </a>
-                               
-                      
-
-                        <a href="' . route("ticket.destroy", $row) . '"
+                                <a href="' . route("ticket.show", $row) . '" class="iconBtn sasa"><i class="fa fa-eye"></i>
+                                </a>';
+                
+                    // Conditionally add the delete button only if the user is not a Broker or Client
+                    if (!Auth::user()->hasRole('Broker') && !Auth::user()->hasRole('Client')) {
+                        $action .= '
+                            <a href="' . route("ticket.destroy", $row) . '"
                                 class="iconBtn remove_us"
                                 title="Delete User"
                                 data-toggle="tooltip"
@@ -44,11 +52,14 @@ class TicketSystemController extends Controller
                                 data-confirm-title="Please Confirm"
                                 data-confirm-text="Are you sure that you want to delete this ticket?"
                                 data-confirm-delete="Yes, delete it!">
-                                <i class="las la-trash" style="color: #ff0000";></i>
-                            </a>
-                    ';
+                                <i class="las la-trash" style="color: #ff0000;"></i>
+                            </a>';
+                    }
+                
+                    $action .= '</span>';
                     return $action;
                 })
+                
                 ->rawColumns(['action'])
                 ->make(true);
         }
