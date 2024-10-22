@@ -356,7 +356,7 @@
                 .data("daterangepicker")
                 .endDate.format("YYYY-MM-DD");
             var range = $("#dynamicDate").html();
-            var url = "{{ route('policy.index',['id'=> 1]) }}";
+            var url = "{{ route('new-policy.index',['id'=> 1]) }}";
             window.location.href =
                 url + "&expiry_from=" + start + "&expiry_to=" + end;
         });
@@ -369,7 +369,7 @@
                 .data("daterangepicker")
                 .endDate.format("YYYY-MM-DD");
             var range = $("#dynamicDate").html();
-            var url = "{{ route('policy.index',['id'=> 2]) }}";
+            var url = "{{ route('new-policy.index',['id'=> 2]) }}";
             window.location.href =
                 url + "&expiry_from=" + start + "&expiry_to=" + end;
         });
@@ -382,7 +382,7 @@
                 .data("daterangepicker")
                 .endDate.format("YYYY-MM-DD");
             var range = $("#dynamicDate").html();
-            var url = "{{ route('policy.index',['id'=> 1]) }}";
+            var url = "{{ route('new-policy.index',['id'=> 1]) }}";
             window.location.href =
                 url +
                 "&expiry_from=" +
@@ -400,7 +400,7 @@
                 .data("daterangepicker")
                 .endDate.format("YYYY-MM-DD");
             var range = $("#dynamicDate").html();
-            var url = "{{ route('policy.index',['id'=> 1]) }}";
+            var url = "{{ route('new-policy.index',['id'=> 1]) }}";
             window.location.href =
                 url +
                 "&expiry_from=" +
@@ -418,7 +418,7 @@
                 .data("daterangepicker")
                 .endDate.format("YYYY-MM-DD");
             var range = $("#dynamicDate").html();
-            var url = "{{ route('policy.index',['id'=> 2]) }}";
+            var url = "{{ route('new-policy.index',['id'=> 2]) }}";
             window.location.href =
                 url +
                 "&expiry_from=" +

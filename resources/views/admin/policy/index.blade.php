@@ -88,12 +88,12 @@
                 <h4 class="  content-title mb-0 my-auto pe-4">Policy </h4>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                        <a href="{{ route('policy.index',['id'=> 1]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto">MIS (<?php echo   new_policy() ?>)</a>
+                        <a href="{{ route('new-policy.index',['id'=> 1]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 1) btn btn-warning @else btn btn-info @endif ml_auto">MIS (<?php echo   new_policy() ?>)</a>
                     </div>
                 </div>
                 <div class="pe-4 mb-xl-0">
                     <div class="btn-group dropdown">
-                        <a href="{{ route('policy.index',['id'=> 2]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif  ml_auto">Renewals (<?php echo   renew_policy() ?>)</a>
+                        <a href="{{ route('new-policy.index',['id'=> 2]) }}" class=" @if(isset($_GET['id']) && $_GET['id'] == 2) btn btn-warning @else btn btn-info @endif  ml_auto">Renewals (<?php echo   renew_policy() ?>)</a>
                     </div>
                 </div>
 

@@ -15,7 +15,7 @@
         <div class="d-flex my-xl-auto right-content">
             <div class="pe-1 mb-xl-0">
                 <div class="btn-group dropdown">
-                    <a class="btn btn-main-primary" href="{{ route('policy.index') }}">View Policy</a>
+                    <a class="btn btn-main-primary" href="{{ route('new-policy.index') }}">View Policy</a>
                 </div>
             </div>
 

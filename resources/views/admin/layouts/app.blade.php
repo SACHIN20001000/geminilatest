@@ -68,6 +68,9 @@
         .dataTables_wrapper .dataTables_filter {
             float: left !important;
         }
+        span.select2-dropdown.select2-dropdown--below {
+    z-index: 99999;
+}
 
         .dataTables_filter label {
             border: 1px solid #f1f1f1;

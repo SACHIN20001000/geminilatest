@@ -380,7 +380,7 @@ class NewPolicyController extends Controller
                 //throw $th;
             }
         }
-        return redirect()->route('policy.index', ['id' => 1])->with('success', 'Policy Added successfully!');
+        return redirect()->route('new-policy.index', ['id' => 1])->with('success', 'Policy Added successfully!');
     }
 
     /**
@@ -530,7 +530,7 @@ class NewPolicyController extends Controller
         }
 
 
-        return redirect()->route('policy.index', ['id' => 1])->with('success', 'Policy Update successfully!');
+        return redirect()->route('new-policy.index', ['id' => 1])->with('success', 'Policy Update successfully!');
     }
 
     /**

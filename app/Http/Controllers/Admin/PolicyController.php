@@ -140,7 +140,7 @@ class PolicyController extends Controller
         $leads = ($request->sort == 'all') ? $query->paginate(100000000) : $query->paginate($request->sort ?? 10);
 
         $companies = Company::all();
-        return view('admin.policy.index', compact('leads', 'products', 'users', 'count', 'companies'));
+        return view('admin.policy.new-index', compact('leads', 'products', 'users', 'count', 'companies'));
     }
 
     /**
