@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PassportAuthController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\BacklinkController;
+use App\Http\Controllers\Admin\ProductController;
 
 use App\Http\Middleware\EnsureApiTokenIsValid;
 /*

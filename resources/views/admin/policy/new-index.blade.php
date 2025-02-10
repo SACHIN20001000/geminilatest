@@ -871,11 +871,21 @@
                         'month').endOf('month')],
                     'Next Month': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')],
 
-                    'Financial Year': [moment().subtract(0, 'years').startOf('year').add(3, 'months'),
-                        moment().subtract(0, 'years').endOf('year').add(3, 'months').endOf('month')
+                    'Financial Year': [
+                        moment().month() < 3 
+                            ? moment().subtract(1, 'year').startOf('year').add(3, 'months') // April 1 of the previous year
+                            : moment().startOf('year').add(3, 'months'),                     // April 1 of the current year
+                        moment().month() < 3 
+                            ? moment().subtract(1, 'year').endOf('year').add(3, 'months')   // March 31 of the current year
+                            : moment().endOf('year').add(3, 'months')                       // March 31 of the next year
                     ],
-                    'Last Financial Year': [moment().subtract(1, 'years').startOf('year').add(3, 'months'),
-                        moment().subtract(1, 'years').endOf('year').add(3, 'months').endOf('month')
+                    'Last Financial Year': [
+                        moment().month() < 3 
+                            ? moment().subtract(2, 'year').startOf('year').add(3, 'months') // April 1 of two years ago
+                            : moment().subtract(1, 'year').startOf('year').add(3, 'months'),// April 1 of the previous year
+                        moment().month() < 3 
+                            ? moment().subtract(2, 'year').endOf('year').add(3, 'months')   // March 31 of the previous year
+                            : moment().subtract(1, 'year').endOf('year').add(3, 'months')   // March 31 of the current year
                     ]
 
                 },
@@ -1068,7 +1078,14 @@
                 @if(isset($_GET['id']) && $_GET['id'] == 1) {
                     data: 'created_at',
                     name: 'created_at',
-                    className: 'truncate-text'
+                    className: 'truncate-text',
+                    render: function(data, type, row) {
+                    if (data) {
+                        const date = new Date(data);
+                        return date.toISOString().split('T')[0];
+                    }
+                    return '';
+                }
 
                 },
                 @endif {

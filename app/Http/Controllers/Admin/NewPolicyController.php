@@ -37,10 +37,10 @@ class NewPolicyController extends Controller
      */
     public function index(Request $request)
     {
+        $products = SubProduct::select('*', DB::raw('DATE(created_at) as created_at'), DB::raw('DATE(updated_at) as updated_at') )->get();
+        $users = User::select('*', DB::raw('DATE(created_at) as created_at'), DB::raw('DATE(updated_at) as updated_at') )->get();
 
 
-        $products = SubProduct::all();
-        $users = User::all();
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns', 'company', 'attachments', 'makes', 'models', 'varriants')->where('is_policy', 1);
         if (Auth::user()->hasRole('Broker') ||  Auth::user()->hasRole('Client')) {
 
@@ -164,7 +164,7 @@ class NewPolicyController extends Controller
         $leads = $query->get();
 
 
-        $companies = Company::all();
+        $companies = Company::select('*', DB::raw('DATE(created_at) as created_at'), DB::raw('DATE(updated_at) as updated_at') )->get();
         if ($request->ajax()) {
             return Datatables::of($leads)
                 ->addIndexColumn()
