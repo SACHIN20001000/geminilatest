@@ -17,3 +17,7 @@
 .hidden{
     display: none;
 }
+
+.breadcrumb-header .btn {
+    padding: 8px 10px;
+}

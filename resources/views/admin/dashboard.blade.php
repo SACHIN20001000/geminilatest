@@ -262,27 +262,21 @@
                         moment().subtract(1, "month").startOf("month"),
                         moment().subtract(1, "month").endOf("month"),
                     ],
-                    "Financial Year": [
-                        moment()
-                        .subtract(1, "years")
-                        .startOf("year")
-                        .add(3, "months"),
-                        moment()
-                        .subtract(1, "years")
-                        .endOf("year")
-                        .add(3, "months")
-                        .endOf("month"),
+                    "Current Financial Year": [
+                        moment().month() < 3 
+                            ? moment().subtract(1, 'year').startOf('year').add(3, 'months')
+                            : moment().startOf('year').add(3, 'months'),  
+                        moment().month() < 3 
+                            ? moment().subtract(1, 'year').endOf('year').add(3, 'months')   
+                            : moment().endOf('year').add(3, 'months')
                     ],
                     "Last Financial Year": [
-                        moment()
-                        .subtract(2, "years")
-                        .startOf("year")
-                        .add(3, "months"),
-                        moment()
-                        .subtract(2, "years")
-                        .endOf("year")
-                        .add(3, "months")
-                        .endOf("month"),
+                        moment().month() < 3 
+                            ? moment().subtract(2, 'year').startOf('year').add(3, 'months') 
+                            : moment().subtract(1, 'year').startOf('year').add(3, 'months'),
+                        moment().month() < 3 
+                            ? moment().subtract(2, 'year').endOf('year').add(3, 'months')
+                            : moment().subtract(1, 'year').endOf('year').add(3, 'months')
                     ],
                 },
                 startDate: moment()
@@ -496,7 +490,8 @@
             // Chart configuration with improvements
             Highcharts.chart("chart-container", {
                 chart: {
-                    type: "column",
+                    type: "bar", // Change chart type to "bar"
+                    zoomType: "xy",
                 },
                 title: {
                     text: "Policies details",
@@ -509,7 +504,7 @@
                         description: "Product wise policy details",
                     },
                     labels: {
-                        rotation: -45,
+                        rotation: -10,
                         style: {
                             fontSize: "12px",
                         },
@@ -525,7 +520,7 @@
                     valuePrefix: "₹ ",
                 },
                 plotOptions: {
-                    column: {
+                    bar: { // Update this to "bar"
                         pointPadding: 0.2,
                         borderWidth: 0,
                     },
@@ -535,10 +530,8 @@
                     align: "right",
                     verticalAlign: "middle",
                 },
-                chart: {
-                    zoomType: "xy",
-                },
-                series: [{
+                series: [
+                    {
                         name: "Premium",
                         data: data.price,
                     },
@@ -548,6 +541,7 @@
                     },
                 ],
             });
+
         }
 
         function pieChart(chartData) {

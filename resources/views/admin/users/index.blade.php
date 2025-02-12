@@ -239,7 +239,13 @@ table.dataTable thead th {
                     data: 'roles[0].name',
                     name: 'roles[0].name',
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                    render: function(data, type, row) {
+                        if (data === 'Broker') {
+                            return 'Agent';
+                        }
+                        return data;
+                    }
                 },
                 <?php if (isset($_GET['id']) && $_GET['id'] == 2) { ?> {
                         data: 'advance_payout',

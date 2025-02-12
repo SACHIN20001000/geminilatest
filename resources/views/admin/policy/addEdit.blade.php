@@ -144,7 +144,7 @@
                                                                     <option value="">Select</option>
                                                                     @if(isset($roles) && $roles->count())
                                                                     @foreach($roles as $role)
-                                                                    <option value="{{$role->id}}" {{ (isset($policy->user_type) && $role->id == $policy->user_type) ? 'Selected' : '' }}>{{$role->name }}</option>
+                                                                    <option value="{{$role->id}}" {{ (isset($policy->user_type) && $role->id == $policy->user_type) ? 'Selected' : '' }}>@if($role->name == "Broker") Agent @else {{$role->name}} @endif</option>
                                                                     @endforeach
                                                                     @endif
                                                                 </select>
