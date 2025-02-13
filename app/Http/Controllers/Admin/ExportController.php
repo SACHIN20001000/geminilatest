@@ -278,88 +278,96 @@ class ExportController extends Controller
     return back()->with('error', 'Error, Please upload the file!');
   }
 
-  public  function importUsers(Request $request)
+  public function importUsers(Request $request)
   {
-
-    /*data to add the*/
-    if ($request->file('users')) {
-      $path = $request->file('users')->getRealPath();  /// DEFINE FILE PATH HERE///
-
-      //turn into array
-      $file = file($path);
-
-      $header = array_slice($file, 0, 1);
-
-      if (!empty($header)) {
-        foreach ($header as $head) {
-          $headerQuotes = str_replace('"', '', trim(strtolower($head)));
-
-          $headerF = explode(',', str_replace(' ', '_', trim(strtolower($headerQuotes))));
-        }
-      }
-      $csvdata = array_slice($file, 1);
-
-      if (!empty($csvdata)) {
-
-        if (
-          in_array('name', $headerF) && in_array('phone', $headerF) && in_array('email', $headerF) && in_array('role', $headerF) && in_array('upi', $headerF) && in_array('birthday', $headerF) && in_array('account_no', $headerF) && in_array('bank_name', $headerF) && in_array('account_name', $headerF) && in_array(
-            'ifsc',
-            $headerF
-          )
-        ) {
+      // Validate the uploaded files
+      $request->validate([
+          'users.*' => 'required|mimes:csv,txt|max:2048', // Adjust validation as needed
+      ]);
+  
+      // Check if files are uploaded
+      if ($request->hasFile('users')) {
           $errorMessages = [];
-          foreach ($csvdata as $key => $csv) {
-            $csvArrF = explode(",", trim($csv));
-
-            if (count($csvArrF) == count($headerF)) {
-
-              $finalCsvData[] = array_combine($headerF, $csvArrF);
-            }
+          $successCount = 0;
+  
+          // Loop through each file
+          foreach ($request->file('users') as $uploadedFile) {
+              $path = $uploadedFile->getRealPath(); // Get file path
+              $file = file($path); // Read file content
+  
+              $header = array_slice($file, 0, 1);
+  
+              if (!empty($header)) {
+                  foreach ($header as $head) {
+                      $headerQuotes = str_replace('"', '', trim(strtolower($head)));
+                      $headerF = explode(',', str_replace(' ', '_', trim(strtolower($headerQuotes))));
+                  }
+              }
+  
+              $csvdata = array_slice($file, 1);
+  
+              if (!empty($csvdata)) {
+                  if (
+                      in_array('name', $headerF) && in_array('phone', $headerF) && in_array('email', $headerF) && in_array('role', $headerF) &&
+                      in_array('upi', $headerF) && in_array('birthday', $headerF) && in_array('account_no', $headerF) &&
+                      in_array('bank_name', $headerF) && in_array('account_name', $headerF) && in_array('ifsc', $headerF)
+                  ) {
+                      $finalCsvData = [];
+                      foreach ($csvdata as $csv) {
+                          $csvArrF = explode(",", trim($csv));
+  
+                          if (count($csvArrF) == count($headerF)) {
+                              $finalCsvData[] = array_combine($headerF, $csvArrF);
+                          }
+                      }
+  
+                      foreach ($finalCsvData as $key => $finalCsv) {
+                          if (!in_array($finalCsv['role'], ['Staff', 'Broker', 'Client'])) {
+                              $errorMessages[] = "File: {$uploadedFile->getClientOriginalName()} | Error in row $key: Invalid role specified! Name = " . $finalCsv['name'] . ", Role = " . $finalCsv['role'] . "  
+                                  Role should be Staff, Broker, or Client.";
+                              continue;
+                          }
+  
+                          try {
+                              DB::beginTransaction();
+  
+                              $user = User::updateOrCreate(
+                                  ['email' => $finalCsv['email']],
+                                  [
+                                      'name' => $finalCsv['name'],
+                                      'upi' => $finalCsv['upi'],
+                                      'birthday' => $finalCsv['birthday'],
+                                      'account_no' => $finalCsv['account_no'],
+                                      'bank_name' => $finalCsv['bank_name'],
+                                      'account_name' => $finalCsv['account_name'],
+                                      'ifsc' => $finalCsv['ifsc'],
+                                      'password' => bcrypt('12345678'),
+                                  ]
+                              );
+  
+                              $user->syncRoles([$finalCsv['role']]);
+                              DB::commit();
+                              $successCount++;
+                          } catch (\Exception $e) {
+                              DB::rollback();
+                              $errorMessages[] = "File: {$uploadedFile->getClientOriginalName()} | Error in row $key: " . $e->getMessage();
+                          }
+                      }
+                  } else {
+                      $errorMessages[] = "File: {$uploadedFile->getClientOriginalName()} | Error: Invalid file structure!";
+                  }
+              } else {
+                  $errorMessages[] = "File: {$uploadedFile->getClientOriginalName()} | Error: Empty file!";
+              }
           }
-
-
-          foreach ($finalCsvData as $key => $finalCsv) {
-            if (!in_array($finalCsv['role'], ['Staff', 'Broker', 'Client'])) {
-              $errorMessages[] = "Error in row $key: Invalid role specified in the CSV file! Name = " . $finalCsv['name'] . ", Role = " . $finalCsv['role'] . "  
-                Role should be Staff, Broker,Client.";
-            }
-
-            try {
-              DB::beginTransaction();
-
-
-              $user = User::updateOrCreate([
-                'email' => $finalCsv['email'],
-              ], [
-                'name' => $finalCsv['name'],
-                'upi' => $finalCsv['upi'],
-                'birthday' => $finalCsv['birthday'],
-                'account_no' => $finalCsv['account_no'],
-                'bank_name' => $finalCsv['bank_name'],
-                'account_name' => $finalCsv['account_name'],
-                'ifsc' => $finalCsv['ifsc'],
-                'password' => bcrypt('12345678'),
-              ]);
-              $user->syncRoles([$finalCsv['role']]);
-              DB::commit();
-            } catch (\Exception $e) {
-
-
-              DB::rollback();
-              $errorMessages[] = "Error in row $key: " . $e->getMessage();
-            }
-          }
-
+  
+          // Return success or error messages
           if (!empty($errorMessages)) {
-            // Display error messages
-            return back()->with('error', implode('<br>', $errorMessages));
+              return back()->with('error', implode('<br>', $errorMessages));
           }
-          return back()->with('success', 'File Imported successfully!');
-        }
-        return back()->with('error', 'Error, Please Check the file!');
+          return back()->with('success', "$successCount records imported successfully!");
       }
-    }
-
-    return back()->with('error', 'Error, Please upload the file!');
+  
+      return back()->with('error', 'Error, Please upload at least one file!');
   }
 }

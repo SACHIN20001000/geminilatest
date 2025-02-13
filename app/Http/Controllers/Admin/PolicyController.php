@@ -43,7 +43,11 @@ class PolicyController extends Controller
         // echo '<pre>'; print_r($request->all()); die;
         $products = SubProduct::all();
         $users = User::all();
+
+        
         $query = Policy::with('users', 'lead', 'insurances', 'products', 'subProduct', 'lead.assigns')->where(['is_policy' => 1]);
+
+        
         if (isset($request->search_anything)   && !empty($request->search_anything)) {
 
             $searchParam = ['holder_name', 'phone', 'email', 'reg_no', 'policy_no'];
