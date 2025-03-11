@@ -182,12 +182,6 @@ class NewPolicyController extends Controller
                     // Common "Send Mail" button
                     $action .= '<a 
                                     type="button" 
-                                    data-id="' . $row->phone . ' "
-                                    data-toggle="tooltip"
-                                    title="' . $row->phone . ' "
-                                    class="endrosment-btn iconBtn"><i class="fa fa-phone text-info"></i></a>';
-                    $action .= '<a 
-                                    type="button" 
                                     data-id="' . $row->id . ' "
                                     data-email="' . (optional($row->users)->email ?? '') . '"
                                     data-expiry="' . date("d-m-Y", strtotime($row->expiry_date)) . '"
