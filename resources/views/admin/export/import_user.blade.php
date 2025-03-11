@@ -29,7 +29,7 @@
                         <div class="p-3 bg-gray-200 d-flex align-items-center justify-content-between">
                             <div class="row row-xs align-items-center">                             
                                 <div class="col-md-12 mg-t-5 mg-md-t-0">
-                                  <input type="file" name="users[]" id="" multiple>
+                                  <input type="file" name="users" id="">
                                    <a href="{{route('downloadsampleUser')}}">Download Sample File</a>
                                 </div>
                             </div>

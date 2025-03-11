@@ -320,7 +320,7 @@
                     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
                     'This Year': [moment().startOf('year'), moment().endOf('year')],
                     'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
-                    'Current Financial Year': [moment().month(3).date(1).startOf('month'), moment().month(2).date(31).endOf('month').add(1, 'year')],
+                    'Financial Year': [moment().month(3).date(1).startOf('month'), moment().month(2).date(31).endOf('month').add(1, 'year')],
                     'Last Financial Year': [moment().subtract(1, 'years').startOf('year').add(3, 'months'), moment().subtract(1, 'years').endOf('year').add(3, 'months').endOf('month')]
 
                 },

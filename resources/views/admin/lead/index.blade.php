@@ -33,14 +33,15 @@
 
         <div class="d-flex my-xl-auto right-content">
             <div class="pe-1 mb-xl-0 filter-btn">
+
                 <button type="button" class="btn btn-info btn-icon me-2 btn-b"><i class="mdi mdi-filter-variant"></i></button>
             </div>
-            <!-- <div class="pe-1 mb-xl-0">
+            <div class="pe-1 mb-xl-0">
                 <button type="button" class="btn btn-danger btn-icon me-2"><i class="mdi mdi-star"></i></button>
             </div>
             <div class="pe-1 mb-xl-0">
                 <button type="button" class="btn btn-warning  btn-icon me-2"><i class="mdi mdi-refresh"></i></button>
-            </div> -->
+            </div>
             @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
             <div class="pe-1 mb-xl-0">
                 <div class="btn-group dropdown assigned-btn">
@@ -95,7 +96,7 @@
                                 </select>
                                 @if(Auth::user()->hasRole('Staff') || Auth::user()->hasRole('Admin'))
 
-                                <p class="mg-b-10">Agent/Staff</p>
+                                <p class="mg-b-10">Broker/Staff</p>
                                 <select name="users" class="form-control">
                                     <option value="">Select</option>
                                     @if(isset($users) && $users->count())
